@@ -1,0 +1,26 @@
+<!-- Copyright 2017 BlueCat Networks. All rights reserved. -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/delete_alias_record_example_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+    <p>{{ text['info'] }}</p>
+    {% from "form_helper.html" import render_form %}
+    {{ render_form(form, action=url_for('delete_alias_record_exampledelete_alias_record_example_delete_alias_record_example_page_form'), id="delete_alias_record_form") }}
+{% endblock %}
+
+{% block scripts %}
+<script src="js/delete_alias_record_example_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}

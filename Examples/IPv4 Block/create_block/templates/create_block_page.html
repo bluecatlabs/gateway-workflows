@@ -1,0 +1,62 @@
+<!-- Copyright 2017 BlueCat Networks. All rights reserved. -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/create_block_page.css">
+{% endblock %}
+
+{% block title %}
+"Create Block"
+{% endblock %}
+
+{% block custom %}
+
+    <div>
+        <h1>Creation of New Block</h1>
+
+
+            Configuration:
+
+            <select id="configuration" name="configuration">
+                <option value="0">Please Select</option>
+                {% for configuration in configurations %}
+                    <option value="{{ configuration[0] }}">{{ configuration[1] }}</option>
+                {% endfor %}
+            </select>
+
+            Parent Block (leave blank to create block at configuration level):
+                <div class="select-div">
+                    <input list="parent-list" name="parent" id="parent" value="" disabled />
+                    <datalist id="parent-list" ></datalist>
+                </div>
+
+
+            New Block Name:
+            <input id="name" name="name" type="text" value="" disabled />
+
+            IP4 Block Range:
+            <div id="cidr_address" class="flex-container">
+                <div id="network">
+                    <input id="network-input" name="network-input" type="text" value="" disabled />
+                </div>
+                <div id="slash-container">
+                    <span>/</span>
+                </div>
+                <div id="mask">
+                    <input id="mask-input" name="mask-input" type="text" value="" disabled />
+                </div>
+            </div>
+
+
+            <input id="submit" type="submit" value="Submit" disabled />
+
+
+        <div id="result"></div><br/>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="js/create_block_page.js"></script>
+{% endblock %}

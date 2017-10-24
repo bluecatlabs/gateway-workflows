@@ -4,7 +4,6 @@ TODO: Write a project description
 
 ## Installation
 
-TODO: Describe the installation process
 
 ## Usage
 
@@ -16,7 +15,7 @@ TODO: Write usage instructions
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+5. Submit a pull request
 
 ## History
 
@@ -24,7 +23,20 @@ TODO: Write history
 
 ## Credits
 
-TODO: Write credits
+The Team:
+---------
+- Vadim Farafontov
+- Viktor Fradkin
+- Xiao Dong
+- Evgeny Misotchnick
+- Nikhil Jangi
+
+Professional Services:
+----------------------
+- Bill Morton
+- Murtaza Haider
+- Chris Storz
+
 
 ## License
 

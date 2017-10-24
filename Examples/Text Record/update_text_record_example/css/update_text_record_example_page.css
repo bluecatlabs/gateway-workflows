@@ -1,0 +1,10 @@
+/* Copyright 2017 BlueCat Networks. All rights reserved. */
+/* Custom styles for your page go in here. */
+#search {
+    float: none;
+}
+
+#txt_list {
+    overflow: auto;
+    height: 300px;
+}

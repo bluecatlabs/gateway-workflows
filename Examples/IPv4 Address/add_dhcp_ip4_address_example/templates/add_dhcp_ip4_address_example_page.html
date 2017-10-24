@@ -1,0 +1,26 @@
+<!-- Copyright 2017 BlueCat Networks. All rights reserved. -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/add_dhcp_ip4_address_example_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+    <p>{{ text['info'] }}</p>
+    {% from "form_helper.html" import render_form %}
+    {{ render_form(form, action=url_for('add_dhcp_ip4_address_exampleadd_dhcp_ip4_address_example_add_dhcp_ip4_address_example_page_form'), id="add_dhcp_ip4_address_form") }}
+{% endblock %}
+
+{% block scripts %}
+<script src="js/add_dhcp_ip4_address_example_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}

@@ -1,0 +1,27 @@
+<!-- Copyright 2017 BlueCat Networks. All rights reserved. -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/add_text_record_example_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+    <p>{{ text['info'] }}</p>
+    {% from "form_helper.html" import render_form %}
+    {{ render_form(form, action=url_for('add_text_record_exampleadd_text_record_add_text_record_page_form'), id="add_text_form") }}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="js/add_text_record_example_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}
