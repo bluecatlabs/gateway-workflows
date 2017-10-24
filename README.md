@@ -1,13 +1,35 @@
 # BlueCat DNS Gateway Workflows
 
-TODO: Write a project description
+The BlueCat DNS Integrity™ Gateway is a Python-based web utility that leverages the BlueCat Address Manager™ (BAM) API
+to allow you to create custom workflows for common tasks in order to maximize efficiency of enterprise DNS operations.
+
+The DNS Integrity Gateway consists of a set of Python classes forming an API to Address Manager and BlueCat DNS/DHCP Server (BDDS) along with
+a customized Python Flask web framework for building custom user interfaces and REST endpoints. It can
+run on most Linux variants with the correct packages installed.
+
 
 ## Installation
 
+The workflows are ready to use, they need to be placed into the <bluecat_portal>/workflows/Examples folder.
+
+There are two ways to do this:
+1. Symbolic Link:
+    ```bash
+    ln -s <gateway-example-repo>/Examples <bluecat_portal>/workflows/.
+    ```
+    This will create a symlink to the repo without actually copying the files over. Any changes done to the workflwos will be reflected in the <gateway-example-repo> location
+
+2. Copy
+    ```bash
+    cp -r <gatewat-example-repo>/Examples <bluecat_portal>/wofkows/.
+    ```
+    This will copy over all of the Example workflows
 
 ## Usage
 
-TODO: Write usage instructions
+Once the workflows have been either symlinked or copied over; just start the portal. You might have to adjust the
+workflow permissions through the administrative workflow to make some of the UI Workflows visible in the navbar.
+
 
 ## Contributing
 
