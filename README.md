@@ -1,4 +1,4 @@
-# BlueCat DNS Gateway Workflows
+# BlueCat DNS Integrity Gateway Workflows
 
 The BlueCat DNS Integrity™ Gateway is a Python-based web utility that leverages the BlueCat Address Manager™ (BAM) API
 to allow you to create custom workflows for common tasks in order to maximize efficiency of enterprise DNS operations.
@@ -10,29 +10,29 @@ run on most Linux variants with the correct packages installed.
 
 ## Installation
 
-The workflows are ready to use, they need to be placed into the <bluecat_portal>/workflows/Examples folder. The same can be done with the community examples.
+The workflows are ready to use; they just need to be placed into the <bluecat_portal>/workflows/Examples folder. The same can be done with the community examples.
 
 There are two ways to do this:
 1. Symbolic Link:
     ```bash
     ln -s <gateway-example-repo>/Examples <bluecat_portal>/workflows/.
     ```
-    This will create a symlink to the repo without actually copying the files over. Any changes done to the workflows will be reflected in the <gateway-example-repo> location
+    This will create a symlink to the repo without actually copying the files over. Any changes done to the workflows will be reflected in the <gateway-example-repo> location.
 
 2. Copy
     ```bash
-    cp -r <gatewat-example-repo>/Examples <bluecat_portal>/wofkows/.
+    cp -r <gatewat-example-repo>/Examples <bluecat_portal>/workflows/.
     ```
-    This will copy over all of the Example workflows
+    This will copy over all of the Example workflows.
 
-The workflows can also be copied one at a time into any other folder. However ensure that there are `__init__.py` files present in your workflows folder structure leading up to the workflow itself. This is required by the gateway in order to discover the workflow.
+The workflows can also be copied one at a time into any other folder. However, ensure that there are `__init__.py` files present in your workflows folder structure leading up to the workflow itself. This is required by the Gateway in order to discover the workflow.
 
 ## Usage
-Once the workflows have been either symlinked or copied over; just start the portal. You might have to adjust the
-workflow permissions through the administrative workflow to make some of the UI Workflows visible in the navigation bar. The workflows contained in the Examples folder are guaranteed to always be up-to-date with the latest gateway version. This is not the case for the community Contribute folder; the contributing authors are required to specify the version of the gateway the workflow was created/updated for and while all community workflows will be reviewed they come "As is".
+Once the workflows have been either symlinked or copied over, just start the Gateway (portal). You might have to adjust the
+workflow permissions through the administrative workflow to make some of the UI Workflows visible in the navigation bar. The workflows contained in the Examples folder are always up-to-date with the latest Gateway version. This is not the case for the community Contribute folder. The contributing authors are required to specify the version of the Gateway for which the workflow was created/updated. While all community workflows will be reviewed, they are delivered "As is".
 
-## Contributing
-Contributing follows a review process, before a workflow is accepted it will be reviewed and then merged into the master branch. It will be the responsibility of the contributor to ensure that their workflow is supported for future releases of the gateway.
+## Contributions
+Contributing follows a review process: before a workflow is accepted it will be reviewed and then merged into the master branch. It will be the responsibility of the contributor to ensure that their workflow is supported for future releases of the Gateway.
 
 #### Process
 1. Fork it!
@@ -53,7 +53,7 @@ Description: Brief description of what the workflow does and the expected behavi
 ```
 
 ## Credits
-The gateway would be so much less without the following people. Thank you for contributing your time to making this project a success.
+The Gateway would be so much less without the following people. Thank you for contributing your time to making this project a success.
 
 #### The Team:
 - Vadim Farafontov
@@ -77,7 +77,7 @@ The gateway would be so much less without the following people. Thank you for co
 
 ## License
 
-Copyright 2017 BlueCat Networks, Inc.
+Copyright 2017 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
