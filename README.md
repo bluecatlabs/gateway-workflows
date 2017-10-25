@@ -17,7 +17,7 @@ There are two ways to do this:
     ```bash
     ln -s <gateway-example-repo>/Examples <bluecat_portal>/workflows/.
     ```
-    This will create a symlink to the repo without actually copying the files over. Any changes done to the workflwos will be reflected in the <gateway-example-repo> location
+    This will create a symlink to the repo without actually copying the files over. Any changes done to the workflows will be reflected in the <gateway-example-repo> location
 
 2. Copy
     ```bash
@@ -25,14 +25,14 @@ There are two ways to do this:
     ```
     This will copy over all of the Example workflows
 
-The workflows can also be copied one at a time into any other folder. However ensure that there are `__init__.py` files present in your workflows folder structure leading up to the workflow itself. This is required by the gateway in order to discover the worklow.
+The workflows can also be copied one at a time into any other folder. However ensure that there are `__init__.py` files present in your workflows folder structure leading up to the workflow itself. This is required by the gateway in order to discover the workflow.
 
 ## Usage
 Once the workflows have been either symlinked or copied over; just start the portal. You might have to adjust the
-workflow permissions through the administrative workflow to make some of the UI Workflows visible in the navbar. The workflows contained in the Examples folder are guarnteed to always be up-to-date with the latest gateway version. This is not the case for the community Contribute folder; the contributing authors are required to specifiy the version of the gateway the workflow was created/updated for and while all community workflows will be reviewed they come "As is".
+workflow permissions through the administrative workflow to make some of the UI Workflows visible in the navigation bar. The workflows contained in the Examples folder are guaranteed to always be up-to-date with the latest gateway version. This is not the case for the community Contribute folder; the contributing authors are required to specify the version of the gateway the workflow was created/updated for and while all community workflows will be reviewed they come "As is".
 
 ## Contributing
-Contributing follows a review process, before a worklow is accepted it will be reviewd and then merged into the master branch. It will be the responsobility of the contributor to ensure that their workflow is supported for future releases of the gateway.
+Contributing follows a review process, before a workflow is accepted it will be reviewed and then merged into the master branch. It will be the responsibility of the contributor to ensure that their workflow is supported for future releases of the gateway.
 
 #### Process
 1. Fork it!
@@ -44,12 +44,12 @@ Contributing follows a review process, before a worklow is accepted it will be r
 5. Submit a pull request
 
 #### Contribute Template
-When contribing a workflow ensure that it contains a `README.md` file with at least the following content:
+When contributing a workflow ensure that it contains a `README.md` file with at least the following content:
 ```
 By: Your Name (youremail@domain.com)
 Date: DD-MM-YYYY
 Gateway Version: X.X.X
-Description: Brief description of what the workflow does and the expected behaviour
+Description: Brief description of what the workflow does and the expected behavior
 ```
 
 ## Credits
@@ -57,7 +57,7 @@ The gateway would be so much less without the following people. Thank you for co
 
 #### The Team:
 - Vadim Farafontov
-- Viktor Fradkin
+- Victor Fradkin
 - Xiao Dong
 - Evgeny Misotchnick
 - Nikhil Jangi
