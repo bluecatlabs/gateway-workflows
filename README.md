@@ -15,14 +15,14 @@ There are two ways to do this:
 
 2. Copy
     ```bash
-    cp -r <gatewat-example-repo>/Examples <bluecat_portal>/workflows/.
+    cp -r <gateway-example-repo>/Examples <bluecat_portal>/workflows/.
     ```
     This will copy over all of the Example workflows.
 
 If only a specific set of workflows is required they can be copied into the workflows folder individually. However, ensure that there are `__init__.py` files present in your workflows folder structure leading up to the workflow itself. This is required by the Gateway in order to discover the workflow.
 
 ## Usage
-Once the workflows have been either symlinked or copied over, just start the Gateway (portal). In order to use the added workflows the permissions have to be adjusted through the administrative permissions workflow. The workflows contained in the Examples folder are always up-to-date with the latest Gateway version. This is not the case for the community workflows. The contributing authors are required to specify the version of the Gateway for which the workflow was created/updated. While all community workflows will be reviewed, they are delivered "as is".
+Once the workflows have been either symlinked or copied over, just start the Gateway (portal). In order to use the added workflows the permissions have to be adjusted through the administrative permissions workflow. The workflows contained in the Examples folder are always up-to-date with the latest Gateway version. This is not the case for the community workflows. The contributing authors are required to specify the version of the Gateway for which the workflow was created or updated. While all community workflows will be reviewed, they are delivered "as is".
 
 ## Contributions
 Contributing follows a review process: before a workflow is accepted it will be reviewed and then merged into the master branch. It will be the responsibility of the contributor to ensure that their workflow is supported for future releases of the Gateway.
@@ -31,7 +31,7 @@ Contributing follows a review process: before a workflow is accepted it will be 
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Move your workflow into `Community/<your-workflow>`
-4. Create `<your-workflow>/README.md` Explaining what the workflow does. Use the Template below
+4. Create `<your-workflow>/README.md` explaining what the workflow does. Use the Template below.
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
