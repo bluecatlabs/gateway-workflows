@@ -39,6 +39,20 @@ Contributing follows a review process: before a workflow is accepted it will be 
 #### Community Template
 When contributing a workflow ensure that it contains a `README.md` file with at least the following content:
 ```
+Copyright YYYY BlueCat Networks (USA) Inc. and its affiliates
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
 By: Your Name (youremail@domain.com)
 Date: DD-MM-YYYY
 Gateway Version: X.X.X
@@ -52,8 +66,8 @@ The Gateway would be so much less without the following people. Thank you for co
 - Vadim Farafontov
 - Victor Fradkin
 - Xiao Dong
-- Evgeny Misotchnick
 - Nikhil Jangi
+- David Cohen
 - Delme Herbert
 - Lana Litvak
 
@@ -66,7 +80,6 @@ The Gateway would be so much less without the following people. Thank you for co
 - Glenn McAllister
 - Robert Barnhardt™
 - Ekim Maurer
-
 
 ## License
 
