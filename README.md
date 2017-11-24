@@ -6,10 +6,9 @@ The DNS Integrity Gateway consists of a set of Python classes forming an API to 
 ## Installation
 The workflows are ready to use; they just need to be placed into the `<bluecat_portal>/workflows` folder. The same can be done with the community examples.
 
-    ```bash
-    cp -r <gateway-example-repo>/Examples/* <bluecat_portal>/workflows/Examples/.
-    ```
-    This will copy over all of the Example workflows.
+This will copy over all of the Example workflows:
+
+`cp -r <gateway-example-repo>/Examples/* <bluecat_portal>/workflows/Examples/.`
 
 If only a specific set of workflows is required they can be copied into the workflows folder individually. However, ensure that there are `__init__.py` files present in your workflows folder structure leading up to the workflow itself. This is required by the Gateway in order to discover the workflow.
 
