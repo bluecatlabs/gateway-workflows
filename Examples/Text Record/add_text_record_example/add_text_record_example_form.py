@@ -11,6 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# By: BlueCat Networks
+# Date: 05-12-17
+# Gateway Version: 17.10.1
+# Description: Example Gateway workflows
 
 from wtforms import SubmitField
 from bluecat.wtform_fields import Configuration, View, Zone, CustomStringField
