@@ -1,0 +1,28 @@
+<!-- Copyright 2017 BlueCat Networks. All rights reserved. -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/update_user_permissions_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+    <p>{{ text['info'] }}</p>
+    <!--Your page's HTML goes here.-->
+    {% from "form_helper.html" import render_form %}
+    {{ render_form(form, action=url_for('update_user_permissionsupdate_user_permissions_update_user_permissions_page_form'), id="update_user_permissions_page_form") }}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="js/update_user_permissions_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}

@@ -1,0 +1,9 @@
+/* Copyright 2017 BlueCat Networks. All rights reserved. */
+/* Custom styles for your page go in here. */
+
+/* Changed background color to match css, was grey */
+
+option {
+    background-color: #132538;
+    color: white;
+}
