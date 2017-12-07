@@ -13,10 +13,17 @@ This will copy over all of the Example workflows:
 If only a specific set of workflows is required they can be copied into the workflows folder individually. However, ensure that there are `__init__.py` files present in your workflows folder structure leading up to the workflow itself. This is required by the Gateway in order to discover the workflow.
 
 ## Usage
-Once the workflows have been either symlinked or copied over, just start the Gateway (portal). In order to use the added workflows the permissions have to be adjusted through the administrative permissions workflow. The workflows contained in the Examples folder are always up-to-date with the latest Gateway version. This is not the case for the community workflows. The contributing authors are required to specify the version of the Gateway for which the workflow was created or updated. While all community workflows will be reviewed, they are delivered "as is".
+Once the workflows have been copied over, just start the Gateway (portal). In order to use the added workflows the permissions have to be adjusted through the administrative permissions workflow. The workflows contained in the Examples folder are always up-to-date with the latest Gateway version. This is not the case for the community workflows. The contributing authors are required to specify the version of the Gateway for which the workflow was created or updated. While all community workflows will be reviewed, they are delivered "as is".
 
 ## Contributions
 Contributing follows a review process: before a workflow is accepted it will be reviewed and then merged into the master branch. It will be the responsibility of the contributor to ensure that their workflow is supported for future releases of the Gateway.
+
+## Standards
+When contributing to the community examples please ensure that the code is of good quality
+- The Gateway is written with the PEP8 standard in mind
+- Ensure that each function contains a docstring exaplining the purpose of the function, the input variables and, the return type
+- Use plenty of comments to describe what the function is doing
+- Use meaningfull variable and function names
 
 #### Process
 1. Fork it!
@@ -28,7 +35,8 @@ Contributing follows a review process: before a workflow is accepted it will be 
 5. Submit a pull request
 
 #### Community Template
-When contributing a workflow ensure that it contains a `README.md` file with at least the following content:
+When contributing a workflow ensure that it contains a `README.md` and that **each file** has the following notice header:
+
 ```
 Copyright YYYY BlueCat Networks (USA) Inc. and its affiliates
 
@@ -49,6 +57,7 @@ Date: DD-MM-YYYY
 Gateway Version: X.X.X
 Description: Brief description of what the workflow does and the expected behavior
 ```
+
 
 ## Credits
 The Gateway would be so much less without the following people. Thank you for contributing your time to making this project a success.
