@@ -13,13 +13,13 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 05-12-17
-# Gateway Version: 17.10.1
+# Date: 07-12-17
+# Gateway Version: 17.12.1
 # Description: Example Gateway workflows
 
 from wtforms import SubmitField
 from bluecat.wtform_fields import Configuration, View, Zone, CustomStringField, CustomSearchButtonField, \
-    FilteredSelectField, PlainHTML
+    FilteredSelectField, PlainHTML, CustomSubmitField
 from bluecat.wtform_extensions import GatewayForm
 from bluecat.server_endpoints import get_text_records_endpoint
 
@@ -34,10 +34,12 @@ class GenericFormTemplate(GatewayForm):
         label='Configuration',
         required=True,
         coerce=int,
-        validators=[],
+        clear_below_on_change=False,
         is_disabled_on_start=False,
         on_complete=['call_view'],
-        enable_on_complete=['view']
+        enable_dependencies={'on_complete': ['view']},
+        disable_dependencies={'on_change': ['view']},
+        clear_dependencies={'on_change': ['view']}
     )
 
     view = View(
@@ -46,8 +48,12 @@ class GenericFormTemplate(GatewayForm):
         label='View',
         required=True,
         one_off=True,
-        on_complete=[],
-        enable_on_complete=['parent_zone']
+        clear_below_on_change=False,
+        enable_dependencies={'on_complete': ['parent_zone']},
+        disable_dependencies={'on_change': ['parent_zone']},
+        clear_dependencies={'on_change': ['parent_zone']},
+        should_cascade_disable_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
     parent_zone = Zone(
@@ -61,7 +67,12 @@ class GenericFormTemplate(GatewayForm):
             'configuration': 'configuration',
             'view': 'view'
         },
-        enable_on_complete=['text_record', 'search']
+        clear_below_on_change=False,
+        enable_dependencies={'on_complete': ['text_record', 'search']},
+        disable_dependencies={'on_change': ['text_record', 'search']},
+        clear_dependencies={'on_change': ['text_record', 'search']},
+        should_cascade_disable_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
     text_record = CustomStringField(
@@ -80,8 +91,14 @@ class GenericFormTemplate(GatewayForm):
         },
         server_side_method=get_text_records_endpoint,
         message_field='search_message',
-        on_click=['populate_txt_list'],
-        enable_on_complete=['txt_filter', 'txt_list']
+        on_complete=['call_txt_list'],
+        enable_dependencies={'on_complete': ['txt_filter', 'txt_list']},
+        disable_dependencies={'on_change': ['txt_filter', 'txt_list'],
+                              'on_click': ['txt_filter', 'txt_list']},
+        clear_dependencies={'on_change': ['txt_filter', 'txt_list'],
+                            'on_click': ['txt_filter', 'txt_list']},
+        should_cascade_disable_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
     plain_0 = PlainHTML('<div id="search_message"></div>')
@@ -101,7 +118,18 @@ class GenericFormTemplate(GatewayForm):
         coerce=int,
         is_disabled_on_error=True,
         on_complete=['call_name_js', 'call_text'],
-        enable_on_complete=['name', 'text', 'submit']
+        inputs={
+            'configuration': 'configuration',
+            'view': 'view',
+            'parent_zone': 'parent_zone',
+            'name': 'text_record'
+        },
+        clear_dependencies={'on_change': ['name', 'text']},
+        server_side_method=get_text_records_endpoint,
+        enable_dependencies={'on_complete': ['name', 'text', 'submit']},
+        disable_dependencies={'on_change': ['name', 'text', 'submit']},
+        should_cascade_disable_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
     plain_1 = PlainHTML('<hr>')
@@ -117,7 +145,6 @@ class GenericFormTemplate(GatewayForm):
         is_disabled_on_error=True
     )
 
-    submit = SubmitField(
-        label='Update',
-        render_kw={'disabled': True}
+    submit = CustomSubmitField(
+        label='Update'
     )

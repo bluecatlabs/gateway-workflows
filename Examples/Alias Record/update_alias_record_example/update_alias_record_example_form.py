@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 05-12-17
-# Gateway Version: 17.10.1
+# Date: 07-12-17
+# Gateway Version: 17.12.1
 # Description: Example Gateway workflows
 
 from wtforms import SubmitField
@@ -32,10 +32,11 @@ class GenericFormTemplate(GatewayForm):
         label='Configuration',
         required=True,
         coerce=int,
-        validators=[],
         is_disabled_on_start=False,
         on_complete=['call_view'],
-        enable_on_complete=['view']
+        enable_dependencies={'on_complete': ['view']},
+        disable_dependencies={'on_change': ['view']},
+        clear_dependencies={'on_change': ['view']}
     )
 
     view = View(
@@ -45,7 +46,11 @@ class GenericFormTemplate(GatewayForm):
         required=True,
         one_off=True,
         on_complete=['call_zone', 'call_linked_record_zone'],
-        enable_on_complete=['zone']
+        enable_dependencies={'on_complete': ['zone']},
+        disable_dependencies={'on_change': ['zone']},
+        should_cascade_disable_on_change=True,
+        clear_dependencies={'on_change': ['zone']},
+        should_cascade_clear_on_change=True
     )
 
     zone = Zone(
@@ -53,7 +58,11 @@ class GenericFormTemplate(GatewayForm):
         permissions=workflow_permission,
         label='Zone',
         required=True,
-        enable_on_complete=['alias_record']
+        enable_dependencies={'on_complete': ['alias_record']},
+        disable_dependencies={'on_change': ['alias_record']},
+        should_cascade_disable_on_change=True,
+        clear_dependencies={'on_change': ['alias_record']},
+        should_cascade_clear_on_change=True
     )
 
     alias_record = AliasRecord(
@@ -62,11 +71,15 @@ class GenericFormTemplate(GatewayForm):
         label='Alias Record',
         required=True,
         inputs={'configuration': 'configuration', 'view': 'view', 'zone': 'zone', 'alias_record': 'alias_record'},
-        server_outputs={'alias_record_name': 'alias_name', 'linked_record_zone': 'linked_record_zone',
-                        'linked_record_name': 'linked_record'},
+        server_outputs={'on_complete': {'alias_record_name': 'alias_name',
+                                        'linked_record_zone': 'linked_record_zone',
+                                        'linked_record_name': 'linked_record'}},
         server_side_output_method=get_alias_records_endpoint,
-        on_complete=['server_output_alias_record'],
-        enable_on_complete=['alias_name', 'linked_record_zone', 'linked_record', 'submit']
+        enable_dependencies={'on_complete': ['alias_name', 'linked_record_zone', 'linked_record', 'submit']},
+        disable_dependencies={'on_change': ['alias_name', 'linked_record_zone', 'linked_record', 'submit']},
+        should_cascade_disable_on_change=True,
+        clear_dependencies={'on_change': ['alias_name', 'linked_record_zone', 'linked_record']},
+        should_cascade_clear_on_change=True
     )
 
     alias_name = CustomStringField(

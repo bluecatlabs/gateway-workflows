@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 05-12-17
-# Gateway Version: 17.10.1
+# Date: 07-12-17
+# Gateway Version: 17.12.1
 # Description: Example Gateway workflows
 
 # -*- coding: utf-8 -*-

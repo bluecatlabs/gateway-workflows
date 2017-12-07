@@ -13,11 +13,11 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 05-12-17
-# Gateway Version: 17.10.1
+# Date: 07-12-17
+# Gateway Version: 17.12.1
 # Description: Example Gateway workflows
 
-from wtforms import SubmitField
+from wtforms import SubmitField, RadioField
 from bluecat.wtform_fields import Configuration, View, Zone, CustomStringField
 from bluecat.wtform_extensions import GatewayForm
 
@@ -32,10 +32,11 @@ class GenericFormTemplate(GatewayForm):
         label='Configuration',
         required=True,
         coerce=int,
-        validators=[],
         is_disabled_on_start=False,
         on_complete=['call_view'],
-        enable_on_complete=['view']
+        enable_dependencies={'on_complete': ['view']},
+        disable_dependencies={'on_change': ['view']},
+        clear_dependencies={'on_change': ['view']}
     )
 
     view = View(
@@ -45,7 +46,11 @@ class GenericFormTemplate(GatewayForm):
         required=True,
         one_off=True,
         on_complete=['call_zone', 'call_linked_record_zone'],
-        enable_on_complete=['zone', 'linked_record_zone', 'submit']
+        enable_dependencies={'on_complete': ['zone', 'linked_record_zone', 'submit']},
+        disable_dependencies={'on_change': ['zone', 'linked_record_zone', 'submit', 'select_one']},
+        should_cascade_disable_on_change=True,
+        clear_dependencies={'on_change': ['zone', 'linked_record_zone', 'select_one']},
+        should_cascade_clear_on_change=True
     )
 
     zone = Zone(
@@ -53,8 +58,11 @@ class GenericFormTemplate(GatewayForm):
         permissions=workflow_permission,
         label='Alias Zone',
         required=True,
-        clear_below_on_change=False,
-        enable_on_complete=['name']
+        enable_on_complete=['name'],
+        disable_dependencies={'on_change': ['name']},
+        should_cascade_disable_on_change=True,
+        clear_dependencies={'on_change': ['name']},
+        should_cascade_clear_on_change=True
     )
 
     name = CustomStringField(
@@ -69,8 +77,11 @@ class GenericFormTemplate(GatewayForm):
         permissions=workflow_permission,
         label='Linked Record Zone',
         required=True,
-        clear_below_on_change=False,
-        enable_on_complete=['host_record']
+        enable_on_complete=['host_record'],
+        disable_dependencies={'on_change': ['host_record']},
+        should_cascade_disable_on_change=True,
+        clear_dependencies={'on_change': ['host_record']},
+        should_cascade_clear_on_change=True
     )
 
     host_record = CustomStringField(

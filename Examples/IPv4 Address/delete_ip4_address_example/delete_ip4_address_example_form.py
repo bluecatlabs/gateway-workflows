@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 05-12-17
-# Gateway Version: 17.10.1
+# Date: 07-12-17
+# Gateway Version: 17.12.1
 # Description: Example Gateway workflows
 
 from wtforms import SubmitField
@@ -39,9 +39,11 @@ class GenericFormTemplate(GatewayForm):
         label='Configuration',
         required=True,
         coerce=int,
-        validators=[],
+        clear_below_on_change=False,
         is_disabled_on_start=False,
-        enable_on_complete=['ip4_address']
+        enable_dependencies={'on_complete': ['ip4_address']},
+        disable_dependencies={'on_change': ['ip4_address']},
+        clear_dependencies={'on_change': ['ip4_address']}
     )
 
     ip4_address = IP4Address(
@@ -50,11 +52,13 @@ class GenericFormTemplate(GatewayForm):
         label='Address',
         required=True,
         inputs={'configuration': 'configuration', 'address': 'ip4_address'},
-        on_change=['server_output_ip4_address'],
-        server_outputs={'state': 'address_state', 'mac_address': 'mac_address', 'name': 'description'},
+        server_outputs={'on_change': {'state': 'address_state', 'mac_address': 'mac_address', 'name': 'description'}},
         server_side_output_method=get_ip4_address_endpoint,
         result_decorator=filter_allocated,
-        enable_on_complete=['submit']
+        clear_below_on_change=False,
+        should_cascade_disable_on_change=True,
+        enable_dependencies={'on_complete': ['submit']},
+        disable_dependencies={'on_change': ['address_state', 'mac_address', 'description', 'submit']}
     )
 
     line_break = PlainHTML('<hr>')

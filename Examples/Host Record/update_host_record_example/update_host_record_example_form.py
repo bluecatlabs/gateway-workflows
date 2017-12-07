@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 05-12-17
-# Gateway Version: 17.10.1
+# Date: 07-12-17
+# Gateway Version: 17.12.1
 # Description: Example Gateway workflows
 
 from wtforms import SubmitField
@@ -33,10 +33,12 @@ class GenericFormTemplate(GatewayForm):
         label='Configuration',
         required=True,
         coerce=int,
-        validators=[],
+        clear_below_on_change=False,
         is_disabled_on_start=False,
         on_complete=['call_view'],
-        enable_on_complete=['view']
+        enable_dependencies={'on_complete': ['view']},
+        disable_dependencies={'on_change': ['view']},
+        clear_dependencies={'on_change': ['view']}
     )
 
     view = View(
@@ -45,8 +47,12 @@ class GenericFormTemplate(GatewayForm):
         label='View',
         required=True,
         one_off=True,
-        on_complete=[],
-        enable_on_complete=['parent_zone']
+        clear_below_on_change=False,
+        enable_dependencies={'on_complete': ['parent_zone']},
+        disable_dependencies={'on_change': ['parent_zone']},
+        clear_dependencies={'on_change': ['parent_zone']},
+        should_cascade_disable_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
     parent_zone = Zone(
@@ -56,7 +62,12 @@ class GenericFormTemplate(GatewayForm):
         required=True,
         start_initialized=True,
         inputs={'zone': 'parent_zone', 'configuration': 'configuration', 'view': 'view'},
-        enable_on_complete=['host_record']
+        clear_below_on_change=False,
+        enable_dependencies={'on_complete': ['host_record']},
+        disable_dependencies={'on_change': ['host_record']},
+        clear_dependencies={'on_change': ['host_record', 'name', 'ip4_address']},
+        should_cascade_disable_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
     host_record = HostRecord(
@@ -70,10 +81,12 @@ class GenericFormTemplate(GatewayForm):
             'parent_zone': 'parent_zone',
             'host_record': 'host_record'
         },
-        on_complete=['server_output_host_record'],
-        server_outputs={'name': 'name', 'addresses': 'ip4_address'},
+        server_outputs={'on_complete': {'name': 'name', 'addresses': 'ip4_address'}},
         server_side_output_method=get_host_records_endpoint,
-        enable_on_complete=['submit', 'name', 'ip4_address']
+        clear_below_on_change=False,
+        enable_dependencies={'on_complete': ['submit', 'name', 'ip4_address']},
+        disable_dependencies={'on_change': ['submit', 'name', 'ip4_address']},
+        should_cascade_disable_on_change=True,
     )
 
     seperator = PlainHTML('<hr>')

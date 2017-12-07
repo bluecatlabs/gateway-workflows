@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 05-12-17
-# Gateway Version: 17.10.1
+# Date: 07-12-17
+# Gateway Version: 17.12.1
 # Description: Example Gateway workflows
 
 from wtforms import SubmitField
@@ -39,10 +39,12 @@ class GenericFormTemplate(GatewayForm):
         label='Configuration',
         required=True,
         coerce=int,
-        validators=[],
+        clear_below_on_change=False,
         is_disabled_on_start=False,
         on_complete=['call_view'],
-        enable_on_complete=['view']
+        enable_dependencies={'on_complete': ['view']},
+        disable_dependencies={'on_change': ['view']},
+        clear_dependencies={'on_change': ['view']}
     )
 
     view = View(
@@ -51,8 +53,13 @@ class GenericFormTemplate(GatewayForm):
         label='View',
         required=True,
         one_off=True,
+        clear_below_on_change=False,
         on_complete=['call_zone'],
-        enable_on_complete=['zone']
+        enable_dependencies={'on_complete': ['zone']},
+        disable_dependencies={'on_change': ['zone']},
+        clear_dependencies={'on_change': ['zone']},
+        should_cascade_disable_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
     zone = Zone(
@@ -60,7 +67,12 @@ class GenericFormTemplate(GatewayForm):
         permissions=workflow_permission,
         label='Zone',
         required=True,
-        enable_on_complete=['ip4_address']
+        clear_below_on_change=False,
+        enable_dependencies={'on_complete': ['ip4_address']},
+        disable_dependencies={'on_change': ['ip4_address']},
+        clear_dependencies={'on_change': ['ip4_address', 'hostname', 'mac_address', 'description']},
+        should_cascade_disable_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
     ip4_address = IP4Address(
@@ -70,7 +82,10 @@ class GenericFormTemplate(GatewayForm):
         required=True,
         inputs={'configuration': 'configuration', 'address': 'ip4_address'},
         result_decorator=filter_unallocated,
-        enable_on_complete=['hostname', 'mac_address', 'description', 'submit']
+        clear_below_on_change=False,
+        enable_dependencies={'on_complete': ['hostname', 'mac_address', 'description', 'submit']},
+        disable_dependencies={'on_change': ['hostname', 'mac_address', 'description', 'submit']},
+        should_cascade_disable_on_change=True,
     )
 
     hostname = CustomStringField(
