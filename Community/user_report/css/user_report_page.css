@@ -1,0 +1,100 @@
+/*
+Copyright 2017 BlueCat Networks (USA) Inc. and its affiliates
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+By: Bill Morton (bmorton@bluecatnetworks.com)
+Date: 06-12-2017
+Gateway Version: 17.10.1
+
+/*
+
+/* Copyright 2017 BlueCat Networks. All rights reserved. */
+/* Custom styles for your page go in here. */
+
+.btn-primary{
+  float: left;
+  margin-left: 0px !important;
+}
+
+.btn-info{
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 3px;
+  border-style: solid;
+  text-transform: uppercase;
+  background-color: #00a4e3;
+  border-color: #00a4e3;
+  color: #000;
+  font-weight: bold;
+  float: right;
+  margin-right: 0px;
+
+}
+.btn-info:hover, .btn-info:focus{
+  border-color: #0073ae;
+  background-color: #0073ae;
+
+.btn-info {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+.btn-info:focus,
+.btn-info.focus {
+  color: #fff;
+  background-color: #286090;
+  border-color: #122b40;
+}
+.btn-info:hover {
+  color: #fff;
+  background-color: #286090;
+  border-color: #204d74;
+}
+.btn-info:active,
+.btn-info.active,
+.open > .dropdown-toggle.btn-info {
+  color: #fff;
+  background-color: #286090;
+  border-color: #204d74;
+}
+.btn-info:active:hover,
+.btn-info.active:hover,
+.open > .dropdown-toggle.btn-info:hover,
+.btn-info:active:focus,
+.btn-info.active:focus,
+.open > .dropdown-toggle.btn-info:focus,
+.btn-info:active.focus,
+.btn-info.active.focus,
+.open > .dropdown-toggle.btn-info.focus {
+  color: #fff;
+  background-color: #204d74;
+  border-color: #122b40;
+}
+.btn-info:active,
+.btn-info.active,
+.open > .dropdown-toggle.btn-info {
+  background-image: none;
+}
+.btn-info.disabled:hover,
+.btn-info[disabled]:hover,
+fieldset[disabled] .btn-info:hover,
+.btn-info.disabled:focus,
+.btn-info[disabled]:focus,
+fieldset[disabled] .btn-info:focus,
+.btn-info.disabled.focus,
+.btn-info[disabled].focus,
+fieldset[disabled] .btn-info.focus {
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+.btn-info .badge {
+  color: #337ab7;
+  background-color: #fff;
+}
