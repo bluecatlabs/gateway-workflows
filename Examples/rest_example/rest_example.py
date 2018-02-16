@@ -1,4 +1,4 @@
-# Copyright 2017 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2018 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 07-12-17
-# Gateway Version: 17.12.1
+# Date: 16-02-18
+# Gateway Version: 18.2.1
 # Description: Example Gateway workflows
 
 from flask import request, g, jsonify
@@ -22,8 +22,28 @@ from flask import request, g, jsonify
 from bluecat import route, util
 from main_app import app
 
-# application config
 
+def autologin_func():
+    """
+    I strongly recommend in real scenario use something more secure than storing plain text
+    username and password in a workflow file.
+    :return: username and password
+    """
+    return 'testuser', 'testuser'
+
+
+def get_configurations():
+    """
+    A simple example that connects to BAM and retrieves a list of configurations
+    :return: List of BAM configurations
+    """
+    res = {}
+    res['username'] = g.user.get_username()
+    configs = []
+    for c in g.user.get_api().get_configurations():
+        configs.append({'id': c.get_id(), 'name': c.get_name()})
+    res['configs'] = configs
+    return jsonify(res)
 
 #
 # Example rest GET call
@@ -34,20 +54,35 @@ from main_app import app
 def rest_get_test():
     # are we authenticated?
     # yes, build a simple JSON response
-    res = {}
-    res['username'] = g.user.get_username()
-    configs = []
-    for c in g.user.get_api().get_configurations():
-        configs.append({'id': c.get_id(), 'name': c.get_name()})
-    res['configs'] = configs
-    return jsonify(res)
+    return get_configurations()
 
 
 #
 # Example rest PUT call
 #
-@route(app, '/rest_example/put_test')
+@route(app, '/rest_example/put_test', methods=['PUT'])
 @util.rest_workflow_permission_required('rest_example')
 @util.rest_exception_catcher
 def rest_put_test():
     return jsonify({'result': request.get_json()['foo'] + ' plus some extra'})
+
+
+#
+# Autologin Example
+#
+@route(app, '/rest_example/list_configurations', methods=['GET', 'POST'])
+@util.autologin(autologin_func)
+@util.rest_exception_catcher
+def rest_test_autologin():
+    # in this case it is always executed
+    return get_configurations()
+
+
+#
+# Example of an endpoint with no authentication required
+#
+@route(app, '/rest_example/no_auth_test')
+@util.rest_exception_catcher
+def rest_test_no_auth():
+    # Permission check is not applicable here
+    return jsonify({'answer': 42})

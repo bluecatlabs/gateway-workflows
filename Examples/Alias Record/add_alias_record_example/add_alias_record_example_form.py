@@ -1,4 +1,4 @@
-# Copyright 2017 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2018 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,16 +13,18 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 07-12-17
-# Gateway Version: 17.12.1
+# Date: 16-02-18
+# Gateway Version: 18.2.1
 # Description: Example Gateway workflows
 
-from wtforms import SubmitField, RadioField
+from wtforms import SubmitField
 from bluecat.wtform_fields import Configuration, View, Zone, CustomStringField
 from bluecat.wtform_extensions import GatewayForm
 
 
 class GenericFormTemplate(GatewayForm):
+    """ Form for add_alias_record_example workflow.
+    """
     # When updating the form, remember to make the corresponding changes to the workflow pages
     workflow_name = 'add_alias_record_example'
     workflow_permission = 'add_alias_record_example_page'
@@ -47,7 +49,7 @@ class GenericFormTemplate(GatewayForm):
         one_off=True,
         on_complete=['call_zone', 'call_linked_record_zone'],
         enable_dependencies={'on_complete': ['zone', 'linked_record_zone', 'submit']},
-        disable_dependencies={'on_change': ['zone', 'linked_record_zone', 'submit', 'select_one']},
+        disable_dependencies={'on_change': ['zone', 'linked_record_zone', 'select_one', 'submit']},
         should_cascade_disable_on_change=True,
         clear_dependencies={'on_change': ['zone', 'linked_record_zone', 'select_one']},
         should_cascade_clear_on_change=True
@@ -58,7 +60,7 @@ class GenericFormTemplate(GatewayForm):
         permissions=workflow_permission,
         label='Alias Zone',
         required=True,
-        enable_on_complete=['name'],
+        enable_dependencies={'on_complete': ['name']},
         disable_dependencies={'on_change': ['name']},
         should_cascade_disable_on_change=True,
         clear_dependencies={'on_change': ['name']},
@@ -77,7 +79,7 @@ class GenericFormTemplate(GatewayForm):
         permissions=workflow_permission,
         label='Linked Record Zone',
         required=True,
-        enable_on_complete=['host_record'],
+        enable_dependencies={'on_complete': ['host_record']},
         disable_dependencies={'on_change': ['host_record']},
         should_cascade_disable_on_change=True,
         clear_dependencies={'on_change': ['host_record']},

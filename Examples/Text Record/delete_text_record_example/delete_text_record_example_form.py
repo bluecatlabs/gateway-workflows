@@ -1,4 +1,4 @@
-# Copyright 2017 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2018 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,13 +13,13 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 07-12-17
-# Gateway Version: 17.12.1
+# Date: 16-02-18
+# Gateway Version: 18.2.1
 # Description: Example Gateway workflows
 
 from wtforms import SubmitField
-from bluecat.wtform_fields import Configuration, View, Zone, CustomStringField, CustomSearchButtonField, \
-    FilteredSelectField, PlainHTML
+from bluecat.wtform_fields import Configuration, View, Zone, CustomStringField
+from bluecat.wtform_fields import CustomSearchButtonField, FilteredSelectField
 from bluecat.wtform_extensions import GatewayForm
 from bluecat.server_endpoints import get_text_records_endpoint
 
@@ -87,7 +87,7 @@ class GenericFormTemplate(GatewayForm):
             'name': 'text_record'
         },
         server_side_method=get_text_records_endpoint,
-        message_field='search_message',
+        display_message=True,
         on_complete=['populate_txt_list'],
         enable_dependencies={'on_complete': ['txt_filter', 'txt_list']},
         disable_dependencies={'on_change': ['txt_filter', 'txt_list'],
@@ -97,8 +97,6 @@ class GenericFormTemplate(GatewayForm):
         should_cascade_disable_on_change=True,
         should_cascade_clear_on_change=True
     )
-
-    plain_0 = PlainHTML('<div id="search_message"></div>')
 
     txt_filter = CustomStringField(
         label='Filter',

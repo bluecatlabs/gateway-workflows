@@ -1,4 +1,4 @@
-// Copyright 2017 BlueCat Networks (USA) Inc. and its affiliates
+// Copyright 2018 BlueCat Networks (USA) Inc. and its affiliates
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 07-12-17
-// Gateway Version: 17.12.1
+// Date: 16-02-18
+// Gateway Version: 18.2.1
 // Description: Example Gateway workflows
 
 // JavaScript for your page goes in here.
