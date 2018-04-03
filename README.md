@@ -30,9 +30,9 @@ When contributing to the community examples please ensure that the code is of go
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Move your workflow into `Community/<your-workflow>`
 4. Create `<your-workflow>/README.md` explaining what the workflow does. Use the Template below.
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request
+5. Commit your changes: `git commit -am 'Add some feature'`
+6. Push to the branch: `git push origin my-new-feature`
+7. Submit a pull request
 
 #### Community Template
 When contributing a workflow ensure that it contains a `README.md` and that **each file** has the following notice header:
