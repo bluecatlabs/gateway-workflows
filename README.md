@@ -67,9 +67,12 @@ The Gateway would be so much less without the following people. Thank you for co
 - Victor Fradkin
 - Xiao Dong
 - Nikhil Jangi
+- Steven Diao
+- Raymond Leong
 - David Cohen
 - Delme Herbert
 - Lana Litvak
+- Rohina Dhunjeebhoy
 
 #### Professional Services:
 - Bill Morton
@@ -80,6 +83,7 @@ The Gateway would be so much less without the following people. Thank you for co
 - Glenn McAllister
 - Robert Barnhardt™
 - Ekim Maurer
+- Roy Reshef
 
 ## License
 
