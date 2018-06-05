@@ -13,10 +13,14 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 16-02-18
-# Gateway Version: 18.2.1
+# Date: 04-05-18
+# Gateway Version: 18.6.1
 # Description: Example Gateway workflows
 
+
+"""
+Component logic
+"""
 from flask import g
 from flask import jsonify
 from flask import request
@@ -32,6 +36,7 @@ from bluecat.server_endpoints import get_result_template
 
 def raw_table_data(*args, **kwargs):
     """Returns table formatted data for display in the TableField component"""
+    # pylint: disable=unused-argument
     return {
         "columns": [
             {"title": "id"},
@@ -83,6 +88,7 @@ def raw_entities_to_table_data(entities):
     :param entities: Response object containing entities from a direct API call
     :param return: Dictionary of data parsable by the UI Table Componenent
     """
+    # pylint: disable=redefined-outer-name
     data = {'columns': [{'title': 'id'},
                         {'title': 'name'},
                         {'title': 'type'},],
@@ -96,6 +102,7 @@ def raw_entities_to_table_data(entities):
 
 def find_objects_by_type_endpoint(workflow_name, element_id, permissions, result_decorator=None):
     """Endpoint for retrieving the selected objects"""
+    # pylint: disable=unused-argument
     endpoint = 'find_objects_by_type'
     function_endpoint = '%sfind_objects_by_type' % workflow_name
     view_function = app.view_functions.get(function_endpoint)
@@ -109,8 +116,10 @@ def find_objects_by_type_endpoint(workflow_name, element_id, permissions, result
     @route(app, '/%s/%s' % (workflow_name, endpoint), methods=['POST'])
     @rest_workflow_permission_required(permissions)
     @rest_exception_catcher
+    # pylint: disable=unused-variable
     def find_objects_by_type():
         """Retrieve a list of properties for the table"""
+        # pylint: disable=broad-except
         try:
             keyword = request.form['keyword']
             object_type = request.form['object_type']
@@ -141,6 +150,8 @@ def find_objects_by_type_endpoint(workflow_name, element_id, permissions, result
 
 
 def server_table_data_endpoint(workflow_name, element_id, permissions, result_decorator=None):
+    """Endpoint for server table data"""
+    # pylint: disable=unused-argument
     endpoint = 'server_table_data'
     function_endpoint = '%sserver_table_data' % workflow_name
     view_function = app.view_functions.get(function_endpoint)
@@ -154,13 +165,15 @@ def server_table_data_endpoint(workflow_name, element_id, permissions, result_de
     @route(app, '/%s/%s' % (workflow_name, endpoint), methods=['POST'])
     @rest_workflow_permission_required(permissions)
     @rest_exception_catcher
+    # pylint: disable=unused-variable
     def server_table_data():
+        """Retrieve server side table data"""
         keyword = request.form['keyword']
         object_type_id = request.form['object_type']
 
         response = get_result_template()
         response['status'] = 'SUCCESS'
-        response['message'] =  'Retrieved server side table data'
+        response['message'] = 'Retrieved server side table data'
         response['data'] = {
             'table_field': {
                 'searching': False,

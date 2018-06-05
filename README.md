@@ -63,15 +63,12 @@ Description: Brief description of what the workflow does and the expected behavi
 The Gateway would be so much less without the following people. Thank you for contributing your time to making this project a success.
 
 #### The Team:
-- Vadim Farafontov
 - Victor Fradkin
 - Xiao Dong
 - Nikhil Jangi
 - Steven Diao
 - Raymond Leong
-- David Cohen
 - Delme Herbert
-- Lana Litvak
 - Rohina Dhunjeebhoy
 
 #### Professional Services:
@@ -84,6 +81,7 @@ The Gateway would be so much less without the following people. Thank you for co
 - Robert Barnhardt™
 - Ekim Maurer
 - Roy Reshef
+- Vadim Farafontov
 
 ## License
 

@@ -13,16 +13,21 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 16-02-18
-# Gateway Version: 18.2.1
+# Date: 04-05-18
+# Gateway Version: 18.6.1
 # Description: Example Gateway workflows
 
+
+"""
+Table component form
+"""
 from bluecat.wtform_extensions import GatewayForm
 from bluecat.wtform_fields import CustomStringField
 from bluecat.wtform_fields import CustomSearchButtonField
 from bluecat.wtform_fields import CustomSelectField
 from bluecat.wtform_fields import TableField
 
+# pylint: disable=relative-import
 from component_logic import find_objects_by_type_endpoint
 from component_logic import server_table_data_endpoint
 from component_logic import get_object_types
@@ -30,6 +35,8 @@ from component_logic import raw_table_data
 
 
 class GenericFormTemplate(GatewayForm):
+    """ Form template to generate html and javascript for page
+    """
     workflow_name = 'table_component'
     workflow_permission = 'table_component_page'
 

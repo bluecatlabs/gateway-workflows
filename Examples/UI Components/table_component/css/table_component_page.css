@@ -13,8 +13,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 By: BlueCat Networks
-Date: 16-02-18
-Gateway Version: 18.2.1
+Date: 04-05-18
+Gateway Version: 18.6.1
 Description: Example Gateway workflows */
 
 /* Custom styles for your page go in here. */
+div#search_message_field{
+  padding-left: 100px;
+  padding-top: 10px;
+}

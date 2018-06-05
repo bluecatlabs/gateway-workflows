@@ -13,15 +13,19 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 16-02-18
-# Gateway Version: 18.2.1
+# Date: 04-05-18
+# Gateway Version: 18.6.1
 # Description: Example Gateway workflows
 
+
+"""
+Add text record page
+"""
 # Various Flask framework items.
 import os
 import sys
 
-from flask import url_for, redirect, render_template, flash, g, request, jsonify
+from flask import url_for, redirect, render_template, flash, g, request
 
 from bluecat import route, util
 import config.default_config as config
@@ -30,6 +34,11 @@ from .add_text_record_example_form import GenericFormTemplate
 
 
 def module_path():
+    """
+    Get module path.
+
+    :return:
+    """
     encoding = sys.getfilesystemencoding()
     return os.path.dirname(os.path.abspath(unicode(__file__, encoding)))
 
@@ -41,6 +50,11 @@ def module_path():
 @util.workflow_permission_required('add_text_record_example_page')
 @util.exception_catcher
 def add_text_record_add_text_record_page():
+    """
+    Renders the form the user would first see when selecting the workflow.
+
+    :return:
+    """
     form = GenericFormTemplate()
     return render_template(
         'add_text_record_example_page.html',
@@ -54,6 +68,12 @@ def add_text_record_add_text_record_page():
 @util.workflow_permission_required('add_text_record_example_page')
 @util.exception_catcher
 def add_text_record_add_text_record_page_form():
+    """
+    Processes the final form after the user has input all the required data.
+
+    :return:
+    """
+    # pylint: disable=broad-except
     form = GenericFormTemplate()
     # Remove this line if your workflow does not need to select a configuration
     form.configuration.choices = util.get_configurations(default_val=True)

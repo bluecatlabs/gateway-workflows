@@ -13,18 +13,26 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 16-02-18
-# Gateway Version: 18.2.1
+# Date: 04-05-18
+# Gateway Version: 18.6.1
 # Description: Example Gateway workflows
 
+
+"""
+Update host record form
+"""
 from wtforms import SubmitField
-from bluecat.wtform_fields import Configuration, View, Zone, HostRecord, CustomStringField, PlainHTML
+from bluecat.wtform_fields import Configuration, View, Zone, HostRecord, CustomStringField, PlainHTML, CustomBooleanField
 from bluecat.server_endpoints import get_host_records_endpoint
 from bluecat.wtform_extensions import GatewayForm
 
 
 class GenericFormTemplate(GatewayForm):
-    # When updating the form, remember to make the corresponding changes to the workflow pages
+    """ Form to generate HTML and Javascript for the update_host_record_example workflow
+
+    Note:
+        When updating the form, remember to make the corresponding changes to the workflow pages
+    """
     workflow_name = 'update_host_record_example'
     workflow_permission = 'update_host_record_example_page'
     configuration = Configuration(
@@ -84,8 +92,8 @@ class GenericFormTemplate(GatewayForm):
         server_outputs={'on_complete': {'name': 'name', 'addresses': 'ip4_address'}},
         server_side_output_method=get_host_records_endpoint,
         clear_below_on_change=False,
-        enable_dependencies={'on_complete': ['submit', 'name', 'ip4_address']},
-        disable_dependencies={'on_change': ['submit', 'name', 'ip4_address']},
+        enable_dependencies={'on_complete': ['submit', 'name', 'ip4_address', 'deploy_now']},
+        disable_dependencies={'on_change': ['submit', 'name', 'ip4_address', 'deploy_now']},
         should_cascade_disable_on_change=True,
     )
 
@@ -97,8 +105,10 @@ class GenericFormTemplate(GatewayForm):
     )
 
     ip4_address = CustomStringField(
-        label='IP4 Address (multiple IP4 addresses must be seperated by a comma)',
+        label='IPv4 Address (multiple IPv4 addresses must be seperated by a comma)',
         required=True
     )
+
+    deploy_now = CustomBooleanField(label='Deploy Now')
 
     submit = SubmitField(label='Update')

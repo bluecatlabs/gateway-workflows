@@ -13,10 +13,14 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 16-02-18
-# Gateway Version: 18.2.1
+# Date: 04-05-18
+# Gateway Version: 18.6.1
 # Description: Example Gateway workflows
 
+
+"""
+Update alias record form
+"""
 from wtforms import SubmitField
 from bluecat.wtform_fields import Configuration, View, Zone, CustomStringField, AliasRecord
 from bluecat.server_endpoints import get_alias_records_endpoint
@@ -24,7 +28,11 @@ from bluecat.wtform_extensions import GatewayForm
 
 
 class GenericFormTemplate(GatewayForm):
-    # When updating the form, remember to make the corresponding changes to the workflow pages
+    """ Form to generate HTML and Javascript for the update_alias_record_example workflow
+
+    Note:
+        When updating the form, remember to make the corresponding changes to the workflow pages
+    """
     workflow_name = 'update_alias_record_example'
     workflow_permission = 'update_alias_record_example_page'
     configuration = Configuration(

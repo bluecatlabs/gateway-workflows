@@ -13,28 +13,33 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 16-02-18
-# Gateway Version: 18.2.1
+# Date: 04-05-18
+# Gateway Version: 18.6.1
 # Description: Example Gateway workflows
 
+
+"""
+Update IPv4 address page
+"""
 # Various Flask framework items.
 import os
 import sys
-import importlib
 
 from flask import url_for, redirect, render_template, flash, g, request
 
 from bluecat import route, util
+from bluecat.api_exception import APIException
 import config.default_config as config
 from main_app import app
 from .update_ip4_address_example_form import GenericFormTemplate
-from bluecat.api_exception import APIException
-
-# Import the common; this type of import is requried due to a space in the name
-ip4_example_common = importlib.import_module("bluecat_portal.workflows.Examples.IPv4 Address.ip4_example_common")
 
 
 def module_path():
+    """
+    Get module path.
+
+    :return:
+    """
     encoding = sys.getfilesystemencoding()
     return os.path.dirname(os.path.abspath(unicode(__file__, encoding)))
 
@@ -46,14 +51,29 @@ def module_path():
 @util.workflow_permission_required('update_ip4_address_example_page')
 @util.exception_catcher
 def update_ip4_address_example_update_ip4_address_example_page():
+    """
+    Renders the form the user would first see when selecting the workflow.
+
+    :return:
+    """
     form = GenericFormTemplate()
-    return render_template('update_ip4_address_example_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options())
+    return render_template(
+        'update_ip4_address_example_page.html',
+        form=form,
+        text=util.get_text(module_path(), config.language),
+        options=g.user.get_options()
+    )
 
 
 @route(app, '/update_ip4_address_example/form', methods=['POST'])
 @util.workflow_permission_required('update_ip4_address_example_page')
 @util.exception_catcher
 def update_ip4_address_example_update_ip4_address_example_page_form():
+    """
+    Processes the final form after the user has input all the required data.
+
+    :return:
+    """
     form = GenericFormTemplate()
     # Remove this line if your workflow does not need to select a configuration
     form.configuration.choices = util.get_configurations(default_val=True)

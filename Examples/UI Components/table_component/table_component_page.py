@@ -13,26 +13,33 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 16-02-18
-# Gateway Version: 18.2.1
+# Date: 04-05-18
+# Gateway Version: 18.6.1
 # Description: Example Gateway workflows
 
+
+"""
+Table component page
+"""
 # Various Flask framework items.
 import os
 import sys
-import codecs
 
-from flask import url_for, redirect, render_template, flash, g
+from flask import render_template, g
 
 from bluecat import route
 from bluecat import util
-from bluecat.server_endpoints import get_result_template
 
 import config.default_config as config
 from .table_component_form import GenericFormTemplate
 from main_app import app
 
 def module_path():
+    """
+    Get module path.
+
+    :return:
+    """
     encoding = sys.getfilesystemencoding()
     return os.path.dirname(os.path.abspath(unicode(__file__, encoding)))
 
@@ -43,6 +50,11 @@ def module_path():
 @util.workflow_permission_required('table_component_page')
 @util.exception_catcher
 def table_component_table_component_page():
+    """
+    Renders the form the user would first see when selecting the workflow.
+
+    :return:
+    """
     form = GenericFormTemplate()
     return render_template(
         'table_component_page.html',
@@ -50,4 +62,3 @@ def table_component_table_component_page():
         text=util.get_text(module_path(), config.language),
         options=g.user.get_options(),
     )
-

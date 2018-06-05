@@ -13,16 +13,26 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 16-02-18
-# Gateway Version: 18.2.1
+# Date: 04-05-18
+# Gateway Version: 18.6.1
 # Description: Example Gateway workflows
 
+
+"""
+Add host record form
+"""
 from wtforms import SubmitField
-from bluecat.wtform_fields import Configuration, View, Zone, IP4Address, CustomStringField
+from bluecat.wtform_fields import Configuration, View, Zone, IP4Address, CustomStringField, CustomBooleanField
 from bluecat.wtform_extensions import GatewayForm
 
 
 def filter_reserved(res):
+    """
+    Filter reserved IP.
+
+    :param res:
+    :return:
+    """
     try:
         if res['data']['state'] == u'RESERVED':
             res['status'] = 'FAIL'
@@ -33,7 +43,11 @@ def filter_reserved(res):
 
 
 class GenericFormTemplate(GatewayForm):
-    # When updating the form, remember to make the corresponding changes to the workflow pages
+    """ Form to generate HTML and Javascript for the add_host_record_example workflow
+
+    Note:
+        When updating the form, remember to make the corresponding changes to the workflow pages
+    """
     workflow_name = 'add_host_record_example'
     workflow_permission = 'add_host_record_example_page'
     configuration = Configuration(
@@ -86,8 +100,8 @@ class GenericFormTemplate(GatewayForm):
         inputs={'configuration': 'configuration', 'address': 'ip4_address'},
         result_decorator=filter_reserved,
         clear_below_on_change=False,
-        enable_dependencies={'on_complete': ['hostname', 'submit']},
-        disable_dependencies={'on_change': ['hostname', 'submit']},
+        enable_dependencies={'on_complete': ['hostname', 'submit', 'deploy_now']},
+        disable_dependencies={'on_change': ['hostname', 'submit', 'deploy_now']},
         should_cascade_disable_on_change=True
     )
 
@@ -95,5 +109,7 @@ class GenericFormTemplate(GatewayForm):
         label='Hostname',
         required=True
     )
+
+    deploy_now = CustomBooleanField(label='Deploy Now')
 
     submit = SubmitField(label='Submit')

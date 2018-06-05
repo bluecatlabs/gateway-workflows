@@ -13,23 +13,34 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 16-02-18
-# Gateway Version: 18.2.1
+# Date: 04-05-18
+# Gateway Version: 18.6.1
 # Description: Example Gateway workflows
 
+
+"""
+Add host record page
+"""
 # Various Flask framework items.
 import os
 import sys
 
-from flask import url_for, redirect, render_template, flash, g, request
+from flask import url_for, redirect, render_template, flash, g, request, jsonify
 
 from bluecat import route, util
+from bluecat.constants import SelectiveDeploymentStatus
+from bluecat.server_endpoints import get_result_template, empty_decorator
 import config.default_config as config
 from main_app import app
 from .add_host_record_example_form import GenericFormTemplate
 
 
 def module_path():
+    """
+    Get module path.
+
+    :return:
+    """
     encoding = sys.getfilesystemencoding()
     return os.path.dirname(os.path.abspath(unicode(__file__, encoding)))
 
@@ -40,16 +51,31 @@ def module_path():
 @util.workflow_permission_required('add_host_record_example_page')
 @util.exception_catcher
 def add_host_record_example_add_host_record_example_page():
+    """
+    Renders the form the user would first see when selecting the workflow.
+
+    :return:
+    """
     form = GenericFormTemplate()
     # Remove this line if your workflow does not need to select a configuration
-    return render_template('add_host_record_example_page.html', form=form, text=util.get_text(module_path(),
-                           config.language), options=g.user.get_options())
+    return render_template(
+        'add_host_record_example_page.html',
+        form=form,
+        text=util.get_text(module_path(), config.language),
+        options=g.user.get_options()
+    )
 
 
 @route(app, '/add_host_record_example/form', methods=['POST'])
 @util.workflow_permission_required('add_host_record_example_page')
 @util.exception_catcher
 def add_host_record_example_add_host_record_example_page_form():
+    """
+    Processes the final form after the user has input all the required data.
+
+    :return:
+    """
+    # pylint: disable=broad-except
     form = GenericFormTemplate()
     form.configuration.choices = util.get_configurations(default_val=True)
 
@@ -71,6 +97,16 @@ def add_host_record_example_add_host_record_example_page_form():
                                ' added with Object ID: ' + util.safe_str(host_record.get_id()))
             flash('Success - Host (A) Record ' + host_record.get_property('absoluteName') + ' added with Object ID: ' +
                   util.safe_str(host_record.get_id()), 'succeed')
+
+            # Perform Selective Deployment (RELATED Scope) on host record if checkbox is checked
+            if form.deploy_now.data:
+                entity_id_list = [host_record.get_id()]
+                deploy_token = g.user.get_api().selective_deploy(entity_id_list)
+                return render_template('add_host_record_example_page.html',
+                                       form=form,
+                                       status_token=deploy_token,
+                                       text=util.get_text(module_path(), config.language),
+                                       options=g.user.get_options())
             return redirect(url_for('add_host_record_exampleadd_host_record_example_add_host_record_example_page'))
         except Exception as e:
             flash(util.safe_str(e))
@@ -88,4 +124,45 @@ def add_host_record_example_add_host_record_example_page_form():
                                options=g.user.get_options())
 
 
+@route(app, '/add_host_record_example/get_deploy_status', methods=['POST'])
+@util.rest_workflow_permission_required('add_host_record_example_page')
+@util.rest_exception_catcher
+def get_deploy_status():
+    """
+    Retrieves and updates deployment task status
+    :return:
+    """
+    result = get_result_template()
+    deploy_token = request.form['deploy_token']
+    try:
+        task_status = g.user.get_api().get_deployment_task_status(deploy_token)
+        result['status'] = task_status['status']
 
+        if task_status['status'] == SelectiveDeploymentStatus.FINISHED:
+            deploy_errors = task_status['response']['errors']
+
+            # Deployment failed
+            if deploy_errors:
+                result['data'] = "FAILED"
+                result['message'] = deploy_errors
+                raise Exception('Deployment Error: ' + str(deploy_errors))
+
+            # Deployment succeeded
+            elif task_status['response']['views']:
+                task_result = task_status['response']['views'][0]['zones'][0]['records'][0]['result']
+                result['data'] = task_result
+
+            # Deployment finished with no changes
+            else:
+                result['data'] = 'FINISHED'
+
+            g.user.logger.info('Deployment Task Status: ' + str(task_status))
+
+        # Deployment queued/started
+        else:
+            result['data'] = task_status['status']
+    # pylint: disable=broad-except
+    except Exception as e:
+        g.user.logger.warning(e)
+
+    return jsonify(empty_decorator(result))

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 16-02-18
-// Gateway Version: 18.2.1
+// Date: 04-05-18
+// Gateway Version: 18.6.1
 // Description: Example Gateway workflows
 
 // JavaScript for your page goes in here.

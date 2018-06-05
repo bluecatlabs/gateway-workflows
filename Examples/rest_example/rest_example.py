@@ -13,10 +13,14 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 16-02-18
-# Gateway Version: 18.2.1
+# Date: 04-05-18
+# Gateway Version: 18.6.1
 # Description: Example Gateway workflows
 
+
+"""
+REST example workflow
+"""
 from flask import request, g, jsonify
 
 from bluecat import route, util
@@ -52,6 +56,11 @@ def get_configurations():
 @util.rest_workflow_permission_required('rest_example')
 @util.rest_exception_catcher
 def rest_get_test():
+    """
+    GET call
+
+    :return:
+    """
     # are we authenticated?
     # yes, build a simple JSON response
     return get_configurations()
@@ -64,6 +73,11 @@ def rest_get_test():
 @util.rest_workflow_permission_required('rest_example')
 @util.rest_exception_catcher
 def rest_put_test():
+    """
+    PUT call
+
+    :return:
+    """
     return jsonify({'result': request.get_json()['foo'] + ' plus some extra'})
 
 
@@ -74,6 +88,11 @@ def rest_put_test():
 @util.autologin(autologin_func)
 @util.rest_exception_catcher
 def rest_test_autologin():
+    """
+    Autologin
+
+    :return:
+    """
     # in this case it is always executed
     return get_configurations()
 
@@ -84,5 +103,10 @@ def rest_test_autologin():
 @route(app, '/rest_example/no_auth_test')
 @util.rest_exception_catcher
 def rest_test_no_auth():
+    """
+    Endpoint with no authentication
+
+    :return:
+    """
     # Permission check is not applicable here
     return jsonify({'answer': 42})

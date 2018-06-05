@@ -13,16 +13,26 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 16-02-18
-# Gateway Version: 18.2.1
+# Date: 04-05-18
+# Gateway Version: 18.6.1
 # Description: Example Gateway workflows
 
+
+"""
+Add static IPv4 address form
+"""
 from wtforms import SubmitField
 from bluecat.wtform_fields import Configuration, View, Zone, IP4Address, CustomStringField
 from bluecat.wtform_extensions import GatewayForm
 
 
 def filter_unallocated(res):
+    """
+    Filter unallocated IP.
+
+    :param res:
+    :return:
+    """
     if res['status'] == 'SUCCESS' and res['data']['state'] != u'UNALLOCATED':
         res['status'] = 'FAIL'
         res['message'] = 'IP status must be unallocated.'
@@ -30,7 +40,11 @@ def filter_unallocated(res):
 
 
 class GenericFormTemplate(GatewayForm):
-    # When updating the form, remember to make the corresponding changes to the workflow pages
+    """ Form to generate HTML and Javascript for the add_static_ip4_address_example workflow
+
+    Note:
+        When updating the form, remember to make the corresponding changes to the workflow pages
+    """
     workflow_name = 'add_static_ip4_address_example'
     workflow_permission = 'add_static_ip4_address_example_page'
     configuration = Configuration(
