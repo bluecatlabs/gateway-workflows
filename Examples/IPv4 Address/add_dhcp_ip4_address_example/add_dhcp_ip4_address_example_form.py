@@ -33,7 +33,7 @@ def filter_unallocated(res):
     :param res:
     :return:
     """
-    if res['status'] == 'SUCCESS' and res['data']['state'] != u'UNALLOCATED':
+    if res['status'] == 'SUCCESS' and res['data']['state'] != 'UNALLOCATED':
         res['status'] = 'FAIL'
         res['message'] = 'IP status must be unallocated.'
     return res

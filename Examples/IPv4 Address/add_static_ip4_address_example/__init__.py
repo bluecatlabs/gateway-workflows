@@ -24,8 +24,8 @@ type = 'ui'
 sub_pages = [
     {
         'name'        : 'add_static_ip4_address_example_page',
-        'title'       : u"Add Static IPv4 Address Example",
+        'title'       : 'Add Static IPv4 Address Example',
         'endpoint'    : 'add_static_ip4_address_example/add_static_ip4_address_example_endpoint',
-        'description' : u"Add Static IP4 Address Example"
+        'description' : 'Add Static IP4 Address Example'
     },
 ]

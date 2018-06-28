@@ -22,7 +22,6 @@
 """this file is responsible to selective deploying certain dns records
 and retrieving the result"""
 import os
-import sys
 
 from flask import jsonify
 
@@ -36,15 +35,14 @@ from bluecat.constants import SelectiveDeploymentStatus
 import config.default_config as config
 from main_app import app
 # pylint: disable=relative-import
-from component_logic import raw_entities_to_table_data
+from .component_logic import raw_entities_to_table_data
 
 from .selective_deployment_form import GenericFormTemplate
 
 
 def module_path():
     """module path"""
-    encoding = sys.getfilesystemencoding()
-    return os.path.dirname(os.path.abspath(unicode(__file__, encoding)))
+    return os.path.dirname(os.path.abspath(str(__file__)))
 
 
 # The workflow name must be the first part of any endpoints defined in this file.

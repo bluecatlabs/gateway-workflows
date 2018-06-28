@@ -59,8 +59,8 @@ def get_object_types(default_val=False):
         if default_val:
             result.append(('1', 'Please Select'))
 
-        for name, data in entity.Entity.__dict__.iteritems():
-            if not isinstance(data, basestring):
+        for name, data in entity.Entity.__dict__.items():
+            if not isinstance(data, str):
                 continue
             if '__' in name[:2]:
                 continue

@@ -25,8 +25,8 @@ type = 'ui'
 sub_pages = [
     {
         'name'        : 'selective_deployment_page',
-        'title'       : u"Selective Deployment Example",
+        'title'       : 'Selective Deployment Example',
         'endpoint'    : 'selective_deployment/selective_deployment_endpoint',
-        'description' : u"selective deployment"
+        'description' : 'selective deployment'
     },
 ]

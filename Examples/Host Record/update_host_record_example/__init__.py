@@ -24,8 +24,8 @@ type = 'ui'
 sub_pages = [
     {
         'name'        : 'update_host_record_example_page',
-        'title'       : u"Update Host Record Example",
+        'title'       : 'Update Host Record Example',
         'endpoint'    : 'update_host_record_example/update_host_record_example_endpoint',
-        'description' : u"Update Host Record Example"
+        'description' : 'Update Host Record Example'
     },
 ]

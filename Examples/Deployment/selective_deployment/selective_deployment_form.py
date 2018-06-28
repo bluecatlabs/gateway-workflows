@@ -25,8 +25,8 @@ from bluecat.wtform_fields import CustomSearchButtonField, CustomButtonField
 from bluecat.wtform_fields import TableField
 
 # pylint: disable=relative-import
-from component_logic import find_objects_by_type_endpoint
-from component_logic import raw_table_data
+from .component_logic import find_objects_by_type_endpoint
+from .component_logic import raw_table_data
 
 
 class GenericFormTemplate(GatewayForm):

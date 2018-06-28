@@ -24,8 +24,8 @@ type = 'ui'
 sub_pages = [
     {
         'name'        : 'delete_alias_record_example_page',
-        'title'       : u"Delete Alias Record Examples",
+        'title'       : 'Delete Alias Record Examples',
         'endpoint'    : 'delete_alias_record_example/delete_alias_record_example_endpoint',
-        'description' : u"Delete Alias Record Examples"
+        'description' : 'Delete Alias Record Examples'
     },
 ]

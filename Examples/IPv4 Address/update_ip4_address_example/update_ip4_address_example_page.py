@@ -23,7 +23,6 @@ Update IPv4 address page
 """
 # Various Flask framework items.
 import os
-import sys
 
 from flask import url_for, redirect, render_template, flash, g, request
 
@@ -40,8 +39,7 @@ def module_path():
 
     :return:
     """
-    encoding = sys.getfilesystemencoding()
-    return os.path.dirname(os.path.abspath(unicode(__file__, encoding)))
+    return os.path.dirname(os.path.abspath(str(__file__)))
 
 
 # The workflow name must be the first part of any endpoints defined in this file.

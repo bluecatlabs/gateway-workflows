@@ -24,8 +24,8 @@ type = 'ui'
 sub_pages = [
     {
         'name'        : 'delete_ip4_address_example_page',
-        'title'       : u"Delete IPv4 Address Example",
+        'title'       : 'Delete IPv4 Address Example',
         'endpoint'    : 'delete_ip4_address_example/delete_ip4_address_example_endpoint',
-        'description' : u"Delete IP4 Address Example"
+        'description' : 'Delete IP4 Address Example'
     },
 ]

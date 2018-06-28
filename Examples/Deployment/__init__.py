@@ -16,4 +16,3 @@
 # Date: 04-05-18
 # Gateway Version: 18.6.1
 # Description: Example Gateway workflows
-

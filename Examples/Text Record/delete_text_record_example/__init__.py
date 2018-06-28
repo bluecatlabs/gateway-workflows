@@ -24,8 +24,8 @@ type = 'ui'
 sub_pages = [
     {
         'name'        : 'delete_text_record_example_page',
-        'title'       : u"Delete Text Record Example",
+        'title'       : 'Delete Text Record Example',
         'endpoint'    : 'delete_text_record_example/delete_text_record_endpoint',
-        'description' : u"Delete Text Record Example"
+        'description' : 'Delete Text Record Example'
     },
 ]

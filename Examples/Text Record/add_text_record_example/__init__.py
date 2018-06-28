@@ -24,8 +24,8 @@ type = 'ui'
 sub_pages = [
     {
         'name'        : 'add_text_record_example_page',
-        'title'       : u"Add Text Record Example",
+        'title'       : 'Add Text Record Example',
         'endpoint'    : 'add_text_record_example/add_text_record_endpoint',
-        'description' : u"Add Text Record Example"
+        'description' : 'Add Text Record Example'
     },
 ]

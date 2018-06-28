@@ -34,7 +34,7 @@ def filter_reserved(res):
     :return:
     """
     try:
-        if res['data']['state'] == u'RESERVED':
+        if res['data']['state'] == 'RESERVED':
             res['status'] = 'FAIL'
             res['message'] = 'Host records cannot be added if ip address is reserved.'
         return res

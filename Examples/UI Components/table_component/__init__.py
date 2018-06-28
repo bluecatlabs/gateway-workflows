@@ -24,8 +24,8 @@ type = 'ui'
 sub_pages = [
     {
         'name'        : 'table_component_page',
-        'title'       : u'UI Table Component',
+        'title'       : 'UI Table Component',
         'endpoint'    : 'table_component/table_component_endpoint',
-        'description' : u'Search through a configuration object for any type of child subobject'
+        'description' : 'Search through a configuration object for any type of child subobject'
     },
 ]

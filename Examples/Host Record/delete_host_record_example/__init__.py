@@ -24,8 +24,8 @@ type = 'ui'
 sub_pages = [
     {
         'name'        : 'delete_host_record_example_page',
-        'title'       : u"Delete Host Record Example",
+        'title'       : 'Delete Host Record Example',
         'endpoint'    : 'delete_host_record_example/delete_host_record_example_endpoint',
-        'description' : u"Delete Host Record Example"
+        'description' : 'Delete Host Record Example'
     },
 ]
