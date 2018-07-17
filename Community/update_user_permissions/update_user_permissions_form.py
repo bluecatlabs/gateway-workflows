@@ -43,7 +43,6 @@ class GenericFormTemplate(GatewayForm):
         permissions=workflow_permission,
         label='Gateway Group',
         required=True,
-        choices=[('admin', 'admin'), ('all', 'all')],
         enable_on_complete=['submit'],
         result_decorator=None
     )
