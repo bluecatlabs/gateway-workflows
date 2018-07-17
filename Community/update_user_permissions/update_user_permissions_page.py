@@ -24,6 +24,7 @@ from bluecat import route, util, entity
 import config.default_config as config
 from main_app import app
 from .update_user_permissions_form import GenericFormTemplate
+from .util_custom import get_udf_portal_groups
 
 #This will skip the user being updated
 access_type_not_update = 'GUI_AND_API'
@@ -40,6 +41,8 @@ def module_path():
 @util.exception_catcher
 def update_user_permissions_update_user_permissions_page():
     form = GenericFormTemplate()
+
+    form.gateway_groups.choices = get_udf_portal_groups()
 
     return render_template(
         'update_user_permissions_page.html',
