@@ -39,7 +39,6 @@ def get_udf_portal_groups():
     udfs = g.user.get_api()._api_client.service.getUserDefinedFields('User', "False")
     group_values = []
     for udf in udfs.item:
-        print udf['name']
         if udf['name'] == 'PortalGroup':
             for group_value in udf['predefinedValues'].split('|'):
                 if group_value != '':
