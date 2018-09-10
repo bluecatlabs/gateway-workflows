@@ -12,11 +12,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-By: Xiao Dong (xdong@bluecatnetworks.com)
-    Anshul Sharma (asharma@bluecatnetworks.com)
-Date: 06-09-2018
-Gateway Version: 18.9.1
-Description: This workflow will provide access to a REST based API for Gateway.
-             Once imported, documentation for the various end points available can
-             be viewed by navigating to /api/v1/. 
+  By: Xiao Dong (xdong@bluecatnetworks.com), Anshul Sharma (asharma@bluecatnetworks.com)  
+  Date: 06-09-2018  
+  Gateway Version: 18.9.1  
+  Description: This workflow will provide access to a REST based API for Gateway.
+               Once imported, documentation for the various end points available can
+               be viewed by navigating to /api/v1/. 
 
