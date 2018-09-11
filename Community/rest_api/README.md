@@ -16,6 +16,6 @@ limitations under the License.
   Date: 06-09-2018  
   Gateway Version: 18.9.1  
   Description: This workflow will provide access to a REST-based API for BlueCat Gateway.
-               Once imported, documentation for the various end points available can
+               Once imported and permissioned, documentation for the various available endpoints can
                be viewed by navigating to /api/v1/. 
 
