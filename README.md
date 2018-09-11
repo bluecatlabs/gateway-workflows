@@ -4,11 +4,11 @@ BlueCat Gateway™ is a Python-based web utility that leverages the BlueCat Addr
 BlueCat Gateway consists of a set of Python classes forming an API to Address Manager and BlueCat DNS/DHCP Server (BDDS) along with a customized Python Flask web framework for building custom user interfaces and REST endpoints. It can run on most Linux variants with the correct packages installed.
 
 ## Installation
-The workflows are ready to use; they just need to be placed into the `<bluecat_portal>/workflows` folder. The same can be done with the community examples.
+The workflows are ready to use; they just need to be placed into the `<bluecat_gateway>/workflows` folder. The same can be done with the community examples.
 
 This will copy over all of the Example workflows:
 
-`cp -r <gateway-example-repo>/Examples/* <bluecat_portal>/workflows/Examples/.`
+`cp -r <gateway-example-repo>/Examples/* <bluecat_gateway>/workflows/Examples/.`
 
 If only a specific set of workflows is required they can be copied into the workflows folder individually. However, ensure that there are `__init__.py` files present in your workflows folder structure leading up to the workflow itself. This is required by BlueCat Gateway in order to discover the workflow.
 
