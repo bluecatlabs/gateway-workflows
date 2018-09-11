@@ -1,7 +1,7 @@
-# BlueCat DNS Integrity Gateway Workflows
-The BlueCat DNS Integrity™ Gateway is a Python-based web utility that leverages the BlueCat Address Manager™ (BAM) API to allow you to create custom workflows for common tasks in order to maximize efficiency of enterprise DNS operations.
+# BlueCat Gateway Workflows
+The BlueCat Gateway™ is a Python-based web utility that leverages the BlueCat Address Manager™ (BAM) API to allow you to create custom workflows for common tasks in order to maximize efficiency of enterprise DNS operations.
 
-The DNS Integrity Gateway consists of a set of Python classes forming an API to Address Manager and BlueCat DNS/DHCP Server (BDDS) along with a customized Python Flask web framework for building custom user interfaces and REST endpoints. It can run on most Linux variants with the correct packages installed.
+BlueCat Gateway consists of a set of Python classes forming an API to Address Manager and BlueCat DNS/DHCP Server (BDDS) along with a customized Python Flask web framework for building custom user interfaces and REST endpoints. It can run on most Linux variants with the correct packages installed.
 
 ## Installation
 The workflows are ready to use; they just need to be placed into the `<bluecat_portal>/workflows` folder. The same can be done with the community examples.
@@ -10,17 +10,17 @@ This will copy over all of the Example workflows:
 
 `cp -r <gateway-example-repo>/Examples/* <bluecat_portal>/workflows/Examples/.`
 
-If only a specific set of workflows is required they can be copied into the workflows folder individually. However, ensure that there are `__init__.py` files present in your workflows folder structure leading up to the workflow itself. This is required by the Gateway in order to discover the workflow.
+If only a specific set of workflows is required they can be copied into the workflows folder individually. However, ensure that there are `__init__.py` files present in your workflows folder structure leading up to the workflow itself. This is required by BlueCat Gateway in order to discover the workflow.
 
 ## Usage
-Once the workflows have been copied over, just start the Gateway (portal). In order to use the added workflows the permissions have to be adjusted through the administrative permissions workflow. The workflows contained in the Examples folder are always up-to-date with the latest Gateway version. This is not the case for the community workflows. The contributing authors are required to specify the version of the Gateway for which the workflow was created or updated. While all community workflows will be reviewed, they are delivered "as is".
+Once the workflows have been copied over, just start the BlueCat Gateway container. In order to use the added workflows the permissions have to be adjusted through the administrative permissions workflow. The workflows contained in the Examples folder are always up-to-date with the latest BlueCat Gateway version. This is not the case for the Community workflows. The contributing authors are required to specify the version of BlueCat Gateway for which the workflow was created or updated. While all community workflows will be reviewed, they are delivered "as is".
 
 ## Contributions
-Contributing follows a review process: before a workflow is accepted it will be reviewed and then merged into the master branch. It will be the responsibility of the contributor to ensure that their workflow is supported for future releases of the Gateway.
+Contributing follows a review process: before a workflow is accepted it will be reviewed and then merged into the master branch. It will be the responsibility of the contributor to ensure that their workflow is supported for future releases of BlueCat Gateway.
 
 ## Standards
-When contributing to the community examples please ensure that the code is of good quality
-- The Gateway is written with the PEP8 standard in mind
+When contributing to the Community examples please ensure that the code is of good quality
+- BlueCat Gateway is written with the PEP8 standard in mind
 - Ensure that each function contains a docstring exaplining the purpose of the function, the input variables and, the return type
 - Use plenty of comments to describe what the function is doing
 - Use meaningfull variable and function names
@@ -60,7 +60,7 @@ Description: Brief description of what the workflow does and the expected behavi
 
 
 ## Credits
-The Gateway would be so much less without the following people. Thank you for contributing your time to making this project a success.
+BlueCat Gateway would be so much less without the following people. Thank you for contributing your time to making this project a success.
 
 #### The Team:
 - Victor Fradkin
