@@ -1,5 +1,5 @@
 # BlueCat Gateway Workflows
-The BlueCat Gateway™ is a Python-based web utility that leverages the BlueCat Address Manager™ (BAM) API to allow you to create custom workflows for common tasks in order to maximize efficiency of enterprise DNS operations.
+BlueCat Gateway™ is a Python-based web utility that leverages the BlueCat Address Manager™ (BAM) API to allow you to create custom workflows for common tasks in order to maximize efficiency of enterprise DNS operations.
 
 BlueCat Gateway consists of a set of Python classes forming an API to Address Manager and BlueCat DNS/DHCP Server (BDDS) along with a customized Python Flask web framework for building custom user interfaces and REST endpoints. It can run on most Linux variants with the correct packages installed.
 
