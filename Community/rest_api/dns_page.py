@@ -107,8 +107,13 @@ cname_parser.add_argument('linked_record', location="json", help='The name of th
 cname_patch_parser = cname_parser.copy()
 cname_patch_parser.remove_argument('absolute_name')
 
+zone_model = api.clone(
+    'zones',
+    entity_model
+)
+
 host_model = api.model(
-    'Host Record',
+    'host_records',
     {
         'absolute_name': fields.String(required=True, description='The FQDN of the host record'),
         'ip4_address':  fields.String(description='The IPv4 addresses associated with the host record'),
@@ -127,7 +132,7 @@ host_patch_model = api.model(
 )
 
 cname_model = api.model(
-    'CName Record',
+    'cname_records',
     {
         'absolute_name': fields.String(required=True, description='The FQDN of the CName record'),
         'linked_record':  fields.String(
