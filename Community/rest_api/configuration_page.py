@@ -40,7 +40,7 @@ entity_parser.add_argument(
 )
 
 entity_model = api.model(
-    'Entity',
+    'entities',
     {
         'name': fields.String(description='The name of the entity.'),
         'properties':  fields.String(

@@ -123,7 +123,7 @@ host_model = api.model(
 )
 
 host_patch_model = api.model(
-    'Host Record Update',
+    'host_records_patch',
     {
         'ip4_address':  fields.String(description='The IPv4 addresses associated with the host record'),
         'ttl':  fields.Integer(description='The TTL of the host record'),
@@ -145,7 +145,7 @@ cname_model = api.model(
 )
 
 cname_patch_model = api.model(
-    'CName Record Update',
+    'cname_records_patch',
     {
         'linked_record':  fields.String(description='The name of the record to which this alias will link'),
         'ttl':  fields.Integer(description='The TTL of the CName record'),
@@ -253,7 +253,7 @@ class ZoneCollection(Resource):
 
     @util.rest_workflow_permission_required('rest_page')
     @zone_ns.response(200, 'Zone created.', model=entity_return_model)
-    @zone_ns.expect(entity_model)
+    @zone_ns.expect(zone_model)
     def post(self, configuration, view, zone):
         """
         Create a zone or subzone belonging to default or provided Configuration and View plus Zone hierarchy.

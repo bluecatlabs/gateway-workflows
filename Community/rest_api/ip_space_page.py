@@ -50,7 +50,7 @@ ip4_network_config_block_ns = api.namespace(
 )
 
 network_patch_model = api.model(
-    'Host Record Update',
+    'ipv4_networks_patch',
     {
         'name':  fields.String(description='The name associated with the IP4 Network.'),
         'properties':  fields.String(description='The properties of the host record', default='attribute=value|'),
