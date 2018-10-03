@@ -40,13 +40,18 @@ entity_parser.add_argument(
 )
 
 entity_model = api.model(
-    'Entity Parameters',
+    'entities',
     {
         'name': fields.String(description='The name of the entity.'),
         'properties':  fields.String(
             description='The properties of the entity in the following format:key=value|key=value|'
         ),
     },
+)
+
+configuration_model = api.clone(
+    'configurations',
+    entity_model
 )
 
 entity_return_model = api.model(
@@ -78,7 +83,7 @@ class ConfigurationCollection(Resource):
         return jsonify(result)
 
     @util.rest_workflow_permission_required('rest_page')
-    @config_ns.expect(entity_parser)
+    @config_ns.expect(configuration_model)
     @config_ns.response(422, 'Error in POST data')
     @config_ns.response(409, 'Configuration already exists')
     def post(self):

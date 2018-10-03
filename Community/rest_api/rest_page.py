@@ -64,9 +64,25 @@ class APIs(Resource):
                         if param_dict['name'] not in parsed_json['parameters']:
                             parsed_json['parameters'][param_dict['name']] = param_dict
                 if 'parameters' in api_paths[path][action]:
+                    if action.lower() == 'patch':
+                        resource_nm = resource + '_patch'
+                    else:
+                        resource_nm = resource
+
+                    if action.lower() == 'post' or action.lower() == 'patch' and resource_nm in api_json['definitions']:
+                        required_list = []
+                        if 'required' in api_json['definitions'][resource_nm]:
+                            required_list = api_json['definitions'][resource_nm]['required']
+                        for name, param_dict in api_json['definitions'][resource_nm]['properties'].items():
+                            param_dict['name'] = name
+                            param_dict['required'] = False
+                            if name in required_list:
+                                param_dict['required'] = True
+                            resources[resource][action]['query_parameters'][param_dict['name']] = param_dict
+                            if param_dict['name'] not in parsed_json['parameters']:
+                                parsed_json['parameters'][param_dict['name']] = param_dict
                     for param_dict in api_paths[path][action]['parameters']:
                         resources[resource][action]['query_parameters'][param_dict['name']] = param_dict
                         if param_dict['name'] not in parsed_json['parameters']:
                             parsed_json['parameters'][param_dict['name']] = param_dict
         return parsed_json
-
