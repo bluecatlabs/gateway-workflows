@@ -12,7 +12,7 @@ from .network_manager_form import GenericFormTemplate
 
 def module_path():
     encoding = sys.getfilesystemencoding()
-    return os.path.dirname(os.path.abspath(unicode(__file__, encoding)))
+    return os.path.dirname(os.path.abspath(str(__file__, encoding)))
 
 
 @route(app, '/network_manager/network_manager_endpoint')

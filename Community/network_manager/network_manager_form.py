@@ -89,7 +89,7 @@ def validate_name(form, field):
     match = regex.match(field.data)
 
     try:
-        print match.group(0)
+        print((match.group(0)))
     except:
         raise ValidationError(message)
 

@@ -5,8 +5,8 @@ type = 'ui'
 sub_pages = [
     {
         'name'        : 'network_manager_page',
-        'title'       : u'Network Manager',
+        'title'       : 'Network Manager',
         'endpoint'    : 'network_manager/network_manager_endpoint',
-        'description' : u'network_manager'
+        'description' : 'network_manager'
     },
 ]
