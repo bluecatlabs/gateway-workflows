@@ -1,4 +1,4 @@
-# Copyright 2017 BlueCat Networks. All rights reserved.
+# Copyright 2018 BlueCat Networks. All rights reserved.
 # -*- coding: utf-8 -*-
 
 type = 'ui'
