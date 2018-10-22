@@ -1,0 +1,30 @@
+<!-- Copyright 2018 BlueCat Networks. All rights reserved. -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/SubnetStatus_page.css?version={{ g.version | urlencode }}">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+    <p>{{ text['info'] }}</p>
+    <!--Your page's HTML goes here.-->
+    {% from "form_helper.html" import render_form %}
+    {{ render_form(form, action=url_for('SubnetStatusSubnetStatus_SubnetStatus_page_form'), id="SubnetStatus_page_form") }}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="js/SubnetStatus_page.js?version={{ g.version | urlencode }}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock %}
