@@ -57,6 +57,8 @@ def update_user_permissions_update_user_permissions_page():
 def update_user_permissions_update_user_permissions_page_form():
     form = GenericFormTemplate()
 
+    form.gateway_groups.choices = get_udf_portal_groups()
+    
     if form.validate_on_submit():
         try:
 
