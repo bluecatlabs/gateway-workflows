@@ -28,11 +28,18 @@ from .configuration_page import config_defaults
 from main_app import api
 
 
+ip4_block_root_default_ns = api.namespace('ipv4_blocks', description='IPv4 Block operations')
+ip4_block_root_ns = api.namespace(
+    'ipv4_blocks',
+    path='/configurations/<string:configuration>/ipv4_blocks/',
+    description='IPv4 Block operations',
+)
+
 ip4_block_default_ns = api.namespace('ipv4_blocks', description='IPv4 Block operations')
 ip4_block_ns = api.namespace(
     'ipv4_blocks',
     path='/configurations/<string:configuration>/ipv4_blocks/',
-    description='IPv4 Network operations',
+    description='IPv4 Block operations',
 )
 
 ip4_network_default_ns = api.namespace('ipv4_networks', description='IPv4 Network operations')
@@ -62,24 +69,27 @@ network_patch_parser.add_argument('name', location="json", help='The name of the
 network_patch_parser.add_argument('properties', location="json", help='The properties of the record')
 
 
+@ip4_block_root_ns.route('/')
 @ip4_block_ns.route('/<path:block>/ipv4_blocks/')
+@ip4_block_root_default_ns.route('/', defaults=config_defaults)
 @ip4_block_default_ns.route('/<path:block>/ipv4_blocks/', defaults=config_defaults)
-@ip4_block_ns.param('block', 'Recursive')
 @ip4_block_ns.response(404, 'IPv4 Blocks not found')
 class IPv4BlockCollection(Resource):
 
     @util.rest_workflow_permission_required('rest_page')
-    def get(self, configuration, block):
+    def get(self, configuration, block=None):
         """
         Get all direct child IPv4 Blocks belonging to default or provided Configuration and Block hierarchy.
         Blocks can be recursively retrieved by specifying extra ipv4_block parameters.
         Blocks can be of the format:
 
         1. 10.1.0.0/16
-        2. 10.1.0.0/16/ipv4_block/10.1.1.0/24/ipv4_block/
+        2. 10.1.0.0/16/ipv4_blocks/10.1.1.0/24/ipv4_blocks/
         """
         range = g.user.get_api().get_configuration(configuration)
-        block_hierarchy = block.split('ipv4_blocks')
+        block_hierarchy = []
+        if block:
+            block_hierarchy = block.split('ipv4_blocks')
 
         for block in block_hierarchy:
             block_cidr = block.strip('/')
@@ -104,7 +114,7 @@ class IPv4Block(Resource):
         Blocks can be of the format:
 
         1. 10.1.0.0/16
-        2. 10.1.0.0/16/ipv4_block/10.1.1.0/24
+        2. 10.1.0.0/16/ipv4_blocks/10.1.1.0/24
         """
         range = g.user.get_api().get_configuration(configuration)
         block_hierarchy = block.split('ipv4_blocks')
@@ -129,7 +139,7 @@ class IPv4NetworkCollection(Resource):
         Get all IPv4 Networks belonging to default or provided Configuration and Block hierarchy.
         Path can be of the format:
 
-        1. ipv4_block/10.1.0.0/16/ipv4_block/10.1.1.0/24/ipv4_network/
+        1. ipv4_blocks/10.1.0.0/16/ipv4_blocks/10.1.1.0/24/ipv4_networks/
         """
         range = g.user.get_api().get_configuration(configuration)
         block_hierarchy = block.split('ipv4_blocks')

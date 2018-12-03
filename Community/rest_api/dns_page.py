@@ -32,6 +32,13 @@ from main_app import api
 view_default_ns = api.namespace('views', path='/views/', description='View operations')
 view_ns = api.namespace('views', path='/configurations/<string:configuration>/views/', description='View operations')
 
+zone_default_root_ns = api.namespace('zones', description='Zone operations')
+zone_root_ns = api.namespace(
+    'zones',
+    path='/configurations/<string:configuration>/views/<string:view>/zones/',
+    description='Zone operations',
+)
+
 zone_default_ns = api.namespace('zones', description='Zone operations')
 zone_ns = api.namespace(
     'zones',
@@ -225,13 +232,15 @@ class Zone(Resource):
         return '', 204
 
 
+@zone_root_ns.route('/')
 @zone_ns.route('/<path:zone>/zones/')
+@zone_default_root_ns.route('/', defaults=dns_defaults)
 @zone_default_ns.route('/<path:zone>/zones/', defaults=dns_defaults)
 @zone_ns.doc(params=zone_doc)
 class ZoneCollection(Resource):
 
     @util.rest_workflow_permission_required('rest_page')
-    def get(self, configuration, view, zone):
+    def get(self, configuration, view, zone=None):
         """
         Get all direct subzones belonging to default or provided Configuration and View plus Zone hierarchy.
         Subzones can be recursively retrieved by specifying extra "zones" parameters.
@@ -242,12 +251,14 @@ class ZoneCollection(Resource):
         """
         configuration = g.user.get_api().get_configuration(configuration)
         zone_parent = configuration.get_view(view)
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
-        if zone is None:
-            return 'No matching Zone(s) found', 404
-        zones = zone.get_zones()
+        leaf_zone = zone_parent
+        if zone:
+            zone_hierarchy = zone.split('/zones')
+            zone_entity = zone_parent.get_zone(zone_hierarchy[0])
+            leaf_zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+            if leaf_zone is None:
+                return 'No matching Zone(s) found', 404
+        zones = leaf_zone.get_zones()
         result = [zone_entity.to_json() for zone_entity in zones]
         return jsonify(result)
 
