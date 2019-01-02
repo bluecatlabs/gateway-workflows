@@ -29,8 +29,13 @@ from bluecat.user import User
 
 
 def module_path():
-    encoding = sys.getfilesystemencoding()
-    return os.path.dirname(os.path.abspath(unicode(__file__, encoding)))
+    """
+    Get module path.
+
+    :return:
+    """
+    return os.path.dirname(os.path.abspath(str(__file__)))
+
 
 #This is a check to see if the user exists
 def doesUserExsist(userName):
