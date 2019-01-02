@@ -30,8 +30,11 @@ from .util_custom import get_udf_portal_groups
 access_type_not_update = 'GUI_AND_API'
 
 def module_path():
-    encoding = sys.getfilesystemencoding()
-    return os.path.dirname(os.path.abspath(unicode(__file__, encoding)))
+    """
+    Get module path.
+    :return:
+    """
+    return os.path.dirname(os.path.abspath(str(__file__)))
 
 # The workflow name must be the first part of any endpoints defined in this file.
 # If you break this rule, you will trip up on other people's endpoint names and
