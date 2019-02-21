@@ -67,21 +67,28 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Xiao Dong
 - Nikhil Jangi
 - Steven Diao
-- Raymond Leong
+- Anshul Sharma
 - Delme Herbert
-- Rohina Dhunjeebhoy
+
 
 #### Professional Services:
-- Bill Morton
 - Murtaza Haider
 - Chris Storz
+- Chris Meyer
+- Timothy Noel
 
 #### Special Thanks:
+- Bill Morton
 - Glenn McAllister
 - Robert Barnhardt™
 - Ekim Maurer
 - Roy Reshef
 - Vadim Farafontov
+- David Cohen
+- Lana Litvak
+- Raymond Leong
+- Rohina Dhunjeebhoy
+- Shanice Cohen
 
 ## License
 
