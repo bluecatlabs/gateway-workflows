@@ -1,0 +1,2 @@
+title=Bulk Import
+info=Upload your file in CSV format
