@@ -1,0 +1,6 @@
+{
+  "network_name" : {
+    "regex":"^[a-zA-Z ]+#[A-Z][0-9]+ - (?:VOIP|PRINTER|DESKTOP|IOT)$",
+    "message": "Required naming convention is 'San Jose #A0001 - VOIP'. Office location, office code and purpose (VOIP, PRINTER, DESKTOP,IOT)"
+  }
+}
