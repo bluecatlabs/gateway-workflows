@@ -64,8 +64,8 @@ def network_manager_network_manager_page_form():
             block = b
             break
         else:
-            flash("This doesn't work, you has no block.")
-            app.logger.error("This doesn't work, you has no block.")
+            flash("This doesn't work, you have no block.")
+            app.logger.error("This doesn't work, you have no block.")
         n = block.get_next_available_ip_range(form.network_size.data, "IP4Network")
         n.name = "%s | %s" % (form.network_location.data, form.network_name.data)
         n.update()
