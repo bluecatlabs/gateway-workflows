@@ -1,0 +1,8 @@
+{
+  "API_ERROR_STATUS":"0",
+  "API_ERROR_NONFATAL_STATUS":"-1",
+  "API_SUCCESS_STATUS":"1",
+  "API_STATUS_NAME": "status",
+  "API_DATA_FIELD": "data",
+  "API_ERROR_FIELD": "error"
+}
