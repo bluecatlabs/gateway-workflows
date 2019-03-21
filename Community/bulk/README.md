@@ -20,5 +20,6 @@ By: Chris Storz (cstorz@bluecatnetworks.com)
 
 Directions:
 1. Add a csv example file at file_repository/downloads/template.csv
-2. Optionally uncomment "view" in your form file if that is a needed input
-3. Write your code in the handlers in bulk_action.py
+2. Copy tools.py and tools.json and tools.py to <gateway>/customizations/
+3. Optionally uncomment "view" in your form file if that is a needed input
+4. Write your code in the handlers in bulk_action.py
