@@ -1,0 +1,77 @@
+{
+	"info": {
+		"name": "SubnetStatus",
+		"_postman_id": "9a33bd08-207d-bc56-49c0-5c12348fb026",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "portal",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "portal",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{server}}/rest_login",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"rest_login"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "run_stats",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"subnet_id\": \"100892\",\n\t\"email\": \"example@email.com\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/SubnetStatus/run_stats",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"SubnetStatus",
+						"run_stats"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -76,7 +76,7 @@ function updateData(data_param){
         dataType:'json',
         success: function(data) {
 
-            if (data.status === 'STARTED') {
+            if (data.status === 'STARTED' || data.status === 'QUEUED') {
 
                 if (document.getElementById("deploy").disabled === false){
                     call_output_table(data.data)
