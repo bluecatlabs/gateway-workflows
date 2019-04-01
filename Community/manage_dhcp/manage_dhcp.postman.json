@@ -1,0 +1,365 @@
+{
+	"info": {
+		"name": "manage_dhcp",
+		"_postman_id": "cb68b079-5861-f039-752c-93835eee3cf8",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "portal",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "portal",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{server}}/rest_login",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"rest_login"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "manage_dhcp",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"network\": \"10.1.22.0\",\n\t\"prefix\": \"test\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_dhcp/endpoint",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_dhcp",
+						"endpoint"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create_reservation IPv4",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"mac\": \"11:11:11:11:88:11\",\n\t\"ip\": \"192.168.5.67\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_dhcp/create_reservation",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_dhcp",
+						"create_reservation"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create_reservation IPv6",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"mac\": \"11:11:11:11:11:11\",\n\t\"ip\": \"FC00::1322:33FF:FE44:5565\",\n\t\"duid\": \"00-01-00-01-14-77-21-A2-00-50-56-AA-5E-EE\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_dhcp/create_reservation",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_dhcp",
+						"create_reservation"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete_reservation IPv4",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ip\": \"192.168.5.2\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_dhcp/delete_reservation",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_dhcp",
+						"delete_reservation"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete_reservation IPv6",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ip\": \"FC00::1322:33FF:FE44:5565\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_dhcp/delete_reservation",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_dhcp",
+						"delete_reservation"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create_scope IPv4",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"network\": \"192.168.5.0/24\",\n\t\"start\": \"15\",\n\t\"end\": \"20\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_dhcp/create_scope",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_dhcp",
+						"create_scope"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create_scope IPv6",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"network\": \"FC00::/64\",\n\t\"size\": \"200\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_dhcp/create_scope",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_dhcp",
+						"create_scope"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete_scope IPv6",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"101595\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_dhcp/delete_scope",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_dhcp",
+						"delete_scope"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "add_option",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"network\": \"192.168.5.0/24\",\n\t\"option_value\": \"10.7.5.48\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_dhcp/add_option",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_dhcp",
+						"add_option"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "reserve_next_available",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"network\": \"192.168.5.0/24\",\n\t\"host_name\": \"reservenexttest\",\n\t\"zone\": \"com\",\n\t\"mac_address\": \"11:11:11:33:11:11\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_dhcp/reserve_next_available",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_dhcp",
+						"reserve_next_available"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
