@@ -1,0 +1,485 @@
+{
+	"variables": [],
+	"info": {
+		"name": "SN",
+		"_postman_id": "6d339ef7-c11b-a6ee-bf33-371de3be72bb",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login-SN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setGlobalVariable(\"token\", responseBody);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{server}}/rest_login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"sndev\",\n\t\"password\":\"sndev\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Info",
+			"request": {
+				"url": "{{server}}/itsm_api/get_bc_data",
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Zones",
+			"request": {
+				"url": "{{server}}/itsm_api/get_zones",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100881\",\n\t\"view\":\"internal\",\n\t\"zone\":\"blue\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Zones (zone not exist)",
+			"request": {
+				"url": "{{server}}/itsm_api/get_zones",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100881\",\n\t\"view\":\"internal\",\n\t\"zone\":\"nonexistent\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Zones (fail missing info)",
+			"request": {
+				"url": "{{server}}/itsm_api/get_zones",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"view\":\"internal\",\n\t\"zone\":\"nonexistent\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Zones (fail malformed info)",
+			"request": {
+				"url": "{{server}}/itsm_api/get_zones",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"k\",\n\t\"view\":\"internal\",\n\t\"zone\":\"blue\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Zones (fail no data)",
+			"request": {
+				"url": "{{server}}/itsm_api/get_zones",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get IP",
+			"request": {
+				"url": "{{server}}/itsm_api/validate_ip",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100881\",\n\t\"ip\":\"10.0.0.6\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get IP (fail not usable)",
+			"request": {
+				"url": "{{server}}/itsm_api/validate_ip",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100881\",\n\t\"ip\":\"11.0.0.6\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get IP (fail missing input)",
+			"request": {
+				"url": "{{server}}/itsm_api/validate_ip",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ip\":\"11.0.0.6\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get IP (fail invalid IP)",
+			"request": {
+				"url": "{{server}}/itsm_api/validate_ip",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100881\",\n\t\"ip\":\"10.0.0.l6\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get IP (fail invalid data)",
+			"request": {
+				"url": "{{server}}/itsm_api/validate_ip",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100l881\",\n\t\"ip\":\"10.0.0.6\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Record ",
+			"request": {
+				"url": "{{server}}/itsm_api/assign_record",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100881\",\n\t\"view\":\"internal\",\n\t\"ip\":\"10.0.0.6\",\n\t\"record\":\"chris.bluecat.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Record (fail missing input)",
+			"request": {
+				"url": "{{server}}/itsm_api/assign_record",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100881\",\n\t\"ip\":\"10.0.0.6\",\n\t\"record\":\"chris.bluecat.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Record (fail invalid config)",
+			"request": {
+				"url": "{{server}}/itsm_api/assign_record",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"1008d81\",\n\t\"view\":\"internal\",\n\t\"ip\":\"10.0.0.6\",\n\t\"record\":\"chris.bluecat.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Record (fail invalid zone)",
+			"request": {
+				"url": "{{server}}/itsm_api/assign_record",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100881\",\n\t\"view\":\"interndal\",\n\t\"ip\":\"10.0.0.6\",\n\t\"record\":\"chris.bluecat.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Record (fail invalid IP)",
+			"request": {
+				"url": "{{server}}/itsm_api/assign_record",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100881\",\n\t\"view\":\"internal\",\n\t\"ip\":\"10.0.0.d6\",\n\t\"record\":\"chris.bluecat.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Record (fail unusable IP)",
+			"request": {
+				"url": "{{server}}/itsm_api/assign_record",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100881\",\n\t\"view\":\"internal\",\n\t\"ip\":\"10.2.0.6\",\n\t\"record\":\"chris.bluecat.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Record (fail duplicate)",
+			"request": {
+				"url": "{{server}}/itsm_api/assign_record",
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuration\":\"100881\",\n\t\"view\":\"internal\",\n\t\"ip\":\"10.0.0.6\",\n\t\"record\":\"chris.bluecat.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
