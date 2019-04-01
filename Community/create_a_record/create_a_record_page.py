@@ -31,8 +31,8 @@ def create_a_record_create_a_record_page():
         configuration, view = get_configuration_and_view(configuration_name=config.default_configuration,
                                                          view_name=config.default_view)
     except PortalException as e:
-        g.user.logger.error('%s' % e, msg_type=g.user.logger.EXCEPTION)
-        return response_handler('Configuration %s or view %s undefined in BAM' % config.default_configuration, 400)
+        g.user.logger.error('%s' % util.safe_str(e), msg_type=g.user.logger.EXCEPTION)
+        return response_handler('Configuration %s or view %s undefined in BAM' % (config.default_configuration, config.default_view), 400)
 
     # Split addresses by comma in case multiple addresses are being added
     ip4_entity = [address.strip() for address in ip4_address.split(',')]
@@ -68,5 +68,5 @@ def create_a_record_create_a_record_page():
                                 % (host_record.get_property('absoluteName'), error), 500)
 
     return response_handler('Host Record %s added to zone %s with IP4 address: %s'
-                            % (host_record.get_property('absoluteName'), 'ins.dell.com',
+                            % (host_record.get_property('absoluteName'), parent_zone,
                                host_record.get_property('addresses')), 200)
