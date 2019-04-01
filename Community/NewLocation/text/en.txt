@@ -1,0 +1,2 @@
+title=New Location
+info=Text for your workflow goes here.
