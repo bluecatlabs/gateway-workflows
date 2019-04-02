@@ -57,11 +57,15 @@ def create_record_endpoint():
         should_deploy = False
     else:
         should_deploy = True
+    if 'ping_check' not in json_data:
+        should_ping = False
+    else:
+        should_ping = True
 
     if response_code == 200:
         try:
             response_code, response_message, response_data, should_deploy, ids = \
-                create_record(record_type, json_data, response_data, response_code, should_deploy)
+                create_record(record_type, json_data, response_data, response_code, should_deploy, should_ping)
 
             if should_deploy:
                 response_code, deploy_message = deploy(ids)
@@ -78,7 +82,7 @@ def create_record_endpoint():
     return jsonify(response_data), response_code
 
 
-def create_record(record_type, record_json, response_data, response_code, should_deploy):
+def create_record(record_type, record_json, response_data, response_code, should_deploy, should_ping):
     ids = []
 
     view = g.user.get_api().get_entity_by_id(DEFAULT_VIEW_ID)
@@ -86,7 +90,7 @@ def create_record(record_type, record_json, response_data, response_code, should
     absolute_name = '%s.%s' % (record_json['name'].strip(), record_json['zone'].strip())
 
     if record_type == 'A' or record_type == 'AAAA':
-        if record_type == 'A' and ping_check(record_json['ip'].strip(), record_type):
+        if record_type == 'A' and (should_ping and ping_check(record_json['ip'].strip(), record_type)):
             response_code = 500
             response_message = 'Detected something at the destination IP(%s), aborting create' % record_json['ip'].strip()
             should_deploy = False
@@ -261,11 +265,15 @@ def update_record_endpoint():
         should_deploy = False
     else:
         should_deploy = True
+    if 'ping_check' not in json_data:
+        should_ping = False
+    else:
+        should_ping = True
 
     if response_code == 200:
         try:
             response_code, response_message, response_data, should_deploy, ids = \
-                update_record(record_type, json_data, response_data, should_deploy)
+                update_record(record_type, json_data, response_data, should_deploy, should_ping)
             if should_deploy:
                 response_code, deploy_message = deploy(ids)
                 response_data['deploy_info'] = deploy_message
@@ -281,7 +289,7 @@ def update_record_endpoint():
     return jsonify(response_data), response_code
 
 
-def update_record(record_type, record_data, response_data, should_deploy):
+def update_record(record_type, record_data, response_data, should_deploy, should_ping):
     ids = []
     response_code = 200
     configuration = g.user.get_api().get_configuration(DEFAULT_CONFIG_NAME)
@@ -290,7 +298,7 @@ def update_record(record_type, record_data, response_data, should_deploy):
     absolute_name = '%s.%s' % (record_data['name'].strip(), record_data['zone'].strip())
 
     if record_type == 'A' or record_type == 'AAAA':
-        if record_type == 'A' and ping_check(record_data['ip'].strip(), record_type):
+        if record_type == 'A' and (should_ping and ping_check(record_data['ip'].strip(), record_type)):
             response_code = 500
             response_message = 'Detected something at the destination IP(%s), aborting update' % record_data['ip'].strip()
             should_deploy = False
@@ -608,7 +616,7 @@ def ping_check(ip_address, record_type):
         output = subprocess.check_output([ping_command, ip_address, '-c 1'], stderr=subprocess.STDOUT,
                                          shell=False)
     except CalledProcessError as e:
-        if '0 packets received' in e.output:
+        if '0 packets received' in str(e.output):
             return False
 
     return True

@@ -10,14 +10,14 @@ Date: 04-01-2019
 Gateway Version: 18.12.1
 Description: manage_records contains a suite of REST APIs to manage various types of resource records. There is also an option to manage them via bulk operations. The type of records supported are: A, AAAA, CNAME, TXT, MX, and TLSA
 /manage_records/create_record
-Submit JSON data to create a record. By default records are NOT deployed. Either the deploy_records API can be called, or you can pass in "deploy" as part of the request JSON data, and it will deploy the record immediately.
+Submit JSON data to create a record. By default records are NOT deployed. Either the deploy_records API can be called, or you can pass in "deploy" as part of the request JSON data, and it will deploy the record immediately. "ping_check" can be added as a part of the request in the JSON request data to have the workflow conduct a ping check prior to assigning the record.
 Please see the Postman Collection for examples of all the calls you can make
 
 /manage_records/delete_record
 Submit JSON data to delete a record. By default the deletion will be deployed. Pass in "deploy" as part of the JSON data to prevent the delete of the record
 
 /manage_records/update_record
-Submit JSON data to update a particular record. This updates the content(for example, the linked IP address to a host name) and not the name or zone of the record. To modify that you must delete and recreate. By default the changes will NOT be deployed. Either the deploy_records API can be called, or you can pass in "deploy" as part of the request JSON data, and it will deploy the record immediately.
+Submit JSON data to update a particular record. This updates the content(for example, the linked IP address to a host name) and not the name or zone of the record. To modify that you must delete and recreate. By default the changes will NOT be deployed. Either the deploy_records API can be called, or you can pass in "deploy" as part of the request JSON data, and it will deploy the record immediately. "ping_check" can be added as a part of the request in the JSON request data to have the workflow conduct a ping check prior to updating the record.
 
 /manage_records/bulk_process
 Submit a csv formatted file to do any of the above processes. Here is the format to submit for the type of record:
