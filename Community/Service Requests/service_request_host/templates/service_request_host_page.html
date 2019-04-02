@@ -36,8 +36,6 @@ Description: Example Gateway workflows -->
     <p>{{ text['info'] }}</p>
     {% from "form_helper.html" import render_form %}
     {{ render_form(form, action=url_for('service_request_hostservice_request_host_page_form'), id="service_request_host_form") }}
-
-    <input type="hidden" id="status_token" value="{{ status_token }}">
 {% endblock %}
 
 {% block scripts %}
