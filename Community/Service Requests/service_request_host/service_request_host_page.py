@@ -12,10 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# By: BlueCat Networks
-# Date: 24-01-19
-# Gateway Version: 18.12.1
-# Description: Example Gateway workflows
 import os
 import sys
 import time
@@ -26,7 +22,7 @@ from flask import url_for, redirect, render_template, flash, g, request, jsonify
 from main_app import app
 from bluecat import route, util
 import config.default_config as config
-from bluecat.constants import SelectiveDeploymentStatus, IPAssignmentActionValues
+from bluecat.constants import IPAssignmentActionValues
 from bluecat.api_exception import PortalException, BAMException
 from .service_request_host_form import GenericFormTemplate
 from bluecat.server_endpoints import get_result_template, empty_decorator
@@ -112,46 +108,3 @@ def service_request_host_page_form():
     flash('Successfully created ServiceNow Ticket: ' + response.json()['result']['number'], 'succeed')
     flash('')
     return redirect(url_for('service_request_hostservice_request_host_page'))
-
-
-@route(app, '/service_request_host/get_deploy_status', methods=['POST'])
-@util.rest_workflow_permission_required('service_request_host_page')
-@util.rest_exception_catcher
-def get_deploy_status():
-    """
-    Retrieves and updates deployment task status
-    :return:
-    """
-    result = get_result_template()
-    deploy_token = request.form['deploy_token']
-    try:
-        task_status = g.user.get_api().get_deployment_task_status(deploy_token)
-        result['status'] = task_status['status']
-
-        if task_status['status'] == SelectiveDeploymentStatus.FINISHED:
-            deploy_errors = task_status['response']['errors']
-
-            # Deployment failed
-            if deploy_errors:
-                result['data'] = "FAILED"
-                result['message'] = deploy_errors
-                raise Exception('Deployment Error: ' + str(deploy_errors))
-
-            # Deployment succeeded
-            elif task_status['response']['views']:
-                task_result = task_status['response']['views'][0]['zones'][0]['records'][0]['result']
-                result['data'] = task_result
-
-            # Deployment finished with no changes
-            else:
-                result['data'] = 'FINISHED'
-
-            g.user.logger.info('Deployment Task Status: ' + str(task_status))
-
-        # Deployment queued/started
-        else:
-            result['data'] = task_status['status']
-    except Exception as e:
-        g.user.logger.warning(e)
-
-    return jsonify(empty_decorator(result))
