@@ -1,0 +1,2 @@
+Customizations folder for community workflows. Place all shared Python modules needed to run Community workflows 
+here. Please include instructions on how to import and use modules you place here in your workflow.
