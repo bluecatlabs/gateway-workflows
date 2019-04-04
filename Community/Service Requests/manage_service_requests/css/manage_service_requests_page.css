@@ -1,0 +1,40 @@
+/* Copyright 2019 BlueCat Networks. All rights reserved. */
+/* Custom styles for your page go in here. */
+#manage_service_requests_page_form{
+    width: 170%;
+}
+.clearfix{
+    clear:both
+}
+label[for=bulk_import_ip4_table], label[for=disable_submit_hidden], #disable_submit_hidden {
+    display:none;
+}
+thead, tr, .dataTables_info {
+    color: #C6C6C6;
+}
+#bulk_import_ipv4_address_table tbody tr:hover {
+   background-color: #0073AE;
+   cursor: pointer;
+}
+.scrollbar::-webkit-scrollbar {
+    height: 7px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #C6C6C6;
+}
+table.dataTable thead th, table.dataTable thead td {
+    padding: 10px 18px;
+    border-bottom: 1px solid #C6C6C6;
+}
+.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
+    border-bottom-color:transparent;
+}
+button, input[type="submit"], input[type="button"] {
+    margin-left: 0px !important;
+}
+/* Styling for hidden configuration ID input */
+#configuration_id_hidden, #filename_hidden {
+    display: none;
+}
