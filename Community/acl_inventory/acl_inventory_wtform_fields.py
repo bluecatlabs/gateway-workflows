@@ -1,4 +1,4 @@
-# Copyright 2017 BlueCat Networks. All rights reserved.
+# Copyright 2019 BlueCat Networks. All rights reserved.
 from bluecat.wtform_fields import CustomSelectField
 from .acl_inventory_server_endpoints import get_acls
 
