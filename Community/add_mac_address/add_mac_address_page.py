@@ -1,4 +1,4 @@
-# Copyright 2018 BlueCat Networks. All rights reserved.
+# Copyright 2019 BlueCat Networks. All rights reserved.
 import os
 import sys
 
