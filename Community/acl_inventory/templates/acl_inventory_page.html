@@ -1,0 +1,25 @@
+<!-- Copyright 2019 BlueCat Networks. All rights reserved. -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/acl_inventory_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+    {% from "form_helper.html" import render_form %}
+    {{ render_form(form, action=url_for('acl_inventoryacl_inventory_acl_inventory_page_form'), id="acl_inventory_page_form") }}
+{% endblock %}
+
+{% block scripts %}
+<script src="js/acl_inventory_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}
+
