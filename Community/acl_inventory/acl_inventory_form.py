@@ -1,4 +1,4 @@
-# Copyright 2018 BlueCat Networks. All rights reserved.
+# Copyright 2019 BlueCat Networks. All rights reserved.
 from bluecat.wtform_extensions import GatewayForm
 from bluecat.wtform_fields import CustomSubmitField
 from .acl_inventory_wtform_fields import ACL
