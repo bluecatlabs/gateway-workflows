@@ -1,0 +1,2 @@
+title=New Location
+info=Create a new location under an existing Location tag
