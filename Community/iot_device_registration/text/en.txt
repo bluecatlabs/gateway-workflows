@@ -1,0 +1,2 @@
+title=IoT Device Registration
+info=Upload a text file containing a list of MAC address, one per line to be assigned with a DHCP Reserved IP

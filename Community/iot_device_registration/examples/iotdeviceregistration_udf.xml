@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data PUBLIC "-//BlueCat Networks/Proteus Migration Specification 8.3//EN" "http://www.bluecatnetworks.com/proteus-migration-8.3.dtd">
+<data>
+	<object-field name="department" display-name="Department" type="text" object-name="tag"/>
+	<object-field name="email" display-name="Email" type="text" object-name="tag"/>
+	<object-field name="expire" display-name="Expire" type="text" object-name="tag"/>
+	<object-field name="expireState" display-name="Expire State" type="boolean" object-name="tag"/>
+	<object-field name="iotname" display-name="IOT Name" type="text" object-name="tag"/>
+	<object-field name="ipaddress" display-name="IP Address" type="text" object-name="tag"/>
+	<object-field name="location" display-name="Location" type="text" object-name="tag"/>
+	<object-field name="owner" display-name="Owner" type="text" object-name="tag"/>
+	<object-field name="phone" display-name="Phone" type="text" object-name="tag"/>
+	<object-field name="registration" display-name="Registration" type="text" object-name="tag"/>
+</data>

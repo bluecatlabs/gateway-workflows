@@ -1,0 +1,4 @@
+name,macAddress,department,phone,location,period
+iotmachine10,B3:E7:6F:DA:69:58,Tech Lab,65278839,block1,10
+iotmachine11,001122334455,Tech Lab,65278839,block1,20
+
