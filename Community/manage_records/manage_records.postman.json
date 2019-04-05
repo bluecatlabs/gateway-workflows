@@ -1,0 +1,700 @@
+{
+	"info": {
+		"name": "manage_records",
+		"_postman_id": "685fae29-9df0-5e01-093d-a9f9fafb0117",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.access_token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "portal",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "portal",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{server}}/rest_login",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"rest_login"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "manage_records",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"network\": \"10.1.22.0\",\n\t\"prefix\": \"test\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/endpoint",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"endpoint"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create_record A",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"A\",\n\t\"name\": \"testA\",\n\t\"zone\": \"com\",\n\t\"ip\": \"192.168.5.2\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/create_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"create_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create_record AAAAA",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"AAAA\",\n\t\"name\": \"testAAAA\",\n\t\"zone\": \"com\",\n\t\"ip\": \"FC00::1322:33FF:FE44:5565\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/create_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"create_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create_record CNAME",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"CNAME\",\n\t\"name\": \"testCNAME\",\n\t\"zone\": \"com\",\n\t\"linked_record\": \"testcnamehost.com\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/create_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"create_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create_record TXT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"TXT\",\n\t\"name\": \"testTXT\",\n\t\"zone\": \"com\",\n\t\"text\": \"testing stuff\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/create_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"create_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create_record MX",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"MX\",\n\t\"name\": \"testMX\",\n\t\"zone\": \"com\",\n\t\"priority\": \"1\",\n\t\"linked_record\": \"testmxhost.com\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/create_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"create_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create_record TLSA",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"TLSA\",\n\t\"name\": \"testTLSA\",\n\t\"zone\": \"com\",\n\t\"data\": \"_25._tcp.somehost.example.com. TLSA 3 1 1 BASE64==\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/create_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"create_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "update_record A",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"A\",\n\t\"name\": \"testA\",\n\t\"zone\": \"com\",\n\t\"ip\": \"192.168.5.3\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/update_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"update_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "update_record AAAAA",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"AAAA\",\n\t\"name\": \"testAAAA\",\n\t\"zone\": \"com\",\n\t\"ip\": \"FC00::1322:33FF:FE44:5566\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/update_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"update_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "update_record CNAME",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"CNAME\",\n\t\"name\": \"testCNAME\",\n\t\"zone\": \"com\",\n\t\"linked_record\": \"testcnamehostb.com\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/update_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"update_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "update_record TXT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"TXT\",\n\t\"name\": \"testTXT\",\n\t\"zone\": \"com\",\n\t\"text\": \"testing stuff edit\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/update_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"update_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "update_record MX",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"MX\",\n\t\"name\": \"testMX\",\n\t\"zone\": \"com\",\n\t\"priority\": \"2\",\n\t\"linked_record\": \"testmxhostb.com\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/update_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"update_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "update_record TLSA",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"TLSA\",\n\t\"name\": \"testTSLA\",\n\t\"zone\": \"com\",\n\t\"data\": \"_26._tcp.somehost.example.com. TLSA 3 1 1 BASE64==\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/update_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"update_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete_record A",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"A\",\n\t\"name\": \"testA\",\n\t\"zone\": \"com\",\n\t\"deploy\": \"False\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/delete_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"delete_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete_record AAAAA",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"AAAA\",\n\t\"name\": \"testAAAA\",\n\t\"zone\": \"com\",\n\t\"deploy\": \"False\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/delete_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"delete_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete_record CNAME",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"CNAME\",\n\t\"name\": \"testCNAME\",\n\t\"zone\": \"com\",\n\t\"deploy\": \"False\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/delete_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"delete_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete_record TXT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"TXT\",\n\t\"name\": \"testTXT\",\n\t\"zone\": \"com\",\n\t\"deploy\": \"False\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/delete_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"delete_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete_record MX",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"MX\",\n\t\"name\": \"testMX\",\n\t\"zone\": \"com\",\n\t\"deploy\": \"False\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/delete_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"delete_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete_record TLSA",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"record_type\": \"TLSA\",\n\t\"name\": \"testtsla\",\n\t\"zone\": \"com\",\n\t\"deploy\": \"False\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/delete_record",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"delete_record"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "bulk_process",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "Basic {{token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fisier",
+							"value": "",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{server}}/manage_records/bulk_process",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"manage_records",
+						"bulk_process"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
