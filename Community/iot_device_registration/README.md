@@ -1,3 +1,25 @@
+Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+By: Muhammad Heidir (mheidir@bluecatnetworks.com)
+ Date: 3-April-2019
+ Gateway Version: 18.10.2
+ Description: Bulk IoT Device Registration/De-Registration workflow for BlueCat Gateway
+
+The Aruba Clearpass API library in clearpass.py is forked from the
+aruba/clearpass-api-python library published by dwilson at HPE Aruba.
+
 # IoT Device Registration
 
 IoT device registration workflow integrated into BlueCat Gateway and Aruba
@@ -5,9 +27,6 @@ Clearpass API allowing self-service registrations to authorised users and RunDec
 scheduled de-registration of expired devices, written in Python. Compliant to
 organisation Network Access Control using Aruba Clearpass.
 
-By: Muhammad Heidir (mheidir@bluecatnetworks.com)
-Date: 3-April-2019
-Gateway Version: 18.10.2
 
 ## Features
  - User authentication managed through BlueCat Address Manager
@@ -77,21 +96,3 @@ enable = true
 ## Future Roadmap
 - A simple interface to upload and preview CSV File, username and contact information retrieved from BAM
 - Setting of configuration in workflow UI instead of accessing directly via CLI
-
-
-## License
-Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-The Aruba Clearpass API library in clearpass.py is from dwilson at HPE Aruba. Copyright information is provided in the clearpass.py file.
