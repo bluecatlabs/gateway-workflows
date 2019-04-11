@@ -27,6 +27,7 @@ Clearpass API allowing self-service registrations to authorised users and RunDec
 scheduled de-registration of expired devices, written in Python. Compliant to
 organisation Network Access Control using Aruba Clearpass.
 
+![IoT Device Registration Workflow Page](https://i.ibb.co/GMbWL7W/Screenshot-2019-01-21-16-14-27.png)
 
 ## Features
  - User authentication managed through BlueCat Address Manager
