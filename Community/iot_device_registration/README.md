@@ -42,22 +42,20 @@ organisation Network Access Control using Aruba Clearpass.
 ## Detailed Information
 - The workflow contains a configuration file "iotipallocation.conf" that has to be configured prior to using it, the configuration includes BAM's connectivity, API User credentials, the block and network to use for the DHCP Reserved allocation, the zone for creation of the device name in DNS, email server settings for notifications and other information necessary for the workflow to workflow
 - The workflow has a UI to get the username, email address and the list of IoT Devices to be registered in CSV format
-- Format of the CSV file: name,macAddress,department,phone,location,period
+- Format of the CSV file: name,macAddress,department,phone,location,period  
 
-![IoT Device Registration Detailed Diagram](https://i.ibb.co/GMbWL7W/Screenshot-2019-01-21-16-14-27.png)
+Registered IoT Device Information  
+![IoT Device Registration - Registered Device](https://i.ibb.co/KxvLW3j/Screenshot-2019-01-21-16-47-47.png)  
 
-Registered IoT Device Information
-![IoT Device Registration - Registered Device](https://i.ibb.co/KxvLW3j/Screenshot-2019-01-21-16-47-47.png)
+Email Notification  
+![IoT Device Registration - Sample Email](https://i.ibb.co/KxvLW3j/Screenshot-2019-01-21-16-47-47.png)  
 
-Email Notification
-![IoT Device Registration - Sample Email](https://i.ibb.co/KxvLW3j/Screenshot-2019-01-21-16-47-47.png)
+De-Registration and IoT Device Removal  
+Administrator Email  
+![IoT Device Registration - De-Registration](https://i.ibb.co/Hn7g7VZ/Screenshot-2019-01-21-17-33-04.png)  
 
-De-Registration and IoT Device Removal
-Administrator Email
-![IoT Device Registration - De-Registration](https://i.ibb.co/Hn7g7VZ/Screenshot-2019-01-21-17-33-04.png)
-
-User Email
-![IoT Device Registration - De-Registration](https://i.ibb.co/v4Hsc5k/Screenshot-2019-01-21-17-33-56.png)
+User Email  
+![IoT Device Registration - De-Registration](https://i.ibb.co/v4Hsc5k/Screenshot-2019-01-21-17-33-56.png)  
 
 ## System Requirements
  - BlueCat Address Manager
