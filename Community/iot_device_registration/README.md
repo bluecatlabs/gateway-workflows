@@ -43,6 +43,7 @@ organisation Network Access Control using Aruba Clearpass.
 - The workflow contains a configuration file "iotipallocation.conf" that has to be configured prior to using it, the configuration includes BAM's connectivity, API User credentials, the block and network to use for the DHCP Reserved allocation, the zone for creation of the device name in DNS, email server settings for notifications and other information necessary for the workflow to workflow
 - The workflow has a UI to get the username, email address and the list of IoT Devices to be registered in CSV format
 - Format of the CSV file: name,macAddress,department,phone,location,period
+
 ![IoT Device Registration Detailed Diagram](https://i.ibb.co/GMbWL7W/Screenshot-2019-01-21-16-14-27.png)
 
 Registered IoT Device Information
