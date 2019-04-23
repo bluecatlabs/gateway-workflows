@@ -1,0 +1,11 @@
+title=IPアドレスの一括登録
+info=CSVファイルによりIPアドレスの一括登録を行う。
+success=正常に登録されました。
+file_legend=読み組むファイルを設定してください。
+title_ip_address=IPアドレス
+title_host_name=ホスト名
+title_mac_address=MACアドレス
+title_comments=備考
+label_file=ファイル:
+label_list=IPアドレス一覧:
+label_submit=登録

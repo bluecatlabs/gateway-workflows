@@ -1,0 +1,11 @@
+title=Lease History (IP Address)
+info=List lease history by IP address.
+instruction=Specify IP address for lease history search
+require_message=This field is mandatory.
+label_ip_address=IP Address:
+label_query=Search
+label_list=Lease History List:
+title_mac_address=MAC Address
+title_lease_time=Lease Time
+title_expiry_time=Expiry Time
+title_update_count=Update Count

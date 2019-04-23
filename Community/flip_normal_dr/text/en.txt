@@ -1,0 +1,10 @@
+title=Flip Main-DR Servers
+info=Flips server DNS records to DR sites.
+success=Succeed.
+instruction=Specify application group to flip
+title_full_name=FQDN
+title_state=State
+title_ip_address=IP Address
+label_application=Application:
+label_list=Server List:
+label_submit=Flip

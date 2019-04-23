@@ -1,0 +1,17 @@
+title=MACアドレスの登録
+info=MACアドレスをネットワークに接続可能な様に登録する。
+config_error=選択された設置場所には、設備が設定されていません。設置場所を確認するか、管理者にご連絡下さい。
+success=正常に登録されました。
+require_message=このフィールドは必須です。
+label_mac_address=MACアドレス:
+label_device_group=端末グループ:
+label_asset_code=資産管理番号:
+label_employee_code=従業員コード:
+label_location=設置場所:
+label_submit_date=申請日:
+label_expiry_date=利用期限:
+label_submit=登録
+label_general_group=一般
+label_design_group=設計
+label_production_group=生技
+

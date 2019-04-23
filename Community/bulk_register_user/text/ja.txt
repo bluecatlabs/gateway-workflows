@@ -1,0 +1,15 @@
+title=ユーザの一括登録
+info=CSVファイルによりユーザの一括登録を行う。
+success=正常に登録されました。
+file_legend=読み組むファイルを設定してください。
+title_user_name=ユーザ名
+title_password=パスワード
+title_email=メールアドレス
+title_last_name=姓
+title_first_name=名
+title_privilege=権限
+title_access_type=アクセスタイプ
+label_file=ファイル:
+label_list=ユーザ一覧:
+label_submit=登録
+

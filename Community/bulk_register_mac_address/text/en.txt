@@ -1,0 +1,11 @@
+title=Bulk MAC Address Registration
+info=Bulk register MAC Addresses to grant network access.
+success=Succeed.
+file_legend=Specify a file to read.
+label_asset_code=Asset Code
+label_mac_address=MAC Address
+label_employee_code=Employee Code
+label_update_date=Update Date
+label_file=File:
+label_list=MAC Address List:
+label_submit=Register

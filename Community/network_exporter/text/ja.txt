@@ -1,0 +1,13 @@
+title=ネットワークエクスーポーター
+info=選択されたネットワークをエクスポートする
+label_format=形式：
+label_contents=内容：
+title_structure=ネットワーク構造
+title_ip_address=IPアドレス
+title_both=構造およびIPアドレス
+full_text=割り振られていないIPアドレスも出力
+sheet_title_for_configuration=構成： 
+sheet_title_for_block=ブロック： 
+sheet_title_for_network=ネットワーク： 
+network_id_display_name=ネットワークID
+broadcast_display_name=ブロードキャスト
