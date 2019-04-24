@@ -44,8 +44,8 @@ organisation Network Access Control using Aruba Clearpass.
 - The workflow has a UI to get the username, email address and the list of IoT Devices to be registered in CSV format
 - Format of the CSV file: name,macAddress,department,phone,location,period  
 
-Registered IoT Device Information  
-![IoT Device Registration - Registered Device](https://i.ibb.co/KxvLW3j/Screenshot-2019-01-21-16-47-47.png)  
+Automation Detail  
+![IoT Device Registration - Setup Diagram](https://i.ibb.co/vwN1LMN/Screenshot-2019-04-12-14-32-10.png)  
 
 Email Notification  
 ![IoT Device Registration - Sample Email](https://i.ibb.co/KxvLW3j/Screenshot-2019-01-21-16-47-47.png)  
