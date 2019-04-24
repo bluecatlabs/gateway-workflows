@@ -5,11 +5,7 @@ This workflow will obtain a list of MAC addresses which the last lease expiry ti
 1. **BAM Default Configuration**  
 This workflow will be using the default configuration value in `/portal/bluecat_portal/config.py` in BlueCat Gateway container.  To set the default configuration, in BlueCat Gateway, go to Administration > Configurations > General Configuration.  
 In General Configuration, select the BAM Settings tab and enter the configuration name under "Default Configuration:" and save.  
-![screenshot](img/BAM_default_settings.jpg?raw=true "BAM_default_settings")
-
-2. **jquery redmond theme and images**  
-This workflow requires the jquery redmond theme CSS and images.  
-Copy all files under the directory `/query_unused_mac_address/additional/jquery-ui` to `/portal/static/js/vendor/jquery-ui` inside the Bluecat Gateway container.
+![screenshot](img/BAM_default_settings.jpg?raw=true "BAM_default_settings")  
 
 ## Usage  
 

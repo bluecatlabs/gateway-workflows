@@ -47,9 +47,6 @@ This workflow requires the following tag groups / tags.
 6. **Tag Object**  
 Tag the predefined network and MAC pool which was created in 3 and 4 to the tag created in 5.  
 
-7. **jquery redmond theme and images**  
-This workflow requires the jquery redmond theme CSS and images.  
-Copy all files under the directory `additional/jquery-ui` to `/portal/static/js/vendor/jquery-ui` inside the Bluecat Gateway container.
 
 ## Usage   
 
