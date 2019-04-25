@@ -27,13 +27,13 @@ Copy directories *"dnsedge"* and *"sdwan"* under `additional/` to `/portal/bluec
 1. **Set DNS Edge Parameters**  
 ![screenshot](img/sdwan_fw1.jpg?raw=true "sdwan_fw1")   
 
-Select the *DNS Edge* tab and set the following parameters:
+Select the *DNS Edge* tab and set the following parameters:  
     - DNS Edge URL:  
       This URL will be the BlueCat DNS Edge CI.  
       The URL should be in the following format:  
       *"https://api-<Your_Edge_CI_URL>"*
 
-
+abc  
     - User Name:  
       This will be the user name which will be used to login to BlueCat DNS Edge CI.  
       Typically it will be a valid e-mail address.  
