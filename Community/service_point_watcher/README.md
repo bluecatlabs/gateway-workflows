@@ -61,7 +61,7 @@ If you wish to deactivate Service Point Watcher, specify the interval to *"0"* a
 All service points which belongs to the specified CI will be listed here.  
 Service points which are **NOT** associated with an IP address will not be listed here even if it does belong to the specified CI.  
 
-The information for each column is the following.  
+Information on each column are the following.  
 - Name  
 The name of the service point.  
 It is typically a unique name followed by the first eight digits of the service point ID.   
