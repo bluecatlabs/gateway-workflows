@@ -106,7 +106,7 @@ Typically a *"Deny All Traffic"* rule will be set here so that only the updated 
 Click *"SAVE"*   
 
 4. **Set Polling Intervals**  
-![screenshot](img/sdwan_fw4.jpg?raw=true "sdwan_fw4")  
+![screenshot](img/absorbaroo4.jpg?raw=true "absorbaroo4") 
 
 Select the *Execution* tab and set polling intervals.  
 - Current Endpoint Version:  
