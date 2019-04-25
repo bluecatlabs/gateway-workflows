@@ -1,0 +1,150 @@
+<!-- Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+By: BlueCat Networks
+Date: 04-25-19
+Gateway Version: 18.10.2
+Description: SDWAN Firewall Rule Updater HTML -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/js/vendor/jqgrid/ui.jqgrid.css" />
+<link rel="stylesheet" href="css/sdwan_firewall_rule_updater_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+<p>{{ text['info'] }}</p>
+
+{% from "form_helper.html" import render_field %}
+
+<ul class="nav nav-tabs" id="myTab">
+    <li role="presentation" class="active">
+        <a id="edge-tab" href="#edge-pane" role="tab" data-toggle="tab">{{ text['label_edge_tab'] }}</a>
+    </li>
+    <li role="presentation">
+        <a id="domain-tab" href="#domain-pane" role="tab" data-toggle="tab">{{ text['label_domain_tab'] }}</a>
+    </li>
+    <li role="presentation">
+        <a id="sdwan-tab" href="#sdwan-pane" role="tab" data-toggle="tab">{{ text['label_sdwan_tab'] }}</a>
+    </li>
+    <li role="presentation">
+        <a id="execution-tab" href="#execution-pane" role="tab" data-toggle="tab">{{ text['label_execution_tab'] }}</a>
+    </li>
+</ul>
+
+<div class="panel" id="main-container">
+    <form id="sdwan_firewall_rule_updater_page_form" method="post"
+        action="{{ url_for('sdwan_firewall_rule_updatersdwan_firewall_rule_updater_sdwan_firewall_rule_updater_page_form') }}"
+            enctype="multipart/form-data" novalidate>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="edge-pane">
+                <hr/>
+                {{ render_field(form.edge_url) }}
+                {{ render_field(form.edge_username) }}
+                {{ render_field(form.edge_password) }}
+                <hr/>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="domain-pane">
+                <hr/>
+                <br/>
+                <table id="table"></table>
+                <div id="pager"></div>
+                <br/>
+                <table style="table-layout: fixed;">
+                    <tr>
+                        <td width="220">
+                            <input id="domainlist_name" type="text" placeholder="Domain List Name" size="40">
+                        </td>
+                        <td width="110">
+                            <input id="port" type="text" placeholder="80,433/Any" size="10">
+                        </td>
+                        <td width="70">
+                            <select id="protocol">
+                                <option value="TCP">TCP</option>
+                                <option value="UDP">UDP</option>
+                                <option value="ICMP">ICMP</option>
+                                <option value="Any">Any</option>
+                            </select>
+                        </td>
+                        <td width="20">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="200">
+                            <button id="add_row" type="button" class="btn-default">
+                                {{ text['label_add'] }}
+                            </button>
+                            &nbsp;
+                            <button id="delete_row" type="button" class="btn-default">
+                                {{ text['label_delete'] }}
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <hr/>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="sdwan-pane">
+                <hr/>
+                {{ render_field(form.sdwan_key) }}
+                {{ render_field(form.sdwan_orgname) }}
+                {{ render_field(form.sdwan_tmpname) }}
+                {{ render_field(form.sdwan_delimit_key) }}
+                <hr/>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="execution-pane">
+                <hr/>
+                {{ render_field(form.last_execution) }}
+                {{ render_field(form.execution_interval) }}
+                <button id="execute_now" name="execute_now" type="submit" class="btn-primary" value="execxute_now">
+                    {{ text['label_synchronize_now'] }}
+                </button>
+                &nbsp;
+                <button id="clear" name="clear" type="submit" class="btn-primary" value="clear">
+                    {{ text['label_clear'] }}
+                </button>
+                <br/>
+                <br/>
+                <hr/>
+            </div>
+        </div>
+        <!-- don't remove the following token -->
+        {{ form.csrf_token }}
+
+        <div class="row">
+            <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
+                {{ text['label_submit'] }}
+            </button>
+            &nbsp;
+            <button id="cancel" name="cancel" type="button" class="btn-default">
+                {{ text['label_cancel'] }}
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/vendor/jqgrid/jquery.jqGrid.min.js" ></script>
+<script src="js/sdwan_firewall_rule_updater_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}
