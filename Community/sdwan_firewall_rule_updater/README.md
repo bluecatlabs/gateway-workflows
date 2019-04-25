@@ -33,14 +33,12 @@ Select the *DNS Edge* tab and set the following parameters:
         The URL should be in the following format:  
         *"https://api-<Your_Edge_CI_URL>"*
 
-abc  
     - User Name:  
         This will be the user name which will be used to login to BlueCat DNS Edge CI.  
         Typically it will be a valid e-mail address.  
 
-abc  
     - Password:  
-              This will be the password to authenticate the above user name.  
+        This will be the password to authenticate the above user name.  
 
 Click *"SAVE"*   
 
@@ -55,19 +53,22 @@ Select the *SDWAN* tab and set the following parameters:
 ![screenshot](img/sdwan_fw5.jpg?raw=true "sdwan_fw5")  
 ![screenshot](img/sdwan_fw6.jpg?raw=true "sdwan_fw6")  
 
-      - Organization Name:
+abc  
+    - Organization Name:
         This corresponds to the *NETWORK* name in the Meraki cloud controller web UI.  
         Make sure it is the same name (case sensitive) as in the web UI.  
 
 ![screenshot](img/sdwan_fw7.jpg?raw=true "sdwan_fw7")  
 
-      - Template Name:  
+abc  
+    - Template Name:  
         This corresponds to the *TEMPLATES* name in the Meraki cloud controller web UI.  
         Make sure it is the same name (case sensitive) as in the web UI.  
 
 ![screenshot](img/sdwan_fw8.jpg?raw=true "sdwan_fw8")  
 
-      - Rule Delimiter Keyword(phrase):  
+abc  
+    - Rule Delimiter Keyword(phrase):  
         The updated firewall rules will be set above this keyword, meaning any rule below this keyword will not be overwritten.  
         Typically a *"Deny All Traffic"* rule will be set here so that only the updated firewall rules based on DNS Edge domain lists will be allowed through.  
 
@@ -83,7 +84,8 @@ Select the *Domain Lists* tab and set the following parameters:
         Type in a domain list to be allowed through the firewall.  
         Make sure that the specified domain list is preregistered in DNS Edge CI.  
 
-      - Ports  
+abc  
+    - Ports  
         Type in the port number to be allowed through the firewall.  
         Multiple ports can be specified with a comma, or type in *"Any"* for all ports.  
 
@@ -92,7 +94,8 @@ Select the *Domain Lists* tab and set the following parameters:
 
 Click *"ADD"* to add a domain list or *"DELETE"* to delete a domain list from the table.  
 
-      - FQDN check box
+abc  
+    - FQDN check box
         Check the FQDN check box if it is a FQDN specific domain list.  
         This means no wild cards in a domain.  
 
