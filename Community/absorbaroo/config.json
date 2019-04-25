@@ -1,0 +1,40 @@
+{
+    "o365_instance": "Worldwide",
+    "o365_client_id": "36d31b79-b010-4a0b-bc62-2030f47e536d",
+    "o365_service_areas": [
+        {
+            "name": "Exchange",
+            "display_name": "Exchange Online",
+            "check": "True"
+        },
+        {
+            "name": "Skype",
+            "display_name": "Skype for Business Online and Microsoft Teams",
+            "check": "True"
+        },
+        {
+            "name": "SharePoint",
+            "display_name": "SharePoint Online and OneDrive for Business",
+            "check": "True"
+        },
+        {
+            "name": "Common",
+            "display_name": "Microsoft 365 Common and Office Online",
+            "check": "True"
+        }
+    ],
+    "edge_url": "https://api-ce4028bf.pilot.bluec.at",
+    "edge_username": "agoto@bluecatnetworks.com",
+    "edge_password": "P@33w0rd",
+    "edge_domainlist": {
+        "name": "Office 365",
+        "edge_id": "b17edc1f-53c1-4965-91a1-edb83df8ba79"
+    },
+    "sdwan_key": "635fef0291b09d7face7a93ba839d040179371e4",
+    "sdwan_orgname": "BlueCatJapan",
+    "sdwan_tmpname": "Branch Template",
+    "sdwan_delimit_key": "Deny all outbound traffic",
+    "current_version": "",
+    "last_execution": "",
+    "execution_interval": 0
+}
