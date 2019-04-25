@@ -103,7 +103,7 @@ Select the *Execution* tab and set polling intervals.
 - Interval (sec):  
 Specify polling intervals.  
 
-If you wish to manually synchronize type in *"0"* in the interval menu and click *"SYNCHRONIZE NOW"*.  
+If you wish to manually synchronize, type in *"0"* in the interval menu and click *"SYNCHRONIZE NOW"*.  
 By clicking *"CLEAR"* the settings will be cleared.  
 
 
