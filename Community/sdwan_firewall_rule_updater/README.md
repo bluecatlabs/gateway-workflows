@@ -28,17 +28,17 @@ Copy directories *"dnsedge"* and *"sdwan"* under `additional/` to `/portal/bluec
 ![screenshot](img/sdwan_fw1.jpg?raw=true "sdwan_fw1")   
 
 Select the *DNS Edge* tab and set the following parameters:  
-    - DNS Edge URL:  
-      This URL will be the BlueCat DNS Edge CI.  
-      The URL should be in the following format:  
-      *"https://api-<Your_Edge_CI_URL>"*
+      - DNS Edge URL:  
+        This URL will be the BlueCat DNS Edge CI.  
+        The URL should be in the following format:  
+          *"https://api-<Your_Edge_CI_URL>"*  
 
-    - User Name:  
-      This will be the user name which will be used to login to BlueCat DNS Edge CI.  
-      Typically it will be a valid e-mail address.
+      - User Name:  
+        This will be the user name which will be used to login to BlueCat DNS Edge CI.  
+        Typically it will be a valid e-mail address.  
 
-    - Password:  
-      This will be the password to authenticate the above user name.  
+      - Password:  
+        This will be the password to authenticate the above user name.  
 
 Click *"SAVE"*   
 
@@ -46,28 +46,28 @@ Click *"SAVE"*
 ![screenshot](img/sdwan_fw3.jpg?raw=true "sdwan_fw3")   
 
 Select the *SDWAN* tab and set the following parameters:  
-    - API Key:  
-      This will be the api key for a certain user to login to the Meraki cloud controller via API.  
-      Make sure that API access is enabled in the Meraki cloud controller web UI and a key is generated before setting this parameter.  
+      - API Key:  
+        This will be the api key for a certain user to login to the Meraki cloud controller via API.  
+        Make sure that API access is enabled in the Meraki cloud controller web UI and a key is generated before setting this parameter.  
 
 ![screenshot](img/sdwan_fw5.jpg?raw=true "sdwan_fw5")  
 ![screenshot](img/sdwan_fw6.jpg?raw=true "sdwan_fw6")  
 
-    - Organization Name:
-      This corresponds to the *NETWORK* name in the Meraki cloud controller web UI.  
-      Make sure it is the same name (case sensitive) as in the web UI.  
+      - Organization Name:
+        This corresponds to the *NETWORK* name in the Meraki cloud controller web UI.  
+        Make sure it is the same name (case sensitive) as in the web UI.  
 
 ![screenshot](img/sdwan_fw7.jpg?raw=true "sdwan_fw7")  
 
-    - Template Name:  
-      This corresponds to the *TEMPLATES* name in the Meraki cloud controller web UI.  
-      Make sure it is the same name (case sensitive) as in the web UI.  
+      - Template Name:  
+        This corresponds to the *TEMPLATES* name in the Meraki cloud controller web UI.  
+        Make sure it is the same name (case sensitive) as in the web UI.  
 
 ![screenshot](img/sdwan_fw8.jpg?raw=true "sdwan_fw8")  
 
-    - Rule Delimiter Keyword(phrase):  
-      The updated firewall rules will be set above this keyword, meaning any rule below this keyword will not be overwritten.  
-      Typically a *"Deny All Traffic"* rule will be set here so that only the updated firewall rules based on DNS Edge domain lists will be allowed through.  
+      - Rule Delimiter Keyword(phrase):  
+        The updated firewall rules will be set above this keyword, meaning any rule below this keyword will not be overwritten.  
+        Typically a *"Deny All Traffic"* rule will be set here so that only the updated firewall rules based on DNS Edge domain lists will be allowed through.  
 
 ![screenshot](img/sdwan_fw9.jpg?raw=true "sdwan_fw9")  
 
@@ -77,22 +77,22 @@ Click *"SAVE"*
 ![screenshot](img/sdwan_fw2.jpg?raw=true "sdwan_fw2")  
 
 Select the *Domain Lists* tab and set the following parameters:  
-    - Domain List Name  
-      Type in a domain list to be allowed through the firewall.  
-      Make sure that the specified domain list is preregistered in DNS Edge CI.  
+      - Domain List Name  
+        Type in a domain list to be allowed through the firewall.  
+        Make sure that the specified domain list is preregistered in DNS Edge CI.  
 
-    - Ports  
-      Type in the port number to be allowed through the firewall.  
-      Multiple ports can be specified with a comma, or type in *"Any"* for all ports.  
+      - Ports  
+        Type in the port number to be allowed through the firewall.  
+        Multiple ports can be specified with a comma, or type in *"Any"* for all ports.  
 
-    - Protocol  
-      Choose a protocol to be allowed through the firewall from the dropdown menu.
+      - Protocol  
+        Choose a protocol to be allowed through the firewall from the dropdown menu.
 
 Click *"ADD"* to add a domain list or *"DELETE"* to delete a domain list from the table.  
 
-    - FQDN check box
-      Check the FQDN check box if it is a FQDN specific domain list.  
-      This means no wild cards in a domain.  
+      - FQDN check box
+        Check the FQDN check box if it is a FQDN specific domain list.  
+        This means no wild cards in a domain.  
 
 Click *"SAVE"*  
 
