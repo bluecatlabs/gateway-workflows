@@ -17,7 +17,7 @@ Date: 04-25-19
 Gateway Version: 18.10.2
 Description: View DB Statistics CSS */
 
-@import url("/static/js/vendor/jquery-ui/jquery-ui.min.redmond.css");
+@import url("/static/js/vendor/jquery-ui/jquery-ui.min.css");
 table.dataTable thead tr {
     color: #FCFCFC;
     background-color: #0068A4;

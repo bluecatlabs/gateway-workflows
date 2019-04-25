@@ -17,7 +17,7 @@ Date: 04-25-19
 Gateway Version: 18.10.2
 Description: SDWAN Firewall Rule Updater CSS */
 
-@import url("/js/vendor/jquery-ui/jquery-ui.min.redmond.css");
+@import url("/js/vendor/jquery-ui/jquery-ui.min.css");
 
 .ui-jqgrid .ui-jqgrid-titlebar {
     height:30px;
