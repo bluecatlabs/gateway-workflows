@@ -40,7 +40,7 @@ abc
 
 abc  
     - Password:  
-        This will be the password to authenticate the above user name.  
+              This will be the password to authenticate the above user name.  
 
 Click *"SAVE"*   
 
