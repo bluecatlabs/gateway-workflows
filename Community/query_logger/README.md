@@ -18,7 +18,7 @@ $pip3 install arrow redis apscheduler
 
 3. **Additional Python Code**  
 This workflow requires addtional python code.  
-Copy the directory *"dnsedge"* under `additional/dnsedge` to `/portal/bluecat_portal/customizations/integrations/` inside the BlueCat Gateway container.  
+Copy the directory *"dnsedge"* under `additional/` to `/portal/bluecat_portal/customizations/integrations/` inside the BlueCat Gateway container.  
 
 
 ## Usage   
@@ -31,7 +31,7 @@ Set the following parameters:
       *"https://api-<Your_Edge_CI_URL>"*
 
     - API Token:  
-      This will the API token to login to BlueCat DNS Edge CI.  
+      This will be the API token to login to BlueCat DNS Edge CI via API.  
 
     - Syslog Server IP Address:  
       This will be the IP address of the server to send the DNS query logs in a syslog format.  
