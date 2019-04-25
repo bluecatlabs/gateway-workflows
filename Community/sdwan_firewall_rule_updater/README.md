@@ -1,7 +1,7 @@
-# Meraki SDWAN Firewall Rule Updater
-This workflow will update the firewall rule on a Meraki SDWAN cloud controller based on BlueCat DNS Edge domain lists.  
-The updated rule based on the domain lists will be allowed traffic and routing through the firewall.  
-This workflow assumes there is a *"Deny All Traffic"* rule at the end in order for only the rules based on DNS Edge domain lists are allowed through.    
+# SDWAN (Meraki) Firewall Rule Updater
+This workflow will update the firewall rule on a SDWAN (Meraki) cloud controller based on BlueCat DNS Edge domain lists.  
+The updated rule based on the domain lists will be allowed traffic through the firewall.  
+This workflow assumes there is a *"Deny All Traffic"* rule at the end in order for only the firewall rules based on DNS Edge domain lists are allowed through.    
 
 ## Prerequisites
 1. **BAM Default Configuration**  
@@ -20,6 +20,13 @@ $pip3 install apscheduler
 3. **Additional Python Code**  
 This workflow requires addtional python code.  
 Copy directories *"dnsedge"* and *"sdwan"* under `additional/` to `/portal/bluecat_portal/customizations/integrations/` inside the BlueCat Gateway container.  
+
+4. **jqGrid**  
+This workflow requires jqGrid.  
+Download jqGrid from [HERE](http://www.trirand.com/blog/?page_id=6).  
+After downloading, extract the following two files: *"ui.jqgrid.css"* and *"jquery.jqGrid.min.js"*.  
+Copy the two files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
+Create a *"jqgrid"* directory if it does not exist.  
 
 
 ## Usage   
@@ -47,7 +54,7 @@ Click *"SAVE"*
 
 Select the *SDWAN* tab and set the following parameters:  
 - API Key:  
-This will be the api key for a certain user to login to the Meraki cloud controller via API.  
+This will be the API key for a specific user to login to the Meraki cloud controller via API.  
 Make sure that API access is enabled in the Meraki cloud controller web UI and a key is generated before setting this parameter.  
 
 ![screenshot](img/sdwan_fw5.jpg?raw=true "sdwan_fw5")  
@@ -66,7 +73,7 @@ Make sure it is the same name (case sensitive) as in the web UI.
 ![screenshot](img/sdwan_fw8.jpg?raw=true "sdwan_fw8")  
 
 - Rule Delimiter Keyword(phrase):  
-The updated firewall rules will be set above this keyword, meaning any rule below this keyword will not be overwritten.  
+The updated firewall rules will be set above this keyword (phrase), meaning any rule below this keyword will not be overwritten.  
 Typically a *"Deny All Traffic"* rule will be set here so that only the updated firewall rules based on DNS Edge domain lists will be allowed through.  
 
 ![screenshot](img/sdwan_fw9.jpg?raw=true "sdwan_fw9")  
