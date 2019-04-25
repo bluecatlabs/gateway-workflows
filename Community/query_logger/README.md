@@ -27,7 +27,8 @@ Copy the directory *"dnsedge"* under `additional/dnsedge` to `/portal/bluecat_po
 Set the following parameters:  
     - DNS Edge URL:  
       This URL will be the BlueCat DNS Edge CI.  
-      The URL should be *"https://api-<Your_Edge_CI_URL>"*
+      The URL should be in the following format:  
+      *"https://api-<Your_Edge_CI_URL>"*
 
     - API Token:  
       This will the API token to login to BlueCat DNS Edge CI.  
