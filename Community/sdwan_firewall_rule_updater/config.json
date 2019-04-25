@@ -1,45 +1,12 @@
 {
-    "edge_url": "https://api-ce4028bf.pilot.bluec.at",
-    "edge_username": "agoto@bluecatnetworks.com",
-    "edge_password": "P@33w0rd",
-    "edge_domainlists": [
-        {
-            "name": "Edge_list",
-            "port": "433",
-            "protocol": "TCP",
-            "fqdn": "False",
-            "edge_id": "",
-            "hash_value": ""
-        },
-        {
-            "name": "Logmein_list",
-            "port": "433",
-            "protocol": "TCP",
-            "fqdn": "False",
-            "edge_id": "",
-            "hash_value": ""
-        },
-        {
-            "name": "Endpoints_list",
-            "port": "Any",
-            "protocol": "TCP",
-            "fqdn": "True",
-            "edge_id": "",
-            "hash_value": ""
-        },
-        {
-            "name": "Meraki_list",
-            "port": "433",
-            "protocol": "TCP",
-            "fqdn": "False",
-            "edge_id": "",
-            "hash_value": ""
-        }
-    ],
-    "sdwan_key": "635fef0291b09d7face7a93ba839d040179371e4",
-    "sdwan_orgname": "BlueCatJapan",
-    "sdwan_tmpname": "Branch Template",
-    "sdwan_delimit_key": "Deny all outbound traffic",
+    "edge_url": "",
+    "edge_username": "",
+    "edge_password": "",
+    "edge_domainlists": [],
+    "sdwan_key": "",
+    "sdwan_orgname": "",
+    "sdwan_tmpname": "",
+    "sdwan_delimit_key": "",
     "last_execution": "",
     "execution_interval": 0
 }

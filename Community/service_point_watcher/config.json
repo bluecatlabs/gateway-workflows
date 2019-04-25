@@ -1,7 +1,7 @@
 {
-    "edge_url": "https://api-ce4028bf.pilot.bluec.at",
-    "edge_username": "agoto@bluecatnetworks.com",
-    "edge_password": "P@33w0rd",
+    "edge_url": "",
+    "edge_username": "",
+    "edge_password": "",
     "edge_service_points": [],
     "last_execution": "",
     "execution_interval": 0
