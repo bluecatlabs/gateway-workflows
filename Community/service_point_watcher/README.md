@@ -3,13 +3,8 @@ This workflow will list the DNS Edge Service Points which belongs to a specified
 It will only list service points which are associated with an IP address.  
 
 
-## Prerequisites
-1. **BAM Default Configuration**  
-This workflow will be using the default configuration value in `/portal/bluecat_portal/config.py` in BlueCat Gateway container.  To set the default configuration, in BlueCat Gateway, go to Administration > Configurations > General Configuration.  
-In Genera l Configuration, select the BAM Settings tab and enter the configuration name under "Default Configuration:" and save.  
-![screenshot](img/BAM_default_settings.jpg?raw=true "BAM_default_settings")  
-
-2. **Additional Python3 Library**  
+## Prerequisites  
+1. **Additional Python3 Library**  
 This workflow requires the python3 *"apscheduler"* library.  
 Install the library using PIP3 inside the BlueCat Gateway container.
 ```
@@ -17,11 +12,11 @@ $pip3 install apscheduler
 
 ```  
 
-3. **Additional Python Code**  
+2. **Additional Python Code**  
 This workflow requires addtional python code.  
 Copy the directory *"dnsedge"* and under `additional/` to `/portal/bluecat_portal/customizations/integrations/` inside the BlueCat Gateway container.  
 
-4. **jqGrid**  
+3. **jqGrid**  
 This workflow requires jqGrid.  
 Download jqGrid from [HERE](http://www.trirand.com/blog/?page_id=6).  
 After downloading, extract the following two files: *"ui.jqgrid.css"* and *"jquery.jqGrid.min.js"*.  
@@ -78,8 +73,10 @@ A green check mark will be shown if the service point is connected to the CI.
 A green X mark will be shown if the service point is not connected to the CI.  
 
 - Status  
-This shows the reachability of the service point from the Service Point Watcher.  
-A blue circle will be shown if the service point is reachable from the Service Point Watcher.  
+This shows the status and the reachability of the service point from the Service Point Watcher.  
+The status is based on the service point diagnostic API.  
+A blue circle will be shown if the status of the service point is *GOOD* and is reachable from the Service Point Watcher.  
+A red circle will be shown if the status of the service point is *BAD* and is reachable from the Service Point Watcher.  
 A red circle with a cross will be shown if the service point is unreachable from the Service Point Watcher.  
 
 3. **Service Point Diagnostic API**  

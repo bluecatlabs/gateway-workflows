@@ -2,13 +2,8 @@
 This workflow will send DNS query logs from the BlueCat DNS Edge CI (Customer Instance) to a designated Syslog server in a syslog format.   
 Only the logs that match DNS Edge policies will be sent.    
 
-## Prerequisites
-1. **BAM Default Configuration**  
-This workflow will be using the default configuration value in `/portal/bluecat_portal/config.py` in BlueCat Gateway container.  To set the default configuration, in BlueCat Gateway, go to Administration > Configurations > General Configuration.  
-In General Configuration, select the BAM Settings tab and enter the configuration name under "Default Configuration:" and save.  
-![screenshot](img/BAM_default_settings.jpg?raw=true "BAM_default_settings")  
-
-2. **Additional Python3 Library**  
+## Prerequisites  
+1. **Additional Python3 Library**  
 This workflow requires the python3 *"arrow"*, *"redis"* and the *"apscheduler"* library.  
 Install the libraries using PIP3 inside the BlueCat Gateway container.
 ```
@@ -16,7 +11,7 @@ $pip3 install arrow redis apscheduler
 
 ```  
 
-3. **Additional Python Code**  
+2. **Additional Python Code**  
 This workflow requires addtional python code.  
 Copy the directory *"dnsedge"* under `additional/` to `/portal/bluecat_portal/customizations/integrations/` inside the BlueCat Gateway container.  
 
@@ -31,7 +26,11 @@ Set the following parameters:
       *"https://api-<Your_Edge_CI_URL>"*
 
     - API Token:  
-      This will be the API token to login to BlueCat DNS Edge CI via API.  
+      This refers to the *"SIEM token"* which the primary administrator receives from DNS Edge.  
+      It is written in the initial e-mail from DNS Edge as below:  
+      ![screenshot](img/query_logger_siem_token.jpg?raw=true "query_logger_siem_token")  
+
+      If you are not a primary administrator (the administrator with an asterisk) and do not know the SIEM token, please contact the primary administrator of the CI.
 
     - Syslog Server IP Address:  
       This will be the IP address of the server to send the DNS query logs in a syslog format.  
