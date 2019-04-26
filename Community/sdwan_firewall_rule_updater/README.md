@@ -1,4 +1,7 @@
-# SDWAN (Meraki) Firewall Rule Updater
+# SDWAN (Meraki) Firewall Rule Updater  
+**Bluecat Gateway Version:** 18.10.2 and greater  
+**BlueCat DNS Edge Version:** 2018.11 and greater  
+
 This workflow will update the firewall rule on a SDWAN (Meraki) cloud controller based on BlueCat DNS Edge domain lists.  
 The updated rule based on the domain lists will be allowed traffic through the firewall.  
 This workflow assumes there is a *"Deny All Traffic"* rule at the end in order for only the firewall rules based on DNS Edge domain lists are allowed through.    
@@ -136,9 +139,9 @@ This will make the base html menus a little bit wider.
 
 
 ## Credits  
-By: Akira Goto (agoto@bluecatnetworks.com)  
+- Akira Goto (agoto@bluecatnetworks.com)  
+- Ryu Tamura (rtamura@bluecatnetworks.com)
 Date: 2019-04-25  
-Gateway Version: 18.10.2
 
 ## License
 ©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.

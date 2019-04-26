@@ -1,11 +1,19 @@
 # Lease History (MAC Address)  
+**Bluecat Gateway Version:** 18.10.2 and greater  
+**BAM Version:** 9.0.0 and greater  
+
 This workflow will list the lease history of a specific MAC Address.  
 
 ## Prerequisites
 1. **BAM Default Configuration**  
 This workflow will be using the default configuration value in `/portal/bluecat_portal/config.py` in BlueCat Gateway container.  To set the default configuration, in BlueCat Gateway, go to Administration > Configurations > General Configuration.  
 In General Configuration, select the BAM Settings tab and enter the configuration name under "Default Configuration:" and save.  
-![screenshot](img/BAM_default_settings.jpg?raw=true "BAM_default_settings")
+![screenshot](img/BAM_default_settings.jpg?raw=true "BAM_default_settings")  
+
+2. **BAM Access Configuration**  
+This workflow will access the BAM database via SQL.  
+In order to gain access to BAM you must first configure the BAM database settings to allow access the BlueCat Gateway IP address.  
+Refer to the BAM Administration Guide for more details.  
 
 ## Usage  
 
@@ -37,9 +45,9 @@ This will make the base html menus a little bit wider.
     1. Copy all files under the directory `additional/templates` to `/portal/templates` inside the Bluecat Gateway container.  
 
 ## Credits  
-By: Akira Goto (agoto@bluecatnetworks.com)  
-Date: 2019-03-14  
-Gateway Version: 18.10.2
+- Akira Goto (agoto@bluecatnetworks.com)  
+- Ryu Tamura (rtamura@bluecatnetworks.com)
+Date: 2019-04-25  
 
 ## License
 ©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.

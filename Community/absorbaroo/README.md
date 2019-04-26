@@ -1,4 +1,7 @@
-# Absorbaroo
+# Absorbaroo  
+**Bluecat Gateway Version:** 18.10.2 and greater  
+**BlueCat DNS Edge Version:** 2018.11 and greater  
+
 Absorbaroo downloads Office 365 Whitelists and syncs them to DNS Edge and Meraki SDWAN.  
 Customers using SDWAN for traffic optimization can leverage this workflow to allow safe traffic to Office 365 sites.  
 The following is a typical use case architecture:  
@@ -150,7 +153,6 @@ The Team:
 - Ryu Tamura (rtamura@bluecatnetworks.com)  
 
 Date: 2019-04-25  
-Gateway Version: 18.10.2
 
 ## License
 ©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.

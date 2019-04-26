@@ -1,4 +1,7 @@
-# Flip Main-DR Servers
+# Flip Main-DR Servers  
+**Bluecat Gateway Version:** 18.10.2 and greater  
+**BAM Version:** 9.0.0 and greater  
+
 This workflow will flip the IP addresses of a certain application (servers) from a main site to a disaster recover site while retaining the same FQDN.   
 It assumes a disaster recovery (business continuity plan) scenario.    
 
@@ -87,9 +90,9 @@ This will make the base html menus a little bit wider.
     1. Copy all files under the directory `additional/templates` to `/portal/templates` inside the Bluecat Gateway container.  
 
 ## Credits  
-By: Akira Goto (agoto@bluecatnetworks.com)  
-Date: 2019-03-14  
-Gateway Version: 18.10.2
+- Akira Goto (agoto@bluecatnetworks.com)  
+- Ryu Tamura (rtamura@bluecatnetworks.com)
+Date: 2019-04-25  
 
 ## License
 ©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.

@@ -1,4 +1,7 @@
-# Service Point Watcher
+# Service Point Watcher  
+**Bluecat Gateway Version:** 18.10.2 and greater  
+**BlueCat DNS Edge Version:** 2018.11 and greater  
+
 This workflow will list the DNS Edge Service Points which belongs to a specified CI and show certain information.  
 It will only list service points which are associated with an IP address.  
 
@@ -47,7 +50,7 @@ This will set the polling interval to DNS Edge CI.
 If you do not wish to activate Service Point Watcher, specify the interval to *"0"*.
 
 Click *"SAVE"*   
-Once saved, Service Point Watcher will be activated and will start to poll to the CI according to the polling intervals.  
+Once saved, Service Point Watcher will activate and will retrieve the necessary information from the CI. Once it retrieves the necessary information from the CI, it will start to poll to the service points according to the polling intervals.  
 If you wish to deactivate Service Point Watcher, specify the interval to *"0"* and save in the *DNS Edge Configuration* tab.  
 
 2. **Service Point List**  
@@ -108,9 +111,9 @@ This will make the base html menus a little bit wider.
 
 
 ## Credits  
-By: Akira Goto (agoto@bluecatnetworks.com)  
+- Akira Goto (agoto@bluecatnetworks.com)  
+- Ryu Tamura (rtamura@bluecatnetworks.com)
 Date: 2019-04-25  
-Gateway Version: 18.10.2
 
 ## License
 ©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.

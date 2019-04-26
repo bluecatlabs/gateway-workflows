@@ -1,4 +1,7 @@
-# Query Logger
+# Query Logger  
+**Bluecat Gateway Version:** 18.10.2 and greater  
+**BlueCat DNS Edge Version:** 2018.11 and greater  
+
 This workflow will send DNS query logs from the BlueCat DNS Edge CI (Customer Instance) to a designated Syslog server in a syslog format.   
 Only the logs that match DNS Edge policies will be sent.    
 
@@ -67,14 +70,12 @@ You can switch to a Japanese menu by doing the following.
 
 2. **Appearance**  
 This will make the base html menus a little bit wider.  
-    1. Copy all files under the directory `additional/templates` to `/portal/templates` inside the Bluecat Gateway container.
-
-
+    1. Copy all files under the directory `additional/templates` to `/portal/templates` inside the Bluecat Gateway container.  
 
 ## Credits  
-By: Akira Goto (agoto@bluecatnetworks.com)  
+- Akira Goto (agoto@bluecatnetworks.com)  
+- Ryu Tamura (rtamura@bluecatnetworks.com)
 Date: 2019-04-25  
-Gateway Version: 18.10.2
 
 ## License
 ©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
