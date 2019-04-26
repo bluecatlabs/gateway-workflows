@@ -3,13 +3,10 @@ This workflow will update the firewall rule on a SDWAN (Meraki) cloud controller
 The updated rule based on the domain lists will be allowed traffic through the firewall.  
 This workflow assumes there is a *"Deny All Traffic"* rule at the end in order for only the firewall rules based on DNS Edge domain lists are allowed through.    
 
-## Prerequisites
-1. **BAM Default Configuration**  
-This workflow will be using the default configuration value in `/portal/bluecat_portal/config.py` in BlueCat Gateway container.  To set the default configuration, in BlueCat Gateway, go to Administration > Configurations > General Configuration.  
-In General Configuration, select the BAM Settings tab and enter the configuration name under "Default Configuration:" and save.  
-![screenshot](img/BAM_default_settings.jpg?raw=true "BAM_default_settings")  
+![screenshot](img/sdwan_updater_diagram.jpg?raw=true "sdwan_updater_diagram")  
 
-2. **Additional Python3 Library**  
+## Prerequisites  
+1. **Additional Python3 Library**  
 This workflow requires the python3 *"apscheduler"* library.  
 Install the library using PIP3 inside the BlueCat Gateway container.
 ```
@@ -17,11 +14,11 @@ $pip3 install apscheduler
 
 ```  
 
-3. **Additional Python Code**  
+2. **Additional Python Code**  
 This workflow requires addtional python code.  
 Copy directories *"dnsedge"* and *"sdwan"* under `additional/` to `/portal/bluecat_portal/customizations/integrations/` inside the BlueCat Gateway container.  
 
-4. **jqGrid**  
+3. **jqGrid**  
 This workflow requires jqGrid.  
 Download jqGrid from [HERE](http://www.trirand.com/blog/?page_id=6).  
 After downloading, extract the following two files: *"ui.jqgrid.css"* and *"jquery.jqGrid.min.js"*.  
@@ -98,8 +95,9 @@ Choose a protocol to be allowed through the firewall from the dropdown menu.
 Click *"ADD"* to add a domain list or *"DELETE"* to delete a domain list from the table.  
 
 - FQDN check box  
-Check the FQDN check box if it is a FQDN specific domain list.  
-This means no wild cards in a domain.  
+By default, the SDWAN (Meraki) Firewall Rule Updater will update all domains with a prefix asterisk wildcard followed by a dot.   
+For example by default, a domain `bc.acme.com` in a domain list will be updated as `*.bc.acme.com` in the firewall rule.   
+If you do not wish to add the prefix in the firewall rule, check the FQDN check box.   
 
 Click *"SAVE"*  
 
@@ -110,7 +108,8 @@ Select the *Execution* tab and set polling intervals.
 - Interval (sec):  
 Specify polling intervals.  
 
-If you wish to manually synchronize, type in *"0"* in the interval menu and click *"SYNCHRONIZE NOW"*.  
+Click *"SYNCHRONIZE NOW"* to synchronize and activate updater.  
+If you wish to manually synchronize once without continuous intervals, type in *"0"* in the interval menu and click *"SYNCHRONIZE NOW"*.  
 By clicking *"CLEAR"* the settings will be cleared.  
 
 
