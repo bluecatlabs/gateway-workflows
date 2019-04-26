@@ -6,13 +6,8 @@ The following is a typical use case architecture:
 ![screenshot](img/absorbaroo_diagram.png?raw=true "absorbaroo_diagram")  
 
 
-## Prerequisites
-1. **BAM Default Configuration**  
-This workflow will be using the default configuration value in `/portal/bluecat_portal/config.py` in BlueCat Gateway container.  To set the default configuration, in BlueCat Gateway, go to Administration > Configurations > General Configuration.  
-In Genera l Configuration, select the BAM Settings tab and enter the configuration name under "Default Configuration:" and save.  
-![screenshot](img/BAM_default_settings.jpg?raw=true "BAM_default_settings")  
-
-2. **Additional Python3 Library**  
+## Prerequisites  
+1. **Additional Python3 Library**  
 This workflow requires the python3 *"apscheduler"* library.  
 Install the library using PIP3 inside the BlueCat Gateway container.
 ```
@@ -20,11 +15,11 @@ $pip3 install apscheduler
 
 ```  
 
-3. **Additional Python Code**  
+2. **Additional Python Code**  
 This workflow requires addtional python code.  
 Copy directories *"dnsedge"*, *"sdwan"* and *"o365"* under `additional/` to `/portal/bluecat_portal/customizations/integrations/` inside the BlueCat Gateway container.  
 
-4. **jqGrid**  
+3. **jqGrid**  
 This workflow requires jqGrid.  
 Download jqGrid from [HERE](http://www.trirand.com/blog/?page_id=6).  
 After downloading, extract the following two files: *"ui.jqgrid.css"* and *"jquery.jqGrid.min.js"*.  
@@ -106,7 +101,7 @@ Typically a *"Deny All Traffic"* rule will be set here so that only the updated 
 Click *"SAVE"*   
 
 4. **Set Polling Intervals**  
-![screenshot](img/absorbaroo4.jpg?raw=true "absorbaroo4") 
+![screenshot](img/absorbaroo4.jpg?raw=true "absorbaroo4")
 
 Select the *Execution* tab and set polling intervals.  
 - Current Endpoint Version:  
@@ -118,9 +113,9 @@ The last synchronized time will be shown here.
 - Interval (sec):  
 Specify polling intervals.  
 
-Click *"SYNCHRONIZE NOW"* to synchronize and start intervals.  
-If you wish to manually synchronize once without intervals, type in *"0"* in the interval menu and click *"SYNCHRONIZE NOW"*.  
-By clicking *"CLEAR"* the settings will be cleared.  
+Click *"SYNCHRONIZE NOW"* to synchronize and activate updater.  
+If you wish to manually synchronize once without continuous intervals, type in *"0"* in the interval menu and click *"SYNCHRONIZE NOW"*.  
+By clicking *"CLEAR"* the settings will be cleared.   
 
 ---
 
