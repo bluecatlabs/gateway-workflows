@@ -1,6 +1,6 @@
 {
-    "o365_instance": "Worldwide",
-    "o365_client_id": "36d31b79-b010-4a0b-bc62-2030f47e536d",
+    "o365_instance": "",
+    "o365_client_id": "",
     "o365_service_areas": [
         {
             "name": "Exchange",
@@ -23,17 +23,17 @@
             "check": "True"
         }
     ],
-    "edge_url": "https://api-ce4028bf.pilot.bluec.at",
-    "edge_username": "agoto@bluecatnetworks.com",
-    "edge_password": "P@33w0rd",
+    "edge_url": "",
+    "edge_username": "",
+    "edge_password": "",
     "edge_domainlist": {
-        "name": "Office 365",
-        "edge_id": "b17edc1f-53c1-4965-91a1-edb83df8ba79"
+        "name": "",
+        "edge_id": ""
     },
-    "sdwan_key": "635fef0291b09d7face7a93ba839d040179371e4",
-    "sdwan_orgname": "BlueCatJapan",
-    "sdwan_tmpname": "Branch Template",
-    "sdwan_delimit_key": "Deny all outbound traffic",
+    "sdwan_key": "",
+    "sdwan_orgname": "",
+    "sdwan_tmpname": "",
+    "sdwan_delimit_key": "",
     "current_version": "",
     "last_execution": "",
     "execution_interval": 0
