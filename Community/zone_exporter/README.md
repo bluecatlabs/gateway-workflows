@@ -115,7 +115,7 @@ You can switch to a Japanese menu by doing the following.
 This will make the base html menus a little bit wider.  
     1. Copy all files under the directory `additional/templates` to `/portal/templates` inside the Bluecat Gateway container.
 
-## Credits  
+## Author   
 - Akira Goto (agoto@bluecatnetworks.com)  
 - Ryu Tamura (rtamura@bluecatnetworks.com)   
 

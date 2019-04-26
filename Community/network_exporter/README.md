@@ -136,7 +136,7 @@ This will make the base html menus a little bit wider.
 
 
 
-## Credits  
+## Author    
 - Akira Goto (agoto@bluecatnetworks.com)  
 - Ryu Tamura (rtamura@bluecatnetworks.com)  
 
