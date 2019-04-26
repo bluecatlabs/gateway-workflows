@@ -63,8 +63,7 @@ This will make the base html menus a little bit wider.
 
 ## Credits  
 - Akira Goto (agoto@bluecatnetworks.com)  
-- Ryu Tamura (rtamura@bluecatnetworks.com)
-Date: 2019-04-25  
+- Ryu Tamura (rtamura@bluecatnetworks.com)  
 
 
 ## License
