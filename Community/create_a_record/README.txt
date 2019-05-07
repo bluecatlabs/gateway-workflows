@@ -26,7 +26,7 @@ Installation Directions:
 REST Examples:
     *** Call the workflow endpoint ***
     -------------------------------------------------------------------------------------------------------------------------------------
-    curl -X GET <gateway_ip>/create_a_record/create_a_record_endpoint
+    curl -X POST <gateway_ip>/create_a_record/create_a_record_endpoint
          -H "Content-Type: application/json"
          -H "Auth: Basic <token>"
          -d '{
