@@ -12,7 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-By: Murtaza Haider (mhaider@bluecatnetworks.com)
+By: Murtaza Haider 
 Date: 29-03-2019
 Gateway Version: 18.12.1
 Description: Add a MAC Address to Address Manager and optionally add the MAC address to a MAC Pool
