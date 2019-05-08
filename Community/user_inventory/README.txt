@@ -12,7 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-By: Murtaza Haider (mhaider@bluecatnetworks.com)
+By: Murtaza Haider 
 Date: 28-03-2019
 Gateway Version: 18.12.1
 Description: REST workflow that generates a list of BAM users and their permissions. Output report is in CSV format and
