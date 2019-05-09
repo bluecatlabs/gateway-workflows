@@ -1,0 +1,17 @@
+IPs:
+    view: "automation"
+    iplist: ["12.0.0.1", "12.0.0.2", "12.0.0.3"]
+
+VIEW_MISSING:
+    iplist: ["12.0.0.1", "12.0.0.2", "12.0.0.3"]
+
+IP_LIST_MISSING:
+    view: "automation"
+
+VIEW_NOT_EXIST:
+    view: "view_not_exist"
+    iplist: ["12.0.0.1", "12.0.0.2", "12.0.0.3"]
+
+IP_NOT_AVAILABLE:
+    view: "automation"
+    iplist: ["10.0.0.1"]

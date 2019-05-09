@@ -1,0 +1,34 @@
+[
+    {
+        "id": 101734,
+		"entityId": 152397,
+        "type": "DHCPClient",
+        "name": "time-offset",
+        "value": "30",
+        "properties": "inherited=false|"
+    },
+	{
+        "id": 101735,
+		"entityId": 152400,
+        "type": "DHCPClient",
+        "name": "time-offset",
+        "value": "30",
+        "properties": "inherited=false|"
+    },
+	{
+        "id": 101736,
+		"entityId": 152398,
+        "type": "DHCPClient",
+        "name": "time-offset",
+        "value": "30",
+        "properties": "inherited=false|"
+    },
+	{
+        "id": 101737,
+		"entityId": 152401,
+        "type": "DHCPClient",
+        "name": "time-offset",
+        "value": "30",
+        "properties": "inherited=false|"
+    }
+]

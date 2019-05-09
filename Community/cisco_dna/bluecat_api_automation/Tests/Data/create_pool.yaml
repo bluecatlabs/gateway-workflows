@@ -1,0 +1,57 @@
+IPV4:
+    view: "auto_view"
+    poolName: "auto_pool"
+    poolCidr: "10.0.0.0/8"
+    DHCPServerip: ["192.168.88.117", "192.168.88.118"]
+    DNSServerip: ["192.168.88.117", "192.168.88.118"]
+    ClientOptions: [{key: "time-offset", keyValue: "30"}]
+
+IPV6:
+    view: "auto_view"
+    poolName: "auto_pool"
+    poolCidr: "2001::/8"
+    DHCPServerip: ["192.168.88.117", "192.168.88.118"]
+    DNSServerip: ["192.168.88.117", "192.168.88.118"]
+    ClientOptions: [{key: "time-offset", keyValue: "30"}]
+
+
+VIEW_MISSING:
+    poolName: "auto_pool"
+    poolCidr: "10.0.0.0/8"
+
+POOLNAME_MISSING:
+    poolCidr: "10.0.0.0/8"
+    view: "automation"
+
+POOLCIDR_MISSING:
+    poolName: "auto_pool"
+    view: "auto_view"
+
+POOL_EXIST:
+    view: "automation"
+    poolName: "auto_pool"
+    poolCidr: "10.0.0.0/8"
+
+SUBPOOL_EXIST:
+    view: "automation"
+    poolName: "auto"
+    poolCidr: "10.0.0.0/16"
+
+
+POOL_INVALID_DHCP_SERVER:
+    view: "auto_view"
+    poolName: "auto_pool"
+    poolCidr: "10.0.0.0/8"
+    DHCPServerip: ["192.168.88.119"]
+
+POOL_INVALID_DSN_SERVER:
+    view: "auto_view"
+    poolName: "auto_pool"
+    poolCidr: "10.0.0.0/8"
+    DHCPServerip: ["192.168.88.119"]
+
+POOL_INVALID_CLIENT_OPTION:
+    view: "auto_view"
+    poolName: "auto_pool"
+    poolCidr: "10.0.0.0/8"
+    ClientOptions: [{"key":"time-offset-wrong", "keyValue":"30"}]
