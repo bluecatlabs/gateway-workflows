@@ -10,11 +10,12 @@ from bluecat.api_exception import AuthenticationError, PortalException, APIExcep
 from bluecat.constants import MAX_COUNT
 from bluecat.entity import Entity
 from bluecat.util import properties_to_map, map_to_properties
-from .ipam_exception import IpPoolBadRequestException, IpPoolAlreadyExistsException, \
-    IpPoolInUseException, IpSubpoolNotEmptyException, IpSubpoolAlreadyExistsException, IpAddressNotAvailableException
 from flask import request, g, jsonify, Response, flash
 from main_app import app
 from netaddr import IPNetwork
+
+from .ipam_exception import IpPoolBadRequestException, IpPoolAlreadyExistsException, \
+    IpPoolInUseException, IpSubpoolNotEmptyException, IpSubpoolAlreadyExistsException, IpAddressNotAvailableException
 
 
 @app.before_request
@@ -51,7 +52,7 @@ def get_token():
     except PortalException as con_err:
         return Response(con_err.__str__(), status=408)
     except Exception as ex:
-        return Response(ex.message, status=400)
+        return Response(ex.__str__(), status=400)
 
 
 @route(app, '/ipam/pool', methods=['POST'])
@@ -102,7 +103,7 @@ def create_pool():
     except IpPoolAlreadyExistsException as exist_err:
         return Response(exist_err.description, status=405)
     except Exception as ex:
-        return Response(ex.message, status=400)
+        return Response(ex.__str__(), status=400)
 
     keys = args.keys()
     options_message = []
@@ -191,7 +192,7 @@ def create_subpool():
     except IpSubpoolAlreadyExistsException as exist_err:
         return Response(exist_err.description, status=405)
     except Exception as ex:
-        return Response(ex.message, status=400)
+        return Response(ex.__str__(), status=400)
 
     keys = args.keys()
     options_message = []
@@ -256,7 +257,7 @@ def get_views():
     except PortalException as con_err:
         return Response(con_err.__str__(), status=408)
     except Exception as ex:
-        return Response(ex.message, status=400)
+        return Response(ex.__str__(), status=400)
 
 
 @route(app, '/ipam/ippool/<string:view>')
@@ -305,7 +306,7 @@ def release_pool(view, poolcidr):
 
         return Response(status=200)
     except IpPoolBadRequestException as ex:
-        return Response(ex.message, status=400)
+        return Response(ex.description, status=400)
 
 
 def create_configuration(name):
@@ -743,7 +744,7 @@ def assign_ip():
 
         config = g.user.get_api()._api_client.service.getEntityByName(0, view, Entity.Configuration)
         if config['type'] is None:
-            raise Exception('View \'{0}\' is not exist'.format(view))
+            raise Exception('View \'{0}\' does not exist'.format(view))
         config_id = config['id']
 
         # MAKE_RESERVED, MAKE_STATIC
@@ -756,7 +757,7 @@ def assign_ip():
     except IpAddressNotAvailableException as avai_err:
         return Response(avai_err.description, status=405)
     except Exception as ex:
-        return Response(ex.message, status=400)
+        return Response(ex.__str__(), status=400)
 
 
 def is_assigned(config_id, ip_address):
@@ -798,7 +799,7 @@ def release_ip(view):
                 g.user.get_api()._api_client.service.delete(id)
         return Response(status=200)
     except Exception as ex:
-        return Response(ex.message, status=400)
+        return Response(ex.__str__(), status=400)
 
 
 @route(app, '/ipam/subpool/<string:view>/<string:poolcidr>', methods=['DELETE'])
@@ -817,7 +818,7 @@ def release_subpool(view, poolcidr):
         g.user.get_api()._api_client.service.delete(pool['id'])
         return Response(status=200)
     except IpPoolBadRequestException as ex:
-        return Response(ex.message, status=400)
+        return Response(ex.description, status=400)
 
 
 def get_gateway_under_network(network_id):

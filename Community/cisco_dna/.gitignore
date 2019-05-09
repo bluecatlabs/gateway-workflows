@@ -1,9 +1,8 @@
 Administration/
 Examples/
-__init__.py
 *.pyc
 test_workflow_ui/
-
+Community/
 bluecat_api_automation/output.xml
 bluecat_api_automation/log.html
 bluecat_api_automation/report.html
