@@ -1,0 +1,65 @@
+[
+	{
+		"parentId": 152336,
+        "id": 152350,
+        "name": "auto_1",
+        "type": "IP4Block",
+        "properties": "CIDR=10.0.0.0/8|allowDuplicateHost=disable|inheritAllowDuplicateHost=false|pingBeforeAssign=disable|inheritPingBeforeAssign=false|locationInherited=true|inheritDefaultDomains=true|inheritDefaultView=true|inheritDNSRestrictions=true|"
+    },
+    {
+		"parentId": 152350,
+        "id": 152396,
+        "name": "auto_2",
+        "type": "IP4Block",
+        "properties": "CIDR=10.0.0.0/10|allowDuplicateHost=disable|inheritAllowDuplicateHost=true|pingBeforeAssign=disable|inheritPingBeforeAssign=true|locationInherited=true|inheritDefaultDomains=true|inheritDefaultView=true|inheritDNSRestrictions=true|"
+    },
+    {
+		"parentId": 152396,
+        "id": 152397,
+        "name": null,
+        "type": "IP4Block",
+        "properties": "CIDR=10.0.0.0/16|allowDuplicateHost=disable|inheritAllowDuplicateHost=true|pingBeforeAssign=disable|inheritPingBeforeAssign=true|locationInherited=true|inheritDefaultDomains=true|inheritDefaultView=true|inheritDNSRestrictions=true|"
+    },
+    {
+		"parentId": 152397,
+        "id": 152398,
+        "name": null,
+        "type": "IP4Network",
+        "properties": "CIDR=10.0.0.0/20|allowDuplicateHost=disable|inheritAllowDuplicateHost=true|pingBeforeAssign=disable|inheritPingBeforeAssign=true|locationInherited=true|gateway=10.0.0.1|inheritDefaultDomains=true|inheritDefaultView=true|inheritDNSRestrictions=true|"
+    },
+    {
+		"parentId": 152336,
+        "id": 152400,
+        "name": "auto_3",
+        "type": "IP4Block",
+        "properties": "CIDR=11.0.0.0/8|allowDuplicateHost=disable|inheritAllowDuplicateHost=false|pingBeforeAssign=disable|inheritPingBeforeAssign=false|locationInherited=true|inheritDefaultDomains=true|inheritDefaultView=true|inheritDNSRestrictions=true|"
+    },
+    {
+		"parentId": 152400,
+        "id": 152401,
+        "name": null,
+        "type": "IP4Block",
+        "properties": "CIDR=11.0.0.0/16|allowDuplicateHost=disable|inheritAllowDuplicateHost=true|pingBeforeAssign=disable|inheritPingBeforeAssign=true|locationInherited=true|inheritDefaultDomains=true|inheritDefaultView=true|inheritDNSRestrictions=true|"
+    },
+	{
+		"parentId": 152401,
+        "id": 152402,
+        "name": "auto_4",
+        "type": "IP4Network",
+        "properties": "CIDR=11.0.0.0/24|allowDuplicateHost=disable|inheritAllowDuplicateHost=true|pingBeforeAssign=disable|inheritPingBeforeAssign=true|locationInherited=true|gateway=11.0.0.1|inheritDefaultDomains=true|inheritDefaultView=true|inheritDNSRestrictions=true|"
+    },
+    {
+		"parentId": 152336,
+        "id": 152337,
+        "name": "Global Unicast Address Space",
+        "type": "IP6Block",
+        "properties": "prefix=2000::/3|locationInherited=true|"
+    },
+    {
+		"parentId": 152336,
+        "id": 152338,
+        "name": "Unique Local Address Space",
+        "type": "IP6Block",
+        "properties": "prefix=FC00::/6|locationInherited=true|"
+    }
+]

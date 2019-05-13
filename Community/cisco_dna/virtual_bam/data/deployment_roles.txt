@@ -1,0 +1,82 @@
+[
+    {
+        "id": 101730,
+        "entityId": 152350,
+        "serverInterfaceId": 101357,
+        "type": "MASTER",
+        "service": "DHCP",
+        "properties": "readOnly=false|inherited=false|"
+    },
+    {
+        "id": 101731,
+        "entityId": 152350,
+        "serverInterfaceId": 101381,
+        "type": "NONE",
+        "service": "DHCP",
+        "properties": "readOnly=false|inherited=false|"
+    },
+    {
+        "id": 101732,
+        "entityId": 152350,
+        "serverInterfaceId": 101357,
+        "type": "MASTER",
+        "service": "DNS",
+        "properties": "readOnly=false|view=101444|nsRecordTTL=86400|inherited=false|"
+    },
+    {
+        "id": 101733,
+        "entityId": 152350,
+        "serverInterfaceId": 101381,
+        "type": "NONE",
+        "service": "DNS",
+        "properties": "readOnly=false|view=101444|inherited=false|"
+    },
+	{
+        "id": 101730,
+        "entityId": 152396,
+        "serverInterfaceId": 101357,
+        "type": "MASTER",
+        "service": "DHCP",
+        "properties": "readOnly=false|inherited=false|"
+    },
+    {
+        "id": 101731,
+        "entityId": 152396,
+        "serverInterfaceId": 101381,
+        "type": "NONE",
+        "service": "DHCP",
+        "properties": "readOnly=false|inherited=false|"
+    },
+    {
+        "id": 101732,
+        "entityId": 152397,
+        "serverInterfaceId": 101357,
+        "type": "MASTER",
+        "service": "DNS",
+        "properties": "readOnly=false|view=101444|nsRecordTTL=86400|inherited=false|"
+    },
+    {
+        "id": 101733,
+        "entityId": 152397,
+        "serverInterfaceId": 101381,
+        "type": "NONE",
+        "service": "DNS",
+        "properties": "readOnly=false|view=101444|inherited=false|"
+    },
+	{
+        "id": 101730,
+        "entityId": 152398,
+        "serverInterfaceId": 101357,
+        "type": "MASTER",
+        "service": "DHCP",
+        "properties": "readOnly=false|inherited=false|"
+    },
+    {
+        "id": 101732,
+        "entityId": 152398,
+        "serverInterfaceId": 101357,
+        "type": "MASTER",
+        "service": "DNS",
+        "properties": "readOnly=false|view=101444|nsRecordTTL=86400|inherited=false|"
+    }
+]

@@ -1,0 +1,116 @@
+[
+    {
+        "id": 102728,
+        "name": "DemoConfig",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 102803,
+        "name": "new",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 102824,
+        "name": "meoConfig",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 102881,
+        "name": "Testing_Org1",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 103023,
+        "name": "testgen4",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 104572,
+        "name": "oanhtest",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 104606,
+        "name": "PST3",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 104999,
+        "name": "dantest",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 109937,
+        "name": "545",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 109989,
+        "name": "dcdung config",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 110025,
+        "name": "zte",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 110381,
+        "name": "red_test",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 116668,
+        "name": "NhonConfig",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 117641,
+        "name": "dungConfig1",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 117662,
+        "name": "Config1",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 117722,
+        "name": "Config2",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 117762,
+        "name": "Config3",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 123733,
+        "name": "DNSAnalysis",
+        "type": "Configuration",
+        "properties": null
+    },
+    {
+        "id": 152336,
+        "name": "automation",
+        "type": "Configuration",
+        "properties": null
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "id": 101356,
+        "name": "auto-bdds",
+        "type": "Server",
+        "properties": "defaultInterfaceAddress=192.168.88.117|fullHostName=auto-bdds|profile=ADONIS_XMB3|"
+    },
+    {
+        "id": 101380,
+        "name": "auto-bdds-2",
+        "type": "Server",
+        "properties": "defaultInterfaceAddress=192.168.88.118|servicesIPv4Address=192.168.88.118|fullHostName=auto-bdds-2|profile=DNS_DHCP_SERVER_20|"
+    }
+]
