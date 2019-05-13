@@ -1,6 +1,6 @@
 # Cisco DNA Integration Automation Test
 
-> This repository contains the tests for VitalQIP Application
+> This component contains the tests for Cisco DNA Workflow
 Requirements: Python 3.7
 
 ## How to start
