@@ -17,4 +17,4 @@ Date: 03-05-2019
 Gateway Version: 18.10
 Description: Gateway workflow to be IPAM interface to integrate with Cisco DNA Centre
 
-Refer 'CiscoDNA - BlueCat gateway Integration Guideline.pdf' for more detail
+Refer to 'CiscoDNA - BlueCat Gateway Integration Guideline.pdf' for more information.
