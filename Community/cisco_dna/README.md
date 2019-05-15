@@ -10,6 +10,12 @@ In SD-Access deployments, BlueCat integration provides:
 
 - When configuring new IP address pools in Cisco DNA Center, the pools populate to the BlueCat Address Manager, reducing manual IP address management tasks.
 
+# System Requirements
+
+- BlueCat Address Manager
+- BlueCat Gateway
+- Cisco DNA Center
+
 ## Installation
 
 #### Installing the BlueCat DNA Center workflow into BlueCat Gateway™
