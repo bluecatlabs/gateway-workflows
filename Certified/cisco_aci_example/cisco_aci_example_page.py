@@ -13,9 +13,9 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2018-09-27
-# Gateway Version: 18.10.1
-# Description: Example Gateway workflows
+# Date: 2018-05-15
+# Gateway Version: 19.5.1
+# Description: Certified Gateway workflows
 
 """
 Cisco ACI page

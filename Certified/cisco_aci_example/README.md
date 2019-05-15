@@ -1,4 +1,4 @@
-# **Example Cisco ACI Workflow**
+# **Certified Cisco ACI Workflow**
 This workflow applies to BlueCat customers who have transitioned to the Cisco ACI infrastructure for their data centers.
 
 ### Requirements
@@ -6,7 +6,7 @@ This workflow applies to BlueCat customers who have transitioned to the Cisco AC
 **BAM version:** 9.1.0 and greater <br/>
 
 ### Description/Example Usage
-This Certified Example Cisco ACI workflow allows you to populate Address Manager with data from your CISCO ACI environment. Using this workflow, you can import ACI Tenants and their infrastructure as well as ACI Fabric Devices into Address Manager for visibility alongside your DNS, DHCP, and IPAM infrastructure in BAM.
+This Certified Cisco ACI workflow allows you to populate Address Manager with data from your Cisco ACI environment. Using this workflow, you can import ACI Tenants and their infrastructure as well as ACI Fabric Devices into Address Manager for visibility alongside your DNS, DHCP, and IPAM infrastructure in BAM.
 
 You can import the following:
   * ACI Fabric Devices
@@ -45,7 +45,7 @@ You can search for Cisco ACI tenants in the infrastructure by providing your Cis
 
 To use the Cisco ACI workflow:
 1. Log in to BlueCat Gateway.
-2. Click **Examples > Cisco ACI**.
+2. Click **Certified > Cisco ACI**.
 3. In the fields, enter your APIC IP address, username, and password.
 4. [Optional] Import the ACI Fabric. Perform this step if you want to import APIC, SPINE, and LEAF devices to the selected BAM configuration.
 
@@ -80,7 +80,7 @@ ___
 
 **Do I need Cisco ACI credentials to use this workflow?**
 
-Yes. You must have ACI credentials to use this workflow. Contact your CISCO administrator to obtain credentials. You cannot search for tenants without these credentials.
+Yes. You must have ACI credentials to use this workflow. Contact your Cisco administrator to obtain credentials. You cannot search for tenants without these credentials.
 
 **Can I use an earlier version of Address Manager?**
 
@@ -88,15 +88,15 @@ You can only use Address Manager v9.1.0 or greater. Earlier versions are not com
 
 **Can I deploy changes I've made to my tenants in BAM to my ACI environment?**
 
-No. Currently, the ACI workflow only imports ACI Tenants and Fabric Devices into Address Manager, and cannot push changes back to the ACI environment.
+No. Currently, the Cisco ACI workflow only imports ACI Tenants and Fabric Devices into Address Manager, and cannot push changes back to the ACI environment.
 
 **How do I troubleshoot error messages?**
 
-Each section of the ACI workflow will display error messages relevant to that section. For example, if you have the wrong ACI credentials, you will see the appropriate error message in the UI. If you still cannot resolve the issue based on the UI error message, please refer to the log files for more detailed information.
+Each section of the Cisco ACI workflow will display error messages relevant to that section. For example, if you have the wrong ACI credentials, you will see the appropriate error message in the UI. If you still cannot resolve the issue based on the UI error message, please refer to the log files for more detailed information.
 
 **Why can't I import ACI Fabric Devices? I'm getting an error message in the UI.**
 
-When importing ACI Fabric Devices however, you might see the following error message:
+When importing ACI Fabric Devices, you might see the following error message:
 
 ```
 An error occurred! Please check the user logs for the
