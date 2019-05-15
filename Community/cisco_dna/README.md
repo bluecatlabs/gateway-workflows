@@ -13,7 +13,7 @@ In SD-Access deployments, BlueCat integration provides:
 # System Requirements
 
 - BlueCat Address Manager
-- BlueCat Gateway
+- BlueCat Gateway 18.10+
 - Cisco DNA Center
 
 ## Installation
