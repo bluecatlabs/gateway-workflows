@@ -1,9 +1,16 @@
 ![alt text](logo.png "logo")
 
 # BlueCat Cisco DNA IPAM Driver
-The BlueCat Cisco DNA IPAM Driver consists of three Python-based components:
+The BlueCat Cisco DNA IPAM Driver consists of BlueCat Gateway Workflow which integrates with Cisco DNA Center
+BlueCat Integration provides the ability to see network IP address scopes and determine the scopes that the enterprise owns directly within the DNA Center or the BlueCat Address Manager interface.
+
+In SD-Access deployments, BlueCat integration provides:
+● Access to existing IP address scopes, referred to as IP address pools in Cisco DNA Center. In BlueCat Address Manager DNAC global-pools are represented as network blocks and sub-pools as Networks (subnets)
+● When configuring new IP address pools in Cisco DNA Center, the pools populate to the BlueCat Address Manager, reducing manual IP address management tasks.
 
 ## Installation
+
+#### Installing the BlueCat DNA Center workflow into BlueCat Gateway™
 
 #### Prepare Cisco DNA Center™ 
 
