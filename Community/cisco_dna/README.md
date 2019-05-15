@@ -1,3 +1,14 @@
+![alt text](logo.png "logo")
+
+# BlueCat Cisco DNA IPAM Driver
+The BlueCat Cisco DNA IPAM Driver consists of three Python-based components:
+
+## Installation
+
+#### Prepare Cisco DNA Center™ 
+
+## Usage
+
 Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,4 +28,4 @@ Date: 03-05-2019
 Gateway Version: 18.10
 Description: Gateway workflow to be IPAM interface to integrate with Cisco DNA Centre
 
-Refer to 'CiscoDNA - BlueCat Gateway Integration Guideline.pdf' for more information.
+
