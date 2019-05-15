@@ -20,6 +20,9 @@ In SD-Access deployments, BlueCat integration provides:
 
 #### Installing the BlueCat DNA Center workflow into BlueCat Gateway™
 
+    # sudo docker exec bluecat_gateway pip install netaddr --user 
+    # sudo docker container restart bluecat_gateway
+
 #### Prepare Cisco DNA Center™ 
 
 ## Usage
