@@ -6,9 +6,9 @@ BlueCat Integration provides the ability to see network IP address scopes and de
 
 In SD-Access deployments, BlueCat integration provides:
 
-● Access to existing IP address scopes, referred to as IP address pools in Cisco DNA Center. In BlueCat Address Manager DNAC global-pools are represented as network blocks and sub-pools as Networks (subnets)
+    ● Access to existing IP address scopes, referred to as IP address pools in Cisco DNA Center. In BlueCat Address Manager DNAC global-pools are represented as network blocks and sub-pools as Networks (subnets)
 
-● When configuring new IP address pools in Cisco DNA Center, the pools populate to the BlueCat Address Manager, reducing manual IP address management tasks.
+    ● When configuring new IP address pools in Cisco DNA Center, the pools populate to the BlueCat Address Manager, reducing manual IP address management tasks.
 
 ## Installation
 
