@@ -65,10 +65,10 @@ Note :- Earlier DNA centre releases will show BLUECAT as an IPAM provider, this 
 
 # Usage
 
-Creating or Importing existing Global Pools
-Releasing Global Pools
-Creating or Importing existing Sub-Pools
-Releasing Sub-Pools
+#### Creating or Importing existing Global Pools
+#### Releasing Global Pools
+#### Creating or Importing existing Sub-Pools
+#### Releasing Sub-Pools
 
 
 Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
