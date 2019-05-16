@@ -18,7 +18,7 @@ In SD-Access deployments, BlueCat DNA Center integration provides:
 - BlueCat Gateway 18.10+
 - Cisco DNA Center
 
-## Installation
+# Installation
 
 #### Installing the BlueCat DNA Center workflow into BlueCat Gateway™
 
