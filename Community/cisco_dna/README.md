@@ -41,7 +41,8 @@ Access the BlueCat Gateway interface using the URL address and login.
 - Select Administration\Workflow Export\Import
 - Click browse file and choose cisco_dna.tar.gz created above
 - Click Import button and then restart the bluecat_gateway container
-- Re-login to Gateway and select Administration\Workflow Permissions 5. Select ipam
+- Re-login to Gateway and select Administration\Workflow Permissions
+- Select ipam
 - Select ipam_page
 - Select all in the New Group Name field
 - Click the ADD button.
