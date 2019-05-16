@@ -49,11 +49,11 @@ Access the BlueCat Gateway interface using the URL address and login.
 
 #### Prepare Cisco DNA Center™ 
 
-The BlueCat Cisco DNA support can be either enabled when the Cisco DNA centre solition is first install OR enabled post installation via System Settings
+The BlueCat Cisco DNA support can be either enabled when the Cisco DNA centre solution is first install OR enabled post installation via the DNA Centre System Settings
 
-Note :- Earlier DNA centre release will show BlueCat as a provider, this newer intergration using the Generic Provider
+Note :- Earlier DNA centre releases will show BLUECAT as an IPAM provider, this newer intergration utilises the GENERIC Provider
 
-- Access the Cisco DNA Center using your credentials
+- Access the Cisco DNA Center using your DNA credentials
 - Go to System Settings
 - Select the Settings tab and click IP Address Manager
 - Select the GENERIC provider and click to View/Select
@@ -63,9 +63,13 @@ Note :- Earlier DNA centre release will show BlueCat as a provider, this newer i
 - Enter the Password to use with BlueCat Gateway into the Password field
 - Enterprise the BlueCat configuration name to use into the View Field
 
+# Usage
 
+Creating or Importing existing Global Pools
+Releasing Global Pools
+Creating or Importing existing Sub-Pools
+Releasing Sub-Pools
 
-## Usage
 
 Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
 
