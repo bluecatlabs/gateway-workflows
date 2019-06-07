@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 03-14-19
+// Date: 2019-03-14
 // Gateway Version: 18.10.2
 // Description: Register MAC Address JS
 
@@ -21,12 +21,12 @@
 
 $(function() {
     var dateFormat = 'yy/mm/dd';
-    
+
     $("#submit_date").prop("disabled", false);
 	$("#submit_date").datepicker({
         dateFormat: dateFormat
     });
-    
+
     $("#expiry_date").prop("disabled", false);
 	$("#expiry_date").datepicker({
         dateFormat: dateFormat

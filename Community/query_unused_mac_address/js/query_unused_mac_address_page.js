@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 03-14-19
+// Date: 2019-03-14
 // Gateway Version: 18.10.2
 // Description: Query Unused MAC Address js
 
@@ -21,7 +21,7 @@
 
 $(function() {
     var dateFormat = 'yy-mm-dd';
-    
+
     $("#expire_time").prop("disabled", false);
 	$("#expire_time").datepicker({
         dateFormat: dateFormat

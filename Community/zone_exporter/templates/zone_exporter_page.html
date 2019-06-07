@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 By: BlueCat Networks
-Date: 03-14-19
+Date: 2019-03-14
 Gateway Version: 18.10.2
 Description: Zone Exporter HTML -->
 
@@ -36,17 +36,17 @@ Description: Zone Exporter HTML -->
 
     <p>{{ text['info'] }}</p>
     <!--Your page's HTML goes here.-->
-    
+
     {% from "form_helper.html" import render_field %}
-    
-    
+
+
     <form>
         <!-- You may not be able to populate a list in a form, in which case you can do it in the html and still
          have the data be sent back with the form -->
-         
+
         <table id="table"></table>
         <div id="pager"></div>
-        
+
         <br/>
         <table style="table-layout: fixed;">
             <tr>
@@ -62,7 +62,7 @@ Description: Zone Exporter HTML -->
             </tr>
         </table>
         <button type="button" class="btn btn-default" id="download">Download</button></a>
-        
+
         <!-- don't remove the following token -->
         {{ form.csrf_token }}
 

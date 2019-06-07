@@ -13,13 +13,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 By: BlueCat Networks
-Date: 03-14-19
+Date: 2019-03-14
 Gateway Version: 18.10.2
 Description: Query Unused MAC Address CSS */
 
 /* Custom styles for your page go in here. */
 
-@import url("/static/js/vendor/jquery-ui/jquery-ui.min.css"); 
+@import url("/static/js/vendor/jquery-ui/jquery-ui.min.css");
 table.dataTable thead tr {
     color: #FCFCFC;
     background-color: #0068A4;

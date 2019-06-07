@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 03-14-19
+// Date: 2019-03-14
 // Gateway Version: 18.10.2
 // Description: Zone Exporter JS
 
@@ -43,9 +43,9 @@ function load_col_model() {
 $(document).ready(function()
 {
     load_col_model();
-    
+
 	var grid = $('#table');
-	
+
 	grid.jqGrid({
 	    url: '/zone_exporter/load_initial_data',
         datatype: 'json',
@@ -64,7 +64,7 @@ $(document).ready(function()
         treedatatype: 'json',
         ExpandColumn: 'name'
 	});
-	
+
 	grid.on('jqGridBeforeExpandTreeGridRow', function(event, rowid, record, children) {
 	    console.log('rowid(%d)', rowid);
 	    var id = record.id;
@@ -84,9 +84,9 @@ $(document).ready(function()
 	    }
 	    return true;
 	});
-	
+
 	var download = $('#download');
-	
+
 	download.click(function() {
 	    $("body").addClass("waiting");
 	    var rowid = grid.getGridParam('selrow');

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 03-14-19
+// Date: 2019-03-14
 // Gateway Version: 18.10.2
 // Description: Flip Main-DR Servers JS
 
@@ -31,13 +31,13 @@ $(document).ready(function()
                 .done(function(data)
                 {
                     var table = $("#server_list").DataTable();
-                    
+
                     table.clear();
                     for (var i in data) {
                         var fqdn = data[i]['fqdn'];
                         var state = data[i]['state'];
                         var addresses = data[i]['addresses'];
-                        
+
                         console.log('No ' + i + '= ' + fqdn + ', ' + state + ', ' + addresses);
                         table.row.add([fqdn, state, addresses]);
                     }

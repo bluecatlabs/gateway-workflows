@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 04-25-19
+// Date: 2019-04-25
 // Gateway Version: 18.10.2
 // Description: Network Exporter JS
 

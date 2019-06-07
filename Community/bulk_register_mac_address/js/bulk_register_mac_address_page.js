@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 03-14-19
+// Date: 2019-03-14
 // Gateway Version: 18.10.2
 // Description: Bulk Register MAC Address JS
 
@@ -23,7 +23,7 @@ function load_from_xml(table, stream) {
     var parser = new DOMParser();
     var dom = parser.parseFromString(stream, 'text/xml');
     console.log('parse done');
-    
+
     var table = $("#mac_address_list").DataTable();
     var rows = dom.documentElement.getElementsByTagName('Row');
 
@@ -56,15 +56,15 @@ function load_from_csv(table, stream) {
     }
 };
 
-$(document).ready(function() 
+$(document).ready(function()
 {
     $("#file").prop("disabled", false);
-    
+
     $('#file').on('change', function(event)
     {
         var uploadFile = document.getElementById('file');
         var file = uploadFile.files[0];
-        
+
         var reader = new FileReader();
         reader.addEventListener('load', update_mac_list, false);
         reader.readAsText(file);
@@ -73,7 +73,7 @@ $(document).ready(function()
             var table = $("#mac_address_list").DataTable();
             var stream = event.target.result;
             var fileName = file.name.toUpperCase();
-            
+
             table.clear();
             if (fileName.endsWith(".XML")) {
                 load_from_xml(table, stream);
@@ -85,13 +85,13 @@ $(document).ready(function()
         }
         $("#submit").prop("disabled", false);
     });
-    
-    $('#submit').on('click', function(event) 
+
+    $('#submit').on('click', function(event)
     {
         event.preventDefault();
         var data_table = $('#mac_address_list').DataTable();
         var json_data = JSON.stringify(data_table.data().toArray());
-        
+
         $.ajax({
             type: "POST",
             contentType: "application/json; charset=utf-8",

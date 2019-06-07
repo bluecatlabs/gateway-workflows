@@ -13,16 +13,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 By: BlueCat Networks
-Date: 03-14-19
+Date: 2019-03-14
 Gateway Version: 18.10.2
 Description: Network Exporter CSS */
 
 /* Custom styles for your page go in here. */
 
-@import url("/js/vendor/jquery-ui/jquery-ui.min.redmond.css"); 
+@import url("/js/vendor/jquery-ui/jquery-ui.min.redmond.css");
 
 .ui-jqgrid .ui-jqgrid-titlebar {
-    height:30px; 
+    height:30px;
     vertical-align: baseline;
 }
 

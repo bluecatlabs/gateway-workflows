@@ -13,21 +13,21 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 03-14-19
+// Date: 2019-03-14
 // Gateway Version: 18.10.2
 // Description: Bulk Register Group JS
 
 // JavaScript for your page goes in here.
 
-$(document).ready(function() 
+$(document).ready(function()
 {
     $("#file").prop("disabled", false);
-    
+
     $('#file').on('change', function(event)
     {
         var uploadFile = document.getElementById('file');
         var file = uploadFile.files[0];
-        
+
         var reader = new FileReader();
         reader.addEventListener('load', update_ip_list, false);
         reader.readAsText(file);
@@ -35,9 +35,9 @@ $(document).ready(function()
         function update_ip_list(event){
             var csv = event.target.result;
             var lines = csv.split("\n");
-            
+
             var table = $("#group_list").DataTable();
-            
+
             table.clear();
             for (i = 1; i < lines.length ;i++) {
                 var columns = lines[i].split(",");
@@ -45,7 +45,7 @@ $(document).ready(function()
                     var group_name = (columns[0]).trim();
                     var division_code = (columns[1]).trim();
                     var comments = (columns[2]).trim();
-                
+
                     table.row.add([group_name, division_code, comments]);
                 }
             }
@@ -53,13 +53,13 @@ $(document).ready(function()
         }
         $("#submit").prop("disabled", false);
     });
-    
-    $('#submit').on('click', function(e) 
+
+    $('#submit').on('click', function(e)
     {
         e.preventDefault();
         var data_table = $('#group_list').DataTable();
         var json_data = JSON.stringify(data_table.data().toArray());
-        
+
         $.ajax({
             type: "POST",
             contentType: "application/json; charset=utf-8",
