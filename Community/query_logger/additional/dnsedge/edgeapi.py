@@ -1,4 +1,4 @@
-# Copyright 2018 BlueCat Networks. All rights reserved.
+# Copyright 2019 BlueCat Networks. All rights reserved.
 
 import os
 import sys
@@ -13,12 +13,12 @@ api_url = {
     'get_domainlists': '/v1/api/list/dns',
     'get_domainlist': '/v1/api/list/dns/{id}',
     'update_domainlist': '/v1/api/list/dns/{id}/attachfile',
-    
+
     'get_sites': '/v3/api/sites',
     'get_service_points': '/v1/api/servicePoints',
-    
+
     'query_log_stream': '/v2/api/customer/dnsQueryLog/stream',
-    
+
     'get_service_point_status': ':80/v1/status/spDiagnostics'
 }
 
@@ -32,7 +32,7 @@ class EdgeAPI(object):
         self._token = ''
         self._etag = ''
         self._debug = debug
-        
+
     def validate_edgeurl(self):
         valid = False
         try:
@@ -48,7 +48,7 @@ class EdgeAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return valid
-        
+
     def login(self, username, password):
         success = False
         try:
@@ -66,18 +66,18 @@ class EdgeAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return success
-        
+
     def logout(self):
         try:
             response = requests.post(self._edgeurl + api_url['logout'], headers=self._headers)
         except requests.exceptions.RequestException as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
-            
+
     def set_token(self, token):
         self._token = token
         self._etag = ''
-        
+
     def get_domainlists(self):
         domainlists = []
         try:
@@ -92,7 +92,7 @@ class EdgeAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return domainlists
-        
+
     def get_domainlist(self, id):
         domainlist = []
         try:
@@ -108,7 +108,7 @@ class EdgeAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return domainlist
-        
+
     def update_domainlist(self, id, csvfile):
         dict = {'file':(csvfile, open(csvfile, 'rb'), 'text/plain')}
         try:
@@ -122,7 +122,7 @@ class EdgeAPI(object):
         except requests.exceptions.RequestException as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
-                
+
     def get_sites(self):
         sites = []
         try:
@@ -137,7 +137,7 @@ class EdgeAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return sites
-        
+
     def get_service_points(self):
         service_points = []
         try:
@@ -152,7 +152,7 @@ class EdgeAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return service_points
-        
+
     def query_log_stream(self):
         headers = {'Authorization': 'Basic ' + self._token, 'ETag': self._etag}
         results = None
@@ -171,10 +171,10 @@ class EdgeAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return results
-        
+
     def get_service_point_status_url(self, sp_address):
         return 'http://' + sp_address + api_url['get_service_point_status']
-        
+
     def get_service_point_status(self, sp_address):
         status = None
         try:
@@ -192,5 +192,3 @@ class EdgeAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return status
-        
-
