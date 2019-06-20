@@ -42,7 +42,7 @@ def module_path():
 
 def get_resource_text():
     return util.get_text(module_path(), config.language)
-    
+
 def get_configuration(api, config_name):
     configuration = api.get_configuration(config_name)
     return configuration
@@ -50,7 +50,7 @@ def get_configuration(api, config_name):
 def raw_table_data(*args, **kwargs):
     """Returns table formatted data for display in the TableField component"""
     # pylint: disable=unused-argument
-    
+
     text = get_resource_text()
     return {
         "columns": [
@@ -68,15 +68,15 @@ def raw_table_data(*args, **kwargs):
 
 def load_lease_history(config_id, mac_address):
     """
-    Load Lease_Summary_TABLE as jason format.
+    Load Lease_Summary_TABLE as json format.
     :param mac_address: MAC Address for query.
     :return: result
     """
-    
+
     db_address = os.environ['BAM_IP']
     connector = psycopg2.connect(host=db_address, database="proteusdb", user="bcreadonly")
     cursor = connector.cursor()
-    
+
     sql = \
     "select " \
     "long2ip4(ip_address), " \
@@ -88,13 +88,13 @@ def load_lease_history(config_id, mac_address):
     "where " \
     "conf_id = %d and long2mac(mac_address) = '%s'" \
     "order by expire_time desc" % (config_id, mac_address.lower().replace(":", "-"))
-    
+
     cursor.execute(sql)
     result = cursor.fetchall()
 
     cursor.close()
     connector.close()
-    
+
     text = get_resource_text()
     data = {
         "columns": [
@@ -111,9 +111,9 @@ def load_lease_history(config_id, mac_address):
 
     for row in result:
         data['data'].append([row[0], row[1], row[2], row[3]])
-        
+
     return data
-        
+
 def query_history_by_mac_endpoint(workflow_name, element_id, permissions, result_decorator=None):
     """Endpoint for retrieving the selected objects"""
     # pylint: disable=unused-argument
@@ -153,4 +153,3 @@ def query_history_by_mac_endpoint(workflow_name, element_id, permissions, result
             return jsonify(result_decorator(result))
 
     return endpoint
-
