@@ -24,7 +24,7 @@ In SD-Access deployments, BlueCat DNA Center integration provides:
 
 #### Download the Cisco DNA workflow from BlueCat Labs:
 
-https://github.com/bluecatlabs/gateway-workflows/tree/master/Community/cisco_dna
+https://github.com/bluecatlabs/gateway-workflows/tree/master/Community/CiscoDNA
 
 Install the following python libary into your BlueCat Gateway install
 
@@ -33,13 +33,13 @@ Install the following python libary into your BlueCat Gateway install
 
 #### Tarball the DNA integration for import into your BlueCat Gateway using gzip
 
-    # gzip cisco_dna folder: tar -zcvf cisco_dna.tar.gz cisco_dna/
+    # gzip CiscoDNA folder: tar -zcvf CiscoDNA.tar.gz CiscoDNA/
 
 #### Importing the CiscoDNS workflow into BlueCat Gateway
 
 Access the BlueCat Gateway interface using the URL address and login.
 - Select Administration\Workflow Export\Import
-- Click browse file and choose cisco_dna.tar.gz created above
+- Click browse file and choose CiscoDNA.tar.gz created above
 - Click Import button and then restart the bluecat_gateway container
 - Re-login to Gateway and select Administration\Workflow Permissions
 - Select ipam
