@@ -1,7 +1,0 @@
-VALID_ACCOUNT:
-    username: gateway-user
-    password: admin
-
-INVALID_ACCOUNT:
-    username: invalid
-    password: admin
