@@ -20,12 +20,13 @@ from .ipam_exception import IpPoolBadRequestException, IpPoolAlreadyExistsExcept
 
 @app.before_request
 def my_before_request():
-    a = request.headers.get('auth')
-    if a is not None:
-        access_token = parse_token(a)
-        u = get_user_from_session(access_token)
+    token = request.headers.get('auth')
+    if token is not None:
+        u = get_user_from_session(token)
         g.user = u
         g.use_rest = True
+        if u:
+            g.user.logger.debug(request)
 
 
 @route(app, '/ipam/token', methods=['POST'])
@@ -44,7 +45,9 @@ def get_token():
                 'Invalid username or password.',
                 status_code=401,
                 payload={'WWW-Authenticate': 'Basic realm="Login Required"'})
-        token = 'Basic ' + u.get_unique_name()
+
+        u.logger.debug(args)
+        token = u.get_unique_name()
         return jsonify({"tokenkey": 'auth',
                         "tokenvalue": token})
     except AuthenticationError as au_err:
@@ -69,6 +72,7 @@ def create_pool():
     :return: None
     """
     args = request.get_json()
+    g.user.logger.debug(args)
     new_entity_id = None
     # create pool
     try:
@@ -149,6 +153,7 @@ def create_subpool():
     :return: None
     """
     args = request.get_json()
+    g.user.logger.debug(args)
     new_entity_id = None
     # create pool
     try:
@@ -236,6 +241,7 @@ def get_views():
         offset = 0
 
         keys = request.args.keys()
+        g.user.logger.debug(request.args)
         if 'limit' in keys:
             limit = int(request.args.get('limit'))
         if 'offset' in keys:
@@ -269,22 +275,23 @@ def get_pools(view):
 
     parent_id = config['id']
     res = []
-    if not 'ipPoolCidr' in request.args.keys():
+    if not 'ippoolcidr' in request.args.keys():
         return jsonify([])
     try:
-        cidr = request.args.get('ipPoolCidr')
+        cidr = request.args.get('ippoolcidr')
         pools = get_empty_pools_under_cidr(parent_id, cidr)
         for pool in pools:
             obj = {}
             obj['view'] = view
-            obj['ippoolcidr'] = get_ip_cidr(pool)
+            obj['ipPoolCidr'] = get_ip_cidr(pool)
             obj['ipPoolName'] = get_pool_name(pool)
             obj['gatewayIp'] = get_gateway(pool)
             obj['dhcpServer'] = get_deploy_role_server(pool, 'DHCP')
             obj['dnsServer'] = get_deploy_role_server(pool, 'DNS')
-            obj['tags'] = get_client_options(pool)
+            obj['ClientOptions'] = get_client_options(pool)
             res.append(obj)
-    except:
+    except Exception as ex:
+        g.user.logger.debug(ex.__str__())
         return jsonify([])
     return jsonify(res)
 
@@ -350,7 +357,7 @@ def get_child_ip(config_id, new_ip):
 
 def get_parent(config_id, new_ip):
     """get parent of new_ip under configutation"""
-    list_pool = get_empty_pools_under_cidr(config_id)
+    list_pool = get_pools_under_id(config_id)
     for pool in list_pool:
         cidr = get_ip_cidr(pool)
         if has_child(cidr, new_ip):
@@ -459,15 +466,6 @@ def get_ip_cidr(obj):
         return properties['CIDR']
     else:
         return properties['prefix']
-
-
-def parse_token(header):
-    """ Parse token"""
-    access_token = ''
-    bits = header.split(' ')
-    if bits[0] == 'Basic':
-        access_token = bits[1]
-    return access_token
 
 
 def get_user_from_session(access_token):
@@ -734,6 +732,7 @@ def assign_ip():
     """assign ip in list input"""
     try:
         args = request.get_json()
+        g.user.logger.debug(args)
         message_check = validate_require_param(args, {'view': False, 'iplist': False})
         if len(message_check) > 0:
             err_message = convert_message_to_string(message_check)
@@ -773,6 +772,7 @@ def release_ip(view):
     """release ip in list input"""
     try:
         args = request.args
+        g.user.logger.debug(args)
         message_check = validate_require_param(args, {'iplist': False})
         if len(message_check) > 0:
             err_message = convert_message_to_string(message_check)

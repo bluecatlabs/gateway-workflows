@@ -1,5 +1,0 @@
-USER:
-    username: "gateway-user"
-    password: "admin"
-
-GATEWAY_URL:   http://localhost

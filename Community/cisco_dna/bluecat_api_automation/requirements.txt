@@ -1,3 +1,0 @@
-RESTinstance==1.0.0rc4
-robotframework==3.1
-PyYAML==3.13

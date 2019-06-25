@@ -1,9 +1,0 @@
-GET_POOL_UNDER_VIEW: "automation"
-
-GET_POOL_UNDER_VIEW_PARENT_POOL:
-    view: "automation"
-    ippoolcidr: "10.0.0.0/8"
-
-GET_POOL_UNDER_VIEW_SUBPOOL:
-    view: "automation"
-    ippoolcidr: "10.0.0.0/20"
