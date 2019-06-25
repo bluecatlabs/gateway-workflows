@@ -1,0 +1,10 @@
+title=グループの一括登録
+info=CSVファイルによりグループの一括登録を行う。
+success=正常に登録されました。
+file_legend=読み組むファイルを設定してください。
+title_group_name=グループ名
+title_division_code=部署コード
+title_comments=備考
+label_file=ファイル:
+label_list=グループ一覧:
+label_submit=登録

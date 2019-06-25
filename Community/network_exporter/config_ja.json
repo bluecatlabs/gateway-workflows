@@ -1,0 +1,72 @@
+{
+    "encoding": "shift-jis",
+    "range": [
+        {
+            "id": "range",
+            "title": "CIDR/範囲",
+            "width": 30,
+            "gwidth": 300
+        },
+        {
+            "id": "name",
+            "title": "名前",
+            "width": 20,
+            "gwidth": 160
+        },
+        {
+            "id": "type",
+            "title": "タイプ",
+            "width": 12,
+            "gwidth": 100
+        },
+        {
+            "id": "Comments",
+            "title": "備考",
+            "width": 40,
+            "gwidth": 180
+        },
+        {
+            "id": "VLANID",
+            "title": "VLAN ID",
+            "width": 16,
+            "gwidth": 80
+        }
+    ],
+    "address": [
+        {
+            "id": "ip_address",
+            "title": "IPアドレス",
+            "width": 16
+        },
+        {
+            "id": "name",
+            "title": "名前",
+            "width": 20
+        },
+        {
+            "id": "macAddress",
+            "title": "MACアドレス",
+            "width": 18
+        },
+        {
+            "id": "state",
+            "title": "状態",
+            "width": 18
+        },
+        {
+            "id": "Owner",
+            "title": "担当者",
+            "width": 20
+        },
+        {
+            "id": "Comments",
+            "title": "備考",
+            "width": 40
+        }
+    ],
+    "excel": {
+        "title_cell_index": "B2",
+        "start_column": "B",
+        "start_row": 4
+    }
+}

@@ -1,0 +1,11 @@
+title=ゾーンエクスポーター
+info=選択されたゾーンをエクスポートする
+label_format=形式：
+label_contents=内容：
+title_structure=ゾーン構造
+title_records=リソースレコード
+title_both=構造およびリソースレコード
+sheet_title_for_configuration=構成： 
+sheet_title_for_view=ビュー： 
+sheet_title_for_zone=ゾーン： 
+sheet_title_for_structure=構造

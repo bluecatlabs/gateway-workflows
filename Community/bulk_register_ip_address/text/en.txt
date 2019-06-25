@@ -1,0 +1,11 @@
+title=Bulk IP Address Registration
+info=Bulk IP Address Registration from CSV File.
+success=Succeed.
+file_legend=Specify file to read.
+title_ip_address=IP Address
+title_host_name=Host Name
+title_mac_address=MAC Address
+title_comments=Comments
+label_file=File:
+label_list=IP Address List:
+label_submit=Register

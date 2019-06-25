@@ -1,0 +1,65 @@
+{
+    "encoding": "shift-jis",
+    "zone": [
+        {
+            "id": "name",
+            "title": "Name",
+            "width": 30,
+            "gwidth": 240
+        },
+        {
+            "id": "absoluteName",
+            "title": "FQDN",
+            "width": 40,
+            "gwidth": 200
+        },
+        {
+            "id": "Comments",
+            "title": "Comments",
+            "width": 40,
+            "gwidth": 200
+        }
+    ],
+    "resource_record": [
+        {
+            "id": "name",
+            "title": "Name",
+            "width": 54
+        },
+        {
+            "id": "type",
+            "title": "Type",
+            "width": 14
+        },
+        {
+            "id": "record_data",
+            "title": "Record Data",
+            "width": 40
+        },
+        {
+            "id": "Primary",
+            "title": "Primary",
+            "width": 14
+        },
+        {
+            "id": "Secondary",
+            "title": "Secondary",
+            "width": 14
+        },
+        {
+            "id": "State",
+            "title": "State",
+            "width": 10
+        },
+        {
+            "id": "Comments",
+            "title": "Comments",
+            "width": 40
+        }
+    ],
+    "excel": {
+        "title_cell_index": "B2",
+        "start_column": "B",
+        "start_row": 4
+    }
+}

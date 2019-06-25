@@ -1,0 +1,72 @@
+{
+    "encoding": "shift-jis",
+    "range": [
+        {
+            "id": "range",
+            "title": "CIDR/Range",
+            "width": 30,
+            "gwidth": 300
+        },
+        {
+            "id": "name",
+            "title": "Name",
+            "width": 20,
+            "gwidth": 160
+        },
+        {
+            "id": "type",
+            "title": "Type",
+            "width": 12,
+            "gwidth": 100
+        },
+        {
+            "id": "Comments",
+            "title": "Comments",
+            "width": 40,
+            "gwidth": 180
+        },
+        {
+            "id": "VLANID",
+            "title": "VLAN ID",
+            "width": 16,
+            "gwidth": 80
+        }
+    ],
+    "address": [
+        {
+            "id": "ip_address",
+            "title": "IP Address",
+            "width": 16
+        },
+        {
+            "id": "name",
+            "title": "Name",
+            "width": 20
+        },
+        {
+            "id": "macAddress",
+            "title": "MAC Address",
+            "width": 18
+        },
+        {
+            "id": "state",
+            "title": "State",
+            "width": 18
+        },
+        {
+            "id": "Owner",
+            "title": "Owner",
+            "width": 20
+        },
+        {
+            "id": "Comments",
+            "title": "Comments",
+            "width": 40
+        }
+    ],
+    "excel": {
+        "title_cell_index": "B2",
+        "start_column": "B",
+        "start_row": 4
+    }
+}

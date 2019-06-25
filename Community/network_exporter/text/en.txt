@@ -1,0 +1,13 @@
+title=Network Exporter
+info=Exports specified network.
+label_format=Format:
+label_contents=Contents:
+title_structure=Network Structure
+title_ip_address=IP Address
+title_both=Structure and IP Address
+full_text=Export unallocated IP Address
+sheet_title_for_configuration=Configuration:
+sheet_title_for_block=Block:
+sheet_title_for_network=Network:
+network_id_display_name=Network ID
+broadcast_display_name=Broadcast

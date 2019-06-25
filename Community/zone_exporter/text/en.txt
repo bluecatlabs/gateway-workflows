@@ -1,0 +1,11 @@
+title=Zone Exporter
+info=Exports specified zone.
+label_format=Format:
+label_contents=Contents:
+title_structure=Zone Structure
+title_records=Resource Records
+title_both=Structure and Records
+sheet_title_for_configuration=Configuration:
+sheet_title_for_view=View:
+sheet_title_for_zone=Zone:
+sheet_title_for_structure=Structure

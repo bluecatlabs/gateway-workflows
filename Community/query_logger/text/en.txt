@@ -1,0 +1,11 @@
+title=DNS Edge Query Logger
+info=Configure DNS Edge Query Logger
+invalid_url_message=Invalid URL.
+require_message=This field is required.
+saved_message=Configuration was successfully saved.
+label_edge_url=DNS Edge URL:
+label_edge_token=API Token:
+label_syslog_server=SysLog Server IP Address:
+label_poll_interval=Poll Interval (seconds/minimum 5):
+label_launch_logger=Launch Logger
+label_submit=Submit
