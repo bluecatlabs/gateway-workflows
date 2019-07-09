@@ -63,16 +63,14 @@ Description: Brief description of what the workflow does and the expected behavi
 BlueCat Gateway would be so much less without the following people. Thank you for contributing your time to making this project a success.
 
 #### The Team:
-- Victor Fradkin
-- Xiao Dong
-- Nikhil Jangi
+- David Cohen
 - Steven Diao
-- Anshul Sharma
+- Murtaza Haider
+- Chris Catral
 - Delme Herbert
 
 
 #### Professional Services:
-- Murtaza Haider
 - Chris Storz
 - Chris Meyer
 - Timothy Noel
@@ -81,10 +79,13 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Bill Morton
 - Glenn McAllister
 - Robert Barnhardt™
-- Ekim Maurer
 - Roy Reshef
 - Vadim Farafontov
-- David Cohen
+- Victor Fradkin
+- Xiao Dong
+- Nikhil Jangi
+- Anshul Sharma
+- Ekim Maurer
 - Lana Litvak
 - Raymond Leong
 - Rohina Dhunjeebhoy
