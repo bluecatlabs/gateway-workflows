@@ -80,15 +80,14 @@ def assign_record(json):
     configuration = get_key(json, "configuration")
     ip = get_key(json, "ip")
     view_name = get_key(json, "view")
-    fqdn = get_key(json, "record")
-    if None in (fqdn, view_name, ip, configuration):
+    record = get_key(json, "record")
+    zone_name = get_key(json, "zone")
+    if None in (record, zone, view_name, ip, configuration):
         return {
             "data": {},
             "message": "Missing one or more input",
             "status": "FAIL"
         }
-    # split record from zone
-    record, zone_name = split_fqdn(fqdn)
     config, view, zone, message = get_config_view_zone(configuration, view_name, zone_name)
     if config is False or view is False:
         return {
