@@ -1,6 +1,3 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
@@ -18,14 +15,13 @@
 # Description: Community Gateway workflow
 
 # Your GitLab URL
-url = 'https://gitlab.customer.update.net/api/v4/'
+gitlab_url = 'https://gitlab.bluecatlabs.net/api/v4/'
 
 # Your personal token you created
 # See https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
-personal_token = 'token goes here'
 
 # Your default GitLab group
-default_group = 'Update to group default'
+default_group = 'Professional Services'
 
 # Base dir
 workflow_dir = 'bluecat_portal'
@@ -36,10 +32,17 @@ workflow_dir = 'bluecat_portal'
 gitlab_import_directory = 'workflows'
 
 # If not using a utils file leave blank
+# GITLAB_IMPORT_UTILS_DIRECTORY=''
 gitlab_import_utils_directory = 'ps'
 
 # This is where the util dir lives on the gateway server
-gw_utils_directory = 'bluecat_portal/ps'
+gw_utils_directory = 'ps'
 
 # Folder where zip files will be when workflows and utils are downloaded
-backups_folder = 'bluecat_portal/customer_backups'
+backups_folder = 'customer_backups'
+
+# Path to secret file
+secret_file = 'workflows/GitLab Management/gitlab_import/.secret'
+
+# Do not change
+gitlab_import_config_file = 'gitlab_import_config.py'
