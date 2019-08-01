@@ -38,14 +38,12 @@ class GenericFormTemplate(GatewayForm):
     """
     workflow_name = 'gitlab_import'
     workflow_permission = 'gitlab_import_page'
-    token = CustomStringField(
-        label='Personal Token',
-        default=gitlab_import_config.personal_token
-    )
-
     default_group = CustomStringField(
         label='Default GitLab Group',
-        default=gitlab_import_config.default_group
+        default=gitlab_import_config.default_group,
+        is_disabled_on_start=True,
+        is_disabled_on_error=True,
+        required=True
     )
 
     gitlab_groups = gitlab_import_entities.GitlabGroups(
@@ -61,4 +59,5 @@ class GenericFormTemplate(GatewayForm):
         enable_dependencies={'on_complete': ['submit']}
     )
 
-    submit = SubmitField(label='GitLab Import')
+    submit = SubmitField(label='Import')
+

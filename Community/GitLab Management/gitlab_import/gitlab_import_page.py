@@ -37,6 +37,7 @@ from file_modified_handler import unload_modules_in_dir, remove_registered_workf
 from main_app import app
 from .gitlab_import_form import GenericFormTemplate
 from . import gitlab_import_config, gitlab_import_util
+from bluecat.util import get_password_from_file
 
 
 def module_path():
@@ -52,8 +53,7 @@ def module_path():
 @util.exception_catcher
 def gitlab_import_gitlab_import_page():
     form = GenericFormTemplate()
-    # Remove this line if your workflow does not need to select a configuration
-
+    form.default_group.data = gitlab_import_config.default_group
     form.gitlab_groups.choices = gitlab_import_util.get_gitlab_groups(default_val=True)
 
     return render_template(
@@ -69,28 +69,22 @@ def gitlab_import_gitlab_import_page():
 @util.exception_catcher
 def gitlab_import_gitlab_import_page_form():
     form = GenericFormTemplate()
-    # Remove this line if your workflow does not need to select a configuration
     form.gitlab_groups.choices = gitlab_import_util.get_gitlab_groups(default_val=True)
     if form.validate_on_submit():
-        # print(form.gitlab_groups.data)
-        # print(form.default_group.data)
-        # print(form.token.data)
-        # print(form.submit.data)
-
-        print("trying to download contents to Gateway server")
 
         try:
             # This is to get and download the archive zip
             response = {}
             response = requests.get(
-                gitlab_import_config.url + 'projects/' + str(
-                    form.gitlab_groups.data) + '/repository/archive.zip?private_token=' + gitlab_import_config.personal_token, None)
+                gitlab_import_config.gitlab_url + 'projects/' + str(
+                    form.gitlab_groups.data) + '/repository/archive.zip?private_token=' + get_password_from_file(gitlab_import_config.secret_file), None)
             response.raise_for_status()
             print(
-                "To download, use this link {}projects/{}/repository/archive.zip?private_token={} ".format(gitlab_import_config.url,
-                                                                                                           str(
+                "To download, use this link {}projects/{}/repository/archive.zip?private_token={} ".format(
+                    gitlab_import_config.gitlab_url,
+                    str(
                                                                                                                form.gitlab_groups.data),
-                                                                                                           gitlab_import_config.personal_token))
+                    get_password_from_file(gitlab_import_config.secret_file)))
 
             # Get the file name
             d = response.headers['content-disposition']
@@ -99,7 +93,6 @@ def gitlab_import_gitlab_import_page_form():
 
             # Clean the file name up so we can use it for the foldername after unzipping
             folder_name = file_name.strip('\"').replace('.zip', '')
-            print(folder_name)
 
             with zipfile.ZipFile(io.BytesIO(response.content)) as thezip:
                 thezip.extractall(gitlab_import_config.workflow_dir)
@@ -116,47 +109,48 @@ def gitlab_import_gitlab_import_page_form():
                 if gitlab_import_config.gitlab_import_utils_directory:
                     print("Found utils to load")
                     # Is the folder really there?
-                    if os.path.exists(gitlab_import_config.gw_utils_directory):
+                    if os.path.exists(os.path.join("bluecat_portal", gitlab_import_config.gw_utils_directory)):
                         # Move folder from zip to deployed util dir
                         # backup folder
                         # Does the backup folder exist
-                        if os.path.exists(gitlab_import_config.backups_folder):
+                        if os.path.exists(os.path.join("bluecat_portal", (gitlab_import_config.backups_folder))):
 
                             # Create the backup file
                             shutil.make_archive(
-                                gitlab_import_config.backups_folder + '/' + gitlab_import_config.gitlab_import_utils_directory + '-' + time_format,
-                                'zip', gitlab_import_config.gw_utils_directory)
+                                os.path.join("bluecat_portal", gitlab_import_config.backups_folder) + '/' + gitlab_import_config.gitlab_import_utils_directory + '-' + time_format,
+                                'zip', os.path.join("bluecat_portal", gitlab_import_config.gw_utils_directory))
                         else:
                             # Create backup folder
-                            os.mkdir(gitlab_import_config.backups_folder)
+                            os.mkdir(os.path.join("bluecat_portal", gitlab_import_config.backups_folder))
                             shutil.make_archive(
-                                gitlab_import_config.backups_folder + '/' + gitlab_import_config.gitlab_import_utils_directory + '-' + time_format,
-                                'zip', gitlab_import_config.gw_utils_directory)
+                                os.path.join("bluecat_portal", gitlab_import_config.backups_folder) + '/' + gitlab_import_config.gitlab_import_utils_directory + '-' + time_format,
+                                'zip', os.path.join("bluecat_portal", gitlab_import_config.gw_utils_directory))
                         # Delete the util folder on the GW server
-                        shutil.rmtree(gitlab_import_config.gw_utils_directory)
+                        shutil.rmtree(os.path.join("bluecat_portal", gitlab_import_config.gw_utils_directory))
                         # Move GitHub Util folder to GW server
                         shutil.move(
                             os.path.join(gitlab_import_config.workflow_dir, folder_name, gitlab_import_config.gitlab_import_utils_directory),
-                            gitlab_import_config.gw_utils_directory.rsplit('/', 1)[0])
+                            os.path.join("bluecat_portal", gitlab_import_config.gw_utils_directory.rsplit('/', 1)[0]))
                     else:
                         # Move folder from zip to deployed util dir
                         shutil.move(
                             os.path.join(gitlab_import_config.workflow_dir, folder_name, gitlab_import_config.gitlab_import_utils_directory),
-                            gitlab_import_config.gw_utils_directory.rsplit('/', 1)[0])
+                            os.path.join("bluecat_portal", gitlab_import_config.gw_utils_directory.rsplit('/', 1)[0]))
 
                 else:
                     print("No utils specified in custom.gitlab_import_utils_directory")
+                    app.logger.info("No util folder used")
 
             except Exception as e:
                 app.logger.exception("Failed to load GitLab Util folder: {}".format(str(e)))
                 g.user.logger.warning('%s' % util.safe_str(e), msg_type=g.user.logger.EXCEPTION)
                 flash(
-                    'Failed to load GitLab Util folder properly. Check to see if path ' + gitlab_import_config.gw_utils_directory + ' exsists on the server.')
+                    'Failed to load GitLab Util folder properly. Check to see if path ' + gitlab_import_config.gw_utils_directory + ' exists on the server.')
                 return redirect(url_for('gitlab_importgitlab_import_gitlab_import_page'))
 
             # Create backup
             shutil.make_archive(
-                gitlab_import_config.backups_folder + '/' + gitlab_import_config.gitlab_import_directory + '-' + time_format,
+                os.path.join("bluecat_portal", gitlab_import_config.backups_folder) + '/' + gitlab_import_config.gitlab_import_directory + '-' + time_format,
                 'zip', os.path.join(gitlab_import_config.workflow_dir, gitlab_import_config.gitlab_import_directory))
 
             for dir in dirs:
@@ -184,7 +178,7 @@ def gitlab_import_gitlab_import_page_form():
             # Refresh config.workflows
             for dir in gitlab_directories:
                 if not gitlab_import_util.custom_workflow_navigator(os.path.join(gitlab_import_config.workflow_dir, gitlab_import_config.gitlab_import_directory, dir),
-                                                 permissions):
+                                                                    permissions):
                     status = False
 
             if not status:
