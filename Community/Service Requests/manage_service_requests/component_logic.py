@@ -1,6 +1,7 @@
 import requests
 
-from .manage_service_requests_config import ManageServiceRequestsConfig
+from bluecat.util import get_password_from_file
+from ..configure_service_requests import service_requests_config
 
 
 headers = {"Accept": "application/json"}
@@ -19,8 +20,8 @@ def raw_table_data(*args, **kwargs):
             'data': []}
 
     # HTTP request
-    ticket_url = ManageServiceRequestsConfig.servicenow_url + '?assigned_to=admin&state!=closed&active=true'
-    response = requests.get(ticket_url, auth=(ManageServiceRequestsConfig.servicenow_username, ManageServiceRequestsConfig.servicenow_password), headers=headers, verify=False)
+    ticket_url = service_requests_config.servicenow_url + '?assigned_to=admin&state!=closed&active=true'
+    response = requests.get(ticket_url, auth=(service_requests_config.servicenow_username, get_password_from_file(service_requests_config.servicenow_secret_file)), headers=headers, verify=False)
 
     # Check for HTTP codes other than 200
     if response.status_code == 200:

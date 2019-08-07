@@ -26,8 +26,8 @@ from bluecat.constants import IPAssignmentActionValues
 from bluecat.api_exception import PortalException, BAMException
 from .service_request_host_form import GenericFormTemplate
 from bluecat.server_endpoints import get_result_template, empty_decorator
-from .service_request_host_config import ServiceRequestHostConfig
-
+from bluecat.util import get_password_from_file
+from ..configure_service_requests import service_requests_config
 
 headers = {"Content-Type": "application/json", "Accept": "application/json"}
 
@@ -93,8 +93,8 @@ def service_request_host_page_form():
     }
 
     # Do the HTTP request
-    response = requests.post(ServiceRequestHostConfig.servicenow_url,
-                             auth=(ServiceRequestHostConfig.servicenow_username, ServiceRequestHostConfig.servicenow_password),
+    response = requests.post(service_requests_config.servicenow_url,
+                             auth=(service_requests_config.servicenow_username, get_password_from_file(service_requests_config.servicenow_secret_file)),
                              headers=headers,
                              data=json.dumps(ticket_information),
                              verify=False)
