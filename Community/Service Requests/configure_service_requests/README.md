@@ -44,8 +44,6 @@ ___
   <img width="50%" height="50%" src="img/config_reqs.png">
 </p>
 
-___
-
 
 <!--
 ### Youtube Tutorial
