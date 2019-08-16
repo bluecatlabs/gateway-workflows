@@ -16,7 +16,8 @@ from bluecat.api_exception import PortalException, BAMException
 import config.default_config as config
 from main_app import app
 from .manage_service_requests_form import GenericFormTemplate
-from .manage_service_requests_config import ManageServiceRequestsConfig
+from bluecat.util import get_password_from_file
+from ..configure_service_requests import service_requests_config
 
 headers = {"Accept": "application/json"}
 
@@ -101,8 +102,8 @@ def approve_ticket(ticket, absolute_name, address):
     }
 
     # get the sys_id of the ticket
-    response = requests.get(ManageServiceRequestsConfig.servicenow_url + '?sysparm_query=number=' + ticket,
-                            auth=(ManageServiceRequestsConfig.servicenow_username, ManageServiceRequestsConfig.servicenow_password),
+    response = requests.get(service_requests_config.servicenow_url + '?sysparm_query=number=' + ticket,
+                            auth=(service_requests_config.servicenow_username, get_password_from_file(service_requests_config.servicenow_secret_file)),
                             headers=headers,
                             verify=False)
     if response.status_code == 200:
@@ -110,8 +111,8 @@ def approve_ticket(ticket, absolute_name, address):
         for r in returned_values['result']:
             ticket_sys_id = r['sys_id']
 
-    requests.put(ManageServiceRequestsConfig.servicenow_url + '/' + ticket_sys_id,
-                 auth=(ManageServiceRequestsConfig.servicenow_username, ManageServiceRequestsConfig.servicenow_password),
+    requests.put(service_requests_config.servicenow_url + '/' + ticket_sys_id,
+                 auth=(service_requests_config.servicenow_username, get_password_from_file(service_requests_config.servicenow_secret_file)),
                  headers=headers,
                  data=json.dumps(ticket_information),
                  verify=False)
@@ -131,8 +132,8 @@ def generate_service_requests_report():
 
         csv_writer.writerow(['TicketNum', 'HostRecord', 'HostID', 'IPAddress', 'IPState', 'IPID', 'RequestCreate',
                              'RequestedBy', 'LastUpdate', 'CloseDate', 'CloseNotes'])
-        ticket_url = ManageServiceRequestsConfig.servicenow_url + '?assigned_to=admin'
-        response = requests.get(ticket_url, auth=(ManageServiceRequestsConfig.servicenow_username, ManageServiceRequestsConfig.servicenow_password), headers=headers, verify=False)
+        ticket_url = service_requests_config.servicenow_url + '?assigned_to=admin'
+        response = requests.get(ticket_url, auth=(service_requests_config.servicenow_username, get_password_from_file(service_requests_config.servicenow_secret_file)), headers=headers, verify=False)
         data = []
         # Check for HTTP codes other than 200
         if response.status_code == 200:

@@ -1,0 +1,48 @@
+<!--
+ Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+ By: BlueCat Networks
+ Date: 2019-07-01
+ Gateway Version: 19.5.1
+ Description: Community Gateway workflow
+
+ -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/gitlab_import_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+    <p>{{ text['info'] }}</p>
+    <!--Your page's HTML goes here.-->
+    {% from "form_helper.html" import render_form %}
+    {{ render_form(form, action=url_for('gitlab_importgitlab_import_gitlab_import_page_form'), id="gitlab_import_page_form") }}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="js/gitlab_import_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}
