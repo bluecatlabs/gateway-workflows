@@ -3,7 +3,7 @@
 # **BlueCat Gateway**
 
 
-## Certified folder
+## Certified Workflows
 
 The Certified folder contains **Certified Workflows** developed and tested by BlueCat. These Certified Workflows demonstrate the kinds of workflows that can be built for BlueCat Gateway, as well as BlueCat's best practices for Python development, UI components, and API usage.
 
