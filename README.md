@@ -23,9 +23,9 @@ Please review the [Terms and Conditions](https://github.com/bluecatlabs/gateway-
 ## Standards
 When contributing to the Community examples please ensure that the code is of good quality
 - BlueCat Gateway is written with the PEP8 standard in mind
-- Ensure that each function contains a docstring exaplining the purpose of the function, the input variables and, the return type
+- Ensure that each function contains a docstring explaining the purpose of the function, the input variables and, the return type
 - Use plenty of comments to describe what the function is doing
-- Use meaningfull variable and function names
+- Use meaningful variable and function names
 
 #### Process
 1. Fork it!
@@ -57,7 +57,7 @@ limitations under the License.
 By: Your Name (youremail@domain.com)
 Date: DD-MM-YYYY
 Gateway Version: X.X.X
-Description: Brief description of what the workflow does and the expected behavior
+Description: Brief description of what the workflow does and the expected behaviour
 ```
 
 
