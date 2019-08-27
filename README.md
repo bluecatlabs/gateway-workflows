@@ -18,6 +18,8 @@ Once the workflows have been copied over, just start the BlueCat Gateway contain
 ## Contributions
 Contributing follows a review process: before a workflow is accepted it will be reviewed and then merged into the master branch. It will be the responsibility of the contributor to ensure that their workflow is supported for future releases of BlueCat Gateway.
 
+Please review the [Terms and Conditions](https://github.com/bluecatlabs/gateway-workflows/blob/master/BlueCat%20GitHub%20Contribution%20Agreement%202019.pdf).
+
 ## Standards
 When contributing to the Community examples please ensure that the code is of good quality
 - BlueCat Gateway is written with the PEP8 standard in mind
