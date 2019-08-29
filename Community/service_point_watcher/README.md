@@ -2,22 +2,31 @@
 **Bluecat Gateway Version:** 18.10.2 and greater  
 **BlueCat DNS Edge Version:** 2018.11 and greater  
 
-This workflow will list the DNS Edge Service Points which belongs to a specified CI and show certain information.  
+This workflow will monitor the DNS Edge Service Points which belong to a specified CI.  
 It will only list service points which are associated with an IP address.  
 
+## Architecture  
+The following diagram depicts the architecture:  
+![screenshot](img/spwatcher_architecture.jpg?raw=true "spwatcher_architecture")  
+1. Service Point Watcher will acquire the service point information from the Customer Instance and determine which service point to monitor.  
+
+2. Based on the information from 1, Service Point Watcher will periodically call the service point diagnostic API to the selected service points and monitor and display the overall status of the service point plus each service status within the service point.  
+
+3. Any change in status will be notified via SNMP trap.
 
 ## Prerequisites  
 1. **Additional Python3 Library**  
-This workflow requires the python3 *"apscheduler"* library.  
+This workflow requires the python3 *"apscheduler"* and *"pysnmp"* library.  
 Install the library using PIP3 inside the BlueCat Gateway container.
 ```
 $pip3 install apscheduler
+$pip3 install pysnmp
 
 ```  
 
 2. **Additional Python Code**  
 This workflow requires addtional python code.  
-Copy the directory *"dnsedge"* and under `additional/` to `/portal/bluecat_portal/customizations/integrations/` inside the BlueCat Gateway container.  
+Copy the directory *"dnsedge"* under `additional/` to `/portal/bluecat_portal/customizations/integrations/` inside the BlueCat Gateway container.  
 
 3. **jqGrid**  
 This workflow requires jqGrid.  
@@ -26,66 +35,141 @@ After downloading, extract the following two files: *"ui.jqgrid.css"* and *"jque
 Copy the two files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
 Create a *"jqgrid"* directory if it does not exist.   
 
+4. **DNS Edge CI Access Key Sets**  
+This workflow requires the DNS Edge CI access key sets JSON file.  
+Log in to the DNS Edge Customer Instance via browser.  
+![screenshot](img/dnsedge_key1.jpg?raw=true "dnsedge_key1")  
+Click "Profile" at the top right corner under  "ACCOUNT".  
+
+![screenshot](img/dnsedge_key2.jpg?raw=true "dnsedge_key2")  
+After opening the Profile page, click the blue cross to create new access key sets.  
+
+![screenshot](img/dnsedge_key3.jpg?raw=true "dnsedge_key3")  
+Click *DOWNDLOAD .JSON FILE* and save the JSON file to a directory of your choosing.   
+
 
 ## Usage   
-
 1. **Set DNS Edge Configurations**  
 ![screenshot](img/sp_watcher1.jpg?raw=true "sp_watcher1")   
 
-Select the *DNS Edge Configuration* tab and set the following parameters:  
+Click the *DNS Edge Configuration* tab and set the following parameters.  
 - DNS Edge URL:  
 This URL will be the BlueCat DNS Edge CI.  
 The URL should be in the following format:  
 *"https://api-<Your_Edge_CI_URL>"*  
 
-- User Name:  
-This will be the user name which will be used to login to BlueCat DNS Edge CI.  
-Typically it will be a valid e-mail address.  
+- Access Key File (JSON):  
+Click `Choose File` and open the DNS Edge Access Key Sets JSON file which contains *Client ID* and *Client Secret*.  
+Once the JSON file is chosen, *Client Id:* and *Client Secret:* will be automatically populated.  
 
-- Password:  
-This will be the password to authenticate the above user name.  
+- Interval (sec):  
+This will set the polling interval to the Service Points. The unit is seconds.  
+If you do not wish to activate Service Point Watcher, specify the interval to *"0"*.  
 
-- Interval (sec)  
-This will set the polling interval to DNS Edge CI.  
-If you do not wish to activate Service Point Watcher, specify the interval to *"0"*.
+- Diagnostic API Timeout (sec):  
+This will set the diagnostic API call timeout to each of the Service Points that will be monitored.  
+The unit is seconds.  
 
-Click *"SAVE"*   
-Once saved, Service Point Watcher will activate and will retrieve the necessary information from the CI. Once it retrieves the necessary information from the CI, it will start to poll to the service points according to the polling intervals.  
-If you wish to deactivate Service Point Watcher, specify the interval to *"0"* and save in the *DNS Edge Configuration* tab.  
+Click *"SAVE"* to save settings.  
 
-2. **Service Point List**  
+2. **SNMP Trap Settings**  
+![screenshot](img/sp_watcher4.jpg?raw=true "sp_watcher4")  
+
+Click the *SNMP Trap Settings* tab and set the following parameters for SNMP traps.  
+- IP Address:  
+Type in the IP Address of the SNMP trap server you wish to send the SNMP traps to.  
+
+- Port:  
+Type in the port number you wish to send the SNMP traps through. This is typically set to `162`.  
+
+- SNMP Version:  
+Select either `v1` or `v2c` from the drop down menu. (v3 is currently not supported)  
+
+- Community String  
+Type in the community string of the SNMP trap.  
+
+Click *"ADD"*  
+A configured SNMP server should appear in the *SNMP Trap Server List* table above.  
+If you need to add more than one server, repeat the process above.  
+If you need to delete a server, click on the check box of each server on the *SNMP Trap Server List* and click *"DELETE"*.  
+
+Click *"SAVE"* to save settings.  
+
+3. **Service Point List**  
 ![screenshot](img/sp_watcher2.jpg?raw=true "sp_watcher2")   
 
-All service points which belongs to the specified CI will be listed here.  
-Service points which are **NOT** associated with an IP address will not be listed here even if it does belong to the specified CI.  
+Click the *Service Point List* tab to select the Service Points to be monitored.  
+
+Click *"LOAD"* to load all the Service Points which are under the specified Customer Instance (CI).  
+This will take some time to load depending on the number of Service Points managed by the specified CI.  
+After loading is complete, all Service Points should appear in the *Service Point List* table.  
+
+Select the Service Points you **DO NOT** wish to monitor by checking on the check box of each Service Point on the *Service Point List* table and click *"DELETE"*.  
+Check that only the Service Points you wish to monitor are remaining in the table.  
+
+Click *"SAVE"* to save settings.  
+
+Once saved, Service Point Watcher will activate and will start to poll to the service points according to the polling intervals.  
+If you wish to deactivate Service Point Watcher, specify the interval to *"0"* and save in the *DNS Edge Configuration* tab.   
+Service points which are **NOT** associated with an IP address will not be listed even if it belongs to the specified CI.  
 
 Information on each column are the following.  
 - Name  
 The name of the service point.  
-It is typically a unique name followed by the first eight digits of the service point ID.   
+It is typically a unique name followed by the first eight digits of the Service Point ID.   
 
 - IP Address  
-The IP address of the service point.  
+The IP address of the Service Point.  
 
 - Site  
-The site which the service point belongs to within the specified CI.  
+The site which the Service Point belongs to within the specified CI.  
 
 - Connected  
-This shows the connectivity of the service point to the CI.  
+This shows the connectivity of the Service Point to the CI.  
 A green check mark will be shown if the service point is connected to the CI.  
 A green X mark will be shown if the service point is not connected to the CI.  
 
 - Status  
 This shows the status and the reachability of the service point from the Service Point Watcher.  
 The status is based on the service point diagnostic API.  
-A blue circle will be shown if the status of the service point is *GOOD* and is reachable from the Service Point Watcher.  
-A red circle will be shown if the status of the service point is *BAD* and is reachable from the Service Point Watcher.  
-A red circle with a cross will be shown if the service point is unreachable from the Service Point Watcher.  
+A blue circle (🔵 ) will be shown when the status of the Service Point is *GOOD* and is reachable from the Service Point Watcher.  
+A red circle (🔴 ) will be shown when the status of the Service Point is *BAD* but is reachable from the Service Point Watcher.  
+A red circle with a cross (🚫 ) will be shown if the service point is unreachable from the Service Point Watcher.  
 
-3. **Service Point Diagnostic API**  
+- Pulling  
+This shows whether the Service Point is successfully pulling information from the CI.  
+It is monitoring the timestamp of the polling service and the status will change depending on length of the time.
+A blue circle (🔵 ) will be shown as **GOOD** when the polling service is polling in a timely manner.    
+A red exclamation mark ( ❗ ) will be shown as **WARNING** when the polling service has not polled for more than 15 minutes.  
+A red circle (🔴 ) will be shown as **CRITICAL** when the polling service has not polled for more than 60 minutes.  
+
+4. **SNMP Traps**  
+The following are the list of SNMP traps used in Service Point Watcher.  
+These traps are defined in the following MIB files, *BCN-SP-MON-MIB.mib*, *BCN-TC-MIB.mib* and *BCN-SMI-MIB.mib*.  
+All three MIB files are located under `additional/mib`.  
+All MIB OID has a prefix of *1.3.6.1.4.1.13315*.
+![screenshot](img/sp_watcher6.jpg?raw=true "sp_watcher6")  
+
+- bcnSpMonAlarmServiceStatus  
+Service Point Watcher will issue `bcnSpMonAlarmServiceStatus` whenever there is a change in status of the Service Point itself or the services within the Service Point.  
+    - Parameters  
+    bcnSpMonAlarmHostInfo：OctetString(‘Service Point name')  
+    bcnSpMonAlarmServiceInfo：OctetString(‘Service names’)  
+    bcnSpMonAlarmServiceState：OctetString(‘Status’)
+
+- bcnSpMonAlarmSettingsPollingHasStopped  
+Service Point Watcher will issue `bcnSpMonAlarmSettingsPollingHasStopped` depending on the change of last polling timestamp time.  
+    - Parameters  
+    bcnSpMonAlarmHostInfo：OctetString(‘Service Point name’)  
+    bcnSpMonAlarmCond：OctetString(‘Conditition of the alarm’)  
+    bcnSpMonAlarmSeverity：Integer(Normal(20)|Warning(40)|Critical(60))
+    bcnSpMonLastPollingTimestamp：OctetString(‘Last polling timestamp’)  
+    ![screenshot](img/sp_watcher7.jpg?raw=true "sp_watcher7")  
+
+5. **Service Point Diagnostic API**  
 ![screenshot](img/sp_watcher3.jpg?raw=true "sp_watcher3")  
 
-If a service point is reachable from the Service Point Watcher, then a service point diagnostic API can be called by clicking the *"Name"* of the service point in the *Service Point List* table.  
+If a Service Point is reachable from the Service Point Watcher, then a Service Point diagnostic API can be called by clicking the *"Name"* of the service point in the *Service Point List* table.  
 
 
 ---

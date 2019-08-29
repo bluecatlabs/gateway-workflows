@@ -161,7 +161,7 @@ class FWRLUpdater(object):
             return False
 
         succeed = False
-        if edge_api.login(self.get_value('edge_username'), self.get_value('edge_password')):
+        if edge_api.login(self.get_value('edge_client_id'), self.get_value('edge_secret')):
             self._update_domainlist_ids(edge_api)
             domainlists = {}
             if self._debug:
@@ -194,7 +194,7 @@ class FWRLUpdater(object):
             return False
 
         succeed = False
-        if edge_api.login(self.get_value('edge_username'), self.get_value('edge_password')):
+        if edge_api.login(self.get_value('edge_client_id'), self.get_value('edge_secret')):
             self._update_domainlist_ids(edge_api)
             domainlists = {}
             self._updates_domainlists(edge_api, domainlists)

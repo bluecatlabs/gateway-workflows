@@ -28,6 +28,17 @@ After downloading, extract the following two files: *"ui.jqgrid.css"* and *"jque
 Copy the two files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
 Create a *"jqgrid"* directory if it does not exist.  
 
+4. **DNS Edge CI Access Key Sets**  
+This workflow requires the DNS Edge CI access key sets JSON file.  
+Log in to the DNS Edge Customer Instance via browser.  
+![screenshot](img/dnsedge_key1.jpg?raw=true "dnsedge_key1")  
+Click "Profile" at the top right corner under  "ACCOUNT".  
+
+![screenshot](img/dnsedge_key2.jpg?raw=true "dnsedge_key2")  
+After opening the Profile page, click the blue cross to create new access key sets.  
+
+![screenshot](img/dnsedge_key3.jpg?raw=true "dnsedge_key3")  
+Click *DOWNDLOAD .JSON FILE* and save the JSON file to a directory of your choosing.   
 
 ## Usage   
 
@@ -40,12 +51,9 @@ This URL will be the BlueCat DNS Edge CI.
 The URL should be in the following format:  
 *"https://api-<Your_Edge_CI_URL>"*  
 
-- User Name:  
-This will be the user name which will be used to login to BlueCat DNS Edge CI.  
-Typically it will be a valid e-mail address.  
-
-- Password:  
-This will be the password to authenticate the above user name.  
+- Access Key File (JSON):  
+Click `Choose File` and open the DNS Edge Access Key Sets JSON file which contains *Client ID* and *Client Secret*.  
+Once the JSON file is chosen, *Client Id:* and *Client Secret:* will be automatically populated.  
 
 Click *"SAVE"*   
 

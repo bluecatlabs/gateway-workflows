@@ -1,8 +1,17 @@
 {
     "edge_url": "",
-    "edge_username": "",
-    "edge_password": "",
+    "edge_client_id": "",
+    "edge_secret": "",
     "edge_service_points": [],
     "last_execution": "",
-    "execution_interval": 0
+    "execution_interval": 30,
+    "timeout": 1,
+    "trap_servers": [
+        {
+            "ipaddress": "",
+            "port": "",
+            "snmpver": "",
+            "comstr": ""
+        }
+    ]
 }
