@@ -1,16 +1,22 @@
 # Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
-# limitations under the License
+# limitations under the License.
+#
+# By: BlueCat Networks
+# Date: 2019-08-28
+# Gateway Version: 19.5.1
+# Description: BlueCat Gateway module for DNS Edge API calls
 
 import os
 import sys
@@ -19,7 +25,7 @@ import json
 
 
 api_url = {
-    'login': '/v1/api/userManagement/authentication/login',
+    'get_token': '/v1/api/authentication/token',
     'logout': '/v1/api/userManagement/authentication/logout',
     'tos': '/v1/api/userManagement/tos',
     'get_domainlists': '/v1/api/list/dns',
@@ -61,15 +67,21 @@ class EdgeAPI(object):
                 print('DEBUG: Exceptin <%s>' % str(e))
         return valid
 
-    def login(self, username, password):
+    def login(self, client_id, secret):
         success = False
         try:
-            data = { "username": username, "password": password }
-            headers = {'Authorization': 'Bearer '}
-            response = requests.post(self._edgeurl + api_url['login'], json=data, headers=headers)
+            body = {
+                'grantType': 'ClientCredentials',
+                'clientCredentials': {
+                    'clientId': client_id,
+                    'clientSecret': secret
+                }
+            }
+            headers = { 'Content-type': 'application/json' }
+            response = requests.post(self._edgeurl + api_url['get_token'], json=body, headers=headers)
             if response.status_code == 200:
                 result = response.json()
-                self._headers =  {'Authorization': 'Bearer ' + result['auth_token']}
+                self._headers =  {'Authorization': 'Bearer ' + result['accessToken']}
                 success = True
             else:
                 if self._debug:
@@ -196,7 +208,6 @@ class EdgeAPI(object):
             else:
                 if self._debug:
                     print('DEBUG: failed response <%s>' % str(vars(response)))
-                raise EdgeException(response)
         except requests.exceptions.RequestException as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))

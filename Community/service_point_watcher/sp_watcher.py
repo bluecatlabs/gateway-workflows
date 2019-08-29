@@ -14,14 +14,15 @@
 
 import os
 import sys
-import datetime
 import pytz
 import json
-import hashlib
+from datetime import datetime, timedelta
+from pytz import timezone
 from threading import Lock
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from dnsedge.edgeapi import EdgeAPI
+from .snmp_trap_sender import send_status_notification, send_pulling_stopped_notification
 
 class SPWatcherException(Exception): pass
 
@@ -29,6 +30,7 @@ class SPWatcherException(Exception): pass
 class SPWatcher(object):
     _unique_instance = None
     _lock = Lock()
+    _service_points_file = os.path.dirname(os.path.abspath(__file__)) + '/service_points.json'
     _config_file = os.path.dirname(os.path.abspath(__file__)) + '/config.json'
 
     @classmethod
@@ -49,6 +51,8 @@ class SPWatcher(object):
         return cls._unique_instance
 
     def _load(self):
+        with open(SPWatcher._service_points_file) as f:
+            self._service_points = json.load(f)
         with open(SPWatcher._config_file) as f:
             self._config = json.load(f)
 
@@ -69,6 +73,21 @@ class SPWatcher(object):
             service_points = self._service_points
         return service_points
 
+    def get_service_point_summaries(self):
+        service_points = self.get_service_points()
+        service_point_summaries = []
+        for sp in service_points:
+            sps = {}
+            sps['id'] = sp['id']
+            sps['name'] = sp['linked_name']
+            sps['ipaddress'] = sp['ipaddress']
+            sps['site'] = sp['site']
+            sps['connected'] = sp['connected']
+            sps['status'] = sp['status']
+            sps['pulling_severity'] = sp['pulling_severity']
+            service_point_summaries.append(sps)
+        return service_point_summaries
+
     def set_service_points(self, service_points):
         with SPWatcher._lock:
             self._service_points = service_points
@@ -79,6 +98,8 @@ class SPWatcher(object):
 
     def save(self):
         with SPWatcher._lock:
+            with open(SPWatcher._service_points_file, 'w') as f:
+                json.dump(self._service_points, f, indent=4)
             with open(SPWatcher._config_file, 'w') as f:
                 json.dump(self._config, f, indent=4)
 
@@ -89,16 +110,77 @@ class SPWatcher(object):
             site_dic[site['id']] = site['name']
         return site_dic
 
-    def _get_sp_status(self, edge_api, ipaddress):
+    def _issue_traps(self, service_point, status, sp_status):
+        trap_servers = self._config['trap_servers']
+        pulling_severity = 'UNKNOWN'
+        if service_point['status'] != 'UNKNOWN' and service_point['status'] != status:
+            send_status_notification(
+                trap_servers,
+                service_point,
+                'spStatus',
+                status
+            )
+                
+        if service_point['diagnostics'] is not None:
+            prev_sp_statuses = service_point['diagnostics']['spServicesStatuses']
+            crnt_sp_statuses = sp_status['spServicesStatuses']
+            for key in crnt_sp_statuses.keys():
+                if prev_sp_statuses[key]['status'] != crnt_sp_statuses[key]['status']:
+                    send_status_notification(
+                        trap_servers,
+                        service_point,
+                        key,
+                        crnt_sp_statuses[key]['status']
+                    )
+                    
+            if 'dns-gateway-service' in crnt_sp_statuses.keys():
+                getway_service = crnt_sp_statuses['dns-gateway-service']
+                if 'additionalDetails' in getway_service.keys():
+                    additional_details = getway_service['additionalDetails']
+                    last_pulling_timestamp = \
+                        additional_details['settingsDiagnostics']['lastSettingsPollingTimestamp'] // 1000
+                    last_pulling_time = datetime.fromtimestamp(last_pulling_timestamp)
+                    now = datetime.now()
+                    
+                    delay = now - last_pulling_time
+                    if delay > timedelta(hours=1):
+                        pulling_severity = 'CRITICAL'
+                    elif delay > timedelta(minutes=15):
+                        pulling_severity = 'WARNING'
+                    else:
+                        pulling_severity = 'NORMAL'
+                    if service_point['pulling_severity'] != 'UNKNOWN' and \
+                       service_point['pulling_severity'] != pulling_severity:
+                        send_pulling_stopped_notification(
+                            trap_servers,
+                            service_point,
+                            pulling_severity,
+                            last_pulling_time
+                        )
+                        
+        return pulling_severity
+
+    def _analyze_service_point(self, edge_api, service_point, timeout):
         status = 'UNKNOWN'
-        sp_status = edge_api.get_service_point_status(ipaddress)
+        sp_status = edge_api.get_service_point_status(service_point['ipaddress'], timeout)
+        pulling_severity = 'UNKNOWN'
         if sp_status is not None:
             status = sp_status['spStatus']
+            pulling_severity = self._issue_traps(service_point, status, sp_status)
         else:
             status = 'UNREACHED'
-        print('ipaddress<%s> status = <%s>' % (ipaddress, status))
-        return status
-
+            if service_point['status'] != 'UNKNOWN' and service_point['status'] != status:
+                send_status_notification(
+                    self._config['trap_servers'],
+                    service_point,
+                    'spStatus',
+                    status
+                )
+            
+        service_point['status'] = status
+        service_point['diagnostics'] = sp_status
+        service_point['pulling_severity'] = pulling_severity
+        
     def _construct_linked_name(self, edge_api, name, ipaddress):
         return "<a href='%s'  target='_blank'>%s</a>" % \
             (edge_api.get_service_point_status_url(ipaddress), name)
@@ -115,8 +197,11 @@ class SPWatcher(object):
             service_point['site'] = site_dic[sp['siteId']] if sp['siteId'] in site_dic.keys() else ''
             service_point['connected'] = sp['connectionState']
             service_point['status'] = 'UNKNOWN'
+            service_point['diagnostics'] = None
+            service_point['pulling_severity'] = 'UNKNOWN'
+            service_point['linked_name'] = service_point['name']
             if service_point['ipaddress'] != '':
-                service_point['name'] = \
+                service_point['linked_name'] = \
                     self._construct_linked_name(edge_api, service_point['name'], service_point['ipaddress'])
                 service_points.append(service_point)
 
@@ -124,30 +209,61 @@ class SPWatcher(object):
             service_points.sort(key=lambda x:x['site'])
         return service_points
 
+    def _find_service_points(self, id):
+        found = None
+        for sp in self.get_service_points():
+            if sp['id'] == id:
+                found = sp
+                break
+        return found
+        
     def watch_service_points(self):
         if self._debug:
             print('Watch Service Points is called....')
-        edge_api = EdgeAPI(self.get_value('edge_url'), debug=self._debug)
-
-        if not edge_api.validate_edgeurl():
-            return False
-
+            
+        edge_api = EdgeAPI(self.get_value('edge_url'), debug=False)
         service_points = self.get_service_points()
         if 0 == len(service_points):
-            if edge_api.login(self.get_value('edge_username'), self.get_value('edge_password')):
-                service_points = self._collect_service_points(edge_api)
-                self.set_service_points(service_points)
-                edge_api.logout()
-
+            return False
+            
+        timeout = self.get_value('timeout')
         for sp in service_points:
-            sp['status'] = self._get_sp_status(edge_api, sp['ipaddress'])
+            self._analyze_service_point(edge_api, sp, timeout)
         return True
 
-    def register_job(self):
+    def collect_service_points(self):
         succeed = False
         try:
             interval = self.get_value('execution_interval')
             edge_api = EdgeAPI(self.get_value('edge_url'), debug=True)
+            if not edge_api.validate_edgeurl():
+                return succeed
+            if edge_api.login(self.get_value('edge_client_id'), self.get_value('edge_secret')):
+                service_points = self._collect_service_points(edge_api)
+                print('Service Points from edge is <%d>' % len(service_points))
+                self.set_service_points(service_points)
+                edge_api.logout()
+                
+        except Exception as e:
+            if self._debug:
+                print('DEBUG: Exceptin <%s>' % str(e))
+        return succeed
+
+    def update_service_points(self, service_points):
+        succeed = False
+        updated_sps = []
+        for sp in service_points:
+            found = self._find_service_points(sp['id'])
+            if found is not None:
+                updated_sps.append(found)
+        print('Updated SPs <%d>' % len(updated_sps))
+        self.set_service_points(updated_sps)
+        return succeed
+
+    def register_job(self):
+        succeed = False
+        try:
+            edge_api = EdgeAPI(self.get_value('edge_url'), debug=False)
             if not edge_api.validate_edgeurl():
                 return succeed
 
@@ -159,7 +275,7 @@ class SPWatcher(object):
                 self._job.remove()
                 self._job = None
 
-            self.clear_service_points()
+            interval = self.get_value('execution_interval')
             if interval is not None and 0 < interval:
                 self.watch_service_points()
                 self._job = \
