@@ -1,5 +1,3 @@
-updated for DNS Edge API new authentication logic
-
 # Service Point Watcher  
 **Bluecat Gateway Version:** v18.10.2 and greater  
 **BlueCat DNS Edge Version:** v2019.8 and greater  
@@ -101,7 +99,7 @@ Type in the community string of the SNMP trap.
 Click *"ADD"*  
 A configured SNMP server should appear in the *SNMP Trap Server List* table above.  
 If you need to add more than one server, repeat the process above.  
-If you need to delete a server, click on the check box of each server on the *SNMP Trap Server List* and click *"DELETE"*.  
+If you need to delete a server, click on the check box of each server on the *SNMP Trap Server List* table and click *"DELETE"*.  
 
 Click *"SAVE"* to save settings.  
 
@@ -124,7 +122,7 @@ If you wish to deactivate Service Point Watcher, specify the interval to *"0"* a
 Service points which are **NOT** associated with an IP address will not be listed even if it belongs to the specified CI.  
 
 Information on each column are the following.  
-![screenshot](img/sp_watcher8.jpg?raw=true "sp_watcher8")   
+![screenshot](img/sp_watcher5.jpg?raw=true "sp_watcher5")   
 - Name  
 The name of the service point.  
 It is typically a unique name followed by the first eight digits of the Service Point ID.   
@@ -149,7 +147,7 @@ A red circle with a cross (🚫 ) will be shown if the service point is unreacha
 
 - Pulling  
 This shows whether the Service Point is successfully pulling information from the CI.  
-It is monitoring the timestamp of the polling service and the status will change depending on length of the time.
+It is monitoring the timestamp of the polling service and the status will change depending on length of the time.  
 A blue circle (🔵 ) will be shown as **GOOD** when the polling service is polling in a timely manner.    
 A red exclamation mark ( ❗ ) will be shown as **WARNING** when the polling service has not polled for more than 15 minutes.  
 A red circle (🔴 ) will be shown as **CRITICAL** when the polling service has not polled for more than 60 minutes.  
@@ -158,7 +156,7 @@ A red circle (🔴 ) will be shown as **CRITICAL** when the polling service has 
 The following are the list of SNMP traps used in Service Point Watcher.  
 These traps are defined in the following MIB files, *BCN-SP-MON-MIB.mib*, *BCN-TC-MIB.mib* and *BCN-SMI-MIB.mib*.  
 All three MIB files are located under `additional/mib`.  
-All MIB OID has a prefix of *1.3.6.1.4.1.13315*.
+All MIB OID has a prefix of `1.3.6.1.4.1.13315`.
 ![screenshot](img/sp_watcher6.jpg?raw=true "sp_watcher6")  
 
 - bcnSpMonAlarmServiceStatus  
@@ -173,7 +171,7 @@ Service Point Watcher will issue `bcnSpMonAlarmSettingsPollingHasStopped` depend
     - Parameters  
     bcnSpMonAlarmHostInfo：OctetString(‘Service Point name’)  
     bcnSpMonAlarmCond：OctetString(‘Conditition of the alarm’)  
-    bcnSpMonAlarmSeverity：Integer(Normal(20)|Warning(40)|Critical(60))
+    bcnSpMonAlarmSeverity：Integer(Normal(20)|Warning(40)|Critical(60))  
     bcnSpMonLastPollingTimestamp：OctetString(‘Last polling timestamp’)  
     ![screenshot](img/sp_watcher7.jpg?raw=true "sp_watcher7")  
 
