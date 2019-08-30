@@ -43,16 +43,16 @@ Log in to the DNS Edge Customer Instance via browser.
     <img src="img/dnsedge_key1.jpg" width="240px">   
 
 
-Click "Profile" at the top right corner under  "ACCOUNT".  
-    <img src="img/dnsedge_key2.jpg" width="160px">   
+      Click "Profile" at the top right corner under  "ACCOUNT".  
+      <img src="img/dnsedge_key2.jpg" width="160px">   
 
 
 
-After opening the Profile page, click the blue cross to create new access key sets.  
-    <img src="img/dnsedge_key3.jpg" width="320px">   
+      After opening the Profile page, click the blue cross to create new access key sets.  
+      <img src="img/dnsedge_key3.jpg" width="640px">   
 
 
- 
+
 Click *DOWNDLOAD .JSON FILE* and save the JSON file to a directory of your choosing.   
 
 
