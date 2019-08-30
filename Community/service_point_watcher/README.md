@@ -2,7 +2,7 @@
 **Bluecat Gateway Version:** 18.10.2 and greater  
 **BlueCat DNS Edge Version:** 2018.11 and greater  
 
-This workflow will monitor the DNS Edge Service Points which belong to a specified CI.  
+This workflow will monitor the DNS Edge Service Points which belong to a specified Customer Instance (CI).  
 It will only list service points which are associated with an IP address.  
 
 ## Architecture  
