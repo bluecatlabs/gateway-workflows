@@ -1,12 +1,16 @@
 # SDWAN (Meraki) Firewall Rule Updater  
-**Bluecat Gateway Version:** 18.10.2 and greater  
-**BlueCat DNS Edge Version:** 2018.11 and greater  
+**Bluecat Gateway Version:** v18.10.2 and greater  
+**BlueCat DNS Edge Version:** v2019.8 and greater  
 
 This workflow will update the firewall rule on a SDWAN (Meraki) cloud controller based on BlueCat DNS Edge domain lists.  
 The updated rule based on the domain lists will be allowed traffic through the firewall.  
 This workflow assumes there is a *"Deny All Traffic"* rule at the end in order for only the firewall rules based on DNS Edge domain lists are allowed through.    
 
 ![screenshot](img/sdwan_updater_diagram.jpg?raw=true "sdwan_updater_diagram")  
+
+**Changes in this release**  
+1. Supports the updated method for obtaining API access token from DNS Edge v2019.8.  
+
 
 ## Prerequisites  
 1. **Additional Python3 Library**  
@@ -31,14 +35,19 @@ Create a *"jqgrid"* directory if it does not exist.
 4. **DNS Edge CI Access Key Sets**  
 This workflow requires the DNS Edge CI access key sets JSON file.  
 Log in to the DNS Edge Customer Instance via browser.  
-![screenshot](img/dnsedge_key1.jpg?raw=true "dnsedge_key1")  
 Click "Profile" at the top right corner under  "ACCOUNT".  
+    <img src="img/dnsedge_key1.jpg" width="160px">   
 
-![screenshot](img/dnsedge_key2.jpg?raw=true "dnsedge_key2")  
-After opening the Profile page, click the blue cross to create new access key sets.  
 
-![screenshot](img/dnsedge_key3.jpg?raw=true "dnsedge_key3")  
-Click *DOWNDLOAD .JSON FILE* and save the JSON file to a directory of your choosing.   
+      After opening the Profile page, click the blue cross to create new access key sets.  
+      <img src="img/dnsedge_key2.jpg" width="160px">   
+
+
+
+      Click *DOWNLOAD .JSON FILE* and save the JSON file to a directory of your choosing.  
+      <img src="img/dnsedge_key3.jpg" width="640px">     
+
+
 
 ## Usage   
 
