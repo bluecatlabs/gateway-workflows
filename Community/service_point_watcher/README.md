@@ -3,7 +3,7 @@
 **BlueCat DNS Edge Version:** 2018.11 and greater  
 
 This workflow will monitor the DNS Edge Service Points which belong to a specified Customer Instance (CI).  
-It will only list service points which are associated with an IP address.  
+It will only list Service Points which are associated with an IP address.  
 
 ## Architecture  
 The following diagram depicts the architecture:  
@@ -16,7 +16,7 @@ The following diagram depicts the architecture:
 
 ## Prerequisites  
 1. **Additional Python3 Library**  
-This workflow requires the python3 *"apscheduler"* and *"pysnmp"* library.  
+This workflow requires the python3 *apscheduler* and *pysnmp* library.  
 Install the library using PIP3 inside the BlueCat Gateway container.
 ```
 $pip3 install apscheduler
@@ -38,12 +38,10 @@ Create a *"jqgrid"* directory if it does not exist.
 4. **DNS Edge CI Access Key Sets**  
 This workflow requires the DNS Edge CI access key sets JSON file.  
 Log in to the DNS Edge Customer Instance via browser.  
-![screenshot](img/dnsedge_key1.jpg?raw=true "dnsedge_key1")  
+<img src="img/dnsedge_key1.jpg" width="320px">   
 Click "Profile" at the top right corner under  "ACCOUNT".  
-
 ![screenshot](img/dnsedge_key2.jpg?raw=true "dnsedge_key2")  
 After opening the Profile page, click the blue cross to create new access key sets.  
-
 ![screenshot](img/dnsedge_key3.jpg?raw=true "dnsedge_key3")  
 Click *DOWNDLOAD .JSON FILE* and save the JSON file to a directory of your choosing.   
 
