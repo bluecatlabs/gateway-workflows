@@ -1,3 +1,5 @@
+updated for DNS Edge API new authentication logic
+
 # Service Point Watcher  
 **Bluecat Gateway Version:** 18.10.2 and greater  
 **BlueCat DNS Edge Version:** 2018.11 and greater  
@@ -38,7 +40,7 @@ Create a *"jqgrid"* directory if it does not exist.
 4. **DNS Edge CI Access Key Sets**  
 This workflow requires the DNS Edge CI access key sets JSON file.  
 Log in to the DNS Edge Customer Instance via browser.  
-<img src="img/dnsedge_key1.jpg" width="320px">   
+<img src="img/dnsedge_key1.jpg" width="240px">   
 Click "Profile" at the top right corner under  "ACCOUNT".  
 ![screenshot](img/dnsedge_key2.jpg?raw=true "dnsedge_key2")  
 After opening the Profile page, click the blue cross to create new access key sets.  
