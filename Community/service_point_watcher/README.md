@@ -1,11 +1,16 @@
 updated for DNS Edge API new authentication logic
 
 # Service Point Watcher  
-**Bluecat Gateway Version:** 18.10.2 and greater  
-**BlueCat DNS Edge Version:** 2018.11 and greater  
+**Bluecat Gateway Version:** v18.10.2 and greater  
+**BlueCat DNS Edge Version:** v2019.8 and greater  
 
 This workflow will monitor the DNS Edge Service Points which belong to a specified Customer Instance (CI).  
 It will only list Service Points which are associated with an IP address.  
+
+**Changes in this release**  
+1. Supports the updated method for obtaining API access token from DNS Edge v2019.8.  
+2. Added SNMP trap feature.  
+3. Added timestamp pull feature.  
 
 ## Architecture  
 The following diagram depicts the architecture:  
@@ -40,7 +45,7 @@ Create a *"jqgrid"* directory if it does not exist.
 4. **DNS Edge CI Access Key Sets**  
 This workflow requires the DNS Edge CI access key sets JSON file.  
 Log in to the DNS Edge Customer Instance via browser.  
-    <img src="img/dnsedge_key1.jpg" width="240px">   
+    <img src="img/dnsedge_key1.jpg" width="160px">   
 
 
       Click "Profile" at the top right corner under  "ACCOUNT".  
@@ -53,7 +58,7 @@ Log in to the DNS Edge Customer Instance via browser.
 
 
 
-Click *DOWNDLOAD .JSON FILE* and save the JSON file to a directory of your choosing.   
+Click *DOWNLOAD .JSON FILE* and save the JSON file to a directory of your choosing.   
 
 
 ## Usage   
@@ -122,6 +127,7 @@ If you wish to deactivate Service Point Watcher, specify the interval to *"0"* a
 Service points which are **NOT** associated with an IP address will not be listed even if it belongs to the specified CI.  
 
 Information on each column are the following.  
+![screenshot](img/sp_watcher8.jpg?raw=true "sp_watcher8")   
 - Name  
 The name of the service point.  
 It is typically a unique name followed by the first eight digits of the Service Point ID.   
