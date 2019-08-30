@@ -40,11 +40,19 @@ Create a *"jqgrid"* directory if it does not exist.
 4. **DNS Edge CI Access Key Sets**  
 This workflow requires the DNS Edge CI access key sets JSON file.  
 Log in to the DNS Edge Customer Instance via browser.  
-<img src="img/dnsedge_key1.jpg" width="240px">   
+    <img src="img/dnsedge_key1.jpg" width="240px">   
+
+
 Click "Profile" at the top right corner under  "ACCOUNT".  
-![screenshot](img/dnsedge_key2.jpg?raw=true "dnsedge_key2")  
+    <img src="img/dnsedge_key2.jpg" width="160px">   
+
+
+
 After opening the Profile page, click the blue cross to create new access key sets.  
-![screenshot](img/dnsedge_key3.jpg?raw=true "dnsedge_key3")  
+    <img src="img/dnsedge_key3.jpg" width="320px">   
+
+
+ 
 Click *DOWNDLOAD .JSON FILE* and save the JSON file to a directory of your choosing.   
 
 
