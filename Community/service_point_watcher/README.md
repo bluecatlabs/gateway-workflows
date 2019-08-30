@@ -58,7 +58,7 @@ Click "Profile" at the top right corner under  "ACCOUNT".
 
 ## Usage   
 1. **Set DNS Edge Configurations**  
-![screenshot](img/sp_watcher1.jpg?raw=true "sp_watcher1")   
+![screenshot](img/sp_watcher1.jpg)   
 
 Click the *DNS Edge Configuration* tab and set the following parameters.  
 - DNS Edge URL:  
@@ -81,7 +81,7 @@ The unit is seconds.
 Click *"SAVE"* to save settings.  
 
 2. **SNMP Trap Settings**  
-![screenshot](img/sp_watcher4.jpg?raw=true "sp_watcher4")  
+![screenshot](img/sp_watcher4.jpg)  
 
 Click the *SNMP Trap Settings* tab and set the following parameters for SNMP traps.  
 - IP Address:  
@@ -104,7 +104,7 @@ If you need to delete a server, click on the check box of each server on the *SN
 Click *"SAVE"* to save settings.  
 
 3. **Service Point List**  
-![screenshot](img/sp_watcher2.jpg?raw=true "sp_watcher2")   
+![screenshot](img/sp_watcher2.jpg)   
 
 Click the *Service Point List* tab to select the Service Points to be monitored.  
 
@@ -122,7 +122,7 @@ If you wish to deactivate Service Point Watcher, specify the interval to *"0"* a
 Service points which are **NOT** associated with an IP address will not be listed even if it belongs to the specified CI.  
 
 Information on each column are the following.  
-![screenshot](img/sp_watcher5.jpg?raw=true "sp_watcher5")   
+![screenshot](img/sp_watcher5.jpg)   
 - Name  
 The name of the service point.  
 It is typically a unique name followed by the first eight digits of the Service Point ID.   
