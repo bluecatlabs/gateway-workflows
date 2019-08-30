@@ -49,7 +49,7 @@ Click "Profile" at the top right corner under  "ACCOUNT".
     <img src="img/dnsedge_key1.jpg" width="160px">   
 
 
-      After opening the Profile page, click the blue cross to create new access key sets.
+      After opening the Profile page, click the blue cross to create new access key sets.  
       <img src="img/dnsedge_key2.jpg" width="160px">   
 
 
