@@ -5,7 +5,7 @@
 This workflow will monitor the DNS Edge Service Points which belong to a specified Customer Instance (CI).  
 It will only list Service Points which are associated with an IP address.  
 
-**Changes in this release**  
+##Changes in this release  
 1. Supports the updated method for obtaining API access token from DNS Edge v2019.8.  
 2. Added SNMP trap feature.  
 3. Added timestamp pull feature.  

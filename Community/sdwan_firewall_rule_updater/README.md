@@ -8,7 +8,7 @@ This workflow assumes there is a *"Deny All Traffic"* rule at the end in order f
 
 ![screenshot](img/sdwan_updater_diagram.jpg?raw=true "sdwan_updater_diagram")  
 
-**Changes in this release**  
+##Changes in this release  
 1. Supports the updated method for obtaining API access token from DNS Edge v2019.8.  
 
 
