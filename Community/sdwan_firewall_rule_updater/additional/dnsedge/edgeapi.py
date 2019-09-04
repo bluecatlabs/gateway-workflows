@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# By: BlueCat Networks
+# By: Akira Goto (agoto@bluecatnetworks.com)
 # Date: 2019-08-28
 # Gateway Version: 19.5.1
 # Description: BlueCat Gateway module for DNS Edge API calls
