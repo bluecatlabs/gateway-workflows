@@ -4,7 +4,7 @@
     "edge_secret": "",
     "edge_service_points": [],
     "last_execution": "",
-    "execution_interval": 30,
+    "execution_interval": 0,
     "timeout": 1,
     "trap_servers": [
         {

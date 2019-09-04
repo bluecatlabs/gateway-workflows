@@ -1,16 +1,22 @@
 # Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
-# limitations under the License
+# limitations under the License.
+#
+# By: Akira Goto (agoto@bluecatnetworks.com)
+# Date: 2019-08-28
+# Gateway Version: 19.5.1
+# Description: Service Point Watcher sp_watcher.py
 
 import os
 import sys
@@ -120,7 +126,7 @@ class SPWatcher(object):
                 'spStatus',
                 status
             )
-                
+
         if service_point['diagnostics'] is not None:
             prev_sp_statuses = service_point['diagnostics']['spServicesStatuses']
             crnt_sp_statuses = sp_status['spServicesStatuses']
@@ -132,7 +138,7 @@ class SPWatcher(object):
                         key,
                         crnt_sp_statuses[key]['status']
                     )
-                    
+
             if 'dns-gateway-service' in crnt_sp_statuses.keys():
                 getway_service = crnt_sp_statuses['dns-gateway-service']
                 if 'additionalDetails' in getway_service.keys():
@@ -141,7 +147,7 @@ class SPWatcher(object):
                         additional_details['settingsDiagnostics']['lastSettingsPollingTimestamp'] // 1000
                     last_pulling_time = datetime.fromtimestamp(last_pulling_timestamp)
                     now = datetime.now()
-                    
+
                     delay = now - last_pulling_time
                     if delay > timedelta(hours=1):
                         pulling_severity = 'CRITICAL'
@@ -157,7 +163,7 @@ class SPWatcher(object):
                             pulling_severity,
                             last_pulling_time
                         )
-                        
+
         return pulling_severity
 
     def _analyze_service_point(self, edge_api, service_point, timeout):
@@ -176,11 +182,11 @@ class SPWatcher(object):
                     'spStatus',
                     status
                 )
-            
+
         service_point['status'] = status
         service_point['diagnostics'] = sp_status
         service_point['pulling_severity'] = pulling_severity
-        
+
     def _construct_linked_name(self, edge_api, name, ipaddress):
         return "<a href='%s'  target='_blank'>%s</a>" % \
             (edge_api.get_service_point_status_url(ipaddress), name)
@@ -216,16 +222,16 @@ class SPWatcher(object):
                 found = sp
                 break
         return found
-        
+
     def watch_service_points(self):
         if self._debug:
             print('Watch Service Points is called....')
-            
+
         edge_api = EdgeAPI(self.get_value('edge_url'), debug=False)
         service_points = self.get_service_points()
         if 0 == len(service_points):
             return False
-            
+
         timeout = self.get_value('timeout')
         for sp in service_points:
             self._analyze_service_point(edge_api, sp, timeout)
@@ -243,7 +249,7 @@ class SPWatcher(object):
                 print('Service Points from edge is <%d>' % len(service_points))
                 self.set_service_points(service_points)
                 edge_api.logout()
-                
+
         except Exception as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
