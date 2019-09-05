@@ -1,12 +1,36 @@
+<!--  Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+ -*- coding: utf-8 -*-
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+ By: Akira Goto (agoto@bluecatnetworks.com)
+ Date: 2019-08-28
+ Gateway Version: 19.5.1
+ Description: SDWAN Firewall Rule Updater README.md -->  
+
 # SDWAN (Meraki) Firewall Rule Updater  
-**Bluecat Gateway Version:** 18.10.2 and greater  
-**BlueCat DNS Edge Version:** 2018.11 and greater  
+**Bluecat Gateway Version:** v18.10.2 and greater  
+**BlueCat DNS Edge Version:** v2019.8 and greater  
 
 This workflow will update the firewall rule on a SDWAN (Meraki) cloud controller based on BlueCat DNS Edge domain lists.  
 The updated rule based on the domain lists will be allowed traffic through the firewall.  
 This workflow assumes there is a *"Deny All Traffic"* rule at the end in order for only the firewall rules based on DNS Edge domain lists are allowed through.    
 
 ![screenshot](img/sdwan_updater_diagram.jpg?raw=true "sdwan_updater_diagram")  
+
+## Changes in this release  
+1. Supports the updated method for obtaining API access token from DNS Edge v2019.8.  
+
 
 ## Prerequisites  
 1. **Additional Python3 Library**  
@@ -28,6 +52,22 @@ After downloading, extract the following two files: *"ui.jqgrid.css"* and *"jque
 Copy the two files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
 Create a *"jqgrid"* directory if it does not exist.  
 
+4. **DNS Edge CI Access Key Sets**  
+This workflow requires the DNS Edge CI access key sets JSON file.  
+Log in to the DNS Edge Customer Instance via browser.  
+Click "Profile" at the top right corner under  "ACCOUNT".  
+    <img src="img/dnsedge_key1.jpg" width="160px">   
+
+
+      After opening the Profile page, click the blue cross to create new access key sets.  
+      <img src="img/dnsedge_key2.jpg" width="160px">   
+
+
+
+      Click *DOWNLOAD .JSON FILE* and save the JSON file to a directory of your choosing.  
+      <img src="img/dnsedge_key3.jpg" width="640px">     
+
+
 
 ## Usage   
 
@@ -40,12 +80,9 @@ This URL will be the BlueCat DNS Edge CI.
 The URL should be in the following format:  
 *"https://api-<Your_Edge_CI_URL>"*  
 
-- User Name:  
-This will be the user name which will be used to login to BlueCat DNS Edge CI.  
-Typically it will be a valid e-mail address.  
-
-- Password:  
-This will be the password to authenticate the above user name.  
+- Access Key File (JSON):  
+Click `Choose File` and open the DNS Edge Access Key Sets JSON file which contains *Client ID* and *Client Secret*.  
+Once the JSON file is chosen, *Client Id:* and *Client Secret:* will be automatically populated.  
 
 Click *"SAVE"*   
 

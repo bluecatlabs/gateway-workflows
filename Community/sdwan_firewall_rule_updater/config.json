@@ -1,7 +1,7 @@
 {
     "edge_url": "",
-    "edge_username": "",
-    "edge_password": "",
+    "edge_client_id": "",
+    "edge_secret": "",
     "edge_domainlists": [],
     "sdwan_key": "",
     "sdwan_orgname": "",
