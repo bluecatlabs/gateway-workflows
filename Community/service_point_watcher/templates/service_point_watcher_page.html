@@ -12,9 +12,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-By: BlueCat Networks
-Date: 2019-04-25
-Gateway Version: 18.10.2
+By: Akira Goto (agoto@bluecatnetworks.com)
+Date: 2019-08-28
+Gateway Version: 19.5.1
 Description: Service Point Watcher HTML -->
 
 {% extends "base-no-box.html" %}
@@ -44,6 +44,9 @@ Description: Service Point Watcher HTML -->
     <li role="presentation">
         <a id="config-tab" href="#config-pane" role="tab" data-toggle="tab">{{ text['label_config_tab'] }}</a>
     </li>
+    <li role="presentation">
+        <a id="trap-tab" href="#trap-pane" role="tab" data-toggle="tab">{{ text['label_trap_tab'] }}</a>
+    </li>
 </ul>
 
 <div class="panel" id="main-container">
@@ -53,23 +56,91 @@ Description: Service Point Watcher HTML -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="splist-pane">
                 <br/>
+                <hr/>
+                <br/>
                 <table id="table"></table>
                 <div id="pager"></div>
                 <br/>
+                <table style="table-layout: fixed;">
+                    <tr>
+                        <td width="180">
+                            <button id="get_service_points" type="button" class="btn-default">
+                                {{ text['label_get_service_points'] }}
+                            </button>
+                            &nbsp;
+                            <button id="delete_service_points" type="button" class="btn-default">
+                                {{ text['label_delete'] }}
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <hr/>
             </div>
             <div role="tabpanel" class="tab-pane" id="config-pane">
-                {{ render_field(form.edge_url) }}
-                {{ render_field(form.edge_username) }}
-                {{ render_field(form.edge_password) }}
-                {{ render_field(form.execution_interval) }}
+                <hr/>
                 <br/>
-                <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
-                    {{ text['label_submit'] }}
-                </button>
+                {{ render_field(form.edge_url) }}
+                <hr/>
+                {{ render_field(form.edge_key_file) }}
+                {{ render_field(form.edge_client_id) }}
+                {{ render_field(form.edge_secret) }}
+                <hr/>
+                {{ render_field(form.execution_interval) }}
+                {{ render_field(form.timeout) }}
+                <hr/>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="trap-pane">
+                <hr/>
+                <br/>
+                <table id="trapservers"></table>
+                <div id="trappage"></div>
+                <br/>
+                <table style="table-layout: fixed;">
+                    <tr>
+                        <td width="32">
+                            <input id="ipaddress" type="text" placeholder="IP Address">
+                        </td>
+                        <td width="14">
+                            <input id="port" type="text" placeholder="Port">
+                        </td>
+                        <td width="16">
+                            <select id="snmpver">
+                                <option value="v1">v1</option>
+                                <option value="v2c" selected>v2c</option>
+                            </select>
+                        </td>
+                        <td width="50">
+                            <input id="comstr" type="text" placeholder="Communication String">
+                        </td>
+                        <td width="10">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <button id="add_row" type="button" class="btn-default">
+                                {{ text['label_add'] }}
+                            </button>
+                            &nbsp;
+                            <button id="delete_row" type="button" class="btn-default">
+                                {{ text['label_delete'] }}
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <hr/>
             </div>
         </div>
         <!-- don't remove the following token -->
         {{ form.csrf_token }}
+
+        <div class="row">
+            <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
+                {{ text['label_submit'] }}
+            </button>
+            &nbsp;
+            <button id="cancel" name="cancel" type="button" class="btn-default">
+                {{ text['label_cancel'] }}
+            </button>
+        </div>
     </form>
 </div>
 

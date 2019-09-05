@@ -1,0 +1,186 @@
+-- Copyright 2019 BlueCat Networks. All rights reserved.
+-- *****************************************************************
+-- BCN-SP-MON-MIB.mib:  BlueCat Networks Service Point Monitoring 
+--
+--
+-- August 2019, Michael Nonweiler
+--
+-- All rights reserved.
+-- 
+-- *****************************************************************
+
+BCN-SP-MON-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, NOTIFICATION-TYPE, OBJECT-IDENTITY,
+    DisplayString
+        FROM SNMPv2-TC
+	OBJECT-GROUP, MODULE-COMPLIANCE, NOTIFICATION-GROUP
+        FROM SNMPv2-CONF
+	BcnAlarmSeverity
+        FROM BCN-TC-MIB
+    bcnContrib
+        FROM BCN-SMI-MIB;
+
+bcnSpMon OBJECT IDENTIFIER  ::= { bcnContrib 3 }
+
+bcnSpMonMIB MODULE-IDENTITY
+    LAST-UPDATED	"201908190000Z"
+    ORGANIZATION	"BlueCat Networks"
+    CONTACT-INFO
+        "BlueCat Networks. Customer Care.
+
+        North America
+        Call: +1.866.491.2228
+        Europe
+        Call: +44.8081.011.306
+        Other
+        Call: +1.416.646.8433
+        
+        Email: support@bluecatnetworks.com"
+    DESCRIPTION
+        "This module provides the notifications for Service Point Monitoring"
+    REVISION "201908190000Z"
+    DESCRIPTION
+        "Initial version of this MIB module."
+    ::= { bcnSpMon 1 }
+
+-- Organization
+
+bcnSpMonNotification OBJECT IDENTIFIER 
+    ::= { bcnSpMon 2 }
+
+bcnSpMonConformance     OBJECT IDENTIFIER 
+	::= { bcnSpMon 3 }
+	
+-- Notification definitions
+
+bcnSpMonNotificationEvents OBJECT IDENTIFIER 
+    ::= { bcnSpMonNotification 0 }
+
+bcnSpMonNotificationData OBJECT IDENTIFIER 
+    ::= { bcnSpMonNotification 1 }
+	
+-- Notification data
+
+bcnSpMonAlarmHostInfo OBJECT-TYPE
+    SYNTAX          DisplayString
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "The service point name."
+    ::= { bcnSpMonNotificationData 1 }
+	
+bcnSpMonAlarmServiceInfo OBJECT-TYPE
+    SYNTAX          DisplayString
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "The service name."
+    ::= { bcnSpMonNotificationData 2 }
+
+bcnSpMonAlarmServiceState OBJECT-TYPE
+    SYNTAX          DisplayString
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "The status (Good or Bad) of the service."
+    ::= { bcnSpMonNotificationData 3 }
+	
+bcnSpMonAlarmCond OBJECT-TYPE
+    SYNTAX          DisplayString
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Condition (set or clear) for the alarm."
+    ::= { bcnSpMonNotificationData 4 }
+	
+bcnSpMonAlarmSeverity OBJECT-TYPE
+    SYNTAX          BcnAlarmSeverity
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "The severity classification (CRITICAL, WARNING or INFO) for the alarm."
+    ::= { bcnSpMonNotificationData 5 }
+
+bcnSpMonLastPollingTimestamp OBJECT-TYPE
+    SYNTAX DateAndTime
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "The last polling time-stamp."
+    ::= { bcnSpMonNotificationData 6 }
+
+-- Notification events
+bcnSpMonAlarmServiceStatus NOTIFICATION-TYPE
+    OBJECTS {                   
+				bcnSpMonAlarmHostInfo,
+				bcnSpMonAlarmServiceInfo,
+				bcnSpMonAlarmServiceState            
+            }
+    STATUS          current
+    DESCRIPTION
+        "A bcnSpMonAlarmServiceStatus signifies that status of a service in a SP diagnostics report changes to BAD or GOOD."
+   ::= { bcnSpMonNotificationEvents 1 }
+
+bcnSpMonAlarmSettingsPollingHasStopped NOTIFICATION-TYPE
+    OBJECTS {                   
+				bcnSpMonAlarmCond,
+				bcnSpMonAlarmHostInfo,
+				bcnSpMonAlarmSeverity,
+				bcnSpMonLastPollingTimestamp
+            }
+    STATUS          current
+    DESCRIPTION
+        "A bcnSpMonAlarmSettingsPollingHasStopped signifies that the last Settings Polling Time-stamp is not recent and a particular event is sent to indicate the alarm is set or cleared."
+   ::= { bcnSpMonNotificationEvents 2 }
+   
+---------------------------------------------------------------------------
+ -- BCN-SP-MON-MIB Module - Conformance Information
+---------------------------------------------------------------------------
+bcnSpMonCompliances OBJECT IDENTIFIER 
+    ::= { bcnSpMonConformance 1 }
+
+bcnSpMonGroups       OBJECT IDENTIFIER 
+	::= { bcnSpMonConformance 2 }
+
+---------------------------------------------------------------------------
+-- Units of conformance
+---------------------------------------------------------------------------
+
+bcnSpMonNotificationEventGroup NOTIFICATION-GROUP
+    NOTIFICATIONS { 
+		  bcnSpMonAlarmServiceStatus,
+		  bcnSpMonAlarmSettingsPollingHasStopped
+    }
+    STATUS current
+    DESCRIPTION "Service Point Monitoring notification event group conformance."
+    ::= { bcnSpMonGroups 1 }
+
+bcnSpMonNotificationDataGroup OBJECT-GROUP
+    OBJECTS { 
+		  bcnSpMonAlarmHostInfo,
+			bcnSpMonAlarmServiceInfo,
+			bcnSpMonAlarmServiceState,
+			bcnSpMonAlarmCond,
+			bcnSpMonAlarmSeverity,
+			bcnSpMonLastPollingTimestamp
+    }
+    STATUS current
+    DESCRIPTION "Service Point Monitoring notification data conformance."
+    ::= { bcnSpMonGroups 2 }
+
+---------------------------------------------------------------------------
+-- MIB Module Compliance statements
+---------------------------------------------------------------------------
+
+bcnSpMonCompliance MODULE-COMPLIANCE
+    STATUS current
+    DESCRIPTION "Basic conformance"
+    MODULE -- This module
+    MANDATORY-GROUPS {        
+        bcnSpMonNotificationEventGroup, 
+        bcnSpMonNotificationDataGroup}
+    ::= {bcnSpMonCompliances 1 }
+
+END

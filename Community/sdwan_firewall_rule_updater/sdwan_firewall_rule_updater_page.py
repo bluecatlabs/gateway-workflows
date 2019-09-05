@@ -1,16 +1,22 @@
 # Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
-# limitations under the License
+# limitations under the License.
+#
+# By: Akira Goto (agoto@bluecatnetworks.com)
+# Date: 2019-08-28
+# Gateway Version: 19.5.1
+# Description: SDWAN Firewall Rule Updater page.py
 
 # Various Flask framework items.
 import os
@@ -18,7 +24,7 @@ import sys
 
 from flask import request, url_for, redirect, render_template, flash, g, jsonify
 from wtforms.validators import URL, DataRequired
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, FileField, SubmitField
 
 from bluecat.wtform_extensions import GatewayForm
 from bluecat.wtform_fields import CustomStringField, CustomSubmitField
@@ -53,12 +59,16 @@ class GenericFormTemplate(GatewayForm):
         validators=[URL(message=invalid_url_message)],
         render_kw={"placeholder": "https://api-<Edge Instance>.bluec.at"}
     )
-    edge_username = StringField(
-        label=text['label_edge_username'],
+    edge_key_file = FileField(
+        text['label_edge_key_file']
+    )
+    edge_client_id = StringField(
+        label=text['label_edge_client_id'],
         validators=[DataRequired(message=require_message)]
     )
-    edge_password = PasswordField(
-        label=text['label_edge_password']
+    edge_secret = StringField(
+        label=text['label_edge_secret'],
+        validators=[DataRequired(message=require_message)]
     )
 
     # SDWAN Pane
@@ -107,12 +117,12 @@ def sdwan_firewall_rule_updater_sdwan_firewall_rule_updater_page():
     value = updater.get_value('edge_url')
     if value is not None:
         form.edge_url.data = value
-    value = updater.get_value('edge_username')
+    value = updater.get_value('edge_client_id')
     if value is not None:
-        form.edge_username.data = value
-    value = updater.get_value('edge_password')
+        form.edge_client_id.data = value
+    value = updater.get_value('edge_secret')
     if value is not None:
-        form.edge_password.data = value
+        form.edge_secret.data = value
 
     value = updater.get_value('sdwan_key')
     if value is not None:
@@ -197,9 +207,8 @@ def sdwan_firewall_rule_updater_sdwan_firewall_rule_updater_page_form():
 
     if form.validate_on_submit():
         updater.set_value('edge_url', form.edge_url.data)
-        updater.set_value('edge_username', form.edge_username.data)
-        if form.edge_password.data != '':
-            updater.set_value('edge_password', form.edge_password.data)
+        updater.set_value('edge_client_id', form.edge_client_id.data)
+        updater.set_value('edge_secret', form.edge_secret.data)
 
         updater.set_value('sdwan_key', form.sdwan_key.data)
         updater.set_value('sdwan_orgname', form.sdwan_orgname.data)
