@@ -6,12 +6,5 @@
     "last_execution": "",
     "execution_interval": 0,
     "timeout": 1,
-    "trap_servers": [
-        {
-            "ipaddress": "",
-            "port": "",
-            "snmpver": "",
-            "comstr": ""
-        }
-    ]
+    "trap_servers": []
 }
