@@ -26,6 +26,7 @@ When contributing to the Community examples please ensure that the code is of go
 - Ensure that each function contains a docstring explaining the purpose of the function, the input variables and, the return type
 - Use plenty of comments to describe what the function is doing
 - Use meaningful variable and function names
+- Contributions should not directly access the BAM database
 
 #### Process
 1. Fork it!
