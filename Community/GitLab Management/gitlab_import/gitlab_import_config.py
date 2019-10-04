@@ -15,7 +15,7 @@
 # Description: Community Gateway workflow
 
 # Your GitLab URL
-gitlab_url = 'https://gitlab.bluecatlabs.net/api/v4/'
+gitlab_url = 'https://gitlab.company-name.net/api/v4/'
 
 # Your personal token you created
 # See https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
