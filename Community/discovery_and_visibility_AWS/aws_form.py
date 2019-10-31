@@ -8,7 +8,7 @@ from wtforms import SubmitField
 from wtforms.validators import DataRequired
 from bluecat.wtform_extensions import GatewayForm
 from bluecat.wtform_fields import *
-RELEASE_VERSION = "1.01"
+RELEASE_VERSION = "1.02"
 
 # Creates a select choice for VPC regions based on boto3 sessions
 S = Session()
@@ -36,123 +36,6 @@ def raw_table_data(*args, **kwargs):
         ]
     }
 
-
-# Get options from cloudatlas.conf, set to null if exception
-PARSER = ConfigParser()
-try:
-    PARSER.read(module_path() + '/cloudatlas.conf')
-except Exception as anexception:
-    print(str(anexception))
-
-# Get Basic AWS parameter defaults from .conf
-try:
-    AWS_REGION = PARSER.get('aws_basic', 'aws_region')
-except KeyError as doesnotexist:
-    AWS_REGION = ""
-try:
-    AWS_ACCESS_KEY_ID = PARSER.get('aws_basic', 'aws_access_key')
-except KeyError as doesnotexist:
-    AWS_ACCESS_KEY_ID = ""
-try:
-    AWS_SECRET_ACCESS_KEY = PARSER.get('aws_basic', 'aws_secret_key')
-except KeyError as doesnotexist:
-    AWS_SECRET_ACCESS_KEY = ""
-try:
-    AWS_REGION_NAME = PARSER.get('aws_basic', 'aws_region')
-except KeyError as doesnotexist:
-    AWS_REGION_NAME = ""
-
-# Get Address Space defaults from .conf
-try:
-    PRIVATE_ADDRESS_SPACE = PARSER.get('discovery_options', 'private_address_space')
-except KeyError as doesnotexist:
-    PRIVATE_ADDRESS_SPACE = False
-try:
-    PUBLIC_ADDRESS_SPACE = PARSER.get('discovery_options', 'public_address_space')
-except KeyError as doesnotexist:
-    PUBLIC_ADDRESS_SPACE = False
-try:
-    PURGE_EXIST = PARSER.get('discovery_options', 'purge')
-    PURGE_EXIST = PURGE_EXIST.lower()
-    if PURGE_EXIST == "false":
-        PURGE_EXIST = False
-    else:
-        PURGE_EXIST = True
-except KeyError as doesnotexist:
-    PURGE_EXIST = False
-
-# Get EC2 instance defaults from .conf
-try:
-    IMPORT_EC2 = PARSER.get('discovery_options', 'import_ec2')
-except KeyError as doesnotexist:
-    IMPORT_EC2 = False
-try:
-    IMPORT_ELBV2 = PARSER.get('discovery_options', 'import_elbv2')
-except KeyError as doesnotexist:
-    IMPORT_ELBV2 = False
-try:
-    IMPORT_DNS = PARSER.get('discovery_options', 'import_dns')
-except KeyError as doesnotexist:
-    IMPORT_DNS = False
-try:
-    IMPORT_ZONE = PARSER.get('discovery_options', 'target_zone')
-except KeyError as doesnotexist:
-    IMPORT_ZONE = False
-
-# Get Route53 defaults from .conf
-try:
-    ROUTE53 = PARSER.get('discovery_options', 'import_route53')
-except KeyError as doesnotexist:
-    ROUTE53 = False
-
-# Get Continuous Sync defaults from .conf
-try:
-    SYNC = PARSER.get('sync_options', 'enable_sync')
-except KeyError as doesnotexist:
-    SYNC = False
-try:
-    SYNCUSER = PARSER.get('sync_options', 'sync_user')
-except KeyError as doesnotexist:
-    SYNCUSER = ""
-try:
-    SYNCPASS = PARSER.get('sync_options', 'sync_pass')
-except KeyError as doesnotexist:
-    SYNCPASS = ""
-try:
-    SQSKEY = PARSER.get('sync_options', 'sqs_service_key')
-except KeyError as doesnotexist:
-    SQSKEY = ""
-try:
-    SQSSECRET = PARSER.get('sync_options', 'sqs_service_secret')
-except KeyError as doesnotexist:
-    SQSSECRET = ""
-try:
-    SELECTIVE_DEPLOY = PARSER.get('sync_options', 'dynamic_deployment')
-except KeyError as doesnotexist:
-    SELECTIVE_DEPLOY = False
-
-# Get AWS Advanced defaults from .conf
-try:
-    ROLEASSUME = PARSER.get('aws_advanced', 'role_assume')
-except KeyError as doesnotexist:
-    ROLEASSUME = False
-try:
-    AWSROLEARN = PARSER.get('aws_advanced', 'aws_role_arn')
-except KeyError as doesnotexist:
-    AWSROLEARN = ""
-try:
-    AWSSESSION = PARSER.get('aws_advanced', 'aws_session')
-except KeyError as doesnotexist:
-    AWSSESSION = ""
-try:
-    MFAON = PARSER.get('aws_advanced', 'mfa')
-except KeyError as doesnotexist:
-    MFAON = False
-try:
-    AWSMFAARN = PARSER.get('aws_advanced', 'aws_mfa_arn')
-except KeyError as doesnotexist:
-    AWSMFAARN = ""
-
 # Disable Pylint line to long rule due to embedded html
 # pylint: disable=C0301
 # Disable Pylint undefined variable rule due to lazy loading
@@ -163,6 +46,122 @@ class GenericFormTemplate(GatewayForm): # pylint: disable=too-few-public-methods
     Note:
     When updating the form, remember to make the corresponding changes to the workflow pages
     """
+    # Get options from cloudatlas.conf, set to null if exception
+    PARSER = ConfigParser()
+    try:
+        PARSER.read(module_path() + '/cloudatlas.conf')
+    except Exception as anexception:
+        print(str(anexception))
+
+    # Get Basic AWS parameter defaults from .conf
+    try:
+        AWS_REGION = PARSER.get('aws_basic', 'aws_region')
+    except KeyError as doesnotexist:
+        AWS_REGION = ""
+    try:
+        AWS_ACCESS_KEY_ID = PARSER.get('aws_basic', 'aws_access_key')
+    except KeyError as doesnotexist:
+        AWS_ACCESS_KEY_ID = ""
+    try:
+        AWS_SECRET_ACCESS_KEY = PARSER.get('aws_basic', 'aws_secret_key')
+    except KeyError as doesnotexist:
+        AWS_SECRET_ACCESS_KEY = ""
+    try:
+        AWS_REGION_NAME = PARSER.get('aws_basic', 'aws_region')
+    except KeyError as doesnotexist:
+        AWS_REGION_NAME = ""
+
+    # Get Address Space defaults from .conf
+    try:
+        PRIVATE_ADDRESS_SPACE = PARSER.get('discovery_options', 'private_address_space')
+    except KeyError as doesnotexist:
+        PRIVATE_ADDRESS_SPACE = False
+    try:
+        PUBLIC_ADDRESS_SPACE = PARSER.get('discovery_options', 'public_address_space')
+    except KeyError as doesnotexist:
+        PUBLIC_ADDRESS_SPACE = False
+    try:
+        PURGE_EXIST = PARSER.get('discovery_options', 'purge')
+        PURGE_EXIST = PURGE_EXIST.lower()
+        if PURGE_EXIST == "false":
+            PURGE_EXIST = False
+        else:
+            PURGE_EXIST = True
+    except KeyError as doesnotexist:
+        PURGE_EXIST = False
+
+    # Get EC2 instance defaults from .conf
+    try:
+        IMPORT_EC2 = PARSER.get('discovery_options', 'import_ec2')
+    except KeyError as doesnotexist:
+        IMPORT_EC2 = False
+    try:
+        IMPORT_ELBV2 = PARSER.get('discovery_options', 'import_elbv2')
+    except KeyError as doesnotexist:
+        IMPORT_ELBV2 = False
+    try:
+        IMPORT_DNS = PARSER.get('discovery_options', 'import_dns')
+    except KeyError as doesnotexist:
+        IMPORT_DNS = False
+    try:
+        IMPORT_ZONE = PARSER.get('discovery_options', 'target_zone')
+    except KeyError as doesnotexist:
+        IMPORT_ZONE = False
+
+    # Get Route53 defaults from .conf
+    try:
+        ROUTE53 = PARSER.get('discovery_options', 'import_route53')
+    except KeyError as doesnotexist:
+        ROUTE53 = False
+
+    # Get Continuous Sync defaults from .conf
+    try:
+        SYNC = PARSER.get('sync_options', 'enable_sync')
+    except KeyError as doesnotexist:
+        SYNC = False
+    try:
+        SYNCUSER = PARSER.get('sync_options', 'sync_user')
+    except KeyError as doesnotexist:
+        SYNCUSER = ""
+    try:
+        SYNCPASS = PARSER.get('sync_options', 'sync_pass')
+    except KeyError as doesnotexist:
+        SYNCPASS = ""
+    try:
+        SQSKEY = PARSER.get('sync_options', 'sqs_service_key')
+    except KeyError as doesnotexist:
+        SQSKEY = ""
+    try:
+        SQSSECRET = PARSER.get('sync_options', 'sqs_service_secret')
+    except KeyError as doesnotexist:
+        SQSSECRET = ""
+    try:
+        SELECTIVE_DEPLOY = PARSER.get('sync_options', 'dynamic_deployment')
+    except KeyError as doesnotexist:
+        SELECTIVE_DEPLOY = False
+
+    # Get AWS Advanced defaults from .conf
+    try:
+        ROLEASSUME = PARSER.get('aws_advanced', 'role_assume')
+    except KeyError as doesnotexist:
+        ROLEASSUME = False
+    try:
+        AWSROLEARN = PARSER.get('aws_advanced', 'aws_role_arn')
+    except KeyError as doesnotexist:
+        AWSROLEARN = ""
+    try:
+        AWSSESSION = PARSER.get('aws_advanced', 'aws_session')
+    except KeyError as doesnotexist:
+        AWSSESSION = ""
+    try:
+        MFAON = PARSER.get('aws_advanced', 'mfa')
+    except KeyError as doesnotexist:
+        MFAON = False
+    try:
+        AWSMFAARN = PARSER.get('aws_advanced', 'aws_mfa_arn')
+    except KeyError as doesnotexist:
+        AWSMFAARN = ""
+        
     workflow_name = 'AWS'
     workflow_permission = 'aws_page'
 
