@@ -1,0 +1,186 @@
+/* Copyright 2019 BlueCat Networks. All rights reserved. */
+/* Custom styles for your page go in here. */
+
+#div-main {
+  padding:5px;
+  width: 100%;
+}
+
+.container #main-container h1 {
+  font-family: 'Josefin Sans',sans-serif;
+  font-size: 42px;
+  text-align: left;
+  text-rendering: optimizeLegibility;
+  color: white;
+  text-shadow: 5px 5px 5px #222;
+}
+
+h4 {
+  font-family: 'Josefin Sans',sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+p {
+  font-family: 'Josefin Sans',sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+label {
+  font-family: 'Josefin Sans',sans-serif;
+  font-size: 16px;
+  font-weight: 325;
+}
+
+input {
+  font-family: 'Josefin Sans',sans-serif;
+  font-size: 16px;
+  font-weight: 325;
+}
+
+.collapsible {
+  background-color: rgba(56, 113, 207, 1);
+  background: rgb(0,115,174);
+  background: -moz-linear-gradient(90deg, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 33%);
+  background: -webkit-linear-gradient(90deg, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 33%);
+  background: linear-gradient(90deg, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 33%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0073ae",endColorstr="#142c52",GradientType=1);
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 1.1em;
+  font-weight: 200;
+  text-align: left;
+  transition: 0.4s;
+  border-color: white;
+  border-radius: 4px 4px 0px 0px;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+}
+
+.active, .collapsible:hover {
+  background-color: rgba(56, 113, 207, 1);
+  color: white;
+}
+.collapsible:after {
+    content: '\002B';
+    color: white;
+    float: right;
+    margin-left: 5px;
+    border-radius: 4px;
+}
+.collapsible.active:after {
+    content: "\2212";
+}
+
+.content {
+  padding: 0 18px;
+  /* border-color: white; */
+  background-color: rgba(20, 44, 82, 1);
+  /* border-style: solid;
+  border-width: 1px;
+  border-radius: 0px 0px 4px 4px; */
+  display: none;
+  overflow: hidden;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+}
+
+.mysubmit {
+  font-family: 'Josefin Sans',sans-serif;
+  padding: 5px;
+  font-size: 16px;
+  border-width: 1px;
+  border-color: #CCCCCC;
+  background-color: #182a43;
+  color: #ffffff;
+  border-style: solid;
+  border-radius: 4px 4px 4px 4px;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+
+}
+
+.status {
+  border-width: 1px;
+  border-color: #CCCCCC;
+  background-color: #182a43;
+  color: #ffffff;
+  border-style: solid;
+  background: rgb(0,115,174);
+  background: -moz-linear-gradient(90deg, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 33%);
+  background: -webkit-linear-gradient(90deg, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 33%);
+  background: linear-gradient(90deg, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 33%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0073ae",endColorstr="#142c52",GradientType=1);
+  padding: 10px 10px;
+  border-radius: 4px 4px 4px 4px;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  margin-bottom: 10px;
+}
+.status:focus {
+     outline:none;
+}
+
+.hidden {
+    display: none;
+}
+
+#aws_page_form {
+  border-width: 1px;
+  border-color: black;
+  background-color: #182a43;
+  color: #ffffff;
+  border-style: solid;
+  background: rgb(0,115,174);
+  background: -moz-radial-gradient(ellipse, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 80%);
+  background: -webkit-radial-gradient(ellipse, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 80%);
+  background: radial-gradient(ellipse, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 80%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0073ae",endColorstr="#142c52",GradientType=1);
+  padding: 10px 20px;
+  border-radius: 6px 6px 6px 6px;
+  -webkit-box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.75);
+}
+
+
+.mylogo_top {
+    display: table-cell;
+}
+
+.mylogo_top img {
+    float: left;
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 5px #222);
+}
+
+.myversion {
+    font-size: x-small;
+    text-align: right;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.disable-select {
+   user-select: none; /* supported by Chrome and Opera */
+   -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+   -moz-user-select: none; /* Firefox */
+   -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.footer {
+  display: none;
+}
