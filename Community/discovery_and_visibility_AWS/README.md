@@ -20,7 +20,7 @@
 
 # Configuring Discovery & Visibility for AWS
 
-- Download Cloud_Discovery_AWS.tar.gz or sourcefiles
+- Download CloudDiscovery_AWS_X.X.X.tar.gz or sourcefiles
 - Install the required python libraries into BlueCat Gateway:
 
 ```
@@ -30,7 +30,9 @@ sudo docker exec bluecat_gateway pip install apscheduler —user
 docker restart bluecat_gateway
 ```
 
-- Import Cloud_Discovery_AWS.tar.gz into BlueCat Gateway
+- Import CloudDiscovery_AWS_X.X.X.tar.gz into BlueCat Gateway
+or
+- Install sourcefiles into your DATA location and restart BlueCat Gateway
 - Add workflow permissions to CloudAtlas/aws > aws_page.py
 - Configuring AWS parameters in cloudatlas.conf (Optional - But Recommended)
 
