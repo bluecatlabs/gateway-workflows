@@ -34,7 +34,6 @@ docker restart bluecat_gateway
 or
 - Install sourcefiles into your DATA location and restart BlueCat Gateway
 - Add workflow permissions to CloudAtlas/aws > aws_page.py
-- Configuring AWS parameters in cloudatlas.conf (Optional - But Recommended)
 
 Screen Shot
 
