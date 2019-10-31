@@ -7,11 +7,11 @@
 
 # Capabilities
 
-- Discovery of AWS VPCs/VNETS/Subnets/Instance/Route53/ELBv2 resources into BlueCat Address Manager
-- Provides near-realtime updates to changes in EC2 using Continuous Synchronisation capability
+- Discovery of AWS VPCs/Subnets/EC2 Instances/Route53 Zone/ELBv2 resources into BlueCat Adaptive DNS
+- Provides near-realtime updates to state changes in EC2 using Continuous Synchronisation 
 - Automatically builds Amazon DNS (EC2 DNS records) into DNS View Amazon External DNS
 - Automatically can create a new target domain using EC2 name tags into DNS View Amazong External DNS
-- Automatically builds Route53 Public and Private Hosted Zones in BlueCat Address Manager
+- Automatically documents Route53 Public and Private Hosted Zones into BlueCat DNS views
 - Can dynamically update authoritative BlueCat DNS using Selective Deployment
 
 # Release Requirements
@@ -20,7 +20,7 @@
 
 # Configuring Discovery & Visibility for AWS
 
-- Download Cloud_Discovery_AWS.tar.gz
+- Download Cloud_Discovery_AWS.tar.gz or sourcefiles
 - Install the required python libraries into BlueCat Gateway
 
 	sudo docker exec bluecat_gateway pip install boto3 —user
