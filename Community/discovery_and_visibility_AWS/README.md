@@ -24,10 +24,14 @@
 - Install the required python libraries into BlueCat Gateway
 
 sudo docker exec bluecat_gateway pip install boto3 —user
+
 sudo docker exec bluecat_gateway pip install netaddr—user
+
 sudo docker exec bluecat_gateway pip install apscheduler —user
+
+docker restart bluecat_gateway
 	
-- Import into BlueCat Gateway
+- Import Cloud_Discovery_AWS.tar.gz into BlueCat Gateway
 - Add workflow permissions to CloudAtlas/aws > aws_page.py
 - Configuring AWS parameters in cloudatlas.conf (Optional - But Recommended)
 
