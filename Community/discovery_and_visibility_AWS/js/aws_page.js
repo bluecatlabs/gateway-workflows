@@ -47,6 +47,10 @@ var form = document.getElementById('aws_page_form')
 bt2.onclick = function () {
 if (mfa.checked == true){
   var code = prompt("Enter MFA token code", "");
+  document.getElementById('submit2')
+  if (!code) {
+    return;
+  };
   token.value = code;
   form.submit();
 } else {
