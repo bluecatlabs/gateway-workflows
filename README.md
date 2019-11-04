@@ -72,12 +72,13 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Chris Catral
 - Delme Herbert
 - Martin Minkov
-
+- Brian Shorland
 
 #### Professional Services:
 - Chris Storz
 - Chris Meyer
 - Timothy Noel
+- Ze'ev Romm
 
 #### Special Thanks:
 - Bill Morton
