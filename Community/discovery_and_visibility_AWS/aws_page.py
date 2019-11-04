@@ -33,7 +33,7 @@ JOBS = []
 DISCOVERYSTATUS = ""
 SYNCSCHEDULER = BackgroundScheduler(daemon=True, timezone=pytz.utc)
 SYNCSCHEDULER.start()
-RELEASE_VERSION = "1.00"
+RELEASE_VERSION = "1.03"
 
 def module_path():
     """ Returns module path dirname """
@@ -103,10 +103,9 @@ def aws_aws_page_form():
 
     parser = ConfigParser()
     parser.read(module_path() + '/cloudatlas.conf')
+    # Save the form values back to the cloudatlas.conf file on submission
 
     if form.validate_on_submit():
-
-        # Save the form values back to the cloudatlas.conf file on submission
         parser['aws_basic']['aws_region'] = form.aws_region_name.data
         parser['aws_basic']['aws_access_key'] = form.aws_access_key_id.data
         parser['aws_basic']['aws_secret_key'] = form.aws_secret_access_key.data
@@ -148,16 +147,21 @@ def aws_aws_page_form():
         else:
             single_config_mode = False
 
-        if form.role_assume.data and form.mfa.data:
-            assume_role = True
+        aws_access_key_id = form.aws_region_name.data
+        aws_secret_access_key = form.aws_access_key_id.data
+        aws_region_name = form.aws_region_name.data
+        aws_session_token = ""
+
+        # If MFA is enabled, use the MFA ARN and MFA code to get the AWS session
+        if form.mfa.data:
             mfa = True
-            aws_access_key_id, aws_secret_access_key, aws_session_token, aws_region_name, aws_session_expiration = connect_aws(form.aws_region_name.data, form.aws_access_key_id.data, form.aws_secret_access_key.data, form.aws_role.data, form.aws_session.data, form.mfa_token.data, form.mfa_code.data)
-        else:
-            assume_role = False
-            mfa = False
-            aws_access_key_id = form.aws_region_name.data
-            aws_secret_access_key = form.aws_access_key_id.data
-            aws_region_name = form.aws_region_name.data
+            aws_access_key_id, aws_secret_access_key, aws_session_token = get_mfa_session(form.aws_access_key_id.data, form.aws_secret_access_key.data,form.mfa_token.data, form.mfa_code.data)
+
+        # If RoleAssume enabled, user the ROLE ARN to assume the role
+        if form.role_assume.data:
+            assume_role = True
+            aws_access_key_id, aws_secret_access_key, aws_session_token, aws_session_expiration = get_assumed_role(aws_access_key_id, aws_secret_access_key, form.aws_role.data, aws_session_token)
+
         if form.import_amazon_dns.data:
             import_amazon_dns = True
         else:
@@ -215,7 +219,7 @@ def aws_aws_page_form():
         if form.aws_sync_init.data:
             DISCOVERYSTATUS = "Initialising Continuous Visibility"
             g.user.logger.info('- AWS Realtime Syncronisation - Initialising SQS bluecat queue')
-            if assume_role and mfa:
+            if assume_role or mfa:
                 sqs = boto3.client('sqs', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
                 sqs_resource = boto3.resource('sqs', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
                 cw_client = boto3.client('events', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
@@ -234,7 +238,7 @@ def aws_aws_page_form():
             except ClientError as thisexception:
                 if thisexception.response['Error']['Code'] == 'AWS.SimpleQueueService.NonExistentQueue':
                     g.user.logger.info('- AWS Realtime Syncronisation - bluecat queue not found, creating')
-                    if assume_role and mfa:
+                    if assume_role or mfa:
                         sqs_resource = boto3.resource('sqs', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
                     else:
                         sqs_resource = boto3.resource('sqs', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
@@ -760,8 +764,26 @@ def aws_aws_page_form():
             DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Completed Discovery"
             return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
     else:
+        DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " Something went wrong"
         g.user.logger.info('Form data was not valid.')
         return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
+
+def get_mfa_session(taws_access_key_id,taws_secret_access_key,tmfaarn,tmfa_token):
+    """ using MFA, connect and get temp access creds/sessions """
+    sts = boto3.client('sts', aws_access_key_id=taws_access_key_id, aws_secret_access_key=taws_secret_access_key)
+    tempcredentials = sts.get_session_token(DurationSeconds=3600, SerialNumber=tmfaarn, TokenCode=tmfa_token)
+    return tempcredentials['Credentials']['AccessKeyId'],tempcredentials['Credentials']['SecretAccessKey'],tempcredentials['Credentials']['SessionToken']
+
+def get_assumed_role(taws_access_key_id, taws_secret_access_key, trolearn, tsession):
+    """ using Assume Role, assume using the RoleARN and Session to get access creds/sessions """
+    sts = boto3.client('sts', aws_access_key_id=taws_access_key_id, aws_secret_access_key=taws_secret_access_key, aws_session_token=tsession)
+    response = sts.assume_role(RoleArn=trolearn, RoleSessionName="CloudAtlas")
+    credentials = response['Credentials']
+    taws_access_key_id = credentials['AccessKeyId']
+    taws_secret_access_key = credentials['SecretAccessKey']
+    taws_session_token = credentials['SessionToken']
+    taws_session_expiration = credentials['Expiration']
+    return taws_access_key_id, taws_secret_access_key, taws_session_token, taws_session_expiration
 
 # Function to connect to AWS using roleAssume and MFA Token
 def connect_aws(taws_region_name, taws_access_key_id, taws_secret_access_key, trolearn, tsession, tmfaarn, tmfa_token):
@@ -887,7 +909,7 @@ def discovervpcs():
     """ import private vpcs into """
     form = GenericFormTemplate()
     global DISCOVERYSTATUS
-    if assume_role and mfa:
+    if assume_role or mfa:
         ec2 = boto3.resource('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
         client = boto3.client('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
     else:
@@ -1026,7 +1048,7 @@ def discoverelbv2(aws_type, elbv2_subtype):
     form = GenericFormTemplate()
     global DISCOVERYSTATUS
     DISCOVERYSTATUS = "Discovering ELBv2 LoadBalancers"
-    if assume_role and mfa:
+    if assume_role or mfa:
         elbclient = boto3.client('elbv2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
         ec2 = boto3.resource('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
     else:
@@ -1095,7 +1117,7 @@ def discoverec2(aws_type, ec2_subtype):
     form = GenericFormTemplate()
     global DISCOVERYSTATUS
     DISCOVERYSTATUS = "Discovering EC2 Instances"
-    if assume_role and mfa:
+    if assume_role or mfa:
         ec2 = boto3.resource('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
         client = boto3.client('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
     else:
@@ -1298,7 +1320,7 @@ def discoverr53():
     form = GenericFormTemplate()
     global DISCOVERYSTATUS
     DISCOVERYSTATUS = "Discovering AWS Route53 DNS"
-    if assume_role and mfa:
+    if assume_role or mfa:
         rt53client = boto3.client('route53', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
         ec2 = boto3.resource('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
     else:

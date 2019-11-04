@@ -8,7 +8,7 @@ from wtforms import SubmitField
 from wtforms.validators import DataRequired
 from bluecat.wtform_extensions import GatewayForm
 from bluecat.wtform_fields import *
-RELEASE_VERSION = "1.02"
+RELEASE_VERSION = "1.03"
 
 # Creates a select choice for VPC regions based on boto3 sessions
 S = Session()
@@ -161,7 +161,7 @@ class GenericFormTemplate(GatewayForm): # pylint: disable=too-few-public-methods
         AWSMFAARN = PARSER.get('aws_advanced', 'aws_mfa_arn')
     except KeyError as doesnotexist:
         AWSMFAARN = ""
-        
+
     workflow_name = 'AWS'
     workflow_permission = 'aws_page'
 
@@ -170,7 +170,7 @@ class GenericFormTemplate(GatewayForm): # pylint: disable=too-few-public-methods
 
     title = PlainHTML(logo)
     status = PlainHTML('<div id="status" class="status disable-select"></div>')
-    panelstart_aws = PlainHTML('<button type="button" class="collapsible disable-select">Basic AWS Options</button><div class="content disable-select">')
+    panelstart_aws = PlainHTML('<button type="button" class="collapsible disable-select">AWS Credentials</button><div class="content disable-select">')
     aws_info = PlainHTML('<br><p>Basic required AWS parameters, AWS region, API access key and API secret access key</p><br/>')
     aws_access_key_id = CustomStringField(
         label='AWS Access Key ID',
@@ -191,12 +191,29 @@ class GenericFormTemplate(GatewayForm): # pylint: disable=too-few-public-methods
         default=AWS_REGION_NAME,
         choices=VPC_REGIONS
     )
-    break1 = PlainHTML('<br>')
-    panelend_aws = PlainHTML('<br></div><p> </p>')
 
-    # Advanced AWS options
-    panelstart_adv_aws = PlainHTML('<button type="button" class="collapsible disable-select">Advanced AWS Options</button><div class="content disable-select">')
-    adv_aws_info = PlainHTML('<br><p>These optional AWS parameters are used to define an AWS Role to assume, SessionName and any MultiFactor Authentication Token ARN</p><br>')
+    hbreak1 = PlainHTML('<br><hr>')
+
+    aws_info2 = PlainHTML('<br><p>Enable this option if the AWS account requires MultiFactor Authentication, enter the assigned ARN for the MFA token</p><br/>')
+
+    mfa = CustomBooleanField(
+        label='Enable AWS Multifactor Authentication',
+        on_checked=['enable_mfa_token', 'enable_mfa_code'],
+        on_unchecked=['disable_mfa_token', 'disable_mfa_code', 'clear_mfa_token', 'clear_mfa_code'],
+        is_disabled_on_start=False,
+        default=MFAON,
+    )
+    brmf2 = PlainHTML('<br>')
+    mfa_token = CustomStringField(
+        label='AWS MFA token ARN',
+        validators=[],
+        default=AWSMFAARN,
+        is_disabled_on_start=False,
+    )
+
+    hbreak2 = PlainHTML('<br><hr>')
+
+    adv_aws_info = PlainHTML('<br><p>Enabled this option if there is an AWS role to assume, enter the Role ARN and an optional session name</p><br>')
     role_assume = CustomBooleanField(
         label='Enable AWS Role Assumption',
         on_checked=['enable_aws_role', 'enable_aws_session'],
@@ -217,23 +234,9 @@ class GenericFormTemplate(GatewayForm): # pylint: disable=too-few-public-methods
         default=AWSSESSION,
         is_disabled_on_start=False,
     )
-    brmf1 = PlainHTML('<br>')
-    mfa = CustomBooleanField(
-        label='Enable AWS Multifactor Authentication',
-        on_checked=['enable_mfa_token', 'enable_mfa_code'],
-        on_unchecked=['disable_mfa_token', 'disable_mfa_code', 'clear_mfa_token', 'clear_mfa_code'],
-        is_disabled_on_start=False,
-        default=MFAON,
-    )
-    brmf2 = PlainHTML('<br>')
-    mfa_token = CustomStringField(
-        label='AWS MFA token ARN',
-        validators=[],
-        default=AWSMFAARN,
-        is_disabled_on_start=False,
-    )
 
-    panelend_adv_aws = PlainHTML('<br></div><p> </p>')
+    panelend_aws = PlainHTML('<br></div><p> </p>')
+
     panelstart_config = PlainHTML('<button type="button" class="collapsible disable-select">Configuration Options</button><div class="content disable-select">')
     single_config_mode_desc = PlainHTML('<br><p>By default discovery imports all AWS infrastucture into a single BlueCat configuration named after the AWS region being discovered</p><br>')
     configuration = CustomStringField(
@@ -243,7 +246,7 @@ class GenericFormTemplate(GatewayForm): # pylint: disable=too-few-public-methods
         validators=[],
         is_disabled_on_start=False,
     )
-    single_config_mode_desc2 = PlainHTML('<br><p><b>NOTE</b> :- Changing the AWS Region in the BASIC AWS OPTIONS panel will dynamically update the target Bluecat configuration, this can optionally be overridden by manually entering a new configuration name into the field above</p><br>')
+    single_config_mode_desc2 = PlainHTML('<br><p><b>NOTE</b> :- Changing the AWS Region in the AWS Credentials panel will dynamically update the target Bluecat configuration, this can optionally be overridden by manually entering a new configuration name into the field above</p><br>')
     hr1 = PlainHTML('<hr>')
     single_config_mode_desc3 = PlainHTML('<br><p>If Regional VPC blocks overlap then the VPC Configration Mode should be enabled, a unique BlueCat configuration per VPC will then be dynamically created</p><br>')
     dynamic_config_mode = CustomBooleanField(
