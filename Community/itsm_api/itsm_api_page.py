@@ -80,17 +80,16 @@ def assign_record(json):
     configuration = get_key(json, "configuration")
     ip = get_key(json, "ip")
     view_name = get_key(json, "view")
-    fqdn = get_key(json, "record")
-    if None in (fqdn, view_name, ip, configuration):
+    record = get_key(json, "record")
+    zone_name = get_key(json, "zone")
+    if None in (record, zone_name, view_name, ip, configuration):
         return {
             "data": {},
             "message": "Missing one or more input",
             "status": "FAIL"
         }
-    # split record from zone
-    record, zone_name = split_fqdn(fqdn)
     config, view, zone, message = get_config_view_zone(configuration, view_name, zone_name)
-    if config is False or view is False:
+    if config is False or view is False or zone is False:
         return {
             "data": {},
             "message": message,
@@ -101,7 +100,7 @@ def assign_record(json):
     #We check true to duplicate record points, true to create if not exists
     ip_exists = does_ip_exist(ip, config, False, True)
     app.logger.info("IP existence: %s" % str(ip_exists))
-
+    fqdn = "%s.%s" %(record, zone_name)
     if ip_exists:
         try:
             record = view.add_host_record(fqdn, [ip])
