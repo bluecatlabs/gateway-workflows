@@ -104,37 +104,37 @@ def aws_aws_page_form():
     parser = ConfigParser()
     parser.read(module_path() + '/cloudatlas.conf')
     # Save the form values back to the cloudatlas.conf file on submission
+    parser['aws_basic']['aws_region'] = form.aws_region_name.data
+    parser['aws_basic']['aws_access_key'] = form.aws_access_key_id.data
+    parser['aws_basic']['aws_secret_key'] = form.aws_secret_access_key.data
+
+    parser['aws_advanced']['role_assume'] = str(form.role_assume.data)
+    parser['aws_advanced']['aws_role_arn'] = form.aws_role.data
+    parser['aws_advanced']['aws_session'] = form.aws_session.data
+    parser['aws_advanced']['mfa'] = str(form.mfa.data)
+    parser['aws_advanced']['aws_mfa_arn'] = form.mfa_token.data
+
+    parser['discovery_options']['dynamic_config_mode'] = str(form.dynamic_config_mode.data)
+    parser['discovery_options']['private_address_space'] = str(form.aws_vpc_import.data)
+    parser['discovery_options']['public_address_space'] = str(form.aws_public_blocks.data)
+    parser['discovery_options']['purge'] = str(form.purge_configuration.data)
+    parser['discovery_options']['import_ec2'] = str(form.aws_ec2_import.data)
+    parser['discovery_options']['import_elbv2'] = str(form.aws_elbv2_import.data)
+    parser['discovery_options']['import_dns'] = str(form.import_amazon_dns.data)
+    parser['discovery_options']['target_zone'] = form.import_target_domain.data
+    parser['discovery_options']['import_route53'] = str(form.aws_route53_import.data)
+
+    parser['sync_options']['enable_sync'] = str(form.aws_sync_start.data)
+    parser['sync_options']['sync_user'] = form.aws_sync_user.data
+    parser['sync_options']['sync_pass'] = form.aws_sync_pass.data
+    parser['sync_options']['sqs_service_key'] = form.sqs_sync_key.data
+    parser['sync_options']['sqs_service_secret'] = form.sqs_sync_secret.data
+    parser['sync_options']['dynamic_deployment'] = str(form.dynamic_deployment.data)
+
+    with open(module_path() + '/cloudatlas.conf', 'w') as configfile:
+        parser.write(configfile)
 
     if form.validate_on_submit():
-        parser['aws_basic']['aws_region'] = form.aws_region_name.data
-        parser['aws_basic']['aws_access_key'] = form.aws_access_key_id.data
-        parser['aws_basic']['aws_secret_key'] = form.aws_secret_access_key.data
-
-        parser['aws_advanced']['role_assume'] = str(form.role_assume.data)
-        parser['aws_advanced']['aws_role_arn'] = form.aws_role.data
-        parser['aws_advanced']['aws_session'] = form.aws_session.data
-        parser['aws_advanced']['mfa'] = str(form.mfa.data)
-        parser['aws_advanced']['aws_mfa_arn'] = form.mfa_token.data
-
-        parser['discovery_options']['dynamic_config_mode'] = str(form.dynamic_config_mode.data)
-        parser['discovery_options']['private_address_space'] = str(form.aws_vpc_import.data)
-        parser['discovery_options']['public_address_space'] = str(form.aws_public_blocks.data)
-        parser['discovery_options']['purge'] = str(form.purge_configuration.data)
-        parser['discovery_options']['import_ec2'] = str(form.aws_ec2_import.data)
-        parser['discovery_options']['import_elbv2'] = str(form.aws_elbv2_import.data)
-        parser['discovery_options']['import_dns'] = str(form.import_amazon_dns.data)
-        parser['discovery_options']['target_zone'] = form.import_target_domain.data
-        parser['discovery_options']['import_route53'] = str(form.aws_route53_import.data)
-
-        parser['sync_options']['enable_sync'] = str(form.aws_sync_start.data)
-        parser['sync_options']['sync_user'] = form.aws_sync_user.data
-        parser['sync_options']['sync_pass'] = form.aws_sync_pass.data
-        parser['sync_options']['sqs_service_key'] = form.sqs_sync_key.data
-        parser['sync_options']['sqs_service_secret'] = form.sqs_sync_secret.data
-        parser['sync_options']['dynamic_deployment'] = str(form.dynamic_deployment.data)
-
-        with open(module_path() + '/cloudatlas.conf', 'w') as configfile:
-            parser.write(configfile)
 
         if not form.dynamic_config_mode.data:
             try:
@@ -156,11 +156,13 @@ def aws_aws_page_form():
         if form.mfa.data:
             mfa = True
             aws_access_key_id, aws_secret_access_key, aws_session_token = get_mfa_session(form.aws_access_key_id.data, form.aws_secret_access_key.data,form.mfa_token.data, form.mfa_code.data)
+            g.user.logger.info("MFA Session")
 
         # If RoleAssume enabled, user the ROLE ARN to assume the role
         if form.role_assume.data:
             assume_role = True
             aws_access_key_id, aws_secret_access_key, aws_session_token, aws_session_expiration = get_assumed_role(aws_access_key_id, aws_secret_access_key, form.aws_role.data, aws_session_token)
+            g.user.logger.info("Assumed Role")
 
         if form.import_amazon_dns.data:
             import_amazon_dns = True
@@ -1303,16 +1305,31 @@ def discoverec2(aws_type, ec2_subtype):
                 except Exception as thisexception:
                     if "Duplicate" in str(thisexception):
                         pass
-                try:
-                    if target_zone:
-                        a_record = internal_view.add_host_record(instance.private_dns_name.split(".")[0]+"." + aws_region_name + "." + target_zone, [instance.private_ip_address])
+                if is_valid_hostname(nametag):
+                    try:
+                        if target_zone:
+                            a_record = internal_view.add_host_record(nametag + "." + aws_region_name + "." + target_zone, [instance.private_ip_address])
+                            a_record.set_property("EC2InstanceID", instance.id)
+                            a_record.update()
+                        a_record = internal_view.add_host_record(instance.private_dns_name, [instance.private_ip_address])
                         a_record.set_property("EC2InstanceID", instance.id)
                         a_record.update()
-                    a_record = internal_view.add_host_record(instance.private_dns_name, [instance.private_ip_address])
-                    a_record.set_property("EC2InstanceID", instance.id)
-                    a_record.update()
-                except Exception as thisexception:
-                    g.user.logger.info(str(thisexception))
+
+                    except Exception as thisexception:
+                        g.user.logger.info(str(thisexception))
+
+
+                else:
+                    try:
+                        if target_zone:
+                            a_record = internal_view.add_host_record(instance.private_dns_name.split(".")[0]+"." + aws_region_name + "." + target_zone, [instance.private_ip_address])
+                            a_record.set_property("EC2InstanceID", instance.id)
+                            a_record.update()
+                        a_record = internal_view.add_host_record(instance.private_dns_name, [instance.private_ip_address])
+                        a_record.set_property("EC2InstanceID", instance.id)
+                        a_record.update()
+                    except Exception as thisexception:
+                        g.user.logger.info(str(thisexception))
 
 # Import Route53 zones
 def discoverr53():
