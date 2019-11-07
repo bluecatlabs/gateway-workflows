@@ -1,12 +1,8 @@
 /* Copyright 2019 BlueCat Networks. All rights reserved. */
 /* Custom styles for your page go in here. */
 
-#div-main {
-  padding:5px;
-  width: 100%;
-}
 
-.container #main-container h1 {
+h1 {
   font-family: 'Josefin Sans',sans-serif;
   font-size: 42px;
   text-align: left;
@@ -134,7 +130,25 @@ input {
     display: none;
 }
 
-#aws_page_form {
+/* #aws_page_form {
+  border-width: 1px;
+  border-color: black;
+  background-color: #182a43;
+  color: #ffffff;
+  border-style: solid;
+  background: rgb(0,115,174);
+  background: -moz-radial-gradient(ellipse, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 80%);
+  background: -webkit-radial-gradient(ellipse, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 80%);
+  background: radial-gradient(ellipse, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 80%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0073ae",endColorstr="#142c52",GradientType=1);
+  padding: 10px 20px;
+  border-radius: 6px 6px 6px 6px;
+  -webkit-box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.75);
+} */
+
+div.main-content.col-sm-offset-1.col-sm-8.col-md-offset-1.col-md-9 {
   border-width: 1px;
   border-color: black;
   background-color: #182a43;
@@ -152,12 +166,37 @@ input {
   box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.75);
 }
 
+div#main-container.panel.login.large.col-sm-4.col-md-6.col-lg-8{
+  display: none;
+}
+
+#aws_page_form {
+  display: none;
+}
+
+.parallel {
+  display: inline-block;
+  width: 375px;
+  padding-right: 20px;
+}
+
+.single {
+  width: 375px;
+  padding-right: 20px;
+}
 
 .mylogo_top {
-    display: table-cell;
+    display: inline-block;
 }
 
 .mylogo_top img {
+    float: left;
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 5px #222);
+}
+
+.mylogo_top h1 {
+    font-size: 38px;
     float: left;
     -webkit-filter: drop-shadow(5px 5px 5px #222);
     filter: drop-shadow(5px 5px 5px #222);
