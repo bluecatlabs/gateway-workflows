@@ -98,10 +98,10 @@ If this fails due to the account not having write permissions to those services,
 
 ©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
 
-Workflow Version: 1.02 <br/>
+Workflow Version: 1.04 <br/>
 Project Title: Discovery and Visibility AWS <br/>
 Author: B.Shorland <br/>
-Date: 30-10-2019 <br/>
+Date: 7-11-2019 <br/>
 BlueCat Gateway Version: 19.5.1+ <br/>
 BAM / BDDS Version: 9.1 <br/>
 Dependencies: See requirements.txt<br/>
