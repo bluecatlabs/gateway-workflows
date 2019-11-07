@@ -21,19 +21,19 @@ from bluecat.server_endpoints import get_result_template,empty_decorator
 import config.default_config as config
 from main_app import app
 from app_user import UserSession
-from .aws_form import GenericFormTemplate, raw_table_data
+from .aws_form import GenericFormTemplate
 import logging
 import collections
-
 
 # pylint: disable=protected-access
 
 JOB = ""
 JOBS = []
 DISCOVERYSTATUS = ""
+DISCOVERY_STATS = []
 SYNCSCHEDULER = BackgroundScheduler(daemon=True, timezone=pytz.utc)
 SYNCSCHEDULER.start()
-RELEASE_VERSION = "1.03"
+RELEASE_VERSION = "1.04"
 
 def module_path():
     """ Returns module path dirname """
@@ -66,6 +66,7 @@ def jobstatus():
         d['Region'] = job.id
         d['StartTime'] = starttime
         d['Target'] = job.name
+        d['StateChanges'] = "Not Implimented"
         templist.append(d)
     return jsonify(templist)
 
@@ -82,11 +83,17 @@ def aws_aws_page():
         options=g.user.get_options(),
     )
 
+@route(app,'/aws/discovery_stats', methods=['GET'])
+def last_discovery_stats():
+    global DISCOVERY_STATS
+    return json.dumps(DISCOVERY_STATS)
+
 @route(app, '/aws/form', methods=['POST'])
 @util.workflow_permission_required('aws_page')
 @util.exception_catcher
 def aws_aws_page_form():
     """main form"""
+
     form = GenericFormTemplate()
     global aws_access_key_id, aws_secret_access_key, aws_session_token, aws_region_name, aws_session_expiration
     global assume_role, mfa, import_amazon_dns, target_zone, single_config_mode, configuration, dynamic_deployment
@@ -136,6 +143,9 @@ def aws_aws_page_form():
 
     if form.validate_on_submit():
 
+        # Clear discovery stats when form validation called
+        global DISCOVERY_STATS
+
         if not form.dynamic_config_mode.data:
             try:
                 conf_entity = get_api().create_configuration(form.configuration.data)
@@ -157,12 +167,16 @@ def aws_aws_page_form():
             mfa = True
             aws_access_key_id, aws_secret_access_key, aws_session_token = get_mfa_session(form.aws_access_key_id.data, form.aws_secret_access_key.data,form.mfa_token.data, form.mfa_code.data)
             g.user.logger.info("MFA Session")
+        else:
+            mfa = False
 
         # If RoleAssume enabled, user the ROLE ARN to assume the role
         if form.role_assume.data:
             assume_role = True
             aws_access_key_id, aws_secret_access_key, aws_session_token, aws_session_expiration = get_assumed_role(aws_access_key_id, aws_secret_access_key, form.aws_role.data, aws_session_token)
             g.user.logger.info("Assumed Role")
+        else:
+            assume_role = False
 
         if form.import_amazon_dns.data:
             import_amazon_dns = True
@@ -756,9 +770,14 @@ def aws_aws_page_form():
             # Start an APscheduler background job
             now = datetime.utcnow()
             thisjob = SYNCSCHEDULER.add_job(syncjob, trigger='date', run_date=datetime.utcnow(), id=aws_region_name, name=configuration, replace_existing=True)
-            g.user.logger.info(thisjob)
+            g.user.logger.info(thisjob,'ThisJob:')
             if thisjob not in JOBS:
                 JOBS.append(thisjob)
+            elif thisjob in JOBS:
+                JOBS.remove(thisjob)
+                JOBS.append(thisjob)
+
+
 
         if form.aws_sync_start.data:
             return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
@@ -846,7 +865,7 @@ def get_device(config_id, device_name):
 # Import AWS public address space
 def importawspublic(targetconfiguration):
     """Import Public AWS address space into BAM"""
-    global DISCOVERYSTATUS
+    global DISCOVERYSTATUS,DISCOVERY_STATS
     DISCOVERYSTATUS = "Discovering AWS Public Blocks for " + aws_region_name
     try:
         conf = get_api().get_configuration(targetconfiguration)
@@ -856,6 +875,23 @@ def importawspublic(targetconfiguration):
     conf.update()
     awspublicv4 = awsblocks(aws_region_name)
     awspublicv6 = awsblocks6(aws_region_name)
+
+    # Add IPv4 public block count to discovery_stats
+    d_pub_v4 = collections.OrderedDict()
+    d_pub_v4['Region'] = aws_region_name
+    d_pub_v4['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+    d_pub_v4['Infrastructure'] = "AWS IPv4 Public Blocks"
+    d_pub_v4['count'] = len(awspublicv4)
+    DISCOVERY_STATS.append((d_pub_v4))
+
+    # Add IPv6 public block count to discovery_stats
+    d_pub_v6 = collections.OrderedDict()
+    d_pub_v6['Region'] = aws_region_name
+    d_pub_v6['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+    d_pub_v6['Infrastructure'] = "AWS IPv6 Public Blocks"
+    d_pub_v6['count'] = len(awspublicv6)
+    DISCOVERY_STATS.append((d_pub_v6))
+
     for block4 in awspublicv4:
         props = "name=" + aws_region_name + " / Public AWS Block"
         try:
@@ -910,7 +946,7 @@ def awsblocks6(target_region):
 def discovervpcs():
     """ import private vpcs into """
     form = GenericFormTemplate()
-    global DISCOVERYSTATUS
+    global DISCOVERYSTATUS,DISCOVERY_STATS
     if assume_role or mfa:
         ec2 = boto3.resource('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
         client = boto3.client('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
@@ -918,6 +954,29 @@ def discovervpcs():
         ec2 = boto3.resource('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
         client = boto3.client('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
     vpcs = list(ec2.vpcs.filter())
+
+    # Add the number of VPCs to the discovery_stats
+    d_vpcs = collections.OrderedDict()
+    d_vpcs['Region'] = aws_region_name
+    d_vpcs['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+    d_vpcs['Infrastructure'] = 'VPCs'
+    d_vpcs['count'] = len(vpcs)
+    DISCOVERY_STATS.append((d_vpcs))
+
+    # Add the number of VPC Subnets to the discovery_stats
+    d_subs = collections.OrderedDict()
+    d_subs['Region'] = aws_region_name
+    d_subs['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+    d_subs['Infrastructure'] = 'VPC Subnets'
+
+    subs_count = 0
+    for v in vpcs:
+        subs = list(v.subnets.all())
+        subs_count = subs_count + len(subs)
+    d_subs['count'] = subs_count
+    DISCOVERY_STATS.append((d_subs))
+
+
     for vpc in vpcs:
         DISCOVERYSTATUS = "Discovering AWS VPCs"
         vpc_name = ""
@@ -1048,7 +1107,7 @@ def discovervpcs():
 # Import ELBv2 devices
 def discoverelbv2(aws_type, elbv2_subtype):
     form = GenericFormTemplate()
-    global DISCOVERYSTATUS
+    global DISCOVERYSTATUS,DISCOVERY_STATS
     DISCOVERYSTATUS = "Discovering ELBv2 LoadBalancers"
     if assume_role or mfa:
         elbclient = boto3.client('elbv2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
@@ -1057,6 +1116,16 @@ def discoverelbv2(aws_type, elbv2_subtype):
         elbclient = boto3.client('elbv2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
         ec2 = boto3.resource('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
     lbs = elbclient.describe_load_balancers()
+
+    # Add the number of ELBv2 instances to the discovery_stats
+    d_elb = collections.OrderedDict()
+    d_elb['Region'] = aws_region_name
+    d_elb['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+    d_elb['Infrastructure'] = "ELBv2"
+    d_elb_count = list(elbclient.describe_load_balancers())
+    d_elb['count'] = len(d_elb_count)
+    DISCOVERY_STATS.append((d_elb))
+
     for x in lbs['LoadBalancers']:
         lbname = x['LoadBalancerName']
         lbdnsname = x['DNSName']
@@ -1117,7 +1186,7 @@ def discoverelbv2(aws_type, elbv2_subtype):
 # Import EC2 devices
 def discoverec2(aws_type, ec2_subtype):
     form = GenericFormTemplate()
-    global DISCOVERYSTATUS
+    global DISCOVERYSTATUS,DISCOVERY_STATS
     DISCOVERYSTATUS = "Discovering EC2 Instances"
     if assume_role or mfa:
         ec2 = boto3.resource('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
@@ -1125,6 +1194,19 @@ def discoverec2(aws_type, ec2_subtype):
     else:
         ec2 = boto3.resource('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
         client = boto3.client('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+
+    # Add the number of EC2 instances to the discovery_stats
+    d_ec2 = collections.OrderedDict()
+    d_ec2['Region'] = aws_region_name
+    d_ec2['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+    d_ec2['Infrastructure'] = "EC2 Devices"
+    d_ec2_count = list(ec2.instances.all())
+    d_ec2['count'] = len(d_ec2_count)
+    DISCOVERY_STATS.append((d_ec2))
+
+
+
+
     for instance in ec2.instances.all():
         if instance.state['Name'] == 'terminated':
             continue
