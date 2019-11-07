@@ -1,24 +1,24 @@
 // Copyright 2019 BlueCat Networks. All rights reserved.
 // JavaScript for your page goes in here.
 
-var red10 = ["#ff0000", "#e60000","#cc0000","#b30000","#990000","#800000","#660000","#4d0000","#330000","#1a0000"]
-var blue10 = ["#4D9BE8", "#3C91E6","#3784D2","#3277BD","#2C6AA8","#275D93","#21507E","#1C4269","#163554","#11283F"]
-var green10 = ["#00ff00", "#00e600","#00cc00","#00b300","#009900","#008000","#006600","#004d00","#003300","#001a00"]
-var rainbow = ["#3366cc", "#dc3912","#ff9900","#109618","#990099","#0099c6","#DD4477","#66AA00","#B82E2E","#316395","#994499","#22AA99","#AAAA11","#6633CC"]
+// var red10 = ["#ff0000", "#e60000","#cc0000","#b30000","#990000","#800000","#660000","#4d0000","#330000","#1a0000"]
+// var blue10 = ["#4D9BE8", "#3C91E6","#3784D2","#3277BD","#2C6AA8","#275D93","#21507E","#1C4269","#163554","#11283F"]
+// var green10 = ["#00ff00", "#00e600","#00cc00","#00b300","#009900","#008000","#006600","#004d00","#003300","#001a00"]
+// var rainbow = ["#3366cc", "#dc3912","#ff9900","#109618","#990099","#0099c6","#DD4477","#66AA00","#B82E2E","#316395","#994499","#22AA99","#AAAA11","#6633CC"]
+//
+// var barconfig = {
+//                   tooltips: {
+//                   mode: 'index',
+//                   },
+//                   responsive: true,
+//                   maintainAspectRatio: true,
+//                   layout: { padding: { left: 0, right: 40, top: 10, bottom: 50, } },
+//                   scales: { xAxes: [{ ticks: { beginAtZero:true }, stacked: true, }], yAxes: [{ ticks: { beginAtZero:true }, stacked: true, }]  },
+//                   legend: { display: false, position: "bottom" },
+//                   title: { display: false, text: 'BARCONFIG', },
+// };
 
-var barconfig = {
-                  tooltips: {
-                  mode: 'index',
-                  },
-                  responsive: true,
-                  maintainAspectRatio: true,
-                  layout: { padding: { left: 0, right: 40, top: 10, bottom: 50, } },
-                  scales: { xAxes: [{ ticks: { beginAtZero:true }, stacked: true, }], yAxes: [{ ticks: { beginAtZero:true }, stacked: true, }]  },
-                  legend: { display: false, position: "bottom" },
-                  title: { display: false, text: 'BARCONFIG', },
-};
-
-Chart.defaults.global.defaultFontColor = "#0093b8";
+// Chart.defaults.global.defaultFontColor = "#0093b8";
 
 $(function () {
 //-----------------------Presets--------------------------//
