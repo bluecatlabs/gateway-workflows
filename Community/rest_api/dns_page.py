@@ -53,6 +53,13 @@ host_ns = api.namespace(
     description='Host Record operations',
 )
 
+external_host_default_ns = api.namespace('host_records', description='External Host Record operations')
+external_host_ns = api.namespace(
+    'host_records',
+    path='/configurations/<string:configuration>/views/<string:view>/external_host_records/',
+    description='External Host Record operations',
+)
+
 host_zone_default_ns = api.namespace(
     'host_records',
     path='/zones/<path:zone>/host_records',
@@ -119,6 +126,19 @@ zone_model = api.clone(
     entity_model
 )
 
+external_host_parser = host_parser.copy()
+external_host_parser.remove_argument('ip4_address')
+external_host_parser.remove_argument('properties')
+external_host_parser.remove_argument('ttl')
+
+
+external_host_model = api.model(
+    'external_host_records',
+    {
+        'absolute_name': fields.String(required=True, description='The FQDN of the external host record')
+    },
+)
+
 host_model = api.model(
     'host_records',
     {
@@ -161,6 +181,7 @@ cname_patch_model = api.model(
 )
 
 dns_defaults = {'configuration': config.default_configuration, 'view': config.default_view}
+
 
 
 @view_ns.route('/<string:view>/')
@@ -358,6 +379,61 @@ class HostRecordCollection(Resource):
         host_record = view.add_host_record(absolute_name, ip4_address_list, ttl, properties)
         result = host_record.to_json()
         return result, 201
+
+
+@external_host_ns.route('/')
+class ExternalHostRecordCollection(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    @external_host_ns.response(201, 'External Host Record successfully created.', model=entity_return_model)
+    @external_host_ns.expect(external_host_model, validate=True)
+    def post(self, configuration, view):
+        """ Create an external host record belonging to default or provided Configuration and View. """
+        data = external_host_parser.parse_args()
+        configuration = g.user.get_api().get_configuration(configuration)
+        view = configuration.get_view(view)
+
+        absolute_name = data.get('absolute_name', '')
+        external_host_record = view.add_external_host_record(absolute_name)
+        result = external_host_record.to_json()
+        return result, 201
+
+
+@external_host_ns.route('/<string:absolute_name>/')
+@external_host_ns.doc(params=host_doc)
+@external_host_default_ns.route('/<string:absolute_name>/', defaults=dns_defaults)
+@external_host_default_ns.doc(params=absolute_name_doc)
+@external_host_ns.response(200, 'Host Record found.', model=entity_return_model)
+class ExternalHostRecord(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    def get(self, configuration, view, absolute_name):
+        """ Get specified external host record belonging to default or provided Configuration and View plus Zone hierarchy. """
+        config = g.user.get_api().get_configuration(configuration)
+        view = config.get_view(view)
+
+        host_record = view.get_external_host_record(absolute_name)
+        if host_record is None:
+            return 'No matching External Host Record(s) found', 404
+        result = host_record.to_json()
+        return jsonify(result)
+
+    @util.rest_workflow_permission_required('rest_page')
+    def delete(self, configuration, view, absolute_name):
+        """
+        Delete specified external host record belonging to default or provided Configuration and View plus Zone hierarchy.
+        """
+        config = g.user.get_api().get_configuration(configuration)
+        view = config.get_view(view)
+
+        try:
+            host_record = view.get_external_host_record(absolute_name)
+        except:
+            host_record = None
+        if host_record is None:
+            return 'No matching External Host Record(s) found', 404
+        host_record.delete()
+        return '', 204
 
 
 @host_ns.route('/<string:absolute_name>/')
