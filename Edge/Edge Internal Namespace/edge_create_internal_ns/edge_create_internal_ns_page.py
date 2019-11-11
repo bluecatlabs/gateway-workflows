@@ -91,7 +91,7 @@ def edge_create_internal_ns_edge_create_internal_ns_page_form():
             edge_session.update_namespace_domain_list(namespace_id, [edge_id])
 
         # Put form processing code here
-        g.user.logger.info('SUCCESS')
+        g.user.logger.info('Created Internal  Namespace: ' + dl['name'] + ' added: ' + str(new_dl_list['numOfValidDomains']) + ' Zones')
         flash('Created Internal  Namespace: ' + dl['name'] + ' added: ' + str(new_dl_list['numOfValidDomains']) + ' Zones' , 'succeed')
         return redirect(url_for('edge_create_internal_nsedge_create_internal_ns_edge_create_internal_ns_page'))
     else:
