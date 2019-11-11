@@ -24,9 +24,9 @@
 - Install the required python libraries into BlueCat Gateway:
 
 ```
-sudo docker exec bluecat_gateway pip install boto3 —user
-sudo docker exec bluecat_gateway pip install netaddr—user
-sudo docker exec bluecat_gateway pip install apscheduler —user
+sudo docker exec bluecat_gateway pip install boto3 —-user
+sudo docker exec bluecat_gateway pip install netaddr —-user
+sudo docker exec bluecat_gateway pip install apscheduler —-user
 docker restart bluecat_gateway
 ```
 
