@@ -199,10 +199,10 @@ class EdgeAPI(object):
     def get_service_point_status_url(self, sp_address):
         return 'http://' + sp_address + api_url['get_service_point_status']
 
-    def get_service_point_status(self, sp_address):
+    def get_service_point_status(self, sp_address, timeout=1):
         status = None
         try:
-            response = requests.get('http://' + sp_address + api_url['get_service_point_status'], timeout=1)
+            response = requests.get('http://' + sp_address + api_url['get_service_point_status'], timeout=timeout)
             if response.status_code == 200:
                 status = response.json()
             else:
