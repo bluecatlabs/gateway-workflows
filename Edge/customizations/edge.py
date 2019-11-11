@@ -177,3 +177,40 @@ class edge:
             headers.update(kwargs)
         return headers
 
+    @auth
+    def get_namespaces(self):
+        url = self.__host+'/v1/api/namespaces'
+        headers = self.__make_headers(Accept="*/*", ContentType="application/json", AcceptEncoding="gzip, deflate")
+        try:
+            response = requests.request("GET", url, headers=headers)
+            parsed_reply = json.loads(response.text)
+        except:
+            self.log("We were unable to complete the request", True)
+            return None
+
+        return parsed_reply
+
+    @auth
+    def update_namespace_domain_list(self, namespace_id, match_list):
+        url = self.__host + '/v1/api/namespaces/' + namespace_id
+
+        headers = self.__make_headers(ContentType="application/json")
+        #headers = {"Content-type": "application/json"}
+        try:
+            response = requests.request("GET", url, headers=headers)
+            parsed_get_reply = json.loads(response.text)
+
+        except:
+            self.log("We were unable to complete the request", True)
+            return None
+
+        parsed_get_reply['matchLists'] = match_list
+        parsed_get_reply.pop('id')
+
+        try:
+            response = requests.put(url, data=json.dumps(parsed_get_reply), headers=headers)
+            parsed_reply = json.loads(response.text)
+        except:
+            self.log("We were unable to complete the request", True)
+            return None
+        return
