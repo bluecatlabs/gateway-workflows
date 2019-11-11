@@ -174,6 +174,6 @@ class edge:
             kwargs['Accept-Encoding'] = kwargs['AcceptEncoding']
             del kwargs['AcceptEncoding']
 
-            headers.update(kwargs)
+        headers.update(kwargs)
         return headers
 
