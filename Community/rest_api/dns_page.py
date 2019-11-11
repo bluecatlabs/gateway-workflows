@@ -403,7 +403,7 @@ class ExternalHostRecordCollection(Resource):
 @external_host_ns.doc(params=host_doc)
 @external_host_default_ns.route('/<string:absolute_name>/', defaults=dns_defaults)
 @external_host_default_ns.doc(params=absolute_name_doc)
-@external_host_ns.response(200, 'Host Record found.', model=entity_return_model)
+@external_host_ns.response(200, 'External Host Record found.', model=entity_return_model)
 class ExternalHostRecord(Resource):
 
     @util.rest_workflow_permission_required('rest_page')
