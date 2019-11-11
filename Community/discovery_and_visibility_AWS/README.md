@@ -35,49 +35,14 @@ or
 - Install sourcefiles into your DATA location and restart BlueCat Gateway
 - Add workflow permissions to CloudAtlas/aws > aws_page.py
 
-Screen Shot
+# Screen Shot
 
 ![alt text](workflow.png "workflow")
 
 
-## cloudatlas.conf
-
-	[aws_basic]
-	aws_access_key = <Insert AWS Access Key>
-	aws_secret_key = <Insert AWS Secret Access Key>
-	aws_region = <Insert Default AWS region>
-
-	[aws_advanced]
-	role_assume = True
-	aws_role_arn = <Insert AWS Role ARN>
-	aws_session = CloudAtlas
-	mfa = True
-	aws_mfa_arn = <Insert AWS MFA Token ARN>
-
-	[discovery_options]
-	dynamic_config_mode = False
-	private_address_space = True
-	public_address_space = True
-	purge = False
-	import_ec2 = True
-	import_elbv2 = True
-	import_dns = True
-	target_zone = bluecatlabs.com
-	import_route53 = True
-
-	[sync_options]
-	enable_sync = True
-	sync_user = cloudatlas
-	sync_pass = cloudatlas
-	sqs_service_key = <Insert AWS Service Access Key>
-	sqs_service_secret = <Insert AWS Service Secret Access Key>
-	dynamic_deployment = True
-
-- If the options are not pre-populated in the cloudatlas.conf then they can still be defined in Cloud Discovery workflow manually, setting the options in the application will write them back to the cloudatlas.conf file dynamically
-
 # Advanced - Manually configuring SQS/CloudWatch Rules
 
-If the AWS user has write permissions to SQS and Cloudwatch then the Initialise Visibility option under Visibility Options can be used to automatically create the required queue and rule.
+If the AWS user has write permissions to SQS and Cloudwatch then the Enable Visibility after Discovery Option will attempt to create the queue and rule if they don't exist.
 
 If this fails due to the account not having write permissions to those services, please have the administrator configure the AWS SQS FIFO queue and CloudWatch Rule as below
 
@@ -98,10 +63,10 @@ If this fails due to the account not having write permissions to those services,
 
 ©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
 
-Workflow Version: 1.04 <br/>
+Workflow Version: 1.05 <br/>
 Project Title: Discovery and Visibility AWS <br/>
 Author: B.Shorland <br/>
-Date: 7-11-2019 <br/>
+Date: 11-11-2019 <br/>
 BlueCat Gateway Version: 19.5.1+ <br/>
 BAM / BDDS Version: 9.1 <br/>
 Dependencies: See requirements.txt<br/>
