@@ -195,7 +195,7 @@ class edge:
         url = self.__host + '/v1/api/namespaces/' + namespace_id
 
         headers = self.__make_headers(ContentType="application/json")
-        #headers = {"Content-type": "application/json"}
+        
         try:
             response = requests.request("GET", url, headers=headers)
             parsed_get_reply = json.loads(response.text)
@@ -214,3 +214,4 @@ class edge:
             self.log("We were unable to complete the request", True)
             return None
         return
+    
