@@ -1,0 +1,6 @@
+default_configuration = 'BlueCat'
+default_view = 'Internal'
+edge_url = 'https://edge.com'
+domain_list_file = '/Users/bmorton/Documents/domains.csv'
+client_id = '3634f-20cd-4we0-9fb4-2342343eewq'
+clientSecret = 'sdl345-kjdkd23wejksgs-wrwll'
