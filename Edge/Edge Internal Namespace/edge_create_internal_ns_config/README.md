@@ -25,7 +25,7 @@ ___
     * **Client Id** - Please refer to the Edge documentation for generating your ClientID
     * **Client Secret** - Please refer to the Edge documentation for generating yourClient Secret
 
-<p align="left">
+<p align="center">
   <img width="50%" height="50%" src="img/EdgeConfig.png">
 </p>
 
