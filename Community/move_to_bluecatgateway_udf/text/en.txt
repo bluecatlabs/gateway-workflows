@@ -1,0 +1,2 @@
+title=Move to BlueCatGateway UDF
+info=This workflow migrates users set value on Portal Group to BlueCatGateway
