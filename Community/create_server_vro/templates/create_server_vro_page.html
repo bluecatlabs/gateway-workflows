@@ -1,0 +1,28 @@
+<!-- Copyright 2019 BlueCat Networks. All rights reserved. -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/create_server_vro_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+    <p>{{ text['info'] }}</p>
+    <!--Your page's HTML goes here.-->
+    {% from "form_helper.html" import render_form %}
+    {{ render_form(form, action=url_for('create_server_vrocreate_server_vro_create_server_vro_page_form'), id="create_server_vro_page_form") }}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="js/create_server_vro_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}
