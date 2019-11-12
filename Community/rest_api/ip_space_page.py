@@ -24,7 +24,7 @@ from flask import g, jsonify
 from flask_restplus import fields, reqparse, Resource
 
 from bluecat import util
-from .configuration_page import config_defaults
+from .configuration_page import config_defaults, entity_return_model
 from main_app import api
 
 
@@ -60,13 +60,71 @@ network_patch_model = api.model(
     'ipv4_networks_patch',
     {
         'name':  fields.String(description='The name associated with the IP4 Network.'),
-        'properties':  fields.String(description='The properties of the host record', default='attribute=value|'),
+        'properties':  fields.String(description='The properties of the IP4 Network', default='attribute=value|'),
+    },
+)
+
+network_post_model = api.model(
+    'ipv4_networks_post',
+    {
+        'name':  fields.String(description='The name associated with the IP4 Network.'),
+        'size':  fields.String(
+            description='The number of addresses in the network expressed as a power of 2 (i.e. 2, 4, 8, 16, ... 256)',
+            default='attribute=value|'
+        ),
+        'properties': fields.String(description='The properties of the IP4 Network', default='attribute=value|'),
     },
 )
 
 network_patch_parser = reqparse.RequestParser()
 network_patch_parser.add_argument('name', location="json", help='The name of the network')
 network_patch_parser.add_argument('properties', location="json", help='The properties of the record')
+
+network_post_parser = reqparse.RequestParser()
+network_post_parser.add_argument('name', location="json", help='The name of the network')
+network_post_parser.add_argument('properties', location="json", help='The properties of the network')
+network_post_parser.add_argument(
+    'size',
+    location="json",
+    help='The number of addresses in the network expressed as a power of 2 (i.e. 2, 4, 8, 16, ... 256)'
+)
+
+
+@ip4_block_ns.route('/<path:block>/get_next_network/')
+@ip4_block_default_ns.route('/<path:block>/get_next_network/', defaults=config_defaults)
+@ip4_block_ns.response(404, 'IPv4 network not found')
+class IPv4NextNetworkCollection(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    @ip4_block_ns.response(201, 'Next network successfully created.', model=entity_return_model)
+    @ip4_block_ns.expect(network_post_model, validate=True)
+    def post(self, configuration, block):
+        """
+        Create the next available IP4 Network
+
+        Blocks can be of the format:
+        1. 10.1.0.0/16
+        2. 10.0.0.0/8/ipv4_blocks/10.1.0.0/24
+
+        """
+        data = network_post_parser.parse_args()
+        name = data.get('name', '')
+        size = data.get('size', '')
+        properties = data.get('properties', '')
+        range = g.user.get_api().get_configuration(configuration)
+        block_hierarchy = []
+        if block:
+            block_hierarchy = block.split('ipv4_blocks')
+
+        for block in block_hierarchy:
+            block_cidr = block.strip('/')
+            range = range.get_entity_by_cidr(block_cidr, range.IP4Block)
+        network = range.get_next_available_ip_range(size, "IP4Network", properties)
+        network.set_name(name)
+        network.update()
+        result = network.to_json()
+
+        return result, 201
 
 
 @ip4_block_root_ns.route('/')
