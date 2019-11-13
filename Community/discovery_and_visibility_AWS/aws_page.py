@@ -138,17 +138,27 @@ def aws_aws_page_form():
         aws_region_name = form.aws_region_name.data
         aws_session_token = ""
 
-        # If MFA is enabled, use the MFA ARN and MFA code to get the AWS session
+        # If MFA is enabled, use the MFA ARN and MFA code to get the AWS session, return on error
         if form.mfa.data:
             mfa = True
             aws_access_key_id, aws_secret_access_key, aws_session_token = get_mfa_session(form.aws_access_key_id.data, form.aws_secret_access_key.data,form.mfa_token.data, form.mfa_code.data)
+            if aws_access_key_id == "invalid mfa":
+                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Invalid MFA one time passcode"
+                return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
+            elif aws_access_key_id == "invalid arn":
+                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - AWS MFA token ARN is invalid or not associated with the Access Key/User"
+                return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
         else:
             mfa = False
 
-        # If RoleAssume enabled, user the ROLE ARN to assume the role
+        # If RoleAssume enabled, user the ROLE ARN to assume the role, return on error
         if form.role_assume.data:
             assume_role = True
             aws_access_key_id, aws_secret_access_key, aws_session_token, aws_session_expiration = get_assumed_role(aws_access_key_id, aws_secret_access_key, form.aws_role.data, aws_session_token)
+            if aws_access_key_id == "not authorized":
+                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Not authorised to assume role " + form.aws_role.data
+                return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
+
         else:
             assume_role = False
 
@@ -817,19 +827,31 @@ def aws_aws_page_form():
 def get_mfa_session(taws_access_key_id,taws_secret_access_key,tmfaarn,tmfa_token):
     """ using MFA, connect and get temp access creds/sessions """
     sts = boto3.client('sts', aws_access_key_id=taws_access_key_id, aws_secret_access_key=taws_secret_access_key)
-    tempcredentials = sts.get_session_token(DurationSeconds=3600, SerialNumber=tmfaarn, TokenCode=tmfa_token)
-    return tempcredentials['Credentials']['AccessKeyId'],tempcredentials['Credentials']['SecretAccessKey'],tempcredentials['Credentials']['SessionToken']
+    try:
+        tempcredentials = sts.get_session_token(DurationSeconds=3600, SerialNumber=tmfaarn, TokenCode=tmfa_token)
+        return tempcredentials['Credentials']['AccessKeyId'],tempcredentials['Credentials']['SecretAccessKey'],tempcredentials['Credentials']['SessionToken']
+    except Exception as thisexception:
+        g.user.logger.info(str(thisexception).lower(), "MFA Exception")
+        if 'please verify your mfa serial number is valid and associated with this user' in str(thisexception).lower():
+            return "invalid arn", "invalid arn", "invalid arn"
+        else:
+            return "invalid mfa", "invalid mfa", "invalid mfa"
 
 def get_assumed_role(taws_access_key_id, taws_secret_access_key, trolearn, tsession):
     """ using Assume Role, assume using the RoleARN and Session to get access creds/sessions """
     sts = boto3.client('sts', aws_access_key_id=taws_access_key_id, aws_secret_access_key=taws_secret_access_key, aws_session_token=tsession)
-    response = sts.assume_role(RoleArn=trolearn, RoleSessionName="CloudAtlas")
-    credentials = response['Credentials']
-    taws_access_key_id = credentials['AccessKeyId']
-    taws_secret_access_key = credentials['SecretAccessKey']
-    taws_session_token = credentials['SessionToken']
-    taws_session_expiration = credentials['Expiration']
-    return taws_access_key_id, taws_secret_access_key, taws_session_token, taws_session_expiration
+    try:
+        response = sts.assume_role(RoleArn=trolearn, RoleSessionName="CloudAtlas")
+        credentials = response['Credentials']
+        taws_access_key_id = credentials['AccessKeyId']
+        taws_secret_access_key = credentials['SecretAccessKey']
+        taws_session_token = credentials['SessionToken']
+        taws_session_expiration = credentials['Expiration']
+        return taws_access_key_id, taws_secret_access_key, taws_session_token, taws_session_expiration
+    except Exception as thisexception:
+        g.user.logger.info(str(thisexception).lower(), "AssumeRole Exception")
+        if "is not authorized to perform: sts:assumerole" in str(thisexception).lower():
+            return "not authorized", "not authorized", "not authorized", "not authorized"
 
 # Function to connect to AWS using roleAssume and MFA Token
 def connect_aws(taws_region_name, taws_access_key_id, taws_secret_access_key, trolearn, tsession, tmfaarn, tmfa_token):
