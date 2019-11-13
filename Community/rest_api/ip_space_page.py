@@ -143,7 +143,7 @@ ip4_address_post_parser.add_argument('properties', location="json", help='The pr
 
 
 @ip4_address_ns.route('/<string:network>/get_next_ip/')
-@ip4_address_default_ns.route('/<string:network>/get_next_network/', defaults=config_defaults)
+@ip4_address_default_ns.route('/<string:network>/get_next_ip/', defaults=config_defaults)
 @ip4_address_ns.response(404, 'IPv4 address not found')
 class IPv4NextIP4Address(Resource):
 
