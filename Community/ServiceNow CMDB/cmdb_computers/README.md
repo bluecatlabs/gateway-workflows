@@ -15,7 +15,7 @@ This workflow will send a rest call to get all the computers in your ServiceNow 
 
 
 <p align="center">
-  <img width="50%" height="50%" src="img/cmdb_computers.png">
+  <img width="75%" height="75%" src="img/cmdb_computers.png">
 </p>
 
 ___
