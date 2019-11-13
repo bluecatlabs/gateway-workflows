@@ -28,6 +28,28 @@ from .configuration_page import config_defaults, entity_return_model
 from main_app import api
 
 
+####### Chris code
+
+
+ip4_address_root_default_ns = api.namespace('ipv4_addresses', description='IPv4 Address operations')
+ip4_address_root_ns = api.namespace(
+    'ipv4_addresses',
+    path='/configurations/<string:configuration>/ipv4_networks/',
+    description='IPv4 Address operations',
+)
+
+ip4_address_default_ns = api.namespace('ipv4_addresses', description='IPv4 Address operations')
+ip4_address_ns = api.namespace(
+    'ipv4_addresses',
+    path='/configurations/<string:configuration>/ipv4_networks/',
+    description='IPv4 Address operations',
+)
+
+
+####### Chris code
+
+
+
 ip4_block_root_default_ns = api.namespace('ipv4_blocks', description='IPv4 Block operations')
 ip4_block_root_ns = api.namespace(
     'ipv4_blocks',
@@ -55,6 +77,27 @@ ip4_network_config_block_ns = api.namespace(
     path='/configurations/<string:configuration>/ipv4_blocks/',
     description='IPv4 Network operations',
 )
+
+
+####### Chris code
+
+ip4_address_post_model = api.model(
+    'ip4_address_post',
+    {
+        'mac_address':  fields.String(description='MAC Address value'),
+        'hostinfo':  fields.String(
+            description='A string containing host information for the address in the following format: '
+                        'hostname,viewId,reverseFlag,sameAsZoneFlag'
+        ),
+        'action':  fields.String(
+            description='Desired IP4 address state: MAKE_STATIC / MAKE_RESERVED / MAKE_DHCP_RESERVED'
+        ),
+        'properties': fields.String(description='The properties of the IP4 Address', default='attribute=value|'),
+    },
+)
+
+####### Chris code
+
 
 network_patch_model = api.model(
     'ipv4_networks_patch',
@@ -88,6 +131,50 @@ network_post_parser.add_argument(
     location="json",
     help='The number of addresses in the network expressed as a power of 2 (i.e. 2, 4, 8, 16, ... 256)'
 )
+
+####### Chris code
+
+
+ip4_address_post_parser = reqparse.RequestParser()
+ip4_address_post_parser.add_argument('mac_address', location="json", help='The MAC address')
+ip4_address_post_parser.add_argument('hostinfo', location="json", help='The hostinfo of the address')
+ip4_address_post_parser.add_argument('action', location="json", help='The action for address assignment')
+ip4_address_post_parser.add_argument('properties', location="json", help='The properties of the record')
+
+
+@ip4_address_ns.route('/<string:network>/get_next_ip/')
+@ip4_address_default_ns.route('/<string:network>/get_next_network/', defaults=config_defaults)
+@ip4_address_ns.response(404, 'IPv4 address not found')
+class IPv4NextIP4Address(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    @ip4_address_ns.response(201, 'Next IP successfully created.', model=entity_return_model)
+    @ip4_address_ns.expect(ip4_address_post_model, validate=True)
+    def post(self, configuration, network):
+        """
+        Create the next available IP4 Address
+
+        Network can be of the format of network address:
+        1. 10.1.0.0
+
+        """
+        data = ip4_address_post_parser.parse_args()
+        mac = data.get('mac_address', '')
+        hostinfo = data.get('hostinfo', '')
+        action = data.get('action', '')
+        properties = data.get('properties', '')
+
+        configuration = g.user.get_api().get_configuration(configuration)
+        network = configuration.get_ip_range_by_ip("IP4Network", network)
+
+        ip = network.assign_next_available_ip4_address(mac, hostinfo, action, properties)
+        result = ip.to_json()
+
+        return result, 201
+
+
+####### Chris code
+
 
 
 @ip4_block_ns.route('/<path:block>/get_next_network/')

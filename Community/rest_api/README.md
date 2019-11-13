@@ -19,3 +19,21 @@ limitations under the License.
                Once imported and permissioned, documentation for the various available endpoints can
                be viewed by navigating to /api/v1/. 
 
+
+How to contribute:
+
+1. Identify a use case that is currently not covered by existing endpoints. The use case should be general and not overly specific to your implementation.
+2. Review the code in dns_page.py and ip_space_page.py to get a general understanding of the constructs involved. Generally there are the following elements involved in a set of endpoints:
+    1. Namespaces (where the endpoints are located)
+    2. Models (for ingestion of JSON)
+    3. Parser (for parsing to the model)
+    4. Routes & methods (actual location, actions and logic)
+3. Design your endpoints to follow [REST best practices](https://www.moesif.com/blog/api-guide/api-design-guidelines/ "REST best practices")
+4. Implement and test your endpoints
+5. Create a pull request and outline your use case and test cases for review
+
+Example contribution:
+
+Use case: Get next IP in a network. This is a commonly utilized API that isn't available at the time of writing.
+
+Design: 
