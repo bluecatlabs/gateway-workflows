@@ -17,7 +17,7 @@ ___
 
 ### Workflow Configuration
 
-1.  Navigate to the workflow GitLab Management > GitLab Configuration and configure:
+1.  Navigate to the workflow ServiceNow CMDB > CMDB Configuration and configure:
     * **Default Configuration** - Configuration that the View and Zones are in 
     * **Default View** - The View that is in the above Configuration and the internal zones you want to add to the Domain List/Namespace
     * **Edge URL** - Your Edge URL
