@@ -8,7 +8,7 @@
 # Capabilities
 
 - Discovery of AWS VPCs/Subnets/EC2 Instances/Route53 Zone/ELBv2 resources into BlueCat Adaptive DNS
-- Provides near-realtime updates to state changes in EC2 using Continuous Synchronisation 
+- Provides near-realtime updates to state changes in EC2 using Continuous Synchronisation
 - Automatically builds Amazon DNS (EC2 DNS records) into DNS View Amazon External DNS
 - Automatically can create a new target domain using EC2 name tags into DNS View Amazong External DNS
 - Automatically documents Route53 Public and Private Hosted Zones into BlueCat DNS views
@@ -66,7 +66,7 @@ If this fails due to the account not having write permissions to those services,
 Workflow Version: 1.05 <br/>
 Project Title: Discovery and Visibility AWS <br/>
 Author: B.Shorland <br/>
-Date: 11-11-2019 <br/>
+Date: 13-11-2019 <br/>
 BlueCat Gateway Version: 19.5.1+ <br/>
 BAM / BDDS Version: 9.1 <br/>
 Dependencies: See requirements.txt<br/>

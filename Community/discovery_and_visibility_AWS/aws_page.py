@@ -173,9 +173,7 @@ def aws_aws_page_form():
         elbv2_subtype = get_or_create_device_type(aws_type.get_id(), "ELBv2 LoadBalancer", 'DeviceSubtype')
 
         # Check and Create AWS Device udfs
-        DISCOVERYSTATUS = "Adding AWS UDFs to BlueCat"
         check_and_create_aws_udfs()
-
 
         # AWS VPC Discovery
         if form.aws_vpc_import.data:
@@ -342,6 +340,7 @@ def aws_aws_page_form():
                         return
 
                     g.user = u
+
                     # Check the SQS session expiration
                     timenow = datetime.now(timezone.utc)
                     timeexpire = sts_client["Credentials"]["Expiration"]
@@ -368,7 +367,7 @@ def aws_aws_page_form():
                         for message in messages['Messages']: # 'Messages' is a list
                             body = json.loads(message['Body'])
                             g.user.logger.info(message, 'Message')
-                            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - " + body['detail']['state'] + " " + body['detail']['instance-id'] + " (" + SQS_QUEUE['REGION'] + ")"
+                            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - State Changing " + str(body['detail']['instance-id']) + " (" + SQS_QUEUE['REGION'] + ")"
                             # Handle terminated EC2 state
                             if body['detail']['state'] == "terminated":
                                 # login to BAM using the API account, do stuff, logout
@@ -385,9 +384,7 @@ def aws_aws_page_form():
                                         g.user.logger.info(i['InstanceId'], "Instance ID")
                                         config_list = set()
                                         configurations = conn.get_configurations()
-                                        g.user.logger.info(configurations)
                                         for conf in configurations:
-                                            g.user.logger.info(conf)
                                             config_list.add(conf.get_id())
                                         for conf_id in config_list:
                                             try:
@@ -419,7 +416,7 @@ def aws_aws_page_form():
                                     if dynamic_deployment:
                                         for this in hosts:
                                             try:
-                                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Dynamically Updating DNS"
+                                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Dynamically Deploying DNS"
                                                 g.user.logger.info("Attempting Selective Deploy")
                                                 g.user.logger.info(this,"this")
                                                 hostidlist = []
@@ -496,6 +493,10 @@ def aws_aws_page_form():
                                             pubip = i['PublicIpAddress']
                                         except KeyError:
                                             pubip = ""
+                                        try:
+                                            keyname = i['KeyName']
+                                        except KeyError:
+                                            keyname = ""
                                         for block in awspubs:
                                             props = "name=" + SQS_QUEUE['REGION'] + " / Public AWS Block"
                                             try:
@@ -507,7 +508,7 @@ def aws_aws_page_form():
                                         else:
                                             g.user.logger.info("AWS Public Blocks NOT available in configuration")
                                         props = "PrivateDNSName="+i['PrivateDnsName'] + '|' + "PublicDNSName=" + i['PublicDnsName'] + '|' + "InstanceState="+body['detail']['state'] + '|' + "InstanceType="+i['InstanceType'] + "|" + "AvailabilityZone=" + i['Placement']['AvailabilityZone'] + "|" + "|CloudAtlasSyncTime=" + now + "|" + \
-                                        "LaunchTime=" + i['LaunchTime'].strftime("%m/%d/%Y %H:%M:%S") + '|' + "Owner=" + n['OwnerId'] + '|' + 'KeyName=' + i['KeyName'] + '|' + 'NAMETAG=' + nametag
+                                        "LaunchTime=" + i['LaunchTime'].strftime("%m/%d/%Y %H:%M:%S") + '|' + "Owner=" + n['OwnerId'] + '|' + 'KeyName=' + keyname + '|' + 'NAMETAG=' + nametag
                                         if i['PrivateIpAddress'] and pubip and publicblocks:
                                             devips = i['PrivateIpAddress'] + "," + pubip
                                         else:
@@ -568,7 +569,7 @@ def aws_aws_page_form():
                                             ip_address_private.update()
                                         except Exception as thisexception:
                                             g.user.logger.info(thisexception, "Exception Getting Private IP")
-                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Stopped " + str(body['detail']['instance-id']) + " (" + SQS_QUEUE['REGION'] + ")"
+                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Stopped " + str(body['detail']['instance-id']) + " - " + nametag + " (" + SQS_QUEUE['REGION'] + ")"
 
                                 sync_hist_stopped = collections.OrderedDict()
                                 sync_hist_stopped['Region'] = thissyncregion
@@ -639,6 +640,13 @@ def aws_aws_page_form():
                                         except KeyError:
                                             g.user.logger.info("EC2 instance DOES NOT have a public IP")
                                             pubip = ""
+                                        try:
+                                            keyname = i['KeyName']
+                                            g.user.logger.info("EC2 instance has SSH Key")
+                                        except KeyError:
+                                            g.user.logger.info("EC2 instance has no SSH Key")
+                                            keyname = ""
+
                                         for block in awspubs:
                                             props = "name=" + SQS_QUEUE['REGION'] + " / Public AWS Block"
                                             try:
@@ -650,7 +658,7 @@ def aws_aws_page_form():
                                         else:
                                             g.user.logger.info("AWS Public Blocks NOT available in configuration")
                                         props = "PrivateDNSName="+i['PrivateDnsName'] + '|' + "PublicDNSName=" + i['PublicDnsName'] + '|' + "InstanceState="+body['detail']['state'] + '|' + "InstanceType="+i['InstanceType'] + "|" + "AvailabilityZone=" + i['Placement']['AvailabilityZone'] + "|"  + "|CloudAtlasSyncTime=" + now + "|" + \
-                                        "LaunchTime=" + i['LaunchTime'].strftime("%m/%d/%Y %H:%M:%S") + '|' + "Owner=" + n['OwnerId'] + '|' + 'KeyName=' + i['KeyName'] + '|' + 'NAMETAG=' + nametag
+                                        "LaunchTime=" + i['LaunchTime'].strftime("%m/%d/%Y %H:%M:%S") + '|' + "Owner=" + n['OwnerId'] + '|' + 'KeyName=' + keyname + '|' + 'NAMETAG=' + nametag
                                         if i['PrivateIpAddress'] and pubip and publicblocks:
                                             devips = i['PrivateIpAddress'] + "," + pubip
                                         else:
@@ -704,6 +712,8 @@ def aws_aws_page_form():
                                             ip_address_private.update()
                                         except Exception as thisexception:
                                             g.user.logger.info(thisexception, "Exception Getting Private IP")
+                                        nametag = nametag.replace(" ","_") # Replace any spaces with hyphen
+                                        nametag = nametag.lower() # convert the nametag to lower case
                                         if (import_amazon_dns and i['PublicDnsName'] and publicblocks and pubip):
                                             external_view = config_entity.get_view("Amazon DNS External")
                                             internal_view = config_entity.get_view("Amazon DNS Internal")
@@ -711,7 +721,10 @@ def aws_aws_page_form():
                                                 try:
                                                     g.user.logger.info(SQS_QUEUE['TARGETZONE'], "Adding HOST for EC2 instance to target zone")
                                                     if is_valid_hostname(nametag):
-                                                        public_host_record = external_view.add_host_record(nametag + "." + SQS_QUEUE['TARGETZONE'], [str(i['PublicIpAddress'])])
+                                                        try:
+                                                            public_host_record = external_view.add_host_record(nametag + "." + SQS_QUEUE['TARGETZONE'], [str(i['PublicIpAddress'])])
+                                                        except Exception as thisexception:
+                                                            public_host_record = external_view.add_host_record(nametag + "_" + i['InstanceId'] + "." + SQS_QUEUE['TARGETZONE'], [str(i['PublicIpAddress'])])
                                                     else:
                                                         public_host_record = external_view.add_host_record(str(i['InstanceId']) + "." + SQS_QUEUE['TARGETZONE'], [str(i['PublicIpAddress'])])
                                                     public_host_record.set_property("EC2InstanceID", str(i['InstanceId']))
@@ -748,11 +761,16 @@ def aws_aws_page_form():
                                             if SQS_QUEUE['TARGETZONE']:
                                                 try:
                                                     g.user.logger.info(SQS_QUEUE['REGION'] + "." + SQS_QUEUE['TARGETZONE'], "Adding HOST record for EC2 instance to target zone")
-                                                    a_record = internal_view.add_host_record(str(i['PrivateDnsName']).split(".")[0]+ "." + SQS_QUEUE['REGION'] + "." + SQS_QUEUE['TARGETZONE'], [str(i['PrivateIpAddress'])])
+                                                    a_record = internal_view.add_host_record(str(nametag) + "." + SQS_QUEUE['REGION'] + "." + SQS_QUEUE['TARGETZONE'], [str(i['PrivateIpAddress'])])
                                                     a_record.set_property("EC2InstanceID", str(i['InstanceId']))
                                                     a_record.update()
                                                 except Exception as thisexception:
-                                                    g.user.logger.info(thisexception)
+                                                    try:
+                                                        a_record = internal_view.add_host_record(str(nametag) + "_" + str(i['InstanceId']) + "." + SQS_QUEUE['REGION'] + "." + SQS_QUEUE['TARGETZONE'], [str(i['PrivateIpAddress'])])
+                                                        a_record.set_property("EC2InstanceID", str(i['InstanceId']))
+                                                        a_record.update()
+                                                    except Exception as thisexception:
+                                                        g.user.logger.info(thisexception)
                                             try:
                                                 g.user.logger.info(SQS_QUEUE['REGION'] + "." + SQS_QUEUE['TARGETZONE'], "Adding default HOST record for EC2 instance to default private zone")
                                                 a_record = internal_view.add_host_record(str(i['PrivateDnsName']), [str(i['PrivateIpAddress'])])
@@ -760,13 +778,13 @@ def aws_aws_page_form():
                                                 a_record.update()
                                             except Exception as thisexception:
                                                 g.user.logger.info(thisexception)
-                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Running " + str(body['detail']['instance-id']) + " (" + SQS_QUEUE['REGION'] + ")"
+                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Started " + str(body['detail']['instance-id']) + " - " + nametag + " (" + SQS_QUEUE['REGION'] + ")"
 
                                 sync_hist_running = collections.OrderedDict()
                                 sync_hist_running['Region'] = thissyncregion
                                 sync_hist_running['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
                                 sync_hist_running['EC2'] = i['InstanceId']
-                                sync_hist_running['Action'] = "Running"
+                                sync_hist_running['Action'] = "Started"
                                 SYNCHISTORY.append((sync_hist_running))
                                 STATECHANGES[thissyncregion] = STATECHANGES[thissyncregion] + 1
 
@@ -1204,9 +1222,6 @@ def discoverec2(aws_type, ec2_subtype):
     d_ec2['count'] = len(d_ec2_count)
     DISCOVERY_STATS.append((d_ec2))
 
-
-
-
     for instance in ec2.instances.all():
         if instance.state['Name'] == 'terminated':
             continue
@@ -1308,16 +1323,16 @@ def discoverec2(aws_type, ec2_subtype):
             devip6 = v6_address
         try:
             newdevice = add_device(config_entity.get_id(), instance.id, aws_type.get_id(), ec2_subtype.get_id(), devips, devip6, props)
-            newdevice.set_property("PrivateDNSName", instance.private_dns_name)
-            newdevice.set_property("PublicDNSName", instance.public_dns_name)
-            newdevice.set_property("InstanceState", instance.state['Name'])
-            newdevice.set_property("InstanceType", instance.instance_type)
-            newdevice.set_property("AvailabilityZone", instance.placement['AvailabilityZone'])
-            newdevice.set_property("CloudAtlasSyncTime", now)
-            newdevice.set_property("LaunchTime", instance.launch_time.strftime("%m/%d/%Y %H:%M:%S"))
-            newdevice.set_property("Owner", owner)
-            newdevice.set_property("KeyName", instance.key_name)
-            newdevice.set_property("NAMETAG", nametag)
+            newdevice.set_property("PrivateDNSName", str(instance.private_dns_name))
+            newdevice.set_property("PublicDNSName", str(instance.public_dns_name))
+            newdevice.set_property("InstanceState", str(instance.state['Name']))
+            newdevice.set_property("InstanceType", str(instance.instance_type))
+            newdevice.set_property("AvailabilityZone", str(instance.placement['AvailabilityZone']))
+            newdevice.set_property("CloudAtlasSyncTime", str(now))
+            newdevice.set_property("LaunchTime", str(instance.launch_time.strftime("%m/%d/%Y %H:%M:%S")))
+            newdevice.set_property("Owner", str(owner))
+            newdevice.set_property("KeyName", str(instance.key_name))
+            newdevice.set_property("NAMETAG", str(nametag))
             newdevice.update()
         except BAMException as thisexception:
             g.user.logger.info(str(thisexception))
@@ -1344,6 +1359,8 @@ def discoverec2(aws_type, ec2_subtype):
         except Exception as thisexception:
             g.user.logger.info(thisexception, "Exception Getting Private IP")
 
+        nametag = nametag.replace(" ","_") # Replace any spaces with hyphen
+        nametag = nametag.lower() # convert the nametag to lower case
         if (import_amazon_dns and instance.public_dns_name and form.aws_public_blocks.data and instance.state['Name'] == 'running'):
             if instance.public_ip_address:
                 try:
@@ -1355,29 +1372,39 @@ def discoverec2(aws_type, ec2_subtype):
 
                 except Exception as thisexception:
                     if "Duplicate" in str(thisexception):
-                        pass
+                        pass #Already exists
+
                 if is_valid_hostname(nametag):
                     try:
                         if target_zone:
                             public_host_record = external_view.add_host_record(nametag + "." + target_zone, [instance.public_ip_address])
                             public_host_record.set_property("EC2InstanceID", instance.id)
                             public_host_record.update()
-                        public_host_record = external_view.add_host_record(instance.public_dns_name, [instance.public_ip_address])
-                        public_host_record.set_property("EC2InstanceID", instance.id)
-                        public_host_record.update()
                     except Exception as thisexception:
                         g.user.logger.info(str(thisexception))
+                        g.user.logger.info("Error Adding TAG Public Host Record to Target Zone, appending instanceID")
+                        try:
+                            public_host_record = external_view.add_host_record(nametag + "_" + instance.id + "." + target_zone, [instance.public_ip_address])
+                            public_host_record.set_property("EC2InstanceID", instance.id)
+                            public_host_record.update()
+                        except Exception as thisexception:
+                            g.user.logger.info(str(thisexception))
                 else:
                     try:
                         if target_zone:
                             public_host_record = external_view.add_host_record(instance.id + "." + target_zone, [instance.public_ip_address])
                             public_host_record.set_property("EC2InstanceID", instance.id)
                             public_host_record.update()
-                        public_host_record = external_view.add_host_record(instance.public_dns_name, [instance.public_ip_address])
-                        public_host_record.set_property("EC2InstanceID", instance.id)
-                        public_host_record.update()
                     except Exception as thisexception:
                         g.user.logger.info(str(thisexception))
+
+                try:
+                    public_host_record = external_view.add_host_record(instance.public_dns_name, [instance.public_ip_address])
+                    public_host_record.set_property("EC2InstanceID", instance.id)
+                    public_host_record.update()
+                except Exception as thisexception:
+                    g.user.logger.info(str(thisexception))
+
 
         if import_amazon_dns and instance.private_dns_name and instance.state['Name'] == 'running':
                 try:
@@ -1393,13 +1420,15 @@ def discoverec2(aws_type, ec2_subtype):
                             a_record = internal_view.add_host_record(nametag + "." + aws_region_name + "." + target_zone, [instance.private_ip_address])
                             a_record.set_property("EC2InstanceID", instance.id)
                             a_record.update()
-                        a_record = internal_view.add_host_record(instance.private_dns_name, [instance.private_ip_address])
-                        a_record.set_property("EC2InstanceID", instance.id)
-                        a_record.update()
-
                     except Exception as thisexception:
                         g.user.logger.info(str(thisexception))
-
+                        g.user.logger.info("Error Adding TAG Private Host Record to Target Zone, appending instanceID")
+                        try:
+                            a_record = internal_view.add_host_record(nametag + "_" + instance.id + "." + aws_region_name + "." + target_zone, [instance.private_ip_address])
+                            a_record.set_property("EC2InstanceID", instance.id)
+                            a_record.update()
+                        except Exception as thisexception:
+                            g.user.logger.info(str(thisexception))
 
                 else:
                     try:
@@ -1407,11 +1436,16 @@ def discoverec2(aws_type, ec2_subtype):
                             a_record = internal_view.add_host_record(instance.private_dns_name.split(".")[0]+"." + aws_region_name + "." + target_zone, [instance.private_ip_address])
                             a_record.set_property("EC2InstanceID", instance.id)
                             a_record.update()
-                        a_record = internal_view.add_host_record(instance.private_dns_name, [instance.private_ip_address])
-                        a_record.set_property("EC2InstanceID", instance.id)
-                        a_record.update()
                     except Exception as thisexception:
                         g.user.logger.info(str(thisexception))
+
+                try:
+                    a_record = internal_view.add_host_record(instance.private_dns_name, [instance.private_ip_address])
+                    a_record.set_property("EC2InstanceID", instance.id)
+                    a_record.update()
+                except Exception as thisexception:
+                    g.user.logger.info(str(thisexception))
+
 
 # Import Route53 zones
 def discoverr53():
