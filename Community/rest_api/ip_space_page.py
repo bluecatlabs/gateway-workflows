@@ -28,9 +28,6 @@ from .configuration_page import config_defaults, entity_return_model
 from main_app import api
 
 
-####### Chris code
-
-
 ip4_address_root_default_ns = api.namespace('ipv4_addresses', description='IPv4 Address operations')
 ip4_address_root_ns = api.namespace(
     'ipv4_addresses',
@@ -44,10 +41,6 @@ ip4_address_ns = api.namespace(
     path='/configurations/<string:configuration>/ipv4_networks/',
     description='IPv4 Address operations',
 )
-
-
-####### Chris code
-
 
 
 ip4_block_root_default_ns = api.namespace('ipv4_blocks', description='IPv4 Block operations')
@@ -79,8 +72,6 @@ ip4_network_config_block_ns = api.namespace(
 )
 
 
-####### Chris code
-
 ip4_address_post_model = api.model(
     'ip4_address_post',
     {
@@ -95,8 +86,6 @@ ip4_address_post_model = api.model(
         'properties': fields.String(description='The properties of the IP4 Address', default='attribute=value|'),
     },
 )
-
-####### Chris code
 
 
 network_patch_model = api.model(
@@ -131,8 +120,6 @@ network_post_parser.add_argument(
     location="json",
     help='The number of addresses in the network expressed as a power of 2 (i.e. 2, 4, 8, 16, ... 256)'
 )
-
-####### Chris code
 
 
 ip4_address_post_parser = reqparse.RequestParser()
@@ -171,10 +158,6 @@ class IPv4NextIP4Address(Resource):
         result = ip.to_json()
 
         return result, 201
-
-
-####### Chris code
-
 
 
 @ip4_block_ns.route('/<path:block>/get_next_network/')
