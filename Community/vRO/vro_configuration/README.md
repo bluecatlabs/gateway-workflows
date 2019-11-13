@@ -17,7 +17,7 @@ ___
 
 ### Workflow Configuration
 
-1.  Navigate to the workflow GitLab Management > GitLab Configuration and configure:
+1.  Navigate to the workflow vRO > vRO Configuration and configure:
     * **Default Configuration** - Configuration used for getting networks, IP Addresses and creating the hostname
     * **Default View** - The View that is in the above Configuration
     * **vRO Default Zone** - The Zones to create the hostname in
