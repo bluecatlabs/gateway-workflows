@@ -15,7 +15,7 @@ This workflow will send a rest call to get all the netgear objects in your Servi
 
 
 <p align="center">
-  <img width="50%" height="50%" src="img/cmdb_netgear.png">
+  <img width="80%" height="80%" src="img/cmdb_netgear.png">
 </p>
 
 ___
