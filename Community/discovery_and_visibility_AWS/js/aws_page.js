@@ -1,32 +1,13 @@
 // Copyright 2019 BlueCat Networks. All rights reserved.
 // JavaScript for your page goes in here.
 
-// var red10 = ["#ff0000", "#e60000","#cc0000","#b30000","#990000","#800000","#660000","#4d0000","#330000","#1a0000"]
-// var blue10 = ["#4D9BE8", "#3C91E6","#3784D2","#3277BD","#2C6AA8","#275D93","#21507E","#1C4269","#163554","#11283F"]
-// var green10 = ["#00ff00", "#00e600","#00cc00","#00b300","#009900","#008000","#006600","#004d00","#003300","#001a00"]
-// var rainbow = ["#3366cc", "#dc3912","#ff9900","#109618","#990099","#0099c6","#DD4477","#66AA00","#B82E2E","#316395","#994499","#22AA99","#AAAA11","#6633CC"]
-//
-// var barconfig = {
-//                   tooltips: {
-//                   mode: 'index',
-//                   },
-//                   responsive: true,
-//                   maintainAspectRatio: true,
-//                   layout: { padding: { left: 0, right: 40, top: 10, bottom: 50, } },
-//                   scales: { xAxes: [{ ticks: { beginAtZero:true }, stacked: true, }], yAxes: [{ ticks: { beginAtZero:true }, stacked: true, }]  },
-//                   legend: { display: false, position: "bottom" },
-//                   title: { display: false, text: 'BARCONFIG', },
-// };
-
-// Chart.defaults.global.defaultFontColor = "#0093b8";
-
 $(function () {
 //-----------------------Presets--------------------------//
+
+
     var bt = document.getElementById('submit1')
     bt.disabled = false;
     bt.style.display = "none";
-
-    // document.getElementById("submit").className = 'mysubmit'
 
     var bt2 = document.getElementById('submit2')
     bt2.disabled = false;
@@ -34,8 +15,10 @@ $(function () {
 
     var region = document.getElementById('aws_region_name')
     region.disabled = false;
+
     var container = document.getElementById('main-container')
     container.className = "panel login large col-sm-4 col-md-6 col-lg-8";
+
     $('#aws_secret_access_key').attr('type','password');
     $('#aws_sync_pass').attr('type','password');
     $('#sqs_sync_secret').attr('type','password');
@@ -43,60 +26,19 @@ $(function () {
     document.getElementById("mfa_code").style.display = "none";
     document.getElementById("purge_configuration").style.display = "none";
 
-    // var panels = document.getElementById('panels')
-    // var region = document.getElementById('aws_region_name').value
-    // console.log(region)
-    //
-    // // Generate Panels for each discovery
-    // let url = '/aws/discovery_stats';
-    // fetch(url)
-    // .then(res => res.json())
-    // .then((out) => {
-    //   if (out.length !== 0) {
-    //   console.log("Found Prior Stats:",out)
-    //   div = document.createElement( 'div' );
-    //   div.innerHTML = "<div class='col disable-select'><h2>" + region + "</h2></div>" + "<canvas id='chart_panel_" +region+ "' width='800' height='450'></canvas><br>"
-    //   panels.appendChild( div )
-    //   var ctx = document.getElementById("chart_panel_"+region)
-    //   console.log("Generated Chart_Panel: ",ctx)
-    //   get_graph(region,out)
-    //   }
-    //   else {
-    //   console.log("No prior discovery stats")
-    //   }
-    //
-    // })
-    // .catch(err => { throw err }
-    // );
-    //
-    // async function get_graph(region,out) {
-    //   var ctx = document.getElementById("chart_panel_"+region)
-    //   console.log("Generated Chart_Panel in get_graph: ", ctx)
-    //   console.log("get_graph data:",out)
-    //   var labels = [];
-    //   var counts = [];
-    //   let x = "item." + region
-    //   out.forEach(item => labels.push(item[region]))
-    //   out.forEach(item => counts.push(item.count))
-    //   var graphdata = {
-    //     labels: labels,
-    //     datasets: [
-    //     {
-    //       datalabels: {
-    //       display: false
-    //     },
-    //     label: 'Object Count',
-    //     data: counts,
-    //     backgroundColor: rainbow,
-    //   }],
-    //   }
-    //   console.log("Labels", labels)
-    //   console.log("Counts", counts)
-    //   var chart = new Chart(ctx, {type: 'bar', data: graphdata, options: barconfig});
-    // }
+    x = document.querySelector("#sync_history_table_length > label > select")
+    console.log("X",x)
 
+    // Load for values from WebStorage
+    loadformvalues()
+
+    // Get the latest table data
+    sync_table();
+    discovery_table();
+    sync_history_table();
 });
 
+// if the AWS_Region is changed, update the configuration field
 $('#aws_region_name').on('change', function()
 {
 $('#configuration').val($('#aws_region_name').val());
@@ -113,6 +55,8 @@ checkbox.addEventListener('change', (event) => {
   }
 })
 
+
+// Handle the submit if there is MFA and save the form values to WebStorage
 var bt2 = document.getElementById('submit2')
 var mfa = document.getElementById('mfa')
 var token = document.getElementById('mfa_code')
@@ -125,12 +69,13 @@ if (mfa.checked == true){
     return;
   };
   token.value = code;
+  saveformvalues()
   form.submit();
 } else {
+  saveformvalues()
   form.submit();
 }
 };
-
 
 // update the status bar every second
 setInterval(function() {
@@ -149,8 +94,89 @@ setInterval(function() {
   });
 }, 1000);
 
-// Get the latest Sync Status data JSON data
-$(function() {
+// update the Tables every 5 seconds
+setInterval(function() {
+  // Get the latest table data
+  console.log('Refreshing Tables')
+  sync_table()
+  discovery_table()
+  sync_history_table()
+}, 5000);
+
+
+function saveformvalues() {
+  if (typeof(Storage) !== "undefined") {
+    localStorage.setItem("aws_access_key_id", document.getElementById('aws_access_key_id').value );
+    localStorage.setItem("aws_secret_access_key", document.getElementById('aws_secret_access_key').value );
+    localStorage.setItem("aws_region_name", document.getElementById('aws_region_name').value );
+    localStorage.setItem("mfa", $('#mfa').prop('checked') );
+    localStorage.setItem("mfa_token", document.getElementById('mfa_token').value );
+    localStorage.setItem("role_assume", $('#role_assume').prop('checked') );
+    localStorage.setItem("aws_role", document.getElementById('aws_role').value );
+    localStorage.setItem("aws_session", document.getElementById('aws_session').value );
+
+    localStorage.setItem("configuration", document.getElementById('configuration').value );
+    // localStorage.setItem("dynamic_config_mode", $('#dynamic_config_mode').prop('checked') );
+
+    localStorage.setItem("aws_vpc_import", $('#aws_vpc_import').prop('checked') );
+    localStorage.setItem("aws_public_blocks", $('#aws_public_blocks').prop('checked') );
+    localStorage.setItem("aws_ec2_import", $('#aws_ec2_import').prop('checked') );
+    localStorage.setItem("import_amazon_dns", $('#import_amazon_dns').prop('checked') );
+    localStorage.setItem("aws_elbv2_import", $('#aws_elbv2_import').prop('checked') );
+    localStorage.setItem("aws_route53_import", $('#aws_route53_import').prop('checked') );
+    localStorage.setItem("import_target_domain", document.getElementById('import_target_domain').value );
+
+    localStorage.setItem("aws_sync_start", $('#aws_sync_start').prop('checked') );
+    localStorage.setItem("aws_sync_user", document.getElementById('aws_sync_user').value );
+    localStorage.setItem("aws_sync_pass", document.getElementById('aws_sync_pass').value );
+    localStorage.setItem("sqs_sync_key", document.getElementById('sqs_sync_key').value );
+    localStorage.setItem("sqs_sync_secret", document.getElementById('sqs_sync_secret').value );
+    // localStorage.setItem("aws_sync_init", $('#aws_sync_init').prop('checked') );
+    localStorage.setItem("dynamic_deployment", $('#dynamic_deployment').prop('checked') );
+
+  } else {
+    console.log('WebStorage not supported by Browser')
+  }
+}
+
+function loadformvalues() {
+  if (typeof(Storage) !== "undefined") {
+    if (localStorage.getItem("aws_access_key_id")) { document.getElementById('aws_access_key_id').value = localStorage.getItem("aws_access_key_id"); }
+    if (localStorage.getItem("aws_secret_access_key")) { document.getElementById('aws_secret_access_key').value = localStorage.getItem("aws_secret_access_key"); }
+    if (localStorage.getItem("aws_region_name")) { document.getElementById('aws_region_name').value = localStorage.getItem("aws_region_name"); }
+    if (localStorage.getItem("mfa")) { $('#mfa').prop('checked',localStorage.getItem("mfa")); }
+    if (localStorage.getItem("mfa_token")) { document.getElementById('mfa_token').value = localStorage.getItem("mfa_token"); }
+    if (localStorage.getItem("role_assume")) { $('#role_assume').prop('checked',localStorage.getItem("role_assume")); }
+    if (localStorage.getItem("aws_role")) { document.getElementById('aws_role').value = localStorage.getItem("aws_role"); }
+    if (localStorage.getItem("aws_session")) { document.getElementById('aws_session').value = localStorage.getItem("aws_session"); }
+
+    if (localStorage.getItem("configuration")) { document.getElementById('configuration').value = localStorage.getItem("configuration"); }
+    // if (localStorage.getItem("dynamic_config_mode")) { $('#dynamic_config_mode').prop('checked',localStorage.getItem("dynamic_config_mode")); }
+
+    if (localStorage.getItem("aws_vpc_import")) { $('#aws_vpc_import').prop('checked',localStorage.getItem("aws_vpc_import")); }
+    if (localStorage.getItem("aws_public_blocks")) { $('#aws_public_blocks').prop('checked',localStorage.getItem("aws_public_blocks")); }
+    if (localStorage.getItem("aws_ec2_import")) { $('#aws_ec2_import').prop('checked',localStorage.getItem("aws_ec2_import")); }
+    if (localStorage.getItem("import_amazon_dns")) { $('#import_amazon_dns').prop('checked',localStorage.getItem("import_amazon_dns")); }
+    if (localStorage.getItem("aws_elbv2_import")) { $('#aws_elbv2_import').prop('checked',localStorage.getItem("aws_elbv2_import")); }
+    if (localStorage.getItem("aws_route53_import")) { $('#aws_route53_import').prop('checked',localStorage.getItem("aws_route53_import")); }
+    if (localStorage.getItem("import_target_domain")) { document.getElementById('import_target_domain').value = localStorage.getItem("import_target_domain"); }
+
+    if (localStorage.getItem("aws_sync_start")) { $('#aws_sync_start').prop('checked',localStorage.getItem("aws_sync_start")); }
+    if (localStorage.getItem("aws_sync_user")) { document.getElementById('aws_sync_user').value = localStorage.getItem("aws_sync_user"); }
+    if (localStorage.getItem("aws_sync_pass")) { document.getElementById('aws_sync_pass').value = localStorage.getItem("aws_sync_pass"); }
+    if (localStorage.getItem("sqs_sync_key")) { document.getElementById('sqs_sync_key').value = localStorage.getItem("sqs_sync_key"); }
+    if (localStorage.getItem("sqs_sync_secret")) { document.getElementById('sqs_sync_secret').value = localStorage.getItem("sqs_sync_secret"); }
+    // if (localStorage.getItem("aws_sync_init")) { $('#aws_sync_init').prop('checked',localStorage.getItem("aws_sync_init")); }
+    if (localStorage.getItem("dynamic_deployment")) { $('#dynamic_deployment').prop('checked',localStorage.getItem("dynamic_deployment")); }
+
+    if (localStorage.getItem("mfa_code")) { document.getElementById('mfa_code').value = localStorage.getItem("mfa_code"); }
+
+  } else {
+    console.log('WebStorage not supported by Browser')
+  }
+}
+
+function sync_table() {
   $("#sync_table").DataTable();
     $.ajax({
       type: 'GET',
@@ -163,30 +189,30 @@ $(function() {
       },
       error: function (e) {
         console.log("There was an error with your request...");
-        console.log("error: " + JSON.stringify(e));
       }
     });
 
-  // populate the Sync Satus data table with JSON data
+  // populate the Sync Status data table with JSON data
   function populateDataTable(data) {
-    console.log("populating data table...");
+    console.log("populating sync_table table...");
     console.log("DATA:",data)
     $("#sync_table").DataTable().destroy();
     $("#sync_table").DataTable({
       paging: false,
+      order: [1,"desc"],
       searching: false,
       info: false,
       autoWidth: false,
-      processing: true,
+      processing: false,
       data: data,
       columns: [ { data: "Region"}, { data: "StartTime"}, { data: "Target"}, { data: "StateChanges"}, ]
     }
   );
-  }
-});
+}};;
+
 
 // Get the latest Sync Status data JSON data
-$(function() {
+function discovery_table() {
   $("#discovery_table").DataTable();
     $.ajax({
       type: 'GET',
@@ -199,24 +225,58 @@ $(function() {
       },
       error: function (e) {
         console.log("There was an error with your request...");
-        console.log("error: " + JSON.stringify(e));
+      }
+    });
+
+  // populate the Sync hist data table with JSON data
+  function populateDataTable(data) {
+    console.log("populating discovery_table table...");
+    console.log("DATA:",data)
+    $("#discovery_table").DataTable().destroy();
+    $("#discovery_table").DataTable({
+      searching: false,
+      order: [1,"desc"],
+      info: true,
+      autoWidth: false,
+      processing: true,
+      paging: true,
+      data: data,
+      columns: [ { data: "Region"}, { data: "Time"}, { data: "Infrastructure"}, { data: "count"}, ]
+    }
+  );
+}};
+
+// Get the latest Sync Status data JSON data
+function sync_history_table() {
+  $("#sync_history_table").DataTable();
+    $.ajax({
+      type: 'GET',
+      url: "synchistory",
+      contentType: "text/plain",
+      dataType: 'json',
+      success: function (data) {
+        myJsonData = data;
+        populateDataTable(myJsonData);
+      },
+      error: function (e) {
+        console.log("There was an error with your request...");
       }
     });
 
   // populate the Sync Satus data table with JSON data
   function populateDataTable(data) {
-    console.log("populating data table...");
+    console.log("populating sync_history_data table...");
     console.log("DATA:",data)
-    $("#discovery_table").DataTable().destroy();
-    $("#discovery_table").DataTable({
-      paging: false,
+    $("#sync_history_table").DataTable().destroy();
+    $("#sync_history_table").DataTable({
       searching: false,
-      info: false,
+      order: [1,"desc"],
+      info: true,
       autoWidth: false,
       processing: true,
+      paging: true,
       data: data,
-      columns: [ { data: "Region"}, { data: "Time"}, { data: "Infrastructure"}, { data: "count"}, ]
+      columns: [ { data: "Region"}, { data: "Time"}, { data: "Action"}, { data: "EC2"}, ]
     }
   );
-  }
-});
+}};
