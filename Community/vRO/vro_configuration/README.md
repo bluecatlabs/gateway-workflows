@@ -42,7 +42,7 @@ ___
 
 ### Known Errors and Bugs: 
 
-1)  If you put workflow's in the folder Admin or Administration, the import/backups will not work properly. Please refrain from using these directories.
+None
 
 ___
 
