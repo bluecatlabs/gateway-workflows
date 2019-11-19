@@ -601,10 +601,10 @@ def aws_aws_page_form():
                                                         hostidlist.append(str(this.get_id()))
                                                         g.user.logger.info(hostidlist,"HostID list")
                                                         result = conn.selective_deploy(hostidlist)
+                                                        g.user.logger.info(result,"Selective Deployment Status")
                                                     except Exception as thisexception:
                                                         g.user.logger.info(thisexception, "Exception Selective Deploy")
-                                                    g.user.logger.info(result,"Selective Deployment Status")
-
+                                                        
                                         try:
                                             g.user.logger.info(i['InstanceId'], "Adding stopped EC2 Device")
                                             conn._api_client.service.addDevice(conf, i['InstanceId'], aws_type, aws_type_ec2, devips, v6_address, props)
