@@ -109,7 +109,7 @@ def aws_aws_page_form():
     form = GenericFormTemplate()
     global aws_access_key_id, aws_secret_access_key, aws_session_token, aws_region_name, aws_session_expiration
     global assume_role, mfa, import_amazon_dns, target_zone, single_config_mode, configuration, dynamic_deployment
-    global awspubs, DISCOVERYSTATUS, SYNCSCHEDULER, JOB, STATECHANGES, SYNCHISTORY
+    global awspubs, DISCOVERYSTATUS, SYNCSCHEDULER, JOB, STATECHANGES, SYNCHISTORY, DISCOVERY_STATS
     if get_api().get_version() < '9.1.0':
         DISCOVERYSTATUS = 'ERROR! CloudDiscovery required BlueCat Integrity 9.1.0 or greater'
         flash(message.format(version=get_api().get_version()))
@@ -121,9 +121,6 @@ def aws_aws_page_form():
         )
 
     if form.validate_on_submit():
-
-        # Clear discovery stats when form validation called
-        global DISCOVERY_STATS
 
         if not form.dynamic_config_mode.data:
             try:
@@ -289,6 +286,13 @@ def aws_aws_page_form():
                 configuration = False
             STATECHANGES[aws_region_name] = 0
 
+            sync_hist_starting = collections.OrderedDict()
+            sync_hist_starting['Region'] = aws_region_name
+            sync_hist_starting['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+            sync_hist_starting['EC2'] = "Visibility"
+            sync_hist_starting['Action'] = "Starting"
+            SYNCHISTORY.append((sync_hist_starting))
+
             # Check BAM Connection, return if cannot connect
             bam_url = config.api_url[0][1]
             username = form.aws_sync_user.data
@@ -301,12 +305,12 @@ def aws_aws_page_form():
                 conn.logout()
             except Exception as thisexception:
                 DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Visiblity ERROR - Could not connect to BAM, check BlueCat username/password"
-                sync_hist_start = collections.OrderedDict()
-                sync_hist_start['Region'] = aws_region_name
-                sync_hist_start['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
-                sync_hist_start['EC2'] = "Visibility"
-                sync_hist_start['Action'] = "ERROR: BlueCat User/Password"
-                SYNCHISTORY.append((sync_hist_start))
+                sync_hist_e1 = collections.OrderedDict()
+                sync_hist_e1['Region'] = aws_region_name
+                sync_hist_e1['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+                sync_hist_e1['EC2'] = "Visibility"
+                sync_hist_e1['Action'] = "ERROR: BlueCat User/Password"
+                SYNCHISTORY.append((sync_hist_e1))
                 return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
 
             # Check SQS Connection using service account, return if cannot connect
@@ -314,12 +318,12 @@ def aws_aws_page_form():
                 sts_client, sqs, sqs_resource, aws_sqs_queue, ec2_client, ec2_resource = connect_sqs(service_access_key, service_secret_key, aws_region_name)
             except Exception as thisexception:
                 DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Visibility ERROR - Could not connect using Service Account"
-                sync_hist_start = collections.OrderedDict()
-                sync_hist_start['Region'] = aws_region_name
-                sync_hist_start['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
-                sync_hist_start['EC2'] = "Visibility"
-                sync_hist_start['Action'] = "ERROR: Service Account"
-                SYNCHISTORY.append((sync_hist_start))
+                sync_hist_e2 = collections.OrderedDict()
+                sync_hist_e2['Region'] = aws_region_name
+                sync_hist_e2['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+                sync_hist_e2['EC2'] = "Visibility"
+                sync_hist_e2['Action'] = "ERROR: Service Account"
+                SYNCHISTORY.append((sync_hist_e2))
                 return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
 
             # Check SQS Queue Connection, return if cannot connect
@@ -329,12 +333,12 @@ def aws_aws_page_form():
                 aws_sqs_queue = aws_sqs_queue['QueueUrl']
             except Exception as thisexception:
                 DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Visibility ERROR - Could not connect to SQS queue"
-                sync_hist_start = collections.OrderedDict()
-                sync_hist_start['Region'] = aws_region_name
-                sync_hist_start['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
-                sync_hist_start['EC2'] = "Visibility"
-                sync_hist_start['Action'] = "ERROR: SQS Connection"
-                SYNCHISTORY.append((sync_hist_start))
+                sync_hist_e3 = collections.OrderedDict()
+                sync_hist_e3['Region'] = aws_region_name
+                sync_hist_e3['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+                sync_hist_e3['EC2'] = "Visibility"
+                sync_hist_e3['Action'] = "ERROR: SQS Connection"
+                SYNCHISTORY.append((sync_hist_e3))
                 return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
 
             @copy_current_request_context
@@ -369,19 +373,21 @@ def aws_aws_page_form():
 
                 thissyncregion = SQS_QUEUE['REGION']
 
-                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Visibility Started for " + SQS_QUEUE['REGION']
-                sync_hist_start = collections.OrderedDict()
-                sync_hist_start['Region'] = thissyncregion
-                sync_hist_start['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
-                sync_hist_start['EC2'] = "Visibility"
-                sync_hist_start['Action'] = "Started"
-                SYNCHISTORY.append((sync_hist_start))
-
                 # Get the Device Type ID for AWS and EC2 DeviceSubtype
                 aws_type = g.user.get_api()._api_client.service.getEntityByName(0, "Amazon Web Services", 'DeviceType')
                 aws_type = aws_type.id
                 aws_type_ec2 = g.user.get_api()._api_client.service.getEntityByName(aws_type, "EC2 Instance", 'DeviceSubtype')
                 aws_type_ec2 = aws_type_ec2.id
+
+                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Visibility Started for " + SQS_QUEUE['REGION']
+                sync_hist_start = collections.OrderedDict()
+                sync_hist_start['Region'] = SQS_QUEUE['REGION']
+                sync_hist_start['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+                sync_hist_start['EC2'] = "Visibility"
+                sync_hist_start['Action'] = "Started"
+                SYNCHISTORY.append((sync_hist_start))
+
+
 
                 while True:
                     if not JOB:
@@ -870,6 +876,8 @@ def aws_aws_page_form():
                     else:
                         g.user.logger.info("No updates in queue")
 
+
+
             # Start an APscheduler background job
             now = datetime.utcnow()
             thisjob = SYNCSCHEDULER.add_job(syncjob, trigger='date', run_date=datetime.utcnow(), id=aws_region_name, name=configuration, replace_existing=True)
@@ -879,6 +887,8 @@ def aws_aws_page_form():
             elif thisjob in JOBS:
                 JOBS.remove(thisjob)
                 JOBS.append(thisjob)
+
+
 
         if form.aws_sync_start.data:
             return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )

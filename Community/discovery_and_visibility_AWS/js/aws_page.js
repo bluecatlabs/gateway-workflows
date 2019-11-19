@@ -45,20 +45,20 @@ $(function () {
           var relexit = relexit.replace('<div class="errorexit" id="errorexit" style="display: inline-block; float: right;"><i class="material-icons">clear</i></div>','')
 
           if (relexit.trim() !== sdata.trim()) {
-            {
+
               if (sdata.includes('ERROR')) {
                 console.log('ERROR alert')
                 status.innerHTML = sdata;
                 $('#status').css('background-color','#DA6900')
                 $('#status').css('color','#001c32')
-                $('.status').fadeIn("fast");
+                $('.status').fadeIn("slow");
                 // Dynamically add a close to the ERROR status
                 const div = document.createElement('div');
                 div.className = 'errorexit';
                 div.id = 'errorexit'
                 div.style.display = "inline-block";
                 div.style.float = 'right';
-                div.innerHTML = `<i class='material-icons'>clear</i>`;
+                div.innerHTML = "<i class='material-icons'>clear</i>";
                 div.onclick = function() { $('.status').fadeOut("fast"); console.log("Cleared Error Status") };
                 status.appendChild(div);
 
@@ -70,21 +70,26 @@ $(function () {
                 $('#status').css('color','white')
                 $('.status').fadeIn("slow");
               }
+              setTimeout(function() {
+                  var thisstatus = document.getElementById('status').innerHTML;
+                  console.log('TIMEOUT:', thisstatus)
+                  if (thisstatus.includes('ERROR')) {
+                    console.log("ERROR not clearing")
+                    return;
+                  }
+                  else {
+                    console.log('INFO now clearing')
+                    $('.status').fadeOut("slow");
+                  }
+              }, 10000); // <-- time in milliseconds
+
             }
           }
-        }
+
       });
     }, 1000);
 
-    setTimeout(function() {
-        var thisstatus = document.getElementById('status').innerHTML;
-        if (thisstatus.includes('ERROR')) {
-          return;
-        }
-        else {
-          $('.status').fadeOut("slow");
-        }
-    }, 5000); // <-- time in milliseconds
+
 
 
     // update the Tables every 5 seconds
