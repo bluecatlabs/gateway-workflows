@@ -25,15 +25,18 @@ from .aws_form import GenericFormTemplate
 import logging
 import collections
 
+logging.basicConfig()
+logging.getLogger('apscheduler').setLevel(logging.DEBUG)
+
 # pylint: disable=protected-access
 
 JOB = ""
 JOBS = []
 DISCOVERYSTATUS = ""
 DISCOVERY_STATS = []
-SYNCSCHEDULER = BackgroundScheduler(daemon=True, timezone=pytz.utc)
+SYNCSCHEDULER = BackgroundScheduler(timezone=pytz.utc)
 SYNCSCHEDULER.start()
-RELEASE_VERSION = "1.05"
+RELEASE_VERSION = "1.0.7"
 STATECHANGES = collections.OrderedDict()
 SYNCHISTORY = []
 
@@ -108,7 +111,7 @@ def aws_aws_page_form():
     global assume_role, mfa, import_amazon_dns, target_zone, single_config_mode, configuration, dynamic_deployment
     global awspubs, DISCOVERYSTATUS, SYNCSCHEDULER, JOB, STATECHANGES, SYNCHISTORY
     if get_api().get_version() < '9.1.0':
-        message = 'Error! Current BlueCat Address Manager version {version} is less than 9.1.0 and Cloud Discovery import will not work!'
+        DISCOVERYSTATUS = 'ERROR! CloudDiscovery required BlueCat Integrity 9.1.0 or greater'
         flash(message.format(version=get_api().get_version()))
         return render_template(
             'aws_page.html',
@@ -133,8 +136,8 @@ def aws_aws_page_form():
         else:
             single_config_mode = False
 
-        aws_access_key_id = form.aws_region_name.data
-        aws_secret_access_key = form.aws_access_key_id.data
+        aws_access_key_id = form.aws_access_key_id.data
+        aws_secret_access_key = form.aws_secret_access_key.data
         aws_region_name = form.aws_region_name.data
         aws_session_token = ""
 
@@ -143,10 +146,10 @@ def aws_aws_page_form():
             mfa = True
             aws_access_key_id, aws_secret_access_key, aws_session_token = get_mfa_session(form.aws_access_key_id.data, form.aws_secret_access_key.data,form.mfa_token.data, form.mfa_code.data)
             if aws_access_key_id == "invalid mfa":
-                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Invalid MFA one time passcode"
+                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - ERROR: Invalid MFA one time passcode"
                 return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
             elif aws_access_key_id == "invalid arn":
-                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - AWS MFA token ARN is invalid or not associated with the Access Key/User"
+                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - ERROR: AWS MFA token ARN is invalid or not associated with the Access Key/User"
                 return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
         else:
             mfa = False
@@ -156,9 +159,8 @@ def aws_aws_page_form():
             assume_role = True
             aws_access_key_id, aws_secret_access_key, aws_session_token, aws_session_expiration = get_assumed_role(aws_access_key_id, aws_secret_access_key, form.aws_role.data, aws_session_token)
             if aws_access_key_id == "not authorized":
-                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Not authorised to assume role " + form.aws_role.data
+                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - ERROR: Not authorised to assume role " + form.aws_role.data
                 return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
-
         else:
             assume_role = False
 
@@ -170,14 +172,13 @@ def aws_aws_page_form():
             target_zone = form.import_target_domain.data
         if form.aws_sync_stop.data:
             JOB = False
-            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Terminating Visibility"
+            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Terminating All Visibility"
         else:
             JOB = True
         if form.dynamic_deployment.data:
             dynamic_deployment = True
 
         # Create AWS device type and sub-type if they don't exist
-        DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Adding AWS Device Types"
         aws_type = get_or_create_device_type(0, "Amazon Web Services", 'DeviceType')
         ec2_subtype = get_or_create_device_type(aws_type.get_id(), "EC2 Instance", 'DeviceSubtype')
         elbv2_subtype = get_or_create_device_type(aws_type.get_id(), "ELBv2 LoadBalancer", 'DeviceSubtype')
@@ -190,7 +191,8 @@ def aws_aws_page_form():
             if single_config_mode and form.aws_public_blocks.data:
                 importawspublic(form.configuration.data)
             # Create the required BAM configurations
-            discovervpcs()
+            if not discovervpcs():
+                return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
 
         # AWS EC2 Discovery
         if form.aws_ec2_import.data:
@@ -205,7 +207,7 @@ def aws_aws_page_form():
             discoverr53()
 
         if form.aws_sync_start.data:
-            DISCOVERYSTATUS = "Initialising Continuous Visibility"
+            DISCOVERYSTATUS = "Initialising Continuous Visibility for " + aws_region_name
             g.user.logger.info('- AWS Realtime Syncronisation - Initialising SQS bluecat queue')
             if assume_role or mfa:
                 sqs = boto3.client('sqs', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
@@ -225,7 +227,7 @@ def aws_aws_page_form():
                 aws_sqs_queue = aws_sqs_queue['QueueUrl']
             except ClientError as thisexception:
                 if thisexception.response['Error']['Code'] == 'AWS.SimpleQueueService.NonExistentQueue':
-                    DISCOVERYSTATUS = "BlueCat SQS FIFO queue not found, creating SQS queue"
+                    DISCOVERYSTATUS = "BlueCat SQS FIFO queue not found, creating SQS queue in " + aws_region_name
                     g.user.logger.info('- AWS Realtime Syncronisation - bluecat queue not found, creating')
                     if assume_role or mfa:
                         sqs_resource = boto3.resource('sqs', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, aws_session_token=aws_session_token)
@@ -239,7 +241,7 @@ def aws_aws_page_form():
                     aws_queue_arn = queue_d.attributes['QueueArn']
                     sqs.tag_queue(QueueUrl=queue.url, Tags={'message group ID':'Bluecat'})
             g.user.logger.info('- AWS Realtime Syncronisation - Initialising CloudWatch to SQS alert rule')
-            DISCOVERYSTATUS = "Initialising CloudWatch to SQS alert rule"
+            DISCOVERYSTATUS = "Initialising CloudWatch to SQS alert rule in " + aws_region_name
             cw_event_pattern = '{"source": ["aws.ec2"],"detail-type": ["EC2 Instance State-change Notification"]}'
             response = cw_client.put_rule(Name='Bluecat', EventPattern=cw_event_pattern, State='ENABLED', Description='Rule sending all EC2 event status changes messages to Bluecat SQS FIFO queue for processing by Cloud Discovery')
             g.user.logger.info('Put Rule "{data}"'.format(data=response))
@@ -287,6 +289,54 @@ def aws_aws_page_form():
                 configuration = False
             STATECHANGES[aws_region_name] = 0
 
+            # Check BAM Connection, return if cannot connect
+            bam_url = config.api_url[0][1]
+            username = form.aws_sync_user.data
+            password = form.aws_sync_pass.data
+            service_access_key = form.sqs_sync_key.data
+            service_secret_key = form.sqs_sync_secret.data
+            conn = api.API(bam_url)
+            try:
+                conn.login(username,password)
+                conn.logout()
+            except Exception as thisexception:
+                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Visiblity ERROR - Could not connect to BAM, check BlueCat username/password"
+                sync_hist_start = collections.OrderedDict()
+                sync_hist_start['Region'] = aws_region_name
+                sync_hist_start['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+                sync_hist_start['EC2'] = "Visibility"
+                sync_hist_start['Action'] = "ERROR: BlueCat User/Password"
+                SYNCHISTORY.append((sync_hist_start))
+                return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
+
+            # Check SQS Connection using service account, return if cannot connect
+            try:
+                sts_client, sqs, sqs_resource, aws_sqs_queue, ec2_client, ec2_resource = connect_sqs(service_access_key, service_secret_key, aws_region_name)
+            except Exception as thisexception:
+                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Visibility ERROR - Could not connect using Service Account"
+                sync_hist_start = collections.OrderedDict()
+                sync_hist_start['Region'] = aws_region_name
+                sync_hist_start['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+                sync_hist_start['EC2'] = "Visibility"
+                sync_hist_start['Action'] = "ERROR: Service Account"
+                SYNCHISTORY.append((sync_hist_start))
+                return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
+
+            # Check SQS Queue Connection, return if cannot connect
+            try:
+                aws_sqs_queue = sqs.get_queue_url(QueueName='Bluecat.fifo')
+                queue_d = sqs_resource.get_queue_by_name(QueueName='Bluecat.fifo')
+                aws_sqs_queue = aws_sqs_queue['QueueUrl']
+            except Exception as thisexception:
+                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Visibility ERROR - Could not connect to SQS queue"
+                sync_hist_start = collections.OrderedDict()
+                sync_hist_start['Region'] = aws_region_name
+                sync_hist_start['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
+                sync_hist_start['EC2'] = "Visibility"
+                sync_hist_start['Action'] = "ERROR: SQS Connection"
+                SYNCHISTORY.append((sync_hist_start))
+                return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
+
             @copy_current_request_context
             def syncjob():
                 global aws_region_name, assume_role, single_config_mode
@@ -294,22 +344,19 @@ def aws_aws_page_form():
                 global DISCOVERYSTATUS, SYNCSCHEDULER, JOB, JOBS, STATECHANGES, SYNCHISTORY
 
                 awspubs = awsblocks(form.aws_region_name.data)
-
                 bam_url = config.api_url[0][1]
                 username = form.aws_sync_user.data
                 password = form.aws_sync_pass.data
+                service_access_key = form.sqs_sync_key.data
+                service_secret_key = form.sqs_sync_secret.data
 
                 u = UserSession.validate(bam_url, username, password)
                 token = u.get_unique_name()
                 g.user = u
                 g.user.logger.info('**** Cloud Discovery Realtime Sync Job ****')
-
                 g.user.logger.info(STATECHANGES[aws_region_name],"StateChanges")
 
-                service_access_key = form.sqs_sync_key.data
-                service_secret_key = form.sqs_sync_secret.data
                 sts_client, sqs, sqs_resource, aws_sqs_queue, ec2_client, ec2_resource = connect_sqs(service_access_key, service_secret_key, aws_region_name)
-
                 aws_sqs_queue = sqs.get_queue_url(QueueName='Bluecat.fifo')
                 queue_d = sqs_resource.get_queue_by_name(QueueName='Bluecat.fifo')
                 aws_sqs_queue = aws_sqs_queue['QueueUrl']
@@ -323,7 +370,6 @@ def aws_aws_page_form():
                 thissyncregion = SQS_QUEUE['REGION']
 
                 DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Visibility Started for " + SQS_QUEUE['REGION']
-
                 sync_hist_start = collections.OrderedDict()
                 sync_hist_start['Region'] = thissyncregion
                 sync_hist_start['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
@@ -339,12 +385,12 @@ def aws_aws_page_form():
 
                 while True:
                     if not JOB:
-                        DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Visibility Terminated"
+                        DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Visibility Terminated for " + SQS_QUEUE['REGION']
                         sync_hist_halt = collections.OrderedDict()
                         sync_hist_halt['Region'] = thissyncregion
                         sync_hist_halt['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
                         sync_hist_halt['EC2'] = "Visibility"
-                        sync_hist_halt['Action'] = "Stopped"
+                        sync_hist_halt['Action'] = "Terminated"
                         SYNCHISTORY.append((sync_hist_halt))
                         JOBS = []
                         return
@@ -377,13 +423,13 @@ def aws_aws_page_form():
                         for message in messages['Messages']: # 'Messages' is a list
                             body = json.loads(message['Body'])
                             g.user.logger.info(message, 'Message')
-                            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - State Changing " + str(body['detail']['instance-id']) + " (" + SQS_QUEUE['REGION'] + ")"
+                            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - State Change for " + str(body['detail']['instance-id']) + " in " + SQS_QUEUE['REGION']
                             # Handle terminated EC2 state
                             if body['detail']['state'] == "terminated":
                                 # login to BAM using the API account, do stuff, logout
                                 conn = api.API(bam_url)
                                 conn.login(form.aws_sync_user.data,form.aws_sync_pass.data)
-                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Terminating " + str(body['detail']['instance-id']) + " (" + SQS_QUEUE['REGION'] + ")"
+                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Terminating " + str(body['detail']['instance-id']) + " in " + SQS_QUEUE['REGION']
                                 g.user.logger.info('EC2 Instance Terminated - Deleting')
                                 instanceid = body['detail']['instance-id']
                                 instanceid = instanceid.split()
@@ -426,7 +472,7 @@ def aws_aws_page_form():
                                     if dynamic_deployment:
                                         for this in hosts:
                                             try:
-                                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Dynamically Deploying DNS"
+                                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Selective Deployment"
                                                 g.user.logger.info("Attempting Selective Deploy")
                                                 g.user.logger.info(this,"this")
                                                 hostidlist = []
@@ -436,7 +482,7 @@ def aws_aws_page_form():
                                                 g.user.logger.info(result,"Selective Deployment Status")
                                             except Exception as thisexception:
                                                 g.user.logger.info(thisexception, "Exception Selective Deploy")
-                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Terminated " + str(body['detail']['instance-id']) + " (" + SQS_QUEUE['REGION'] + ")"
+                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Terminated " + str(body['detail']['instance-id']) + " in " + SQS_QUEUE['REGION']
 
                                 sync_hist_term = collections.OrderedDict()
                                 sync_hist_term['Region'] = thissyncregion
@@ -456,7 +502,7 @@ def aws_aws_page_form():
                                 instanceid = body['detail']['instance-id']
                                 instanceid = instanceid.split()
                                 instance = ec2_client.describe_instances(InstanceIds=instanceid)
-                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Stopping " + str(body['detail']['instance-id']) + " (" + SQS_QUEUE['REGION'] + ")"
+                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Stopping " + str(body['detail']['instance-id']) + " in " + SQS_QUEUE['REGION']
                                 g.user.logger.info(instance)
                                 for r in instance['Reservations']:
                                     for i in r['Instances']:
@@ -542,16 +588,17 @@ def aws_aws_page_form():
                                             if dynamic_deployment:
                                                 for this in hosts:
                                                     try:
-                                                        DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Dynamically Updating DNS"
+                                                        DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Selective Deployment"
                                                         g.user.logger.info("Attempting Selective Deploy")
-                                                        g.user.logger.info(this,"this")
+                                                        g.user.logger.info(this.get_property("absoluteName"),"AbsoluteName")
                                                         hostidlist = []
                                                         hostidlist.append(str(this.get_id()))
                                                         g.user.logger.info(hostidlist,"HostID list")
                                                         result = conn.selective_deploy(hostidlist)
-                                                        g.user.logger.info(result,"Selective Deployment Status")
                                                     except Exception as thisexception:
                                                         g.user.logger.info(thisexception, "Exception Selective Deploy")
+                                                    g.user.logger.info(result,"Selective Deployment Status")
+
                                         try:
                                             g.user.logger.info(i['InstanceId'], "Adding stopped EC2 Device")
                                             conn._api_client.service.addDevice(conf, i['InstanceId'], aws_type, aws_type_ec2, devips, v6_address, props)
@@ -579,12 +626,18 @@ def aws_aws_page_form():
                                             ip_address_private.update()
                                         except Exception as thisexception:
                                             g.user.logger.info(thisexception, "Exception Getting Private IP")
-                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Stopped " + str(body['detail']['instance-id']) + " - " + nametag + " (" + SQS_QUEUE['REGION'] + ")"
+                                        if nametag:
+                                            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Stopped " + str(body['detail']['instance-id']) + " (" + nametag + ") in " + SQS_QUEUE['REGION']
+                                        else:
+                                            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Stopped " + str(body['detail']['instance-id']) + " in " + SQS_QUEUE['REGION']
 
                                 sync_hist_stopped = collections.OrderedDict()
                                 sync_hist_stopped['Region'] = thissyncregion
                                 sync_hist_stopped['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
-                                sync_hist_stopped['EC2'] = i['InstanceId']
+                                if nametag:
+                                    sync_hist_stopped['EC2'] = i['InstanceId'] + " (" + str(nametag) + ")"
+                                else:
+                                    sync_hist_stopped['EC2'] = i['InstanceId']
                                 sync_hist_stopped['Action'] = "Stopped"
                                 SYNCHISTORY.append((sync_hist_stopped))
                                 STATECHANGES[thissyncregion] = STATECHANGES[thissyncregion] + 1
@@ -601,7 +654,7 @@ def aws_aws_page_form():
                                 instanceid = instanceid.split()
                                 instance = ec2_client.describe_instances(InstanceIds=instanceid)
                                 g.user.logger.info(instance)
-                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Starting " + str(body['detail']['instance-id']) + " (" + SQS_QUEUE['REGION'] + ")"
+                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Starting " + str(body['detail']['instance-id']) + " in " + SQS_QUEUE['REGION']
                                 for r in instance['Reservations']:
                                     for i in r['Instances']:
                                         g.user.logger.info(i)
@@ -682,14 +735,17 @@ def aws_aws_page_form():
                                                         g.user.logger.info(thing, "Deleting")
                                                         thing.delete()
                                                         if dynamic_deployment:
-                                                            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Dynamically Updating DNS"
+                                                            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Selective Deployment"
                                                             g.user.logger.info("Attempting Selective Deploy")
                                                             g.user.logger.info(thing,"thing")
                                                             g.user.logger.info(thing.get_id(),"ID")
                                                             hostidlist = []
                                                             hostidlist.append(str(thing.get_id()))
                                                             g.user.logger.info(hostidlist,"HostID list")
-                                                            result = conn.selective_deploy(hostidlist)
+                                                            try:
+                                                                result = conn.selective_deploy(hostidlist)
+                                                            except Exception as thisexception:
+                                                                g.user.logger.info(thisexception)
                                                             g.user.logger.info(result,"Selective Deployment Status")
 
                                             except Exception as thisexception:
@@ -722,8 +778,8 @@ def aws_aws_page_form():
                                             ip_address_private.update()
                                         except Exception as thisexception:
                                             g.user.logger.info(thisexception, "Exception Getting Private IP")
-                                        nametag = nametag.replace(" ","_") # Replace any spaces with hyphen
-                                        nametag = nametag.lower() # convert the nametag to lower case
+                                        nametagdns = nametag.replace(" ","_") # Replace any spaces with hyphen
+                                        nametagdns = nametagdns.lower() # convert the nametag to lower case
                                         if (import_amazon_dns and i['PublicDnsName'] and publicblocks and pubip):
                                             external_view = config_entity.get_view("Amazon DNS External")
                                             internal_view = config_entity.get_view("Amazon DNS Internal")
@@ -732,16 +788,20 @@ def aws_aws_page_form():
                                                     g.user.logger.info(SQS_QUEUE['TARGETZONE'], "Adding HOST for EC2 instance to target zone")
                                                     if is_valid_hostname(nametag):
                                                         try:
-                                                            public_host_record = external_view.add_host_record(nametag + "." + SQS_QUEUE['TARGETZONE'], [str(i['PublicIpAddress'])])
+                                                            public_host_record = external_view.add_host_record(nametagdns + "." + SQS_QUEUE['TARGETZONE'], [str(i['PublicIpAddress'])])
+                                                            thishostname = nametagdns + "." + SQS_QUEUE['TARGETZONE']
                                                         except Exception as thisexception:
-                                                            public_host_record = external_view.add_host_record(nametag + "_" + i['InstanceId'] + "." + SQS_QUEUE['TARGETZONE'], [str(i['PublicIpAddress'])])
+                                                            public_host_record = external_view.add_host_record(nametagdns + "_" + i['InstanceId'] + "." + SQS_QUEUE['TARGETZONE'], [str(i['PublicIpAddress'])])
+                                                            thishostname = nametagdns + "_" + i['InstanceId'] + "." + SQS_QUEUE['TARGETZONE']
                                                     else:
                                                         public_host_record = external_view.add_host_record(str(i['InstanceId']) + "." + SQS_QUEUE['TARGETZONE'], [str(i['PublicIpAddress'])])
+                                                        thishostname = str(i['InstanceId']) + "." + SQS_QUEUE['TARGETZONE']
                                                     public_host_record.set_property("EC2InstanceID", str(i['InstanceId']))
                                                     public_host_record.update()
                                                 except Exception as thisexception:
                                                     g.user.logger.info(thisexception)
                                                 if dynamic_deployment:
+                                                    DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Selective Deployment"
                                                     try:
                                                         hostidlist = []
                                                         hostidlist.append(str(public_host_record.get_id()))
@@ -750,6 +810,7 @@ def aws_aws_page_form():
                                                         g.user.logger.info(result,"Selective Deployment Status")
                                                     except Exception as thisexception:
                                                         g.user.logger.info(thisexception)
+
                                             try:
                                                 g.user.logger.info(SQS_QUEUE['TARGETZONE'], "Adding default HOST for EC2 instance")
                                                 public_host_record = external_view.add_host_record(i['PublicDnsName'] , [str(i['PublicIpAddress'])])
@@ -771,12 +832,12 @@ def aws_aws_page_form():
                                             if SQS_QUEUE['TARGETZONE']:
                                                 try:
                                                     g.user.logger.info(SQS_QUEUE['REGION'] + "." + SQS_QUEUE['TARGETZONE'], "Adding HOST record for EC2 instance to target zone")
-                                                    a_record = internal_view.add_host_record(str(nametag) + "." + SQS_QUEUE['REGION'] + "." + SQS_QUEUE['TARGETZONE'], [str(i['PrivateIpAddress'])])
+                                                    a_record = internal_view.add_host_record(str(nametagdns) + "." + SQS_QUEUE['REGION'] + "." + SQS_QUEUE['TARGETZONE'], [str(i['PrivateIpAddress'])])
                                                     a_record.set_property("EC2InstanceID", str(i['InstanceId']))
                                                     a_record.update()
                                                 except Exception as thisexception:
                                                     try:
-                                                        a_record = internal_view.add_host_record(str(nametag) + "_" + str(i['InstanceId']) + "." + SQS_QUEUE['REGION'] + "." + SQS_QUEUE['TARGETZONE'], [str(i['PrivateIpAddress'])])
+                                                        a_record = internal_view.add_host_record(str(nametagdns) + "_" + str(i['InstanceId']) + "." + SQS_QUEUE['REGION'] + "." + SQS_QUEUE['TARGETZONE'], [str(i['PrivateIpAddress'])])
                                                         a_record.set_property("EC2InstanceID", str(i['InstanceId']))
                                                         a_record.update()
                                                     except Exception as thisexception:
@@ -788,12 +849,18 @@ def aws_aws_page_form():
                                                 a_record.update()
                                             except Exception as thisexception:
                                                 g.user.logger.info(thisexception)
-                                DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Started " + str(body['detail']['instance-id']) + " - " + nametag + " (" + SQS_QUEUE['REGION'] + ")"
+                                if nametag:
+                                    DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Started " + str(body['detail']['instance-id']) + " (" + nametag + ") in " + SQS_QUEUE['REGION']
+                                else:
+                                    DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") +" - Started " + str(body['detail']['instance-id']) + " in " + SQS_QUEUE['REGION']
 
                                 sync_hist_running = collections.OrderedDict()
                                 sync_hist_running['Region'] = thissyncregion
                                 sync_hist_running['Time'] = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S")
-                                sync_hist_running['EC2'] = i['InstanceId']
+                                if nametag:
+                                    sync_hist_running['EC2'] = i['InstanceId'] + " (" + str(nametag) + ")"
+                                else:
+                                    sync_hist_running['EC2'] = i['InstanceId']
                                 sync_hist_running['Action'] = "Started"
                                 SYNCHISTORY.append((sync_hist_running))
                                 STATECHANGES[thissyncregion] = STATECHANGES[thissyncregion] + 1
@@ -813,15 +880,13 @@ def aws_aws_page_form():
                 JOBS.remove(thisjob)
                 JOBS.append(thisjob)
 
-
         if form.aws_sync_start.data:
             return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
         else:
-            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Completed Discovery"
+            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - Completed Discovery of " + str(aws_region_name)
             return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
     else:
-        DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " Something went wrong"
-        g.user.logger.info('Form data was not valid.')
+        DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - ERROR: AWS Credentials Missing or Incorrect"
         return render_template('aws_page.html', form=form, text=util.get_text(module_path(), config.language), options=g.user.get_options(), )
 
 def get_mfa_session(taws_access_key_id,taws_secret_access_key,tmfaarn,tmfa_token):
@@ -852,20 +917,6 @@ def get_assumed_role(taws_access_key_id, taws_secret_access_key, trolearn, tsess
         g.user.logger.info(str(thisexception).lower(), "AssumeRole Exception")
         if "is not authorized to perform: sts:assumerole" in str(thisexception).lower():
             return "not authorized", "not authorized", "not authorized", "not authorized"
-
-# Function to connect to AWS using roleAssume and MFA Token
-def connect_aws(taws_region_name, taws_access_key_id, taws_secret_access_key, trolearn, tsession, tmfaarn, tmfa_token):
-    """ Connect to AWS """
-    sts = boto3.client('sts', aws_access_key_id=taws_access_key_id, aws_secret_access_key=taws_secret_access_key)
-    tempcredentials = sts.get_session_token(DurationSeconds=3600, SerialNumber=tmfaarn, TokenCode=tmfa_token)
-    sts = boto3.client('sts', aws_access_key_id=tempcredentials['Credentials']['AccessKeyId'], aws_secret_access_key=tempcredentials['Credentials']['SecretAccessKey'], aws_session_token=tempcredentials['Credentials']['SessionToken'])
-    response = sts.assume_role(RoleArn=trolearn, RoleSessionName=str(tsession))
-    credentials = response['Credentials']
-    taws_access_key_id = credentials['AccessKeyId']
-    taws_secret_access_key = credentials['SecretAccessKey']
-    taws_session_token = credentials['SessionToken']
-    taws_session_expiration = credentials['Expiration']
-    return taws_access_key_id, taws_secret_access_key, taws_session_token, taws_region_name, taws_session_expiration
 
 # Function to connect to AWS AQS using service account (i.e no MFA)
 def connect_sqs(service_access_key, service_secret_key, aws_region):
@@ -1000,7 +1051,16 @@ def discovervpcs():
     else:
         ec2 = boto3.resource('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
         client = boto3.client('ec2', region_name=aws_region_name, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
-    vpcs = list(ec2.vpcs.filter())
+    try:
+        vpcs = list(ec2.vpcs.filter())
+    except Exception as thisexception:
+        g.user.logger.info(str(thisexception).lower(), "DescribeVPC Exception")
+        if "aws was not able to validate the provided access credentials" in str(thisexception).lower():
+            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - ERROR Authentication, check AWS API parameters"
+            return False
+        elif "you are not authorized to perform this operation" in str(thisexception).lower():
+            DISCOVERYSTATUS = datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S") + " - ERROR Authentication, you are not authorised to Describe VPCs"
+            return False
 
     # Add the number of VPCs to the discovery_stats
     d_vpcs = collections.OrderedDict()
@@ -1022,7 +1082,6 @@ def discovervpcs():
         subs_count = subs_count + len(subs)
     d_subs['count'] = subs_count
     DISCOVERY_STATS.append((d_subs))
-
 
     for vpc in vpcs:
         DISCOVERYSTATUS = "Discovering AWS VPCs"
@@ -1143,6 +1202,7 @@ def discovervpcs():
                         blkv6.add_ip6_network_by_prefix(v6sub, name=block_name)
                     except Exception as thisexception:
                         pass
+    return True
 
 # Import ELBv2 devices
 def discoverelbv2(aws_type, elbv2_subtype):
