@@ -1,7 +1,7 @@
 
 ![alt text](logo.png "logo")
 
-# Cloud Discovery and Visibility for AWS
+# Cloud Discovery and Visibility - AWS
 
 **NOTE :- This is a community supported technology preview, it should be used with caution in production environments until a planned certified release is made available by BlueCat**
 
@@ -18,7 +18,7 @@
 - BlueCat Address Manager 9.1+
 - Gateway 19.5.1+
 
-# Configuring Discovery & Visibility for AWS
+# Configuring Discovery & Visibility - AWS
 
 - Download CloudDiscovery_AWS_X.X.X.tar.gz or sourcefiles
 - Install the required python libraries into BlueCat Gateway:
@@ -63,8 +63,8 @@ If this fails due to the account not having write permissions to those services,
 
 ©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
 
-Workflow Version: 1.05 <br/>
-Project Title: Discovery and Visibility AWS <br/>
+Workflow Version: 1.0.7 <br/>
+Project Title: Discovery and Visibility - AWS <br/>
 Author: B.Shorland <br/>
 Date: 13-11-2019 <br/>
 BlueCat Gateway Version: 19.5.1+ <br/>
