@@ -20,6 +20,10 @@ limitations under the License.
                be viewed by navigating to /api/v1/. 
 
 
+Known issues:
+1. On upgrade or change, remove all __pycache__ folders and __*.pyc__ files as you make experience odd results as a result of caching
+
+
 How to contribute:
 
 1. Identify a use case that is currently not covered by existing endpoints. The use case should be general and not overly specific to your implementation.
