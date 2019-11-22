@@ -1,0 +1,10 @@
+{
+    "edge_url": "",
+    "edge_client_id": "",
+    "edge_secret": "",
+    "edge_service_points": [],
+    "last_execution": "",
+    "execution_interval": 0,
+    "timeout": 1,
+    "trap_servers": []
+}

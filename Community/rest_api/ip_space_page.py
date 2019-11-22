@@ -24,8 +24,23 @@ from flask import g, jsonify
 from flask_restplus import fields, reqparse, Resource
 
 from bluecat import util
-from .configuration_page import config_defaults
+from .configuration_page import config_defaults, entity_return_model
 from main_app import api
+
+
+ip4_address_root_default_ns = api.namespace('ipv4_addresses', description='IPv4 Address operations')
+ip4_address_root_ns = api.namespace(
+    'ipv4_addresses',
+    path='/configurations/<string:configuration>/ipv4_networks/',
+    description='IPv4 Address operations',
+)
+
+ip4_address_default_ns = api.namespace('ipv4_addresses', description='IPv4 Address operations')
+ip4_address_ns = api.namespace(
+    'ipv4_addresses',
+    path='/configurations/<string:configuration>/ipv4_networks/',
+    description='IPv4 Address operations',
+)
 
 
 ip4_block_root_default_ns = api.namespace('ipv4_blocks', description='IPv4 Block operations')
@@ -56,17 +71,130 @@ ip4_network_config_block_ns = api.namespace(
     description='IPv4 Network operations',
 )
 
+
+ip4_address_post_model = api.model(
+    'ip4_address_post',
+    {
+        'mac_address':  fields.String(description='MAC Address value'),
+        'hostinfo':  fields.String(
+            description='A string containing host information for the address in the following format: '
+                        'hostname,viewId,reverseFlag,sameAsZoneFlag'
+        ),
+        'action':  fields.String(
+            description='Desired IP4 address state: MAKE_STATIC / MAKE_RESERVED / MAKE_DHCP_RESERVED'
+        ),
+        'properties': fields.String(description='The properties of the IP4 Address', default='attribute=value|'),
+    },
+)
+
+
 network_patch_model = api.model(
     'ipv4_networks_patch',
     {
         'name':  fields.String(description='The name associated with the IP4 Network.'),
-        'properties':  fields.String(description='The properties of the host record', default='attribute=value|'),
+        'properties':  fields.String(description='The properties of the IP4 Network', default='attribute=value|'),
+    },
+)
+
+network_post_model = api.model(
+    'ipv4_networks_post',
+    {
+        'name':  fields.String(description='The name associated with the IP4 Network.'),
+        'size':  fields.String(
+            description='The number of addresses in the network expressed as a power of 2 (i.e. 2, 4, 8, 16, ... 256)',
+            default='attribute=value|'
+        ),
+        'properties': fields.String(description='The properties of the IP4 Network', default='attribute=value|'),
     },
 )
 
 network_patch_parser = reqparse.RequestParser()
 network_patch_parser.add_argument('name', location="json", help='The name of the network')
 network_patch_parser.add_argument('properties', location="json", help='The properties of the record')
+
+network_post_parser = reqparse.RequestParser()
+network_post_parser.add_argument('name', location="json", help='The name of the network')
+network_post_parser.add_argument('properties', location="json", help='The properties of the network')
+network_post_parser.add_argument(
+    'size',
+    location="json",
+    help='The number of addresses in the network expressed as a power of 2 (i.e. 2, 4, 8, 16, ... 256)'
+)
+
+
+ip4_address_post_parser = reqparse.RequestParser()
+ip4_address_post_parser.add_argument('mac_address', location="json", help='The MAC address')
+ip4_address_post_parser.add_argument('hostinfo', location="json", help='The hostinfo of the address')
+ip4_address_post_parser.add_argument('action', location="json", help='The action for address assignment')
+ip4_address_post_parser.add_argument('properties', location="json", help='The properties of the record')
+
+
+@ip4_address_ns.route('/<string:network>/get_next_ip/')
+@ip4_address_default_ns.route('/<string:network>/get_next_ip/', defaults=config_defaults)
+@ip4_address_ns.response(404, 'IPv4 address not found')
+class IPv4NextIP4Address(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    @ip4_address_ns.response(201, 'Next IP successfully created.', model=entity_return_model)
+    @ip4_address_ns.expect(ip4_address_post_model, validate=True)
+    def post(self, configuration, network):
+        """
+        Create the next available IP4 Address
+
+        Network can be of the format of network address:
+        1. 10.1.0.0
+
+        """
+        data = ip4_address_post_parser.parse_args()
+        mac = data.get('mac_address', '')
+        hostinfo = data.get('hostinfo', '')
+        action = data.get('action', '')
+        properties = data.get('properties', '')
+
+        configuration = g.user.get_api().get_configuration(configuration)
+        network = configuration.get_ip_range_by_ip("IP4Network", network)
+
+        ip = network.assign_next_available_ip4_address(mac, hostinfo, action, properties)
+        result = ip.to_json()
+
+        return result, 201
+
+
+@ip4_block_ns.route('/<path:block>/get_next_network/')
+@ip4_block_default_ns.route('/<path:block>/get_next_network/', defaults=config_defaults)
+@ip4_block_ns.response(404, 'IPv4 network not found')
+class IPv4NextNetworkCollection(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    @ip4_block_ns.response(201, 'Next network successfully created.', model=entity_return_model)
+    @ip4_block_ns.expect(network_post_model, validate=True)
+    def post(self, configuration, block):
+        """
+        Create the next available IP4 Network
+
+        Blocks can be of the format:
+        1. 10.1.0.0/16
+        2. 10.0.0.0/8/ipv4_blocks/10.1.0.0/24
+
+        """
+        data = network_post_parser.parse_args()
+        name = data.get('name', '')
+        size = data.get('size', '')
+        properties = data.get('properties', '')
+        range = g.user.get_api().get_configuration(configuration)
+        block_hierarchy = []
+        if block:
+            block_hierarchy = block.split('ipv4_blocks')
+
+        for block in block_hierarchy:
+            block_cidr = block.strip('/')
+            range = range.get_entity_by_cidr(block_cidr, range.IP4Block)
+        network = range.get_next_available_ip_range(size, "IP4Network", properties)
+        network.set_name(name)
+        network.update()
+        result = network.to_json()
+
+        return result, 201
 
 
 @ip4_block_root_ns.route('/')

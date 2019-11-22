@@ -1,0 +1,17 @@
+title=DB統計情報の表示
+info=データベース統計情報を表示します。
+title_title=タイトル
+title_value=値
+label_list=データベース統計情報：
+title_db_size=データベースサイズ
+title_entity_count=登録エンティティ数
+title_ip4b_count=登録IPv4 ブロック数
+title_ip4n_count=登録IPv4 ネットワーク数
+title_ip4a_count=登録IPv4 アドレス数
+title_view_count=登録ビュー数
+title_zone_count=登録ゾーン数
+title_record_count=登録リソースレコード数
+title_mac_count=登録MACアドレス数
+title_nusr_count=登録ユーザ数
+title_gusr_count=登録グループ数
+title_location_count=登録ロケーション数

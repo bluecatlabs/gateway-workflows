@@ -1,0 +1,10 @@
+title=MACアドレスの一括登録
+info=MACアドレスをネットワークに接続可能な様に一括登録する。
+file_legend=読み組むファイルを設定してください。
+label_asset_code=資産管理番号
+label_mac_address=MACアドレス
+label_employee_code=従業員コード
+label_update_date=更新日付
+label_file=ファイル:
+label_list=MACアドレス一覧:
+label_submit=登録

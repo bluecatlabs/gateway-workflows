@@ -1,0 +1,11 @@
+title=リース履歴（IPアドレス）
+info=IPアドレスよりリース履歴一覧を表示する
+instruction=リース履歴を検索するIPアドレスを指定して下さい。
+require_message=このフィールドは必須です。
+label_ip_address=IPアドレス：
+label_query=検索
+label_list=リース履歴一覧：
+title_mac_address=MACアドレス
+title_lease_time=リース時間
+title_expiry_time=失効時間
+title_update_count=更新回数

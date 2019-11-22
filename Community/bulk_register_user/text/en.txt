@@ -1,0 +1,15 @@
+title=Bulk User Registration
+info=Bulk User Registration from CSV File.
+success=Succeed.
+file_legend=Specify file to read.
+title_user_name=User Name
+title_password=Password
+title_email=EMail
+title_last_name=Last Name
+title_first_name=First Name
+title_privilege=Privilege
+title_access_type=Access Type
+label_file=File:
+label_list=User List:
+label_submit=Register
+

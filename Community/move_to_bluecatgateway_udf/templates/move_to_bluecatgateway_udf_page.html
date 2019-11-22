@@ -1,0 +1,28 @@
+<!-- Copyright 2019 BlueCat Networks. All rights reserved. -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/move_to_bluecatgateway_udf_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+    <p>{{ text['info'] }}</p>
+    <!--Your page's HTML goes here.-->
+    {% from "form_helper.html" import render_form %}
+    {{ render_form(form, action=url_for('move_to_bluecatgateway_udfmove_to_bluecatgateway_udf_move_to_bluecatgateway_udf_page_form'), id="move_to_bluecatgateway_udf_page_form") }}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="js/move_to_bluecatgateway_udf_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}

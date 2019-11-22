@@ -1,0 +1,86 @@
+/* Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+By: Akira Goto (agoto@bluecatnetworks.com)
+Date: 2019-08-28
+Gateway Version: 19.5.1
+Description: SDWAN Firewall Rule Updater CSS */
+
+@import url("/js/vendor/jquery-ui/jquery-ui.min.css");
+
+.ui-jqgrid .ui-jqgrid-titlebar {
+    height:30px;
+    vertical-align: baseline;
+}
+
+.ui-jqgrid .ui-jqgrid-htable th {
+    height: 30px;
+    vertical-align: baseline;
+}
+
+.ui-jqgrid tr.jqgrow td {
+    vertical-align: baseline;
+}
+.hovertext
+{
+    border-bottom: 1px dotted;
+    text-decoration: none;
+}
+.nav-tabs
+{
+    border-bottom: 0px solid;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover
+{
+    border-width: 0px;
+    background: transparent;
+}
+
+.nav-tabs > li > a
+{
+    border: none;
+    padding: 10px 10px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li > a:hover
+{
+    border: none;
+    color: inherit !important;
+    background: transparent;
+}
+
+.nav-tabs > li > a::after
+{
+    content: "";
+    background: #FFFFFF;
+    height: 2px;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    bottom: -1px;
+    transition: all 250ms ease 0s;
+    transform: scale(0);
+}
+
+.nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after
+{
+    transform: scale(1);
+}
+
+.tab-nav > li > a::after
+{
+    background: #21527d none repeat scroll 0% 0%;
+    color: #fff;
+}

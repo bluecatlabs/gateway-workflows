@@ -18,12 +18,15 @@ Once the workflows have been copied over, just start the BlueCat Gateway contain
 ## Contributions
 Contributing follows a review process: before a workflow is accepted it will be reviewed and then merged into the master branch. It will be the responsibility of the contributor to ensure that their workflow is supported for future releases of BlueCat Gateway.
 
+Please review the [Terms and Conditions](https://github.com/bluecatlabs/gateway-workflows/blob/master/BlueCat%20GitHub%20Contribution%20Agreement%202019.pdf).
+
 ## Standards
 When contributing to the Community examples please ensure that the code is of good quality
 - BlueCat Gateway is written with the PEP8 standard in mind
-- Ensure that each function contains a docstring exaplining the purpose of the function, the input variables and, the return type
+- Ensure that each function contains a docstring explaining the purpose of the function, the input variables and, the return type
 - Use plenty of comments to describe what the function is doing
-- Use meaningfull variable and function names
+- Use meaningful variable and function names
+- Contributions should not directly access the BAM database
 
 #### Process
 1. Fork it!
@@ -55,7 +58,7 @@ limitations under the License.
 By: Your Name (youremail@domain.com)
 Date: DD-MM-YYYY
 Gateway Version: X.X.X
-Description: Brief description of what the workflow does and the expected behavior
+Description: Brief description of what the workflow does and the expected behaviour
 ```
 
 
@@ -63,28 +66,31 @@ Description: Brief description of what the workflow does and the expected behavi
 BlueCat Gateway would be so much less without the following people. Thank you for contributing your time to making this project a success.
 
 #### The Team:
-- Victor Fradkin
-- Xiao Dong
-- Nikhil Jangi
+- David Cohen
 - Steven Diao
-- Anshul Sharma
+- Murtaza Haider
+- Chris Catral
 - Delme Herbert
-
+- Martin Minkov
+- Brian Shorland
 
 #### Professional Services:
-- Murtaza Haider
 - Chris Storz
 - Chris Meyer
 - Timothy Noel
+- Ze'ev Romm
 
 #### Special Thanks:
 - Bill Morton
 - Glenn McAllister
 - Robert Barnhardt™
-- Ekim Maurer
 - Roy Reshef
 - Vadim Farafontov
-- David Cohen
+- Victor Fradkin
+- Xiao Dong
+- Nikhil Jangi
+- Anshul Sharma
+- Ekim Maurer
 - Lana Litvak
 - Raymond Leong
 - Rohina Dhunjeebhoy

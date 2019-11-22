@@ -1,0 +1,49 @@
+# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# -*- coding: utf-8 -*-
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# By: Akira Goto (agoto@bluecatnetworks.com)
+# Date: 2019-08-28
+# Gateway Version: 19.5.1
+# Description: SDWAN Firewall Rule Updater text files
+
+title=Service Point監視
+info=Service Pointの監視を行います。
+invalid_url_message=不適切なURLです。
+require_message=このフィールドは必須です。
+saved_message=構成情報は正常に保存されました。
+failed_message=保存が失敗しました。構成を確認して下さい。
+label_splist_tab=Service Point一覧
+label_col_name=名前
+label_col_ipaddress=IPアドレス
+label_col_site=Site
+label_col_connected=接続
+label_col_status=状態
+label_col_pulling_severity=取得
+label_col_port=ポート
+label_col_snmpver=バージョン
+label_col_comstr=コミュニティ文字列
+label_config_tab=DNS Edge構成
+label_config_url=DNS Edge URL：
+label_config_key_file=アクセスキーファイル（JSON）：
+label_config_client_id=クライアントID：
+label_config_secret=クライアントシークレット：
+label_config_interval=インターバル（秒）：
+label_config_timeout=Diagnostics API タイムアウト（秒）：
+label_trap_tab=SNMPトラップ設定
+label_get_service_points=取得
+label_add=追加
+label_delete=削除
+label_submit=保存
+label_cancel=キャンセル

@@ -1,0 +1,241 @@
+/* Copyright 2019 BlueCat Networks. All rights reserved. */
+/* Custom styles for your page go in here. */
+/* v1.0.7 B.Shorland */
+
+/* Hide the title content */
+.main-content {
+  display: none;
+}
+
+/* Hide the selection accordion */
+#main-menu-accordion {
+  display: none;
+}
+
+.mytitle {
+  font-family: 'Open Sans',sans-serif;
+  font-size: 32px;
+  float: left;
+  text-rendering: optimizeLegibility;
+  color: white;
+  text-shadow: 5px 5px 5px #222;
+  padding-bottom: 20px;
+}
+
+.exit {
+  display: block;
+  float: right;
+  color: #01b5ff;
+}
+
+button {
+  text-transform: none;
+}
+
+p {
+  font-family: 'Open Sans',sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+label {
+  font-family: 'Open Sans',sans-serif;
+  color: #3f485e;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+input {
+  font-family: 'Open Sans',sans-serif;
+  font-size: 16px;
+  font-weight: 325
+}
+
+select {
+  font-family: 'Open Sans',sans-serif;
+  font-size: 16px;
+  font-weight: 325;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.form-control {
+  background-color: #22314e;
+  border-color: #22314e;
+}
+
+.collapsible {
+  background-color: #001C32;
+  font-family: 'Open Sans',sans-serif;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: left;
+  transition: 0.4s;
+  border-color: white;
+  border-radius: 4px 4px 4px 4px;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+}
+
+.active, .collapsible:hover {
+    background-color: #0085c3;
+    color: white;
+}
+
+
+.collapsible:before:hover {
+    background-color: #0085c3;
+    font-family: "Material Icons";
+    content: '\e5cc';
+    color: #01b5ff;
+    font-size: 1em;
+    float: left;
+    margin-left: 5px;
+    border-radius: 4px;
+    padding-right: 5px;
+}
+
+.collapsible:before {
+    font-family: "Material Icons";
+    content: '\e5cc';
+    font-size: 1em;
+    color: #01b5ff;
+    float: left;
+    margin-left: 5px;
+    border-radius: 4px;
+    padding-right: 5px;
+}
+.collapsible.active:before {
+    font-family: "Material Icons";
+    content: '\e313';
+    font-size: 1em;
+    color: white;
+    float: left;
+    margin-left: 5px;
+    border-radius: 4px;
+    padding-right: 5px;
+}
+
+.content {
+  padding: 0 18px;
+  /* border-color: white; */
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 4px 4px 4px 4px;
+  display: none;
+  overflow: hidden;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+}
+
+.mysubmit {
+  font-family: 'Open Sans',sans-serif;
+  padding: 5px;
+  font-size: 16px;
+  border-width: 0px;
+  background-color: #01b5ff;
+  color: #001c32;
+  border-style: none;
+  float: right;
+  border-radius: 4px 4px 4px 4px;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+}
+
+.status {
+  text-align: left;
+  font-family: 'Open Sans',sans-serif;
+  margin-top: 10px;
+  font-size: 16px;
+  background-color: #01b5ff;
+  background: #01b5ff;
+  color: #ffffff;
+  border-width: 0px;
+  border-style: none;
+  padding: 10px 10px;
+  border-radius: 4px 4px 4px 4px;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+  margin-bottom: 10px;
+}
+.status:focus {
+     outline:none;
+}
+
+.hidden {
+    display: none;
+}
+
+div.main-content.col-sm-offset-1.col-sm-8.col-md-offset-1.col-md-9 {
+  border-width: 1px;
+  border-color: black;
+  background-color: #182a43;
+  color: #ffffff;
+  border-style: solid;
+  background: rgb(0,115,174);
+  background: -moz-radial-gradient(ellipse, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 80%);
+  background: -webkit-radial-gradient(ellipse, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 80%);
+  background: radial-gradient(ellipse, rgba(0,115,174,1) 0%, rgba(20,44,82,1) 80%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0073ae",endColorstr="#142c52",GradientType=1);
+  padding: 10px 20px;
+  border-radius: 6px 6px 6px 6px;
+  -webkit-box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.75);
+}
+
+div#main-container.panel.login.large.col-sm-4.col-md-6.col-lg-8{
+  display: none;
+}
+
+#aws_page_form {
+  display: none;
+}
+
+.parallel {
+  display: inline-block;
+  width: 375px;
+  padding-right: 20px;
+}
+
+.subtitle {
+  font-family: 'Open Sans',sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: white;
+}
+
+.single {
+  width: 375px;
+  padding-right: 20px;
+}
+
+.myversion {
+    font-size: x-small;
+    text-align: right;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.disable-select {
+   user-select: none; /* supported by Chrome and Opera */
+   -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+   -moz-user-select: none; /* Firefox */
+   -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.footer {
+  display: none;
+}

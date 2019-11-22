@@ -1,0 +1,10 @@
+title=Bulk Group Registration
+info=Bulk Group Registration from CSV File.
+success=Succeed.
+file_legend=Specify file to read.
+title_group_name=Group Name
+title_division_code=Div. Code
+title_comments=Comments
+label_file=File:
+label_list=Group List:
+label_submit=Register

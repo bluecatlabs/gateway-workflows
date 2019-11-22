@@ -1,0 +1,11 @@
+title=DNS Edgeクエリログ転送
+info=DNS EdgeクエリログをSysLog形式での転送設定を行う。
+invalid_url_message=不適切なURLです。
+require_message=このフィールドは必須です。
+saved_message=構成情報は正常に保存されました。
+label_edge_url=DNS Edge URL:
+label_edge_token=API Token:
+label_syslog_server=SysLogサーバーIPアドレス：
+label_poll_interval=取得間隔（秒/最小5秒）：
+label_launch_logger=ログ転送開始
+label_submit=登録

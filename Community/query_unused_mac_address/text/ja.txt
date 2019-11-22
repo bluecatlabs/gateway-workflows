@@ -1,0 +1,10 @@
+title=未使用のMACアドレス一覧
+info=日付を指定し、それ以前が最終リース失効時間の端末（MACアドレス）一覧を取得する
+instruction=取得するMACアドレスの最終失効時間を指定して下さい。
+label_expire_time=最終失効時間：
+label_query=取得
+label_list=MACアドレス一覧：
+title_mac_address=MACアドレス
+title_lease_time=リース時間
+title_expiry_time=失効時間
+title_update_count=更新回数

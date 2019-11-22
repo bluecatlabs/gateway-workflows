@@ -1,0 +1,12 @@
+{
+    "edge_url": "",
+    "edge_client_id": "",
+    "edge_secret": "",
+    "edge_domainlists": [],
+    "sdwan_key": "",
+    "sdwan_orgname": "",
+    "sdwan_tmpname": "",
+    "sdwan_delimit_key": "",
+    "last_execution": "",
+    "execution_interval": 0
+}

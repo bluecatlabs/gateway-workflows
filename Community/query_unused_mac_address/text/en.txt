@@ -1,0 +1,10 @@
+title=List unused MAC Addresses
+info=Obtain a list of MAC addresses which the last lease expiry time is before a specified date.
+instruction=Specify the last lease time of the MAC Address to be obtained.
+label_expire_time=Last Expire Date:
+label_query=Search
+label_list=MAC Address List:
+title_mac_address=MAC Address
+title_lease_time=Lease Time
+title_expiry_time=Expiry Time
+title_update_count=Update Count

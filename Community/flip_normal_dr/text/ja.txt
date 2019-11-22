@@ -1,0 +1,10 @@
+title=サーバのDR一括切替え
+info=サーバのDNSレコードを一括でDRサイトへ切替える
+success=正常に切替えられました。
+instruction=切替えるアプリケーショングループを選択してください。
+title_full_name=サーバ（FQDN）
+title_state=状態
+title_ip_address=IPアドレス
+label_application=アプリケーション:
+label_list=サーバ一覧：
+label_submit=切替え

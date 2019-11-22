@@ -1,0 +1,4 @@
+boto3==1.9.154
+netaddr==0.7.19
+apscheduler=3.6.1
+

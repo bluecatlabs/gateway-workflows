@@ -1,0 +1,17 @@
+title=View DB Statistics Information
+info=Display Database Statistics Information.
+title_title=Title
+title_value=Value
+label_list=Database Statistics Information:
+title_db_size=Database Size
+title_entity_count=Registered Entity Count
+title_ip4b_count=Registered IPv4 Block Count
+title_ip4n_count=Registered IPv4 Network Count
+title_ip4a_count=Registered IPv4 Address Count
+title_view_count=Registered View Count
+title_zone_count=Registered Zone Count
+title_record_count=Registered Resource Record Count
+title_mac_count=Registered MAC Address Count
+title_nusr_count=Registered User Count
+title_gusr_count=Registered Group Count
+title_location_count=Registered Location Count

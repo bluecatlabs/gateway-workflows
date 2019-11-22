@@ -1,0 +1,17 @@
+title=Register MAC Address
+info=Register MAC address to grant network access.
+config_error=The specified location does not have any settings. Please re-check location or contact the administrator.
+success=MAC Address has been successfully registered.
+require_message=This field is mandatory.
+label_mac_address=MAC Address:
+label_device_group=Device Group:
+label_asset_code=Asset Code:
+label_employee_code=Employee Code:
+label_location=Location:
+label_submit_date=Submit Date
+label_expiry_date=Expiry Date
+label_submit=Submit
+label_general_group=General
+label_design_group=Design
+label_production_group=Production
+
