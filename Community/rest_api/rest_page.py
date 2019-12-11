@@ -69,7 +69,7 @@ class APIs(Resource):
                     else:
                         resource_nm = resource
 
-                    if action.lower() == 'post' or action.lower() == 'patch' and resource_nm in api_json['definitions']:
+                    if (action.lower() == 'post' or action.lower() == 'patch') and resource_nm in api_json['definitions']:
                         required_list = []
                         if 'required' in api_json['definitions'][resource_nm]:
                             required_list = api_json['definitions'][resource_nm]['required']
