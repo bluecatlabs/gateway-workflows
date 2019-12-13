@@ -34,6 +34,7 @@ from . import configuration_page
 @api.route('/ddi/')
 class ddi(Resource):
 
+    @util.rest_workflow_permission_required('rest_page')
     def get(self):
         """ Get JSON of all available configurations and views in BAM. """
         configurations = g.user.get_api().get_configurations()
