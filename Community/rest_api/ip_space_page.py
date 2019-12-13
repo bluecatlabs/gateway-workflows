@@ -22,7 +22,7 @@
 
 from flask import g, jsonify
 from flask_restplus import fields, reqparse, Resource
-
+import bluecat.server_endpoints as se
 from bluecat import util
 from .configuration_page import config_defaults, entity_return_model
 from main_app import api
@@ -31,14 +31,14 @@ from main_app import api
 ip4_address_root_default_ns = api.namespace('ipv4_addresses', description='IPv4 Address operations')
 ip4_address_root_ns = api.namespace(
     'ipv4_addresses',
-    path='/configurations/<string:configuration>/ipv4_networks/',
+    path='/configurations/<string:configuration>/',
     description='IPv4 Address operations',
 )
 
 ip4_address_default_ns = api.namespace('ipv4_addresses', description='IPv4 Address operations')
 ip4_address_ns = api.namespace(
     'ipv4_addresses',
-    path='/configurations/<string:configuration>/ipv4_networks/',
+    path='/configurations/<string:configuration>/',
     description='IPv4 Address operations',
 )
 
@@ -129,8 +129,8 @@ ip4_address_post_parser.add_argument('action', location="json", help='The action
 ip4_address_post_parser.add_argument('properties', location="json", help='The properties of the record')
 
 
-@ip4_address_ns.route('/<string:network>/get_next_ip/')
-@ip4_address_default_ns.route('/<string:network>/get_next_ip/', defaults=config_defaults)
+@ip4_address_ns.route('/ipv4_networks/<string:network>/get_next_ip/')
+@ip4_address_default_ns.route('/ipv4_networks/<string:network>/get_next_ip/', defaults=config_defaults)
 @ip4_address_ns.response(404, 'IPv4 address not found')
 class IPv4NextIP4Address(Resource):
 
@@ -158,6 +158,43 @@ class IPv4NextIP4Address(Resource):
         result = ip.to_json()
 
         return result, 201
+
+
+@ip4_address_ns.route('/ipv4_address/<string:ipv4_address>/')
+@ip4_address_default_ns.route('/ipv4_address/<string:ipv4_address>/', defaults=config_defaults)
+@ip4_address_ns.response(200, 'IP4 Address found.', model=entity_return_model)
+class IPv4Address(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    def get(self, configuration, ipv4_address):
+        """
+        Get an IP4 Address
+
+        """
+        configuration = g.user.get_api().get_configuration(configuration)
+
+        try:
+            result = se.get_address_data(configuration.get_id(), ipv4_address)
+            if result['status'] == 'FAIL':
+                raise Exception
+            name = ""; ip_id = 0; properties = ""
+            if result['data']['state'] != 'UNALLOCATED':
+                ip = configuration.get_ip4_address(ipv4_address)
+                ip_id = ip.get_id()
+                name = ip.get_name()
+                properties = ""
+                for prop, value in ip.get_properties().items():
+                    properties += prop + "=" + value + "|"
+
+            response = {
+                'id': ip_id,
+                'name': name,
+                'properties': properties,
+                'type': 'IP4Address'
+            }
+            return response
+        except Exception:
+            return 'IPv4 address not found', 404
 
 
 @ip4_block_ns.route('/<path:block>/get_next_network/')

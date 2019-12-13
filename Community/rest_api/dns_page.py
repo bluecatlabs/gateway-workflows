@@ -22,7 +22,7 @@
 
 from flask import g, jsonify
 from flask_restplus import fields, reqparse, Resource
-
+import bluecat.server_endpoints as se
 from bluecat import util
 import config.default_config as config
 from .configuration_page import config_doc, config_defaults, entity_parser, entity_model, entity_return_model
@@ -251,6 +251,45 @@ class Zone(Resource):
             return 'No matching Zone(s) found', 404
         zone.delete()
         return '', 204
+
+
+@zone_ns.route('/hint/<string:hint>/')
+@zone_default_ns.route('/hint/<string:hint>/', defaults=dns_defaults)
+@zone_ns.doc()
+class ZoneHintCollection(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    @zone_ns.response(200, 'Zone found.', model=entity_return_model)
+    def get(self, configuration, view, hint):
+        """
+        Get a zone by hint belonging to default or provided Configuration and View.
+        Zone hints should be of the format:
+
+        1. abc
+        2. abc.domain
+        3. abc.domain.com
+        """
+        configuration = g.user.get_api().get_configuration(configuration)
+        try:
+            zones = se.get_zones_data_by_hint(configuration.get_id(), view, hint)
+        except Exception:
+            zones = None
+        if zones == None or zones['status'] == 'FAIL':
+            return 'No matching Zone(s) found', 404
+        return_data = []
+        for zone in zones['data']['select_field']:
+            zone_object = g.user.get_api().get_entity_by_id(zone['id'])
+            properties = ""
+            for prop, value in zone_object.get_properties().items():
+                properties += prop + "=" + value + "|"
+            return_data.append({
+                'id': zone['id'],
+                'name': zone['txt'],
+                'type': 'Zone',
+                'properties': properties
+            })
+
+        return return_data
 
 
 @zone_root_ns.route('/')

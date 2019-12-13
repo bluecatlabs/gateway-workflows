@@ -31,6 +31,21 @@ from . import dns_page
 from . import configuration_page
 
 
+@api.route('/ddi/')
+class ddi(Resource):
+
+    def get(self):
+        """ Get JSON of all available configurations and views in BAM. """
+        configurations = g.user.get_api().get_configurations()
+        data = {}
+        for configuration in configurations:
+            data[configuration.name] = {"id": configuration.get_id(), "views": []}
+            views = configuration.get_views()
+            for view in views:
+                data[configuration.name]["views"].append(view.name)
+        return jsonify(data)
+
+
 @api.route('/gateway_api_json/')
 class APIs(Resource):
 
