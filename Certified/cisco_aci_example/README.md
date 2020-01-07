@@ -106,6 +106,6 @@ in the BlueCat logs folder  at: <logfile.log>
 
 This message can mean the ACI Fabric Devices have already been imported, or that any associated objects have already been imported. For example, when importing an APIC, SPINE, or LEAF, a network block or network for an associated device might also have been previously imported resulting in the error message. Please refer to the log files for more specific information to help you resolve the conflict.
 
-©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved.
+©2020 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved.
 This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted.
 Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
