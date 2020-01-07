@@ -1,5 +1,5 @@
-# Copyright 2019 BlueCat Networks. All rights reserved.
-""" Cloud Discovery for AWS form - B.Shorland 2019 """
+# Copyright 2020 BlueCat Networks. All rights reserved.
+""" Cloud Discovery for AWS form - B.Shorland 2020 """
 
 import os
 from configparser import ConfigParser

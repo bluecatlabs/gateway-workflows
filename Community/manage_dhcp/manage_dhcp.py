@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks. All rights reserved.
+# Copyright 2020 BlueCat Networks. All rights reserved.
 
 from flask import request, g, jsonify
 

@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks. All rights reserved.
+# Copyright 2020 BlueCat Networks. All rights reserved.
 import json
 import bluecat_portal.config as config
 

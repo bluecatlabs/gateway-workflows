@@ -1,5 +1,5 @@
 # **Community: Create Server - vRO User Group Content**
-This workflow was used in the 2019 User Groups to show creating a hostname and getting the next available IP Address.  
+This workflow was used in the 2020 User Groups to show creating a hostname and getting the next available IP Address.
 ___
 
 ### Requirements

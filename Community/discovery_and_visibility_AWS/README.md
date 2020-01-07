@@ -59,7 +59,7 @@ If this fails due to the account not having write permissions to those services,
 ![alt text](cloudwatch.png "cloudwatch")
 
 
-<!-- Copyright 2019 BlueCat Networks. All rights reserved. -->
+<!-- Copyright 2020 BlueCat Networks. All rights reserved. -->
 
 ©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
 
