@@ -1,4 +1,4 @@
-# **Example Text Record Workflows**
+# **Certified Text Record Workflows**
 ## Add, Delete, and Update Text Records
 
 **BlueCat Gateway Version:** 18.10.2 or greater <br/>

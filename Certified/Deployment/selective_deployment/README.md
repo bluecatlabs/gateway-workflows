@@ -1,4 +1,4 @@
-# **Example Selective Deployment Workflow**
+# **Certified Selective Deployment Workflow**
 ## Select a DNS record for deployment
 
 **BlueCat Gateway Version:** 18.6.1 and greater <br/>
@@ -9,11 +9,11 @@
 DNS/DHCP server appliances should be configured with necessary deployment roles and be under Address Manager control. Full deployment to DNS/DHCP server required prior to performing selective deployment. <br/>
 
 ### Description/Example Usage
-In addition to Python wrappers for the Selective Deployment APIs, example Selective Deployment workflows are now available on the BlueCat Labs GitHub repository, helping to complete BlueCat’s Integrity solution of this API feature with UI-based Gateway workflows.
+In addition to Python wrappers for the Selective Deployment APIs, Certified Selective Deployment workflows are now available on the BlueCat Labs GitHub repository, helping to complete BlueCat’s Integrity solution of this API feature with UI-based Gateway workflows.
 
 There is a standalone Selective Deployment workflow as well as new Add, Update, and Delete Host Record workflows that include the ‘Deploy Now’ functionality. BlueCat recommends using these workflows as a template that you can modify to suit the needs of your environment.
 
-By default, all example Selective Deployment workflows invoke the selectiveDeploy API method using the ‘related’ property. This will deploy a record and any of its associated records. These example workflows use related deployments as a precaution against broken record chains if modifying or deleting records.  
+By default, all Certified Selective Deployment workflows invoke the selectiveDeploy API method using the ‘related’ property. This will deploy a record and any of its associated records. These Certified workflows use related deployments as a precaution against broken record chains if modifying or deleting records.  
 
 For more details on the Selective Deployment API methods, refer to the DNS Integrity Gateway Help & Documentation or Administration Guide, or the Address Manager 8.3.2 API Guide available on BlueCat Customer Care.
 
@@ -28,13 +28,13 @@ Select or search for a DNS record that has previously been added or modified. On
 
 To use the Selective Deployment workflow:
 1. Login to BlueCat Gateway.
-2. Click **Examples > Deployment**.
+2. Click **Certified > Deployment**.
 3. Select **Selective Deployment Example**.
 4. In the drop-down menus, select the Configuration, View, and Zone.
 5. Click **Search DNS**. The table populates with related DNS records.
 6. Select the check boxes at the end of each row for each DNS record you want to deploy, then click **Deploy**. The system returns either a Success, Queued, or an explanation of failure message.
 
-### Add, Delete, and Update Host Record Example Workflows
+### Add, Delete, and Update Host Record Certified Workflows
 These workflows are the same workflows as previously found on Github, however, these workflows include a **Deploy Now** checkbox, which invokes the selective deployment API. These workflows are purely example templates for you to modify for your use.
 
 To use the Host Record workflow:

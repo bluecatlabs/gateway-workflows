@@ -1,4 +1,4 @@
-# **Example Rest Workflows**
+# **Certified Rest Workflows**
 ## Access Gateway through scripts
 
 **BlueCat Gateway Version:** 18.10.2 or greater <br/>

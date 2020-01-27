@@ -1,4 +1,4 @@
-# **Example Alias Record Workflows**
+# **Certified Alias Record Workflows**
 ## Add, Delete, and Update Alias Records
 
 **BlueCat Gateway Version:** 18.10.2 and greater <br/>

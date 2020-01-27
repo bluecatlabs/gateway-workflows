@@ -1,4 +1,4 @@
-# **Example IPv4 Address Workflows**
+# **Certified IPv4 Address Workflows**
 ## Add DHCP and static IPv4 addresses, Delete, and Update IPv4 addresses
 
 **BlueCat Gateway Version:** 18.10.2 or greater <br/>

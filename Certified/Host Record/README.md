@@ -1,4 +1,4 @@
-# **Example Host Record Workflows**
+# **Certified Host Record Workflows**
 ## Add, Delete, and Update Host Records
 
 **BlueCat Gateway Version:** 18.10.2 or greater <br/>

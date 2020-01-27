@@ -1,4 +1,4 @@
-# **Example UI Table Component Workflows**
+# **Certified UI Table Component Workflows**
 ## Search for UI Table Components
 
 **BlueCat Gateway Version:** 18.10.2 or greater <br/>
