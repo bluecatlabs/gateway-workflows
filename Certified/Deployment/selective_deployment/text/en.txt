@@ -1,2 +1,2 @@
-title=Selective Deployment Example
+title=Selective Deployment
 info=

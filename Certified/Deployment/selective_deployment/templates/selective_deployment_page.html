@@ -1,4 +1,4 @@
-<!-- Copyright 2018 BlueCat Networks (USA) Inc. and its affiliates
+<!-- Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@ limitations under the License.
 By: BlueCat Networks
 Date: 04-05-18
 Gateway Version: 18.6.1
-Description: Example Gateway workflows -->
+Description: Certified Gateway workflows -->
 
 {% extends "base-no-box.html" %}
 
@@ -35,7 +35,7 @@ Description: Example Gateway workflows -->
 
     <p>{{ text['info'] }}</p>
     {% from "form_helper.html" import render_form %}
-    {{ render_form(form, id="selective_deployment_example_form") }}
+    {{ render_form(form, id="selective_deployment_form") }}
 {% endblock %}
 
 {% block scripts %}

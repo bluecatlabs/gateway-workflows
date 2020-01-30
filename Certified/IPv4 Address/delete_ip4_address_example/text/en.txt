@@ -1,2 +1,0 @@
-title=Delete IPv4 Address Example
-info=

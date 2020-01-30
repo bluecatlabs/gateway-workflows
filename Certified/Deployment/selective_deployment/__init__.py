@@ -1,4 +1,4 @@
-# Copyright 2018 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +25,7 @@ type = 'ui'
 sub_pages = [
     {
         'name'        : 'selective_deployment_page',
-        'title'       : 'Selective Deployment Example',
+        'title'       : 'Selective Deployment',
         'endpoint'    : 'selective_deployment/selective_deployment_endpoint',
         'description' : 'selective deployment'
     },

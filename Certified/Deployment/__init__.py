@@ -1,4 +1,4 @@
-# Copyright 2018 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,4 +15,4 @@
 # By: BlueCat Networks
 # Date: 2018-09-27
 # Gateway Version: 18.10.1
-# Description: Example Gateway workflows
+# Description: Certified Gateway workflows
