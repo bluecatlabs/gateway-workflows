@@ -1,5 +1,0 @@
-title=Discovery & Visibility AWS
-info=Discovery and import of Amazon Web Service infrastructure into BlueCat and realtime visibility
-success=Discovery Completed - Updated BlueCat Address Manager
-success2=Discovery Completed - Updated BlueCat Address Manager, continuous synchronisation Enabled
-auth_error=Could not authenticate with AWS, check AWS access parameters
