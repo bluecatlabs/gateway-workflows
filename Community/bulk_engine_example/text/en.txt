@@ -1,0 +1,2 @@
+title=Bulk Example
+info=
