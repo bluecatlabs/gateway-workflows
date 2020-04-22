@@ -112,6 +112,7 @@ host_patch_parser.replace_argument(
     required=False,
     help='The IPv4 addresses associated with the host record',
 )
+host_patch_parser.add_argument('name', location="json", help='The name of the record')
 host_patch_parser.remove_argument('absolute_name')
 
 cname_parser = host_parser.copy()
@@ -152,6 +153,7 @@ host_model = api.model(
 host_patch_model = api.model(
     'host_records_patch',
     {
+        'name': fields.String(description='The name of the host record'),
         'ip4_address':  fields.String(description='The IPv4 addresses associated with the host record'),
         'ttl':  fields.Integer(description='The TTL of the host record'),
         'properties':  fields.String(description='The properties of the host record', default='attribute=value|'),
@@ -524,11 +526,13 @@ class HostRecord(Resource):
             return 'No matching Host Record(s) found', 404
         if data['properties'] is not None:
             properties = data.get('properties')
-            host_record.properties = util.properties_to_map(properties)
+            host_record._properties = util.properties_to_map(properties)
         if data['ip4_address'] is not None:
             host_record.set_property('addresses', data['ip4_address'])
         if data['ttl'] is not None:
             host_record.set_property('ttl', str(data.get('ttl')))
+        if data['name'] is not None:
+            host_record.name = data.get('name')
         host_record.update()
         result = host_record.to_json()
         return result
