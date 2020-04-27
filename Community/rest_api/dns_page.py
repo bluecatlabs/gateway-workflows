@@ -226,10 +226,7 @@ class Zone(Resource):
         2. zone_name1/zones/subzone_name2/zones/subzone_name3
         """
         configuration = g.user.get_api().get_configuration(configuration)
-        zone_parent = configuration.get_view(view)
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+        zone = generate_zone_fqdn(zone, configuration.get_view(view))
         if zone is None:
             return 'No matching Zone(s) found', 404
         return zone.to_json()
@@ -245,10 +242,7 @@ class Zone(Resource):
         2. zone_name1/zones/subzone_name2/zones/subzone_name3
         """
         configuration = g.user.get_api().get_configuration(configuration)
-        zone_parent = configuration.get_view(view)
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+        zone = generate_zone_fqdn(zone, configuration.get_view(view))
         if zone is None:
             return 'No matching Zone(s) found', 404
         zone.delete()
@@ -339,16 +333,40 @@ class ZoneCollection(Resource):
         data = entity_parser.parse_args()
         configuration = g.user.get_api().get_configuration(configuration)
         view = configuration.get_view(view)
-        zone_parent = view
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+        zone = generate_zone_fqdn(zone, view)
         if zone is None:
             return 'No matching Zone(s) found', 404
         zone_name = data['name']
         kwargs = util.properties_to_map(data['properties'])
         zone = view.add_zone('%s.%s' % (zone_name, zone.get_full_name()), **kwargs)
         return zone.to_json(), 201
+
+
+def generate_zone_fqdn(zone=None, view=None, data=None):
+    if view is not None:
+        if zone is None:
+            if data is not None:
+                if 'absolute_name' in data.keys():
+                    return data['absolute_name']
+        elif '/zone' not in zone:
+            zone_split = zone.split('.')
+            zone_split.reverse()
+            current = view
+            for z in zone_split:
+                current = current.get_zone(z)
+            if data is not None:
+                return data['absolute_name'].split('.')[0] + '.' + current.get_full_name()
+            else:
+                return current
+        else:
+            zone_parent = view
+            zone_hierarchy = zone.split('/zones')
+            zone_entity = zone_parent.get_zone(zone_hierarchy[0])
+            zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+            if data is not None:
+                return data['absolute_name'].split('.')[0] + '.' + zone.get_full_name()
+            else:
+                return zone
 
 
 def check_zone_in_path(zone_entity, pre_path, post_path, zone_parent, delimiter='/zones'):
@@ -387,11 +405,7 @@ class HostRecordCollection(Resource):
     def get(self, configuration, view, zone=None):
         """ Get all host records belonging to default or provided Configuration and View plus Zone hierarchy. """
         configuration = g.user.get_api().get_configuration(configuration)
-        view = configuration.get_view(view)
-        zone_parent = view
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+        zone = generate_zone_fqdn(zone, configuration.get_view(view))
 
         host_records = zone.get_children_of_type(zone.HostRecord)
         result = [host.to_json() for host in host_records]
@@ -405,15 +419,7 @@ class HostRecordCollection(Resource):
         data = host_parser.parse_args()
         configuration = g.user.get_api().get_configuration(configuration)
         view = configuration.get_view(view)
-
-        if zone is None:
-            absolute_name = data['absolute_name']
-        else:
-            zone_parent = view
-            zone_hierarchy = zone.split('/zones')
-            zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-            zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
-            absolute_name = data['absolute_name'] + '.' + zone.get_full_name()
+        absolute_name = generate_zone_fqdn(zone, view, data)
         ip4_address_list = data['ip4_address'].split(',')
         ttl = data.get('ttl', -1)
         properties = data.get('properties', '')
@@ -547,14 +553,10 @@ class CNameRecordCollection(Resource):
     def get(self, configuration, view, zone=None):
         """ Get all cname records belonging to default or provided Configuration and View plus Zone hierarchy. """
         configuration = g.user.get_api().get_configuration(configuration)
-        view = configuration.get_view(view)
+        zone = generate_zone_fqdn(zone, configuration.get_view(view))
         if zone is None:
             return 'No matching Zone(s) found', 404
-        zone_parent = view
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
-
+        
         host_records = zone.get_children_of_type(zone.AliasRecord)
         result = [host.to_json() for host in host_records]
         return jsonify(result)
@@ -567,15 +569,7 @@ class CNameRecordCollection(Resource):
         data = cname_parser.parse_args()
         configuration = g.user.get_api().get_configuration(configuration)
         view = configuration.get_view(view)
-
-        if zone is None:
-            absolute_name = data['absolute_name']
-        else:
-            zone_parent = view
-            zone_hierarchy = zone.split('/zones')
-            zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-            zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
-            absolute_name = data['absolute_name'] + '.' + zone.get_full_name()
+        absolute_name = generate_zone_fqdn(zone, view, data)
         ip4_address_list = data['linked_record']
         ttl = data.get('ttl', -1)
         properties = data.get('properties', '')
