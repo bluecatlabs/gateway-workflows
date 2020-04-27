@@ -120,6 +120,7 @@ cname_parser.remove_argument('ip4_address')
 cname_parser.add_argument('linked_record', location="json", help='The name of the record to which this alias will link')
 
 cname_patch_parser = cname_parser.copy()
+cname_patch_parser.add_argument('name', location="json", help='The name of the alias record')
 cname_patch_parser.remove_argument('absolute_name')
 
 zone_model = api.clone(
@@ -176,6 +177,7 @@ cname_model = api.model(
 cname_patch_model = api.model(
     'cname_records_patch',
     {
+        'name':  fields.String(description='The name of the alias record'),
         'linked_record':  fields.String(description='The name of the record to which this alias will link'),
         'ttl':  fields.Integer(description='The TTL of the CName record'),
         'properties':  fields.String(description='The properties of the CName record', default='attribute=value|'),
@@ -627,12 +629,13 @@ class CNameRecord(Resource):
             return 'No matching CName Record(s) found', 404
         if data['properties'] is not None:
             properties = data.get('properties')
-            cname_record.properties = util.properties_to_map(properties)
+            cname_record._properties = util.properties_to_map(properties)
         if data['linked_record'] is not None:
             cname_record.set_property('linkedRecordName', data['linked_record'])
         if data['ttl'] is not None:
             cname_record.set_property('ttl', str(data.get('ttl')))
-
+        if data['name'] is not None:
+            cname_record.name = data['name']
         cname_record.update()
         result = cname_record.to_json()
         return result
