@@ -162,10 +162,10 @@ class IPv4NextIP4Address(Resource):
 
 @ip4_address_ns.route('/ipv4_address/<string:ipv4_address>/')
 @ip4_address_default_ns.route('/ipv4_address/<string:ipv4_address>/', defaults=config_defaults)
-@ip4_address_ns.response(200, 'IP4 Address found.', model=entity_return_model)
 class IPv4Address(Resource):
 
     @util.rest_workflow_permission_required('rest_page')
+    @ip4_address_ns.response(200, 'IP4 Address found.', model=entity_return_model)
     def get(self, configuration, ipv4_address):
         """
         Get an IP4 Address
@@ -195,6 +195,27 @@ class IPv4Address(Resource):
             return response
         except Exception:
             return 'IPv4 address not found', 404
+    
+    @util.rest_workflow_permission_required('rest_page')
+    @ip4_address_ns.response(201, 'IP Address successfully created.', model=entity_return_model)
+    @ip4_address_ns.expect(ip4_address_post_model, validate=True)
+    def post(self, configuration, ipv4_address):
+        """
+        Assign an IP4 Address
+
+        """
+        
+        data = ip4_address_post_parser.parse_args()
+        mac = data.get('mac_address', '')
+        hostinfo = data.get('hostinfo', '')
+        action = data.get('action', '')
+        properties = data.get('properties', '')
+        
+        configuration = g.user.get_api().get_configuration(configuration)
+        address = configuration.assign_ip4_address(ipv4_address, mac, hostinfo, action, properties)
+        result = address.to_json()
+
+        return result, 201
 
 
 @ip4_block_ns.route('/<path:block>/get_next_network/')
