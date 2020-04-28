@@ -58,7 +58,7 @@ class ConfigurationUnitTests(RestAPIUnitTests):
             'configurations/rest_api_test',
             self.bam_token
         )
-        self.assertEqual((r.status_code in (500, 404)), True)
+        self.assertEqual(r.status_code, 404) 
 
 
 
