@@ -204,19 +204,20 @@ class IPv4Address(Resource):
         Assign an IP4 Address
 
         """
-        
-        data = ip4_address_post_parser.parse_args()
-        mac = data.get('mac_address', '')
-        hostinfo = data.get('hostinfo', '')
-        action = data.get('action', '')
-        properties = data.get('properties', '')
-        
-        configuration = g.user.get_api().get_configuration(configuration)
-        address = configuration.assign_ip4_address(ipv4_address, mac, hostinfo, action, properties)
-        result = address.to_json()
+        try:
+            data = ip4_address_post_parser.parse_args()
+            mac = data.get('mac_address', '')
+            hostinfo = data.get('hostinfo', '')
+            action = data.get('action', '')
+            properties = data.get('properties', '')
+            
+            configuration = g.user.get_api().get_configuration(configuration)
+            address = configuration.assign_ip4_address(ipv4_address, mac, hostinfo, action, properties)
+            result = address.to_json()
 
-        return result, 201
-
+            return result, 201
+        except Exception as e:
+            return str(e), 500
 
 @ip4_block_ns.route('/<path:block>/get_next_network/')
 @ip4_block_default_ns.route('/<path:block>/get_next_network/', defaults=config_defaults)
