@@ -225,6 +225,19 @@ class IPv4Address(Resource):
         except Exception as e:
             return str(e), 500
 
+    @util.rest_workflow_permission_required('rest_page')
+    def delete(self, configuration, ipv4_address):
+        """
+        Delete IPv4 Address
+        """
+        try:
+            configuration = g.user.get_api().get_configuration(configuration)
+            address = configuration.get_ip4_address(ipv4_address)
+            address.delete()
+            return '', 204
+        except Exception as e:
+            return str(e), 500
+
 @ip4_block_ns.route('/<path:block>/get_next_network/')
 @ip4_block_default_ns.route('/<path:block>/get_next_network/', defaults=config_defaults)
 @ip4_block_ns.response(404, 'IPv4 network not found')
