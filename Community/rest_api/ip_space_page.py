@@ -128,6 +128,12 @@ ip4_address_post_parser.add_argument('hostinfo', location="json", help='The host
 ip4_address_post_parser.add_argument('action', location="json", help='The action for address assignment')
 ip4_address_post_parser.add_argument('properties', location="json", help='The properties of the record')
 
+linked_root_default_ns = api.namespace('linked', description='Linked operations')
+linked_root_ns = api.namespace(
+    'linked',
+    path='/linked/',
+    description='Linkeds operations',
+)
 
 @ip4_address_ns.route('/ipv4_networks/<string:network>/get_next_ip/')
 @ip4_address_default_ns.route('/ipv4_networks/<string:network>/get_next_ip/', defaults=config_defaults)
@@ -410,3 +416,24 @@ class IPv4Network(Resource):
         result = network_range.to_json()
         return jsonify(result)
 
+@linked_root_ns.route('/<int:tag_id>')
+class LinkedIPv4NetWork(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    @linked_root_ns.response(200, 'IPv4 Network found.', model=entity_return_model)
+    def get(self, tag_id):
+        """
+        Get IPv4 Network linked with tags.
+        """
+        try: 
+            results = []
+            tag = g.user.get_api().get_entity_by_id(tag_id)
+            networks = tag.get_linked_entities(tag.IP4Network)
+            for network in networks:
+                results.append(network.to_json())
+            if len(results) == 0:
+                return 'No IPv4 Network linked.', 404
+            return jsonify(results)
+        except Exception as e:
+            return str(e), 500
+       
