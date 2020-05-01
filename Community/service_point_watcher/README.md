@@ -13,9 +13,15 @@ Unless required by applicable law or agreed to in writing, software
  See the License for the specific language governing permissions and
  limitations under the License.
 
+ -Original creation info-
  By: Akira Goto (agoto@bluecatnetworks.com)
  Date: 2019-08-28
  Gateway Version: 19.5.1
+
+ -Update info-
+ By: Akira Goto (agoto@bluecatnetworks.com)
+ Date: 2020-04-30
+ Gateway Version: 20.3.1
  Description: Service Point Watcher README.md -->  
 
 # Service Point Watcher  
@@ -26,9 +32,8 @@ This workflow will monitor the DNS Edge Service Points which belong to a specifi
 It will only list Service Points which are associated with an IP address.  
 
 ## Changes in this release  
-1. Supports the updated method for obtaining API access token from DNS Edge v2019.8.  
-2. Added SNMP trap feature.  
-3. Added timestamp pull feature.  
+1. Added toggle on / off checkbox for each Service Point in the Service Point List.
+2. Changed icon for the state of Service Points in the Service Point List.
 
 ## Architecture  
 The following diagram depicts the architecture:  
@@ -143,6 +148,13 @@ Service points which are **NOT** associated with an IP address will not be liste
 
 Information on each column are the following.  
 ![screenshot](img/sp_watcher5.jpg)   
+
+- Watch  
+Toggle on / off which Service Points to monitor.  
+Toggled off Service Points will not be monitored.
+Check / Uncheck the box to do so.  
+Click *"SAVE"* to save settings.  
+
 - Name  
 The name of the service point.  
 It is typically a unique name followed by the first eight digits of the Service Point ID.   
@@ -155,22 +167,22 @@ The site which the Service Point belongs to within the specified CI.
 
 - Connected  
 This shows the connectivity of the Service Point to the CI.  
-A green check mark will be shown if the service point is connected to the CI.  
-A green X mark will be shown if the service point is not connected to the CI.  
+A green check mark ![screenshot](img/check.gif) will be shown if the service point is connected to the CI.  
+A green question mark ![screenshot](img/help.gif) will be shown if the service point is not connected to the CI.  
 
 - Status  
 This shows the status and the reachability of the service point from the Service Point Watcher.  
 The status is based on the service point diagnostic API.  
-A blue circle (🔵 ) will be shown when the status of the Service Point is *GOOD* and is reachable from the Service Point Watcher.  
-A red circle (🔴 ) will be shown when the status of the Service Point is *BAD* but is reachable from the Service Point Watcher.  
-A red circle with a cross (🚫 ) will be shown if the service point is unreachable from the Service Point Watcher.  
+A green circle ![screenshot](img/good.gif) will be shown when the status of the Service Point is *GOOD* and is reachable from the Service Point Watcher.  
+A red blinking circle ![screenshot](img/bad.gif) will be shown when the status of the Service Point is *BAD* but is reachable from the Service Point Watcher.  
+A red circle with a line ![screenshot](img/unreached.gif) will be shown if the service point is unreachable from the Service Point Watcher.  
 
 - Pulling  
 This shows whether the Service Point is successfully pulling information from the CI.  
 It is monitoring the timestamp of the polling service and the status will change depending on length of the time.  
-A blue circle (🔵 ) will be shown as **GOOD** when the polling service is polling in a timely manner.    
-A red exclamation mark ( ❗ ) will be shown as **WARNING** when the polling service has not polled for more than 15 minutes.  
-A red circle (🔴 ) will be shown as **CRITICAL** when the polling service has not polled for more than 60 minutes.  
+A green circle ![screenshot](img/good.gif) will be shown as **GOOD** when the polling service is polling in a timely manner.    
+A yellow circle ![screenshot](img/warning.gif) will be shown as **WARNING** when the polling service has not polled for more than 15 minutes.  
+A red blinking circle ![screenshot](img/bad.gif) will be shown as **CRITICAL** when the polling service has not polled for more than 60 minutes.  
 
 4. **SNMP Traps**  
 The following are the list of SNMP traps used in Service Point Watcher.  
