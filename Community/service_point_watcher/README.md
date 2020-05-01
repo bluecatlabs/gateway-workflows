@@ -183,7 +183,7 @@ It is monitoring the timestamp of the polling service and the status will change
 A green circle ![screenshot](img/good.gif) will be shown as **GOOD** when the polling service is polling in a timely manner.    
 A yellow circle ![screenshot](img/warning.gif) will be shown as **WARNING** when the polling service has not polled for more than 15 minutes.  
 A red blinking circle ![screenshot](img/bad.gif) will be shown as **CRITICAL** when the polling service has not polled for more than 60 minutes.  
-A white circle ![screenshot](img/unknown.gif) will be shown when the Status of the Service Point is *Unreachable* ( ![screenshot](img/unreached.gif) ).
+A white circle ![screenshot](img/unknown.gif) will be shown as **UNKNOWN** when the *Status* of the Service Point is *Unreachable* ( ![screenshot](img/unreached.gif) ). This indicates that since the Service Point is unreachable from the Service Point Watcher, Service Point Watcher will not be able to ascertain whether the Service Point is successfully pullling information from the CI, hence unknown.
 
 4. **SNMP Traps**  
 The following are the list of SNMP traps used in Service Point Watcher.  
