@@ -127,39 +127,57 @@ def load_col_model():
         'sp_nodes': [
             {'index':'id', 'name':'id', 'hidden':True, 'sortable':False},
             {
+                'label': text['label_col_watch'], 'index':'watch', 'name':'watch',
+                'width':60, 'align':'center', 'sortable':False,
+                'editoptions': { 'value':'True:False'},'formatter':'checkbox'
+            },
+            {
                 'label': text['label_col_name'], 'index':'name', 'name':'name',
-                'width':260, 'sortable':False
+                'width':220, 'sortable':False
             },
             {
                 'label': text['label_col_ipaddress'], 'index':'ipaddress', 'name':'ipaddress',
-                'width':140, 'sortable':False
+                'width':100, 'align':'center', 'sortable':False
             },
             {
                 'label': text['label_col_site'], 'index':'site', 'name':'site',
-                'width':200, 'sortable':False
+                'width':180, 'sortable':False
             },
             {
                 'label': text['label_col_connected'], 'index':'connected', 'name':'connected',
-                'width':100, 'align':'center', 'sortable':False,
+                'width':80, 'align':'center', 'sortable':False,
                 'formatter': 'select',
                 'formatoptions': {
-                    'value': {'CONNECTED': '✅', 'DISCONNECTED': '❎'}
+                    'value': {
+                        'CONNECTED': '<img src="img/check.gif" title="Connected" width="16" height="16">',
+                        'DISCONNECTED': '<img src="img/help.gif" title="Disconnected" width="16" height="16">'
+                    }
                 }
             },
             {
                 'label': text['label_col_status'], 'index':'status', 'name':'status',
-                'width':80, 'align':'center', 'sortable':False,
+                'width':60, 'align':'center', 'sortable':False,
                 'formatter': 'select',
                 'formatoptions': {
-                    'value': {'UNKNOWN': '⚪', 'UNREACHED': '🚫', 'GOOD': '🔵', 'BAD': '🔴'}
+                    'value': {
+                        'UNKNOWN': '<img src="img/unknown.gif" title="Unknown" width="16" height="16">',
+                        'UNREACHED': '<img src="img/unreached.gif" title="Unreached" width="16" height="16">',
+                        'GOOD': '<img src="img/good.gif" title="God" width="16" height="16">',
+                        'BAD': '<img src="img/bad.gif" title="Bad" width="16" height="16">'
+                    }
                 }
             },
             {
                 'label': text['label_col_pulling_severity'], 'index':'pulling_severity', 'name':'pulling_severity',
-                'width':80, 'align':'center', 'sortable':False,
+                'width':60, 'align':'center', 'sortable':False,
                 'formatter': 'select',
                 'formatoptions': {
-                    'value': {'UNKNOWN': '⚪', 'NORMAL': '🔵', 'WARNING': '❗', 'CRITICAL': '🔴'}
+                    'value': {
+                        'UNKNOWN': '<img src="img/unknown.gif" title="Unknown" width="16" height="16">',
+                        'NORMAL': '<img src="img/good.gif" title="Normal" width="16" height="16">',
+                        'WARNING': '<img src="img/worning.gif" title="Warning" width="16" height="16">',
+                        'CRITICAL': '<img src="img/bad.gif" title="Critical" width="16" height="16">'
+                    }
                 }
             }
         ],
@@ -188,18 +206,15 @@ def load_col_model():
 @util.workflow_permission_required('service_point_watcher_page')
 @util.exception_catcher
 def get_service_points():
-    print('Get Service Points is called!!!!')
     sp_watcher = SPWatcher.get_instance()
     sp_watcher.collect_service_points()
     service_points = sp_watcher.get_service_point_summaries()
-    print('Get Service Points has been done!!! sps<%d>' % len(service_points))
     return jsonify(service_points)
 
 @route(app, '/service_point_watcher/load_service_points')
 @util.workflow_permission_required('service_point_watcher_page')
 @util.exception_catcher
 def load_service_points():
-    print('Load Service Points is called!!!!')
     sp_watcher = SPWatcher.get_instance()
     service_points = sp_watcher.get_service_point_summaries()
     return jsonify(service_points)
@@ -211,13 +226,12 @@ def update_service_points():
     service_points = request.get_json()
     sp_watcher = SPWatcher.get_instance()
     sp_watcher.update_service_points(service_points)
-    return ""
+    return jsonify(success=True)
 
 @route(app, '/service_point_watcher/load_trap_servers')
 @util.workflow_permission_required('service_point_watcher_page')
 @util.exception_catcher
 def load_trap_servers():
-    print('Load Trap Servers is called!!!!')
     sp_watcher = SPWatcher.get_instance()
     trap_servers = sp_watcher.get_value('trap_servers')
     return jsonify(trap_servers)
@@ -229,7 +243,7 @@ def submit_trap_servers():
     trap_servers = request.get_json()
     sp_watcher = SPWatcher.get_instance()
     sp_watcher.set_value('trap_servers', trap_servers)
-    return ""
+    return jsonify(success=True)
 
 @route(app, '/service_point_watcher/form', methods=['POST'])
 @util.workflow_permission_required('service_point_watcher_page')
@@ -240,7 +254,6 @@ def service_point_watcher_service_point_watcher_page_form():
     text=util.get_text(module_path(), config.language)
 
     if form.validate_on_submit():
-        print(form.submit.data)
         sp_watcher.set_value('edge_url', form.edge_url.data)
         sp_watcher.set_value('edge_client_id', form.edge_client_id.data)
         sp_watcher.set_value('edge_secret', form.edge_secret.data)
