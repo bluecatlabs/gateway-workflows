@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -65,7 +65,7 @@ class SPWatcher(object):
         for sp in self._service_points:
             if 'watch' not in sp.keys():
                 sp['watch'] = 'True'
-
+                
         with open(SPWatcher._config_file) as f:
             self._config = json.load(f)
 
