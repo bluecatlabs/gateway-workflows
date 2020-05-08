@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,9 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# -Original creation info-
 # By: Akira Goto (agoto@bluecatnetworks.com)
 # Date: 2019-08-28
 # Gateway Version: 19.5.1
+#
+# -Update info-
+# By: Akira Goto (agoto@bluecatnetworks.com)
+# Date: 2020-04-30
+# Gateway Version: 20.3.1
 # Description: Service Point Watcher state_logger.py
 
 import logging
@@ -25,7 +31,7 @@ import sys
 class StateLogger(object):
     _base_directory = 'logs'
     _logger = None
-    
+
     def __init__(self, level = 20):
         self._logger = logging.getLogger('Status Logger')
         self._logger.setLevel(level)
@@ -33,8 +39,8 @@ class StateLogger(object):
         formatter = logging.Formatter('Service Point Watcher:%(asctime)s UTC:%(levelname)s:%(message)s')
         self._logger.addHandler(fh)
         fh.setFormatter(formatter)
-        
-        
+
+
     def log_status_notification(self, service_point, service, status):
         msg = '<%s> <%s> status has been changed to <%s>.' % (service_point['name'], service, status)
         if status == 'GOOD':
@@ -44,7 +50,7 @@ class StateLogger(object):
                 self._logger.critical(msg)
             else:
                 self._logger.error(msg)
-                
+
     def log_pulling_stopped_notification(self, service_point, pulling_severity, last_pulling_time):
         msg = '<%s> pulling severity has been changed to <%s>.' % (service_point['name'], pulling_severity)
         if pulling_severity == 'NORMAL':
@@ -53,4 +59,3 @@ class StateLogger(object):
             self._logger.warning(msg)
         elif pulling_severity == 'CRITICAL':
             self._logger.error(msg)
-

@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,9 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# -Original creation info-
 # By: Akira Goto (agoto@bluecatnetworks.com)
 # Date: 2019-08-28
 # Gateway Version: 19.5.1
+#
+# -Update info-
+# By: Akira Goto (agoto@bluecatnetworks.com)
+# Date: 2020-04-30
+# Gateway Version: 20.3.1
 # Description: Service Point Watcher sp_watcher.py
 
 import os
@@ -65,7 +71,7 @@ class SPWatcher(object):
         for sp in self._service_points:
             if 'watch' not in sp.keys():
                 sp['watch'] = 'True'
-                
+
         with open(SPWatcher._config_file) as f:
             self._config = json.load(f)
 
