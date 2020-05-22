@@ -65,8 +65,8 @@ Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI
 
 You can also obtain this via API.  
 Enter the following into your browser search bar:  
-*https://<Dashboard-Instance>/api/v0/organizations/*  
-Replace <Dashboard-Instance> with your Meraki Dashboard instance (xxx.meraki.com).  
+*"https://<Dashboard-Instance>/api/v0/organizations/""*  
+Replace "<Dashboard-Instance>" with your Meraki Dashboard instance (xxx.meraki.com).  
 
 ![screenshot](img/meraki_org_name_api.jpg "meraki_org_name_api")  
 
