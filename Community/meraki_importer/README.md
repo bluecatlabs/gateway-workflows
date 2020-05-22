@@ -85,8 +85,8 @@ Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com
 
 - Dashboard URL:  
 Enter the Meraki Dashboard URL the following format:
-*https://{Dashboard-Instance}.meraki.com/{Network-Name}/n/<ID>*
-Replace {Dashboard-Instance}, {Network-Name} and <ID>.  
+*https://{Dashboard-Instance}.meraki.com/{Network-Name}/n/{ID}*
+Replace {Dashboard-Instance}, {Network-Name} and {ID}.  
 
 If you are unsure, you can obtain this via API.  
 Enter the following into your browser search bar:  
@@ -102,11 +102,11 @@ Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com
 
 By clicking the *"LOAD"* button, client information stored in Meraki Dashboard will be loaded to the list.  
 By default, only the clients which **DO NOT MATCH** will be loaded to the list.
-**DO NOT MATCH** means that there is either a *mismatched IP address* or an *unknown IP address* between the information stored in Meraki Dashboard and the information stored in BlueCat Address Manager.
+**DO NOT MATCH** means that there is either a *mismatched IP address* or an *unknown IP address* between the information stored in Meraki Dashboard and the information stored in BlueCat Address Manager.  
 
-    + *"Mismatched IP address"* => An IP address that exists in both BlueCat Address Manager and in Meraki Dashboard, but where the MAC address does not match.  
++ *"Mismatched IP address"* => An IP address that exists in both BlueCat Address Manager and in Meraki Dashboard, but where the MAC address does not match.  
 
-    + *"Unknown IP address"* => An IP address that exists in Meraki Dashboard, but not in BlueCat Address Manager. This likely represents an address that has been added to the network since the last discovery.  
++ *"Unknown IP address"* => An IP address that exists in Meraki Dashboard, but not in BlueCat Address Manager. This likely represents an address that has been added to the network since the last discovery.  
 
 **Loading Options**  
 There are two loading options which you can toggle on or off when loading. Default is toggled off.  
