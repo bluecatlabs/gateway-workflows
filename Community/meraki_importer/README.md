@@ -65,8 +65,8 @@ Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI
 
 You can also obtain this via API.  
 Enter the following into your browser search bar:  
-*"https://{Dashboard-Instance}/api/v0/organizations/""*  
-Replace "{Dashboard-Instance}" with your Meraki Dashboard instance (xxx.meraki.com).  
+*https://{Dashboard-Instance}/api/v0/organizations/*  
+Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com).  
 
 ![screenshot](img/meraki_org_name_api.jpg "meraki_org_name_api")  
 
@@ -78,20 +78,20 @@ Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI
 
 You can also obtain this via API.  
 Enter the following into your browser search bar:  
-*https://<Dashboard-Instance>/api/v0/organizations/<Organization-ID>/networks*  
-Replace <Dashboard-Instance> with your Meraki Dashboard instance (xxx.meraki.com) and <Organization-ID> with your organization ID.  
+*https://{Dashboard-Instance}/api/v0/organizations/{Organization-ID}/networks*  
+Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com) and {Organization-ID} with your organization ID.  
 
 ![screenshot](img/meraki_network_name_api.jpg "meraki_network_name_api")   
 
 - Dashboard URL:  
 Enter the Meraki Dashboard URL the following format:
-*https://<Dashboard-Instance>.meraki.com/<Network-Name>/n/<ID>*
-Replace <Dashboard-Instance>, <Network-Name> and <ID>.  
+*https://{Dashboard-Instance}.meraki.com/{Network-Name}/n/<ID>*
+Replace {Dashboard-Instance}, {Network-Name} and <ID>.  
 
 If you are unsure, you can obtain this via API.  
 Enter the following into your browser search bar:  
-*https://<Dashboard-Instance>/api/v0/organizations/<Organization-ID>/networks/<Network-ID>*   
-Replace <Dashboard-Instance> with your Meraki Dashboard instance (xxx.meraki.com), <Organization-ID> with your organization ID and <Network-ID> with your network ID.  
+*https://{Dashboard-Instance}/api/v0/organizations/{Organization-ID}/networks/{Network-ID}*   
+Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com), {Organization-ID} with your organization ID and {Network-ID} with your network ID.  
 
 ![screenshot](img/meraki_dashboard_url_api.jpg "meraki_dashboard_url_api")  
 
