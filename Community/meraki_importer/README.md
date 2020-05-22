@@ -78,7 +78,7 @@ Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI
 
 - Dashboard URL:  
 Enter the Meraki Dashboard URL the following format:  
-*https://{Dashboard-Instance}.meraki.com/{Network-Name}/n/{ID}*
+*https://{Dashboard-Instance}.meraki.com/{Network-Name}/n/{ID}*  
 Replace {Dashboard-Instance}, {Network-Name} and {ID}.  
 
   If you are unsure, you can obtain this via API.  
