@@ -133,7 +133,7 @@ The host name of the loaded client (if exists).
 
 - State  
 The IP address state of the loaded client.  
-  + This icon ![screenshot](img/check.gif "check") represents the state **Matched**. When a client of this state is imported, it will not update the IP address and MAC address information in BlueCat Address Manager (since it is already a match) but will add additional information obtained by Meraki Dashboard.  
+  + This icon ![screenshot](img/check.gif) represents the state **Matched**. When a client of this state is imported, it will not update the IP address and MAC address information in BlueCat Address Manager (since it is already a match) but will add additional information obtained by Meraki Dashboard.  
 
   + This icon ![screenshot](img/about.gif "about") represents the state **Mismatched**. When a client of this state is imported, it will update the MAC address information in BlueCat Address Manager and add additional information obtained by Meraki Dashboard.  
 
