@@ -48,7 +48,8 @@ Make a new director `jqgrid` under `/portal/static/js/vendor/` if none exists.
 1. **Setting Meraki Importer Parameters**  
 Set the following parameters.  
 
-![screenshot](img/meraki_importer1.jpg "meraki_importer1")   
+![screenshot](img/meraki_importer1.jpg "meraki_importer1")  
+<img src = "meraki_importer1.jpg" width = "320px">
 
 - API Key:  
 This will be the API key for a specific user to login to the Meraki Dashboard via API.  
@@ -102,7 +103,7 @@ Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com
 
 By clicking the *"LOAD"* button, client information stored in Meraki Dashboard will be loaded to the list.  
 By default, only the clients which **DO NOT MATCH** will be loaded to the list.
-**DO NOT MATCH** means that there is either a *mismatched IP address* or an *unknown IP address* between the information stored in Meraki Dashboard and the information stored in BlueCat Address Manager.  
+**DO NOT MATCH** means that there is either a *"mismatched IP address"* or an *"unknown IP address"* between the information stored in Meraki Dashboard and the information stored in BlueCat Address Manager.  
 
 + *"Mismatched IP address"* => An IP address that exists in both BlueCat Address Manager and in Meraki Dashboard, but where the MAC address does not match.  
 
