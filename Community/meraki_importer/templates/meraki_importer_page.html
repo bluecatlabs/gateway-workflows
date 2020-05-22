@@ -1,0 +1,98 @@
+<!-- Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+By: Akira Goto (agoto@bluecatnetworks.com)
+Date: 2020-03-31
+Gateway Version: 20.1.1
+Description: CISCO Meraki Importer HTML -->
+
+{% extends "base-no-box.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/js/vendor/jqgrid/ui.jqgrid.css" />
+<link rel="stylesheet" href="css/meraki_importer_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+<p>{{ text['info'] }}</p>
+{% from "form_helper.html" import render_field %}
+<form id="meraki_importer_page_form" method="post"
+    action="{{ url_for('meraki_importermeraki_importer_meraki_importer_page_form') }}"
+        enctype="multipart/form-data" novalidate>
+    <hr/>
+    {{ render_field(form.api_key) }}
+    {{ render_field(form.org_name) }}
+    {{ render_field(form.network_name) }}
+    <hr/>
+    {{ render_field(form.dashboard_url) }}
+    <hr/>
+    <br/>
+    <table id="table"></table>
+    <div id="pager"></div>
+    <br/>
+    <table style="table-layout: fixed;">
+        <tr>
+            <td width="100">
+                <button id="get_clients" type="button" class="btn-default">
+                    {{ text['label_get_clients'] }}
+                </button>
+            </td>
+            <td width="20">
+                &nbsp;
+            </td>
+            <td width="160">
+                {{ render_field(form.include_matches) }} {{ text['label_include_matches'] }}
+            </td>
+            <td width="20">
+                &nbsp;
+            </td>
+            <td width="240">
+                {{ render_field(form.include_ipam_only) }} {{ text['label_include_ipam_only'] }}
+            </td>
+            <td width="300">
+                &nbsp;
+            </td>
+        </tr>
+    </table>
+    <hr/>
+    <!-- don't remove the following token -->
+    {{ form.csrf_token }}
+    
+    <div class="row">
+        <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
+            {{ text['label_submit'] }}
+        </button>
+        &nbsp;
+        <button id="cancel" name="cancel" type="button" class="btn-default">
+            {{ text['label_cancel'] }}
+        </button>
+    </div>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/vendor/jqgrid/i18n/grid.locale-ja.js" ></script>
+<script src="/js/vendor/jqgrid/jquery.jqGrid.min.js" ></script>
+<script src="js/meraki_importer_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}
