@@ -38,7 +38,6 @@ Copy directory *"sdwan"* under `additional/` to `/portal/bluecat_portal/customiz
 
 3. **jqGrid**  
 This workflow requires jqGrid.  
-
 Download jqGrid from [HERE](http://www.trirand.com/blog/?page_id=6).  
 After downloading, extract the following two files: *"ui.jqgrid.css"* and *"jquery.jqGrid.min.js"*.  
 Copy the two files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
