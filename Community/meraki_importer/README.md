@@ -48,7 +48,7 @@ Make a new director `jqgrid` under `/portal/static/js/vendor/` if none exists.
 1. **Setting Meraki Importer Parameters**  
 Set the following parameters.  
 
-<img src = "img/meraki_importer1.jpg" width = "600px">
+<img src = "img/meraki_importer1.jpg" width = "600px">  
 
 - API Key:  
 This will be the API key for a specific user to login to the Meraki Dashboard via API.  
@@ -61,7 +61,6 @@ Make sure that API access is enabled in the Meraki Dashboard web UI and a key is
 This corresponds to the *Organization* name in the **Organization settings** menu.  
 Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI. (*Organization* -> *Settings*)  
 
-![screenshot](img/meraki_org_name.jpg "meraki_org_name")  
 <img src = "img/meraki_org_name.jpg" width = "600px">  
 
 You can also obtain this via API.  
@@ -69,7 +68,7 @@ Enter the following into your browser search bar:
 *https://{Dashboard-Instance}/api/v0/organizations/*  
 Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com).  
 
-![screenshot](img/meraki_org_name_api.jpg "meraki_org_name_api")  
+<img src = "img/meraki_org_name_api.jpg" width = "600px">   
 
 - Network Name:  
 This corresponds to the *NETWORK* name in the Meraki Dashboard web UI.  
@@ -82,7 +81,7 @@ Enter the following into your browser search bar:
 *https://{Dashboard-Instance}/api/v0/organizations/{Organization-ID}/networks*  
 Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com) and {Organization-ID} with your organization ID.  
 
-![screenshot](img/meraki_network_name_api.jpg "meraki_network_name_api")   
+<img src = "img/meraki_network_name_api.jpg" width = "600px">  
 
 - Dashboard URL:  
 Enter the Meraki Dashboard URL the following format:
@@ -94,12 +93,11 @@ Enter the following into your browser search bar:
 *https://{Dashboard-Instance}/api/v0/organizations/{Organization-ID}/networks/{Network-ID}*   
 Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com), {Organization-ID} with your organization ID and {Network-ID} with your network ID.  
 
-![screenshot](img/meraki_dashboard_url_api.jpg "meraki_dashboard_url_api")  
+<img src = "img/meraki_dashboard_url_api.jpg" width = "600px">  
 
 
-
-2. **Loading Meraki Client Lists**  
-![screenshot](img/meraki_client_list_initial.jpg "meraki_client_list_initial")  
+2. **Loading Meraki Client Lists**   
+<img src = "img/meraki_client_list_initial.jpg" width = "600px">   
 
 By clicking the *"LOAD"* button, client information stored in Meraki Dashboard will be loaded to the list.  
 By default, only the clients which **DO NOT MATCH** will be loaded to the list.
@@ -119,8 +117,8 @@ When this option is toggled on, it will load the clients which only exists in Bl
 
     + *"Reclaimable IP Address"* => An IP address that exists in BlueCat Address Manager, but not in Meraki Dashboard. This may represent a device that was turned off at the time of the discovery, or the address may no longer exist on the network.
 
-**Meraki Client List**  
-![screenshot](img/meraki_client_list_loaded.jpg "meraki_client_list_loaded")  
+**Meraki Client List**    
+<img src = "img/meraki_client_list_loaded.jpg" width = "600px">   
 
 - IP Address  
 The IP Address of the loaded client.  
@@ -149,7 +147,7 @@ Before reclaiming an IP address, please bear in mind that there is a good possib
 3. **Importing**  
 After thoroughly checking the state of the loaded clients, select the clients you wish to import by checking on the checkbox. You can either check them one by one or check all them by checking the top left check box in the list.  
 
-![screenshot](img/meraki_client_list_check.jpg "meraki_client_list_check")  
+<img src = "img/meraki_client_list_check.jpg" width = "600px">   
 
 Click *IMPORT* to import data into BlueCat Address Manager.  
 By Clicking *CANCEL*, the whole list will be cleared.  
@@ -157,11 +155,11 @@ By Clicking *CANCEL*, the whole list will be cleared.
 4. **Checking imported information**  
 Once imported, check the device information in BlueCat Address Manager.  
 
-![screenshot](img/bam_device_info.jpg "bam_device_info")  
+<img src = "img/bam_device_info.jpg" width = "600px">   
 
 In addition to the added information from Meraki Dashboard, a direct link to the Meraki Dashboard client information page will appear.
 
-![screenshot](img/meraki_client_info.jpg "meraki_client_info")  
+<img src = "img/meraki_client_info.jpg" width = "600px">  
 ---
 
 ## Additional   
