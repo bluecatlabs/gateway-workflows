@@ -145,9 +145,14 @@ After thoroughly checking the state of the loaded clients, select the clients yo
 
 4. **Checking imported information**  
 Once imported, check the device information in BlueCat Address Manager.  
-<img src = "img/bam_device_info.jpg" width = "600px">  
-In addition to the added information from Meraki Dashboard, a direct link to the Meraki Dashboard client information page will appear.  
-<img src = "img/meraki_client_info.jpg" width = "600px">  
+
+    <img src = "img/bam_device_info.jpg" width = "600px">  
+
+
+    In addition to the added information from Meraki Dashboard, a direct link to the Meraki Dashboard client information page will appear.  
+
+
+    <img src = "img/meraki_client_info.jpg" width = "600px">  
 
 ---
 
