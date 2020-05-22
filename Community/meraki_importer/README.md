@@ -30,7 +30,7 @@ When import is executed, BlueCat Address Manager will perform IP address reconci
 1. **BAM Default Configuration**  
 This workflow will be using the default configuration value in `/portal/bluecat_portal/config.py` in BlueCat Gateway container.  To set the default configuration, in BlueCat Gateway, go to Administration > Configurations > General Configuration.  
 In General Configuration, select the BAM Settings tab and enter the configuration name under "Default Configuration:" and save.  
-![screenshot](img/BAM_default_settings.jpg?raw=true "BAM_default_settings")
+![screenshot](img/BAM_default_settings.jpg "BAM_default_settings")
 
 2. **Additional Python Code**  
 This workflow requires addtional python code.  
@@ -49,40 +49,40 @@ Make a new director `jqgrid` under `/portal/static/js/vendor/` if none exists.
 1. **Setting Meraki Importer Parameters**  
 Set the following parameters.  
 
-![screenshot](img/meraki_importer1.jpg?raw=true "meraki_importer1")   
+![screenshot](img/meraki_importer1.jpg "meraki_importer1")   
 
 - API Key:  
 This will be the API key for a specific user to login to the Meraki Dashboard via API.  
 Make sure that API access is enabled in the Meraki Dashboard web UI and a key is generated before setting this parameter.  
 
-![screenshot](img/sdwan_fw5.jpg?raw=true "sdwan_fw5")  
-![screenshot](img/sdwan_fw6.jpg?raw=true "sdwan_fw6")  
+![screenshot](img/sdwan_fw5.jpg "sdwan_fw5")  
+![screenshot](img/sdwan_fw6.jpg "sdwan_fw6")  
 
 - Organization Name:  
 This corresponds to the *Organization* name in the **Organization settings** menu.  
 Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI. (*Organization* -> *Settings*)  
 
-![screenshot](img/meraki_org_name.jpg?raw=true "meraki_org_name")  
+![screenshot](img/meraki_org_name.jpg "meraki_org_name")  
 
 You can also obtain this via API.  
 Enter the following into your browser search bar:  
 *https://<Dashboard Instance>/api/v0/organizations/*  
 Replace <Dashboard Instance> with your Meraki Dashboard instance (xxx.meraki.com).  
 
-![screenshot](img/meraki_org_name_api.jpg?raw=true "meraki_org_name_api")  
+![screenshot](img/meraki_org_name_api.jpg "meraki_org_name_api")  
 
 - Network Name:  
 This corresponds to the *NETWORK* name in the Meraki Dashboard web UI.  
 Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI.  
 
-![screenshot](img/sdwan_fw7.jpg?raw=true "sdwan_fw7")  
+![screenshot](img/sdwan_fw7.jpg "sdwan_fw7")  
 
 You can also obtain this via API.  
 Enter the following into your browser search bar:  
 *https://<Dashboard Instance>/api/v0/organizations/<Organization ID>/networks*  
 Replace <Dashboard Instance> with your Meraki Dashboard instance (xxx.meraki.com) and <Organization ID> with your organization ID.  
 
-![screenshot](img/meraki_network_name_api.jpg?raw=true "meraki_network_name_api")   
+![screenshot](img/meraki_network_name_api.jpg "meraki_network_name_api")   
 
 - Dashboard URL:  
 Enter the Meraki Dashboard URL the following format:
@@ -94,12 +94,12 @@ Enter the following into your browser search bar:
 *https://<Dashboard Instance>/api/v0/organizations/<Organization ID>/networks/<Network ID>*   
 Replace <Dashboard Instance> with your Meraki Dashboard instance (xxx.meraki.com), <Organization ID> with your organization ID and <Network ID> with your network ID.  
 
-![screenshot](img/meraki_dashboard_url_api.jpg?raw=true "meraki_dashboard_url_api")  
+![screenshot](img/meraki_dashboard_url_api.jpg "meraki_dashboard_url_api")  
 
 
 
 2. **Loading Meraki Client Lists**  
-![screenshot](img/meraki_client_list_initial.jpg?raw=true "meraki_client_list_initial")  
+![screenshot](img/meraki_client_list_initial.jpg "meraki_client_list_initial")  
 
 By clicking the *"LOAD"* button, client information stored in Meraki Dashboard will be loaded to the list.  
 By default, only the clients which **DO NOT MATCH** will be loaded to the list.
@@ -120,7 +120,7 @@ When this option is toggled on, it will load the clients which only exists in Bl
     + *"Reclaimable IP Address"* => An IP address that exists in BlueCat Address Manager, but not in Meraki Dashboard. This may represent a device that was turned off at the time of the discovery, or the address may no longer exist on the network.
 
 **Meraki Client List**  
-![screenshot](img/meraki_client_list_loaded.jpg?raw=true "meraki_client_list_loaded")  
+![screenshot](img/meraki_client_list_loaded.jpg "meraki_client_list_loaded")  
 
 - IP Address  
 The IP Address of the loaded client.  
