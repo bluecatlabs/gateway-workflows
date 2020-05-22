@@ -49,7 +49,7 @@ Make a new director `jqgrid` under `/portal/static/js/vendor/` if none exists.
 Set the following parameters.  
 
 ![screenshot](img/meraki_importer1.jpg "meraki_importer1")  
-<img src = "img/meraki_importer1.jpg" width = "320px">
+<img src = "img/meraki_importer1.jpg" width = "600px">
 
 - API Key:  
 This will be the API key for a specific user to login to the Meraki Dashboard via API.  
