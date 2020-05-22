@@ -48,7 +48,6 @@ Make a new director `jqgrid` under `/portal/static/js/vendor/` if none exists.
 1. **Setting Meraki Importer Parameters**  
 Set the following parameters.  
 
-![screenshot](img/meraki_importer1.jpg "meraki_importer1")  
 <img src = "img/meraki_importer1.jpg" width = "600px">
 
 - API Key:  
@@ -63,6 +62,7 @@ This corresponds to the *Organization* name in the **Organization settings** men
 Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI. (*Organization* -> *Settings*)  
 
 ![screenshot](img/meraki_org_name.jpg "meraki_org_name")  
+<img src = "img/meraki_org_name.jpg" width = "600px">  
 
 You can also obtain this via API.  
 Enter the following into your browser search bar:  
