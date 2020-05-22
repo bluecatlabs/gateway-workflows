@@ -77,7 +77,7 @@ Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI
   <img src = "img/meraki_network_name_api.jpg" width = "500px">  
 
 - Dashboard URL:  
-Enter the Meraki Dashboard URL the following format:
+Enter the Meraki Dashboard URL the following format:  
 *https://{Dashboard-Instance}.meraki.com/{Network-Name}/n/{ID}*
 Replace {Dashboard-Instance}, {Network-Name} and {ID}.  
 
