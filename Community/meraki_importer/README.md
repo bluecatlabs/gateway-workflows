@@ -59,7 +59,7 @@ Make sure that API access is enabled in the Meraki Dashboard web UI and a key is
 - Organization Name:  
 This corresponds to the *Organization* name in the **Organization settings** menu.  
 Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI. (*Organization* -> *Settings*)  
-  <img src = "img/meraki_org_name.jpg" width = "600px">  
+  <img src = "img/meraki_org_name.jpg" width = "400px">  
   You can also obtain this via API.  
   Enter the following into your browser search bar:  
   *https://{Dashboard-Instance}/api/v0/organizations/*  
