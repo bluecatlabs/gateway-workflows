@@ -1,4 +1,4 @@
-// Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+// Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ function update_config() {
     config['site_name'] = $('#site_name').val();
     config['include_matches'] = $('#include_matches').prop('checked');
     config['include_ipam_only'] = $('#include_ipam_only').prop('checked');
-    
+
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
@@ -79,7 +79,7 @@ function get_clients() {
 function push_selected_clients() {
     var grid = $('#table');
     var rows = grid.getGridParam("selarrrow");
-    
+
     var client_ids = [];
     if (rows.length > 0) {
         for (var i = 0; i < rows.length; i++) {
@@ -123,7 +123,7 @@ $(document).ready(function()
         multiselect: true,
         caption: 'Mist Client List'
     });
-    
+
     $('#get_clients').on('click', function(e)
     {
         $('body').addClass('waiting');
@@ -145,4 +145,3 @@ $(document).ready(function()
         location.reload(true);
     });
 });
-

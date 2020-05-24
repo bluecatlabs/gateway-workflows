@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,10 +43,10 @@ class MistAPI(object):
         self._api_key = api_key
         self._headers = {'Authorization': 'Token ' + api_key}
         self._debug = debug
-        
+
     def _get_url(self, key):
         return api_base_url + api_url[key]
-        
+
     def validate_api_key(self):
         valid = False
         try:
@@ -63,7 +63,7 @@ class MistAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return valid
-        
+
     def get_self(self):
         ret = None
         try:
@@ -78,7 +78,7 @@ class MistAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return ret
-        
+
     def get_sites(self):
         sites = None
         try:
@@ -93,13 +93,13 @@ class MistAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return sites
-        
+
     def get_site_by_name(self, name):
         for site in self.get_sites():
             if name == site['name']:
                 return site
         return None
-        
+
     def get_clients(self, id):
         clients = []
         try:
@@ -114,9 +114,8 @@ class MistAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return clients
-        
+
     def get_client_detail_url(self, site_id, client_id):
         url = console_base_url + \
             api_url['get_client_detail'].format(org_id=self._org_id, client_id=client_id, site_id=site_id)
         return url
-        

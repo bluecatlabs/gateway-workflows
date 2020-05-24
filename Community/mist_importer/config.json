@@ -1,7 +1,7 @@
 {
-    "org_id": "6677bc00-42f6-4272-b858-30e123dc1b06",
-    "api_token": "p9nTtSaTsmba752c1sUQBF8lBswZlCE284Hykwdb2JGDDXjOfUShFmYNsJ09s7xFiDV4uEFGnQpS1abC7HWZjFfO1ApKyMYd",
-    "site_name": "BlueCat_Japan_Test",
-    "include_matches": true,
+    "org_id": "",
+    "api_token": "",
+    "site_name": "",
+    "include_matches": false,
     "include_ipam_only": false
 }

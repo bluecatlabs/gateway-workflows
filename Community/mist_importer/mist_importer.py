@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -105,10 +105,10 @@ class MistImporter(object):
                 mc_mac[6:8] + '-' + mc_mac[8:10] + '-' + mc_mac[10:12]
             mac_address = mac_address.upper()
         return mac_address
-        
+
     def _construct_mist_url(self, mist_api, client):
         return mist_api.get_client_detail_url(client['site_id'], client['id'])
-        
+
     def _construct_linked_name(self, mist_api, client):
         return "<a href='%s'  target='_blank'>%s</a>" % \
             (self._construct_mist_url(mist_api, client), client['name'])
@@ -128,12 +128,12 @@ class MistImporter(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return state
-    
+
     def _collect_clients(self, configuration, mist_api, site_id):
         clients = []
         now = datetime.now()
         mist_clients = mist_api.get_clients(site_id)
-        
+
         for mc in mist_clients:
             client = {}
             client['id'] = mc['_id']
@@ -149,7 +149,7 @@ class MistImporter(object):
             client['macaddr'] = self._convert_mac(mc['mac'])
             client['detail_link'] = self._construct_mist_url(mist_api, client)
             client['linked_name'] = self._construct_linked_name(mist_api, client)
-            
+
             lastfound = datetime.fromtimestamp(mc['last_seen'])
             lastfound = lastfound.replace(tzinfo=None)
             client['last_found'] = lastfound.strftime('%Y-%m-%d %H:%M:%S')
@@ -157,10 +157,10 @@ class MistImporter(object):
                 client['state'] = 'RECLAIM'
             else:
                 client['state'] = 'UNKNOWN'
-                
+
             clients.append(client)
         clients.sort(key = lambda client: client['order'])
-        
+
         return clients
 
     def _collect_ip4_networks(self, configuration, ip4_networks, ipaddr):
@@ -172,23 +172,23 @@ class MistImporter(object):
             end_address = util.ip42int(str(network.broadcast_address))
             if start_address <= pack_address <= end_address:
                 return
-                
+
         try:
             found = configuration.get_ip_range_by_ip(Entity.IP4Network, ipaddr)
             if found is not None:
                 ip4_networks.append(found)
-                
+
         except PortalException as e:
             print(safe_str(e))
-            
+
     def _compare_clients(self, configuration, clients):
         ip4_networks = []
         include_matches = self.get_value('include_matches')
         include_ipam_only = self.get_value('include_ipam_only')
-        
+
         for client in clients:
             self._collect_ip4_networks(configuration, ip4_networks, client['ipaddr'])
-            
+
         for ip4_network in ip4_networks:
             ip4_addresses = ip4_network.get_children_of_type(Entity.IP4Address)
             for ip4_address in ip4_addresses:
@@ -215,9 +215,9 @@ class MistImporter(object):
                     found['state'] = 'MATCH' if found['macaddr'] == macaddress else 'MISMATCH'
                     if include_matches == False and found['state'] == 'MATCH':
                         clients.remove(found)
-                    
+
         clients.sort(key = lambda client: client['order'])
-        
+
     def _update_mac_by_client(self, configuration, client):
         mac_address = None
         assignalbe_name = self._get_assignable_name(client)
@@ -227,7 +227,7 @@ class MistImporter(object):
                 mac_address.set_name(assignalbe_name)
         except PortalException as e:
             mac_address = configuration.add_mac_address(client['macaddr'], assignalbe_name)
-            
+
         mac_address.set_property('DetailLink', client['detail_link'])
         mac_address.set_property('System', client['system'])
         mac_address.set_property('ImportedSource', 'Mist')
@@ -254,7 +254,7 @@ class MistImporter(object):
         except PortalException as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % safe_str(e))
-            
+
         self._update_mac_by_client(configuration, client)
 
     def _free_by_client(self, configuration, client):
@@ -274,13 +274,13 @@ class MistImporter(object):
             mist_api = MistAPI(self.get_value('org_id'), self.get_value('api_token'), debug=True)
             if not mist_api.validate_api_key():
                 return succeed
-                
+
             site = mist_api.get_site_by_name(self.get_value('site_name'))
             if (site is not None) and (site['id'] != ''):
                 clients = self._collect_clients(configuration, mist_api, site['id'])
                 self._compare_clients(configuration, clients)
                 self.set_clients(clients)
-                
+
         except Exception as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
@@ -298,4 +298,3 @@ class MistImporter(object):
             elif 'RECLAIM' == client['state']:
                 self._free_by_client(configuration, client)
         self.clear_clients()
-        
