@@ -18,11 +18,11 @@ Unless required by applicable law or agreed to in writing, software
  Gateway Version: 20.1.1
  Description: Meraki Importer README.md -->  
 
-# Meraki Importer  
+# Cisco Meraki Importer  
 **Bluecat Gateway Version:** v20.1.1 and greater  
 **BlueCat Address Manager Version:** v9.1 and greater  
 
-This workflow will import the client device information stored in the Meraki Dashboard into BlueCat Address Manager.  
+This workflow will import the client device information stored in the Cisco Meraki Dashboard into BlueCat Address Manager.  
 When import is executed, BlueCat Address Manager will perform IP address reconciliation depending on what is imported.  
 
 
@@ -91,7 +91,7 @@ Replace {Dashboard-Instance}, {Network-Name} and {ID}.
 2. **Loading Meraki Client Lists**  
 
     <img src = "img/meraki_client_list_initial.jpg" width = "600px">  
-    
+
     By clicking the *"LOAD"* button, client information stored in Meraki Dashboard will be loaded to the list.  
     By default, only the clients which **DO NOT MATCH** will be loaded to the list.  
     **DO NOT MATCH** means that there is either a *"mismatched IP address"* or an *"unknown IP address"* between the information stored in Meraki Dashboard and the information stored in BlueCat Address Manager.  

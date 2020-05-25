@@ -18,11 +18,11 @@ Unless required by applicable law or agreed to in writing, software
  Gateway Version: 19.8.1
  Description: Mist Importer README.md -->  
 
-# Mist Importer  
+# Juniper Mist Importer  
 **Bluecat Gateway Version:** v19.8.1 and greater  
 **BlueCat Address Manager Version:** v9.1 and greater  
 
-This workflow will import the client device information stored in the Mist Dashboard into BlueCat Address Manager.  
+This workflow will import the client device information stored in the Juniper Mist Dashboard into BlueCat Address Manager.  
 When import is executed, BlueCat Address Manager will perform IP address reconciliation depending on what is imported.  
 
 
