@@ -83,10 +83,10 @@ Make sure it is the same name (case sensitive) as in the Mist Dashboard web UI. 
 **Loading Options**  
 There are two loading options which you can toggle on or off when loading. Default is toggled off.  
 - Include Matches  
-When this option is toggled on, it will load the clients which **MATCH**, meaning IP addresses that exists in both BlueCat Address Manager and in Mist Dashboard where the MAC address match as well.  
+When this option is toggled on, it will additionally load the clients which **MATCH**, meaning IP addresses that exists in both BlueCat Address Manager and in Mist Dashboard where the MAC address match as well.  
 
 - Include IPAM only  
-When this option is toggled on, it will load the clients which only exists in BlueCat Address Manager. These clients will be listed as a *reclaimable IP address*.  
+When this option is toggled on, it will load the clients which only exists in BlueCat Address Manager. These clients will be listed as a *"reclaimable IP address"*.  
 
     + *"Reclaimable IP Address"* => An IP address that exists in BlueCat Address Manager, but not in Mist Dashboard. This may represent a device that was turned off at the time of the discovery, or the address may no longer exist on the network.
 

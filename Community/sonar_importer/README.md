@@ -84,10 +84,10 @@ Make sure it is the same name (case sensitive) as in the Kompira Cloud Dashboard
 **Loading Options**  
 There are two loading options which you can toggle on or off when loading. Default is toggled off.  
 - Include Matches  
-When this option is toggled on, it will load the nodes which **MATCH**, meaning IP addresses that exists in both BlueCat Address Manager and in Kompira Cloud Dashboard where the MAC address match as well.  
+When this option is toggled on, it will additionally load the nodes which **MATCH**, meaning IP addresses that exists in both BlueCat Address Manager and in Kompira Cloud Dashboard where the MAC address match as well.  
 
 - Include IPAM only  
-When this option is toggled on, it will load the nodes which only exists in BlueCat Address Manager. These nodes will be listed as a *reclaimable IP address*.  
+When this option is toggled on, it will load the nodes which only exists in BlueCat Address Manager. These nodes will be listed as a *"reclaimable IP address"*.  
 
     + *"Reclaimable IP Address"* => An IP address that exists in BlueCat Address Manager, but not in Kompira Cloud Dashboard. This may represent a device that was turned off at the time of the discovery, or the address may no longer exist on the network.
 
@@ -114,7 +114,7 @@ The IP address state of the loaded node.
   + This icon ![screenshot](img/data_delete.gif "data_delete") represents the state **Reclaimable**. When a node of this state is imported, it will reclaim the IP address in BlueCat Address Manager.  
 
 - Last Discovered  
-Timestamp of the last time Mist discovered the node. Kompira Cloud Dashboard will only retain this information up to 30 days. If a nodes last discovered time is over 30 days plus the nodes IP address is registered in BlueCat Address Manager, then the state of the node will appear as **Reclaimable** in the list.  
+Timestamp of the last time Sonar discovered the node. Kompira Cloud Dashboard will only retain this information up to 30 days. If a nodes last discovered time is over 30 days plus the nodes IP address is registered in BlueCat Address Manager, then the state of the node will appear as **Reclaimable** in the list.  
 **IMPORTANT:**  
 Before reclaiming an IP address, please bear in mind that there is a good possibility that the last discovered time has expired (gone over 30 days) but the IP address is actually still assigned and thus should not be reclaimed.    
 
