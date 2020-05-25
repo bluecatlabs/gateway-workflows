@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -100,7 +100,7 @@ class SonarImporter(object):
 
     def _construct_sonar_url(self, sonar_api, node):
         return sonar_api.get_node_detail_url(node['network_id'], node['id'])
-        
+
     def _construct_linked_name(self, sonar_api, node):
         return "<a href='%s'  target='_blank'>%s</a>" % \
             (self._construct_sonar_url(sonar_api, node), node['name'])
@@ -120,12 +120,12 @@ class SonarImporter(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return state
-    
+
     def _collect_nodes(self, configuration, sonar_api, network_id):
         nodes = []
         now = datetime.now()
         sonar_nodes = sonar_api.get_nodes(network_id)
-        
+
         for sn in sonar_nodes:
             for ad in sn['addresses']:
                 node = {}
@@ -134,18 +134,18 @@ class SonarImporter(object):
                 node['order'] = util.ip42int(ad['addr'])
                 node['name'] = sn['displayName']
                 node['system'] = sn['system']['family']
-                
+
                 if node['system'] == '':
                     try:
                         node['system'] = ad['extraFields']['macaddr']['organizationName']
                     except:
                         pass
-                        
+
                 node['ipaddr'] = ad['addr']
                 node['macaddr'] = ad['macaddr'].upper().replace(':', '-')
                 node['detail_link'] = self._construct_sonar_url(sonar_api, node)
                 node['linked_name'] = self._construct_linked_name(sonar_api, node)
-                
+
                 node['last_found'] = sn['lastScanSucceededAt']
                 lastfound = parser.parse(sn['lastScanSucceededAt'])
                 lastfound = lastfound.replace(tzinfo=None)
@@ -153,10 +153,10 @@ class SonarImporter(object):
                     node['state'] = 'RECLAIM'
                 else:
                     node['state'] = 'UNKNOWN'
-                    
+
                 nodes.append(node)
         nodes.sort(key = lambda node: node['order'])
-        
+
         return nodes
 
     def _collect_ip4_networks(self, configuration, ip4_networks, ipaddr):
@@ -168,23 +168,23 @@ class SonarImporter(object):
             end_address = util.ip42int(str(network.broadcast_address))
             if start_address <= pack_address <= end_address:
                 return
-                
+
         try:
             found = configuration.get_ip_range_by_ip(Entity.IP4Network, ipaddr)
             if found is not None:
                 ip4_networks.append(found)
-                
+
         except PortalException as e:
             print(safe_str(e))
-            
+
     def _compare_nodes(self, configuration, nodes):
         ip4_networks = []
         include_matches = self.get_value('include_matches')
         include_ipam_only = self.get_value('include_ipam_only')
-        
+
         for node in nodes:
             self._collect_ip4_networks(configuration, ip4_networks, node['ipaddr'])
-            
+
         for ip4_network in ip4_networks:
             ip4_addresses = ip4_network.get_children_of_type(Entity.IP4Address)
             for ip4_address in ip4_addresses:
@@ -211,9 +211,9 @@ class SonarImporter(object):
                     found['state'] = 'MATCH' if found['macaddr'] == macaddress else 'MISMATCH'
                     if include_matches == False and found['state'] == 'MATCH':
                         nodes.remove(found)
-                    
+
         nodes.sort(key = lambda node: node['order'])
-        
+
     def _update_mac_by_node(self, configuration, node):
         mac_address = None
         assignalbe_name = self._get_assignable_name(node)
@@ -223,7 +223,7 @@ class SonarImporter(object):
                 mac_address.set_name(assignalbe_name)
         except PortalException as e:
             mac_address = configuration.add_mac_address(node['macaddr'], assignalbe_name)
-            
+
         mac_address.set_property('DetailLink', node['detail_link'])
         mac_address.set_property('System', node['system'])
         mac_address.set_property('ImportedSource', 'Sonar')
@@ -250,7 +250,7 @@ class SonarImporter(object):
         except PortalException as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % safe_str(e))
-            
+
         self._update_mac_by_node(configuration, node)
 
     def _free_by_node(self, configuration, node):
@@ -270,13 +270,13 @@ class SonarImporter(object):
             sonar_api = SonarAPI(self.get_value('kompira_url'), self.get_value('api_token'), debug=True)
             if not sonar_api.validate_api_key():
                 return succeed
-                
+
             network = sonar_api.get_network_by_name(self.get_value('network_name'))
             if (network is not None) and (network['networkId'] != ''):
                 nodes = self._collect_nodes(configuration, sonar_api, network['networkId'])
                 self._compare_nodes(configuration, nodes)
                 self.set_nodes(nodes)
-                
+
         except Exception as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
@@ -294,4 +294,3 @@ class SonarImporter(object):
             elif 'RECLAIM' == node['state']:
                 self._free_by_node(configuration, node)
         self.clear_nodes()
-        

@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,10 +42,10 @@ class SonarAPI(object):
         self._api_key = api_key
         self._headers = {'X-Authorization': 'Token ' + api_key}
         self._debug = debug
-        
+
     def _get_url(self, key):
         return self._instance + api_url[key]
-        
+
     def validate_api_key(self):
         valid = False
         try:
@@ -59,7 +59,7 @@ class SonarAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return valid
-        
+
     def get_networks(self):
         networks = []
         try:
@@ -74,7 +74,7 @@ class SonarAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return networks
-        
+
     def get_network(self, id):
         node = None
         try:
@@ -89,13 +89,13 @@ class SonarAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return node
-        
+
     def get_network_by_name(self, name):
         for network in self.get_networks():
             if name == network['displayName']:
                 return network
         return None
-        
+
     def get_nodes(self, id):
         nodes = []
         offset = 0
@@ -116,9 +116,8 @@ class SonarAPI(object):
             except requests.exceptions.RequestException as e:
                 if self._debug:
                     print('DEBUG: Exceptin <%s>' % str(e))
-                    
+
         return nodes
-        
+
     def get_node_detail_url(self, network_id, node_id):
         return self._get_url('get_node_detail').format(network_id=network_id, node_id=node_id)
-        
