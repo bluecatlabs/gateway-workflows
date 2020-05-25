@@ -62,7 +62,7 @@ Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI
   <img src = "img/meraki_org_name.jpg" width = "400px">  
   You can also obtain this via API.  
   Enter the following into your browser search bar:  
-  *https://{Dashboard-Instance}/api/v0/organizations/*  
+  `https://{Dashboard-Instance}/api/v0/organizations/`  
   Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com).  
   <img src = "img/meraki_org_name_api.jpg" width = "600px">   
 
@@ -72,18 +72,18 @@ Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI
   ![screenshot](img/sdwan_fw7.jpg "sdwan_fw7")  
   You can also obtain this via API.  
   Enter the following into your browser search bar:  
-  *https://{Dashboard-Instance}/api/v0/organizations/{Organization-ID}/networks*  
+  `https://{Dashboard-Instance}/api/v0/organizations/{Organization-ID}/networks`  
   Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com) and {Organization-ID} with your organization ID.  
   <img src = "img/meraki_network_name_api.jpg" width = "500px">  
 
 - Dashboard URL:  
-Enter the Meraki Dashboard URL the following format:  
-*https://{Dashboard-Instance}.meraki.com/{Network-Name}/n/{ID}*  
+Enter the Meraki Dashboard URL in the following format:  
+`https://{Dashboard-Instance}.meraki.com/{Network-Name}/n/{ID}`  
 Replace {Dashboard-Instance}, {Network-Name} and {ID}.  
 
   If you are unsure, you can obtain this via API.  
   Enter the following into your browser search bar:  
-  *https://{Dashboard-Instance}/api/v0/organizations/{Organization-ID}/networks/{Network-ID}*   
+  `https://{Dashboard-Instance}/api/v0/organizations/{Organization-ID}/networks/{Network-ID}`   
   Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com), {Organization-ID} with your organization ID and {Network-ID} with your network ID.  
   <img src = "img/meraki_dashboard_url_api.jpg" width = "600px">  
 

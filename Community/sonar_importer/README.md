@@ -53,8 +53,8 @@ Set the following parameters.
 
 - Kompira Cloud URL:  
 This corresponds to your Kompira Cloud Dashboard URL.  
-Please enter by the following format.  
-*https://{Kompira Instance}.cloud.kompira.jp*  
+Please enter in the following format.  
+`https://{Kompira Instance}.cloud.kompira.jp`  
 Replace {Kompira Instance} with your Kompira Cloud instance name.    
 
 - API Token:  
