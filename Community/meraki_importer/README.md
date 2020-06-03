@@ -46,10 +46,27 @@ After downloading, extract the following three files: *"ui.jqgrid.css"*, *"jquer
 Copy the three files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
 Make a new director `jqgrid` under `/portal/static/js/vendor/` if none exists.  
 
+4. **UDF**  
+This workflow requires the additional UDF to the MAC Address object in BAM.  
+Add the following UDF to the MAC Address object in BAM.  
+  - System  
+  Field Name: System    
+  Display Name: System   
+  Type: Text  
+  - Imported Source    
+  Field Name: ImportedSource
+  Display Name: Imported Source   
+  Type: Text  
+  - Detail Link  
+  Field Name: DetailLink
+  Display Name: Detail Link  
+  Type: URL
+
 
 ## Usage   
 1. **Setting Meraki Importer Parameters**  
-Click *"Cisco Meraki Configuration"* to open up parameter settings menu and set the following parameters.   
+Click the *"CISCO Meraki Configuration"* pull down menu to open up parameter settings.  
+Set the following parameters.   
 
     <img src = "img/meraki_importer1.jpg" width = "600px">  
 
@@ -125,6 +142,9 @@ The MAC Address of the loaded client.
 - Name  
 The host name of the loaded client (if exists).  
 
+- System  
+The device type of the loaded client (if exists).  
+
 - State  
 The IP address state of the loaded client.  
   + This icon ![screenshot](img/check.gif) represents the state **Matched**. When a client of this state is imported, it will not update the IP address and MAC address information in BlueCat Address Manager (since it is already a match) but will add additional information obtained by Meraki Dashboard.  
@@ -148,6 +168,9 @@ After thoroughly checking the state of the loaded clients, select the clients yo
 
     Click *IMPORT* to import data into BlueCat Address Manager.  
     By Clicking *CANCEL*, the whole list will be cleared.  
+
+    **DHCP leased IP addresses**  
+    If the imported IP address happens to be a DHCP leased IP address, then it will **NOT** update the IP address and MAC address information in BlueCat Address Manager and will only add additional information obtained by Meraki Dashboard.  
 
 4. **Checking imported information**  
 Once imported, check the device information in BlueCat Address Manager.  
