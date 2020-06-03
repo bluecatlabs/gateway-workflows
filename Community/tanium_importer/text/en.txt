@@ -14,23 +14,27 @@
 # limitations under the License.
 #
 # By: Akira Goto (agoto@bluecatnetworks.com)
-# Date: 2020-03-31
-# Gateway Version: 20.1.1
-# Description: CISCO Meraki Importer text files
+# Date: 2020-05-15
+# Gateway Version: 20.3.1
+# Description: Tanium Importer text files
 
-title=Cisco Meraki Importer
-info=Import Cisco Meraki Clients.
+title=Tanium Importer
+info=Import Tanium Clients.
 require_message=This field is required.
 imported_message=Mist clients were successfully imported.
 failed_message=Failed to import, check configuration.
-label_meraki_config=CISCO Meraki Configuration
-label_api_key=API Key:
-label_org_name=Organization Name:
-label_network_name=Network Name:
-label_dashboard_url=Dashboard URL:
+label_tanium_config=Tanium Configuration
+label_server_addr=Server Address:
+label_user_id=User ID:
+label_password=Password:
+label_target_networks=Target Networks:
+label_retry_count=Retry Count:
+label_interval=Interval (Seconds):
+label_include_discovery=Include Discovered
 label_include_matches=Include Matches
 label_include_ipam_only=Include IPAM only
-label_client_list=Meraki Client List
+label_client_list=Tanium Client List
+label_col_managed=TA
 label_col_ipaddr=IP Address
 label_col_macaddr=MAC Address
 label_col_name=Name

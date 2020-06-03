@@ -147,7 +147,11 @@ def load_col_model():
         },
         {
             'label': text['label_col_name'], 'index':'linked_name', 'name':'linked_name',
-            'width':200, 'sortable':False, 'formatter': 'link'
+            'width':140, 'sortable':False, 'formatter': 'link'
+        },
+        {
+            'label': text['label_col_system'], 'index':'system', 'name':'system',
+            'width':240, 'sortable':False
         },
         {
             'label': text['label_col_state'], 'index':'state', 'name':'state',

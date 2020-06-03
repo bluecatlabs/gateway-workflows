@@ -1,4 +1,4 @@
-<!-- Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+<!-- Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,43 +39,52 @@ Description: Juniper Mist Importer HTML -->
 <form id="mist_importer_page_form" method="post"
     action="{{ url_for('mist_importermist_importer_mist_importer_page_form') }}"
         enctype="multipart/form-data" novalidate>
-    <hr/>
-    {{ render_field(form.org_id) }}
-    {{ render_field(form.api_token) }}
-    {{ render_field(form.site_name) }}
-    <hr/>
-    <br/>
-    <table id="table"></table>
-    <div id="pager"></div>
-    <br/>
-    <table style="table-layout: fixed;">
-        <tr>
-            <td width="100">
-                <button id="get_clients" type="button" class="btn-default">
-                    {{ text['label_get_clients'] }}
-                </button>
-            </td>
-            <td width="20">
-                &nbsp;
-            </td>
-            <td width="160">
-                {{ render_field(form.include_matches) }} {{ text['label_include_matches'] }}
-            </td>
-            <td width="20">
-                &nbsp;
-            </td>
-            <td width="240">
-                {{ render_field(form.include_ipam_only) }} {{ text['label_include_ipam_only'] }}
-            </td>
-            <td width="300">
-                &nbsp;
-            </td>
-        </tr>
-    </table>
-    <hr/>
+    <div id="wide-content" class="wide-content">
+        <hr/>
+        <!-- Mist Configuration Collapse Section -->
+        <a data-toggle="collapse" href="#mistConfig" id="mist-collapse" class="btn btn-default wide-content" style="text-align:left;">
+            {{ text['label_mist_config'] }}<span class="glyphicon glyphicon-chevron-down"></span>
+        </a>
+        <div id="mistConfig" class="collapse">
+            <br/>
+            {{ render_field(form.org_id) }}
+            {{ render_field(form.api_token) }}
+            {{ render_field(form.site_name) }}
+        </div>
+        <hr/>
+        <br/>
+        <table id="table"></table>
+        <div id="pager"></div>
+        <br/>
+        <table style="table-layout: fixed;">
+            <tr>
+                <td width="100">
+                    <button id="get_clients" type="button" class="btn-default">
+                        {{ text['label_get_clients'] }}
+                    </button>
+                </td>
+                <td width="20">
+                    &nbsp;
+                </td>
+                <td width="160">
+                    {{ render_field(form.include_matches) }} {{ text['label_include_matches'] }}
+                </td>
+                <td width="20">
+                    &nbsp;
+                </td>
+                <td width="240">
+                    {{ render_field(form.include_ipam_only) }} {{ text['label_include_ipam_only'] }}
+                </td>
+                <td width="300">
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+        <hr/>
+    </div>
     <!-- don't remove the following token -->
     {{ form.csrf_token }}
-
+    
     <div class="row">
         <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
             {{ text['label_submit'] }}

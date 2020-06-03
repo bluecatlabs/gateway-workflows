@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,7 +43,7 @@ def get_configuration():
     if g.user:
         configuration = g.user.get_api().get_configuration(config.default_configuration)
     return configuration
-
+    
 
 class GenericFormTemplate(GatewayForm):
     """
@@ -54,10 +54,10 @@ class GenericFormTemplate(GatewayForm):
     """
     workflow_name = 'mist_importer'
     workflow_permission = 'mist_importer_page'
-
+    
     text=util.get_text(module_path(), config.language)
     require_message=text['require_message']
-
+    
     org_id = StringField(
         label=text['label_org_id'],
         validators=[DataRequired(message=require_message)]
@@ -70,17 +70,17 @@ class GenericFormTemplate(GatewayForm):
         label=text['label_site_name'],
         validators=[DataRequired(message=require_message)]
     )
-
+    
     include_matches = BooleanField(
         label='',
         default='checked'
     )
-
+    
     include_ipam_only = BooleanField(
         label='',
         default='checked'
     )
-
+    
     submit = SubmitField(label=text['label_submit'])
 
 # The workflow name must be the first part of any endpoints defined in this file.
@@ -91,9 +91,9 @@ class GenericFormTemplate(GatewayForm):
 @util.exception_catcher
 def mist_importer_mist_importer_page():
     form = GenericFormTemplate()
-
+    
     mist_importer = MistImporter.get_instance(debug=True)
-
+    
     value = mist_importer.get_value('org_id')
     if value is not None:
         form.org_id.data = value
@@ -109,7 +109,7 @@ def mist_importer_mist_importer_page():
     value = mist_importer.get_value('include_ipam_only')
     if value is not None:
         form.include_ipam_only.data = value
-
+    
     return render_template(
         'mist_importer_page.html',
         form=form,
@@ -122,7 +122,7 @@ def mist_importer_mist_importer_page():
 @util.exception_catcher
 def load_col_model():
     text=util.get_text(module_path(), config.language)
-
+    
     clients = [
         {'index':'id', 'name':'id', 'hidden':True, 'sortable':False},
         {'index':'network_id', 'name':'network_id', 'hidden':True, 'sortable':False},
@@ -140,7 +140,11 @@ def load_col_model():
         },
         {
             'label': text['label_col_name'], 'index':'linked_name', 'name':'linked_name',
-            'width':200, 'sortable':False
+            'width':140, 'sortable':False
+        },
+        {
+            'label': text['label_col_system'], 'index':'system', 'name':'system',
+            'width':240, 'sortable':False
         },
         {
             'label': text['label_col_state'], 'index':'state', 'name':'state',
@@ -203,11 +207,11 @@ def push_selected_clients():
     new_clients = []
     client_ids = request.get_json()
     mist_importer = MistImporter.get_instance()
-
+    
     for client in mist_importer.get_clients():
         if client['id'] in client_ids:
             new_clients.append(client)
-
+            
     mist_importer.set_clients(new_clients)
     return jsonify(success=True)
 
@@ -233,11 +237,11 @@ def mist_importer_mist_importer_page_form():
         mist_importer.set_value('include_matches', form.include_matches.data)
         mist_importer.set_value('include_ipam_only', form.include_ipam_only.data)
         mist_importer.save()
-
+        
         configuration = get_configuration()
         mist_importer.import_clients(configuration)
         mist_importer.collect_clients(configuration)
-
+        
         # Put form processing code here
         g.user.logger.info('SUCCESS')
         flash(text['imported_message'], 'succeed')

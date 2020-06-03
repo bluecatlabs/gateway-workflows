@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 # limitations under the License.
 #
 # By: Akira Goto (agoto@bluecatnetworks.com)
-# Date: 2019-10-30
-# Gateway Version: 19.8.1
-# Description: Juniper Mist Importer.py
+# Date: 2020-05-31
+# Gateway Version: 20.3.1
+# Description: Tanium Importer.py
 
 import os
 import sys
@@ -25,6 +25,7 @@ import ipaddress
 
 from datetime import datetime, timedelta
 from dateutil import parser
+from pytz import timezone
 from threading import Lock
 
 from bluecat import util
@@ -32,11 +33,11 @@ from bluecat.util import safe_str
 from bluecat.entity import Entity
 from bluecat.api_exception import BAMException, PortalException
 
-from mist.mistapi import MistAPI
+from tanium.taniumapi import TaniumAPI
 
-class MistImporterException(Exception): pass
+class TaniumImporterException(Exception): pass
 
-class MistImporter(object):
+class TaniumImporter(object):
     _unique_instance = None
     _lock = Lock()
     _config_file = os.path.dirname(os.path.abspath(__file__)) + '/config.json'
@@ -57,100 +58,100 @@ class MistImporter(object):
         return cls._unique_instance
 
     def _load(self):
-        with open(MistImporter._config_file) as f:
+        with open(TaniumImporter._config_file) as f:
             self._config = json.load(f)
 
     def get_value(self, key):
         value = None
-        with MistImporter._lock:
+        with TaniumImporter._lock:
             if key in self._config.keys():
                 value = self._config[key]
         return value
 
     def set_value(self, key, value):
-        with MistImporter._lock:
+        with TaniumImporter._lock:
             self._config[key] = value
 
     def get_clients(self):
         clients = []
-        with MistImporter._lock:
+        with TaniumImporter._lock:
             clients = self._clients
         return clients
 
     def set_clients(self, clients):
-        with MistImporter._lock:
+        with TaniumImporter._lock:
             self._clients = clients
 
     def clear_clients(self):
-        with MistImporter._lock:
+        with TaniumImporter._lock:
             self._clients = []
 
     def save(self):
-        with MistImporter._lock:
-            with open(MistImporter._config_file, 'w') as f:
+        with TaniumImporter._lock:
+            with open(TaniumImporter._config_file, 'w') as f:
                 json.dump(self._config, f, indent=4)
 
     def _get_assignable_name(self, client):
-        assignalbe_name = ''
-        try:
-            ipaddress.IPv4Address(client['name'])
-        except ipaddress.AddressValueError:
-            assignalbe_name = client['name']
-        return assignalbe_name
+        return client['name'] if client['name'] != '-' else ''
 
-    def _convert_mac(self, mc_mac):
+    def _convert_mac(self, tc_mac):
         mac_address = ''
-        if len(mc_mac) == 12:
-            mac_address = mc_mac[0:2] + '-' + mc_mac[2:4] + '-' + mc_mac[4:6] + '-' + \
-                mc_mac[6:8] + '-' + mc_mac[8:10] + '-' + mc_mac[10:12]
-            mac_address = mac_address.upper()
+        length = len(tc_mac)
+        if tc_mac is not None:
+            for i in range(length):
+                mac_address += tc_mac[i].upper().replace(':', '-')
+                if i + 1 < length:
+                    mac_address += ', '
         return mac_address
         
-    def _construct_mist_url(self, mist_api, client):
-        return mist_api.get_client_detail_url(client['site_id'], client['id'])
+    def _construct_tanium_url(self, tanium_api, client):
+        return tanium_api.get_client_detail_url(self.get_value('server_addr'), client['id'])
         
-    def _construct_linked_name(self, mist_api, client):
+    def _construct_linked_name(self, tanium_api, client):
         return "<a href='%s'  target='_blank'>%s</a>" % \
-            (self._construct_mist_url(mist_api, client), client['name'])
+            (self._construct_tanium_url(tanium_api, client), client['name'])
 
-    def _collect_clients(self, configuration, mist_api, site_id):
-        clients = []
-        now = datetime.now()
-        mist_clients = mist_api.get_clients(site_id)
+    def _to_subnets_list(self, networks):
+        subnets = []
+        for subnet in networks.split(','):
+            if subnet != '':
+                subnets.append(subnet.strip())
+        return subnets
         
-        for mc in mist_clients:
+    def _collect_clients(self, configuration, tanium_api, target_networks, include_discovery):
+        retry_count = self.get_value('retry_count')
+        interval = self.get_value('interval')
+        clients = []
+        subnets = self._to_subnets_list(target_networks)
+        result = tanium_api.get_managed_assets(subnets, retry_count, interval)
+        tanium_clients = result['clients']
+        
+        if include_discovery:
+            result = tanium_api.get_unmanaged_assets(subnets, retry_count, interval)
+            tanium_clients.extend(result['clients'])
+        
+        for tc in tanium_clients:
             client = {}
-            client['id'] = mc['_id']
-            client['site_id'] = mc['site_id']
-            client['order'] = util.ip42int(mc['ip'])
-            client['name'] = mc['hostname']
-            client['system'] = mc['manufacture']
+            client['managed'] = 'MANAGED' if tc['managed'] else 'UNKNOWN'
+            client['id'] = tc['id']
+            client['order'] = util.ip42int(tc['ip_address'])
+            client['name'] = tc['computer_name']
+            client['system'] = tc['manufacturer']
             
-            if mc['family'] is not None and 0 < len(mc['family']):
+            if tc['os'] is not None and 0 < len(tc['os']):
                 if 0 < len(client['system']):
                     client['system'] += ' - '
-                client['system'] += mc['family']
+                client['system'] += tc['os']
                 
-            if mc['os'] is not None and 0 < len(mc['os']):
-                if 0 < len(client['system']):
-                    client['system'] += ' ' if '-' in client['system'] else ' - '
-                client['system'] += mc['os']
-                
-            client['ipaddr'] = mc['ip']
-            client['macaddr'] = self._convert_mac(mc['mac'])
-            client['detail_link'] = self._construct_mist_url(mist_api, client)
-            client['linked_name'] = self._construct_linked_name(mist_api, client)
+            client['ipaddr'] = tc['ip_address']
+            client['macaddr'] = self._convert_mac(tc['mac_address'])
+            client['detail_link'] = ''
+            client['linked_name'] = tc['computer_name']
+            client['last_found'] = tc['last_found']
             
-            lastfound = datetime.fromtimestamp(mc['last_seen'])
-            lastfound = lastfound.replace(tzinfo=None)
-            client['last_found'] = lastfound.strftime('%Y-%m-%d %H:%M:%S')
-            if (now - lastfound) > timedelta(days=30):
-                client['state'] = 'RECLAIM'
-            else:
-                client['state'] = 'UNKNOWN'
-                
+            client['state'] = 'UNKNOWN'
             clients.append(client)
-        clients.sort(key = lambda client: client['order'])
+            print(client)
         
         return clients
 
@@ -187,8 +188,8 @@ class MistImporter(object):
                 if 0 == len(founds):
                     if include_ipam_only == True and ip4_address.get_state() != 'DHCP_FREE':
                         new_client = {}
-                        new_client['id'] = ''
-                        new_client['site_id'] = ''
+                        new_client['id'] = 'BlueCat_' + str(ip4_address.get_id())
+                        new_client['network_id'] = ''
                         new_client['order'] = util.ip42int(ip4_address.get_address())
                         new_client['name'] = ip4_address.get_name()
                         new_client['system'] = ''
@@ -203,12 +204,17 @@ class MistImporter(object):
                 else:
                     macaddress = ip4_address.get_property('macAddress')
                     found = founds[0]
-                    found['state'] = 'MATCH' if found['macaddr'] == macaddress else 'MISMATCH'
+                    matched_macs = [mac for mac in found['macaddr'].split(',') if macaddress == mac.strip()]
+                    print("found['mcaddr'] = ", found['macaddr'], ', maccaddress = ', macaddress )
+                    
+                    if 0 < len(matched_macs):
+                        found['state'] = 'MATCH'
+                        found['macaddr'] = matched_macs[0].strip()
+                    else:
+                        found['state'] = 'MISMATCH'
                     if include_matches == False and found['state'] == 'MATCH':
                         clients.remove(found)
-                    
-        clients.sort(key = lambda client: client['order'])
-        
+
     def _update_mac_by_client(self, configuration, client):
         mac_address = None
         assignalbe_name = self._get_assignable_name(client)
@@ -221,7 +227,7 @@ class MistImporter(object):
             
         mac_address.set_property('DetailLink', client['detail_link'])
         mac_address.set_property('System', client['system'])
-        mac_address.set_property('ImportedSource', 'Mist')
+        mac_address.set_property('ImportedSource', 'Tanium')
         mac_address.update()
 
     def _assigne_by_client(self, configuration, client):
@@ -261,17 +267,21 @@ class MistImporter(object):
 
     def collect_clients(self, configuration):
         succeed = False
+        tanium_api = TaniumAPI(self.get_value('server_addr'), ignore_ssl_validation=True, debug=True)
         try:
-            mist_api = MistAPI(self.get_value('org_id'), self.get_value('api_token'), debug=True)
-            if not mist_api.validate_api_key():
+            
+            if tanium_api.login(self.get_value('user_id'), self.get_value('password')) == False:
                 return succeed
                 
-            site = mist_api.get_site_by_name(self.get_value('site_name'))
-            if (site is not None) and (site['id'] != ''):
-                clients = self._collect_clients(configuration, mist_api, site['id'])
-                self._compare_clients(configuration, clients)
-                self.set_clients(clients)
+            clients = self._collect_clients(configuration, tanium_api,
+                                            self.get_value('target_networks'),
+                                            self.get_value('include_discovery'))
+                                            
+            self._compare_clients(configuration, clients)
+            clients.sort(key = lambda client: client['order'])
+            self.set_clients(clients)
                 
+            tanium_api.logout()
         except Exception as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))

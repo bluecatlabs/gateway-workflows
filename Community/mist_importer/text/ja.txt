@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,6 +23,7 @@ info=Juniper Mistクライアントをインポートします。
 require_message=このフィールドは必須です。
 imported_message=Mistクライアントは正常にインポートされました。
 failed_message=Mistクライアントのインポートが失敗しました。構成を確認して下さい。
+label_mist_config=Juniper Mist 設定
 label_org_id=オーガナイゼーションID：
 label_api_token=APIトークン；
 label_site_name=サイト名：
@@ -32,6 +33,7 @@ label_client_list=Mistクライアント一覧
 label_col_ipaddr=IPアドレス
 label_col_macaddr=MACアドレス
 label_col_name=名前
+label_col_system=システム
 label_col_state=状態
 label_col_lastfound=最終確認
 label_get_clients=取得

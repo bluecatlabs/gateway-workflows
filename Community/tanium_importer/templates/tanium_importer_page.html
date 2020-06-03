@@ -1,4 +1,4 @@
-<!-- Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+<!-- Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,15 +13,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 By: Akira Goto (agoto@bluecatnetworks.com)
-Date: 2019-10-30
-Gateway Version: 19.8.1
-Description: Fixpoint Kompira Cloud Sonar Importer HTML -->
+Date: 2020-05-31
+Gateway Version: 20.3.1
+Description: Tanium Importer HTML -->
 
 {% extends "base-no-box.html" %}
 
 {% block css %}
 <link rel="stylesheet" href="/js/vendor/jqgrid/ui.jqgrid.css" />
-<link rel="stylesheet" href="css/sonar_importer_page.css?version={{ g.version | urlencode }}">
+<link rel="stylesheet" href="css/tanium_importer_page.css?version={{ g.version | urlencode }}">
 {% endblock %}
 
 {% block title %}
@@ -36,40 +36,56 @@ Description: Fixpoint Kompira Cloud Sonar Importer HTML -->
 
 <p>{{ text['info'] }}</p>
 {% from "form_helper.html" import render_field %}
-<form id="sonar_importer_page_form" method="post"
-    action="{{ url_for('sonar_importersonar_importer_sonar_importer_page_form') }}"
+<form id="tanium_importer_page_form" method="post"
+    action="{{ url_for('tanium_importertanium_importer_tanium_importer_page_form') }}"
         enctype="multipart/form-data" novalidate>
     <div id="wide-content" class="wide-content">
         <hr/>
-        <!-- Sonar Configuration Collapse Section -->
-        <a data-toggle="collapse" href="#sonarConfig" id="sonar-collapse" class="btn btn-default wide-content" style="text-align:left;">
-            {{ text['label_sonar_config'] }}<span class="glyphicon glyphicon-chevron-down"></span>
+        <!-- Tanium Configuration Collapse Section -->
+        <a data-toggle="collapse" href="#taniumConfig" id="tanium-collapse" class="btn btn-default wide-content" style="text-align:left;">
+            {{ text['label_tanium_config'] }}<span class="glyphicon glyphicon-chevron-down"></span>
         </a>
-        <div id="sonarConfig" class="collapse">
+        <div id="taniumConfig" class="collapse">
             <br/>
-            {{ render_field(form.kompira_url) }}
-            {{ render_field(form.api_token) }}
-            {{ render_field(form.network_name) }}
+            {{ render_field(form.server_addr) }}
+            <div class="parallel-left">
+                {{ render_field(form.user_id) }}
+            </div>
+            <div class="parallel-right">
+                {{ render_field(form.password) }}
+            </div>
+            <div class="parallel-left">
+                {{ render_field(form.retry_count) }}
+            </div>
+            <div class="parallel-right">
+                {{ render_field(form.interval) }}
+            </div>
         </div>
         <hr/>
-        <br/>
+        <div class="parallel-left">
+            {{ render_field(form.target_networks) }}
+        </div>
+        <div class="parallel-right">
+            {{ render_field(form.include_discovery) }} {{ text['label_include_discovery'] }}
+        </div>
+        <hr/>
         <table id="table"></table>
         <div id="pager"></div>
         <br/>
         <table style="table-layout: fixed;">
             <tr>
                 <td width="100">
-                    <button id="get_nodes" type="button" class="btn-default">
-                        {{ text['label_get_nodes'] }}
+                    <button id="get_clients" type="button" class="btn-default">
+                        {{ text['label_get_clients'] }}
                     </button>
                 </td>
-                <td width="20">
+                <td width="4">
                     &nbsp;
                 </td>
-                <td width="160">
+                <td width="140">
                     {{ render_field(form.include_matches) }} {{ text['label_include_matches'] }}
                 </td>
-                <td width="20">
+                <td width="4">
                     &nbsp;
                 </td>
                 <td width="240">
@@ -101,5 +117,5 @@ Description: Fixpoint Kompira Cloud Sonar Importer HTML -->
 {% block scripts %}
 <script src="/js/vendor/jqgrid/i18n/grid.locale-ja.js" ></script>
 <script src="/js/vendor/jqgrid/jquery.jqGrid.min.js" ></script>
-<script src="js/sonar_importer_page.js?version={{ g.version | urlencode }}"></script>
+<script src="js/tanium_importer_page.js?version={{ g.version | urlencode }}"></script>
 {% endblock %}

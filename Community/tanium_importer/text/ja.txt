@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,29 +14,33 @@
 # limitations under the License.
 #
 # By: Akira Goto (agoto@bluecatnetworks.com)
-# Date: 2019-10-30
-# Gateway Version: 19.8.1
-# Description: Sonar Importer text files
+# Date: 2020-05-15
+# Gateway Version: 20.3.1
+# Description: Tanium Importer text files
 
-title=Kompira Cloud Sonar インポーター
-info=Kompira Cloud Sonar Nodeをインポートします。
-invalid_url_message=不適切なURLです。
+title=Tanium インポーター
+info=Taniumクライアントをインポートします。
 require_message=このフィールドは必須です。
-imported_message=Sonar Nodeは正常にインポートされました。
-failed_message=Sonar Nodeのインポートが失敗しました。構成を確認して下さい。
-label_sonar_config=Kompira Cloud Sonar 設定
-label_kompira_url=Kompira Cloud URL：
-label_api_token=APIトークン；
-label_network_name=ネットワーク名：
+imported_message=Mistクライアントは正常にインポートされました。
+failed_message=Mistクライアントのインポートが失敗しました。構成を確認して下さい。
+label_tanium_config=Tanium 設定
+label_server_addr=サーバーアドレス：
+label_user_id=ユーザーID：
+label_password=パスワード：
+label_target_networks=対象ネットワーク：
+label_retry_count=リトライ回数:
+label_interval=リトライ間隔（秒数）:
+label_include_discovery=発見されたインタフェースも表示
 label_include_matches=一致する物も表示
 label_include_ipam_only=IPAMのみに存在する物も表示
-label_node_list=Sonar Node一覧
+label_client_list=Taniumクライアント一覧
+label_col_managed=TA
 label_col_ipaddr=IPアドレス
 label_col_macaddr=MACアドレス
 label_col_name=名前
 label_col_system=システム
 label_col_state=状態
 label_col_lastfound=最終確認
-label_get_nodes=取得
+label_get_clients=取得
 label_submit=インポート
 label_cancel=キャンセル

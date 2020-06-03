@@ -1,0 +1,11 @@
+{
+    "server_addr": "taniumserver.bcj.local",
+    "user_id": "tanium",
+    "password": "P@33w0rd1234",
+    "target_networks": "192.168.10.0/24, 10.10.10.0/24",
+    "include_discovery": false,
+    "include_matches": true,
+    "include_ipam_only": false,
+    "retry_count": 4,
+    "interval": 3
+}

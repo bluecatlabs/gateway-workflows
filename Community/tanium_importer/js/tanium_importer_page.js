@@ -1,4 +1,4 @@
-// Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+// Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 // By: Akira Goto (agoto@bluecatnetworks.com)
-// Date: 2019-10-30
-// Gateway Version: 19.8.1
-// Description: Juniper Mist Importer JS
+// Date: 2020-05-31
+// Gateway Version: 20.3.1
+// Description: Tanium Importer JS
 
 var clientColModel = []
 
 function load_col_model() {
     $.ajax({
         type: 'GET',
-        url: '/mist_importer/load_col_model',
+        url: '/tanium_importer/load_col_model',
         async: false
     })
     .done(function(data) {
@@ -37,16 +37,20 @@ function load_col_model() {
 
 function update_config() {
     var config = {}
-    config['org_id'] = $('#org_id').val();
-    config['api_token'] = $('#api_token').val();
-    config['site_name'] = $('#site_name').val();
+    config['server_addr'] = $('#server_addr').val();
+    config['user_id'] = $('#user_id').val();
+    config['password'] = $('#password').val();
+    config['target_networks'] = $('#target_networks').val();
+    config['retry_count'] = parseInt($('#retry_count').val());
+    config['interval'] = parseInt($('#interval').val());
+    config['include_discovery'] = $('#include_discovery').prop('checked');
     config['include_matches'] = $('#include_matches').prop('checked');
     config['include_ipam_only'] = $('#include_ipam_only').prop('checked');
     
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: '/mist_importer/update_config',
+        url: '/tanium_importer/update_config',
         data: JSON.stringify(config),
         dataType: "json"
     });
@@ -57,7 +61,7 @@ function get_clients() {
 
     $.ajax({
         type: "GET",
-        url: '/mist_importer/get_clients',
+        url: '/tanium_importer/get_clients',
         async: false
     })
     .done(function(data) {
@@ -90,7 +94,7 @@ function push_selected_clients() {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: '/mist_importer/push_selected_clients',
+        url: '/tanium_importer/push_selected_clients',
         data: JSON.stringify(client_ids),
         dataType: "json"
     });
@@ -102,7 +106,7 @@ function clear_clients() {
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: '/mist_importer/clear_clients'
+        url: '/tanium_importer/clear_clients'
     });
 }
 
@@ -113,7 +117,7 @@ $(document).ready(function()
     load_col_model();
 
     grid.jqGrid({
-        url: '/mist_importer/load_clients',
+        url: '/tanium_importer/load_clients',
         datatype: 'json',
         colModel: clientColModel,
         height: 190,
@@ -121,7 +125,7 @@ $(document).ready(function()
         pager : '#pager',
         scroll: true,
         multiselect: true,
-        caption: 'Mist Client List'
+        caption: 'Tanium Client List'
     });
     
     $('#get_clients').on('click', function(e)

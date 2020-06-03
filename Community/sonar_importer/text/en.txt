@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,6 +24,7 @@ invalid_url_message=Invalid URL.
 require_message=This field is required.
 imported_message=Sonar Nodes were successfully imported.
 failed_message=Failed to import, check configuration.
+label_sonar_config=Kompira Cloud Sonar Configuration
 label_kompira_url=Kompira Cloud URL:
 label_api_token=API Token:
 label_network_name=Network Name:
@@ -33,6 +34,7 @@ label_node_list=Sonar Node List
 label_col_ipaddr=IP Address
 label_col_macaddr=MAC Address
 label_col_name=Name
+label_col_system=System
 label_col_state=State
 label_col_lastfound=Last Discovered
 label_get_nodes=Load

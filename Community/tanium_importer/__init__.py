@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,16 +14,16 @@
 # limitations under the License.
 #
 # By: Akira Goto (agoto@bluecatnetworks.com)
-# Date: 2019-10-30
-# Gateway Version: 19.8.1
-# Description: Fixpoint Kompira Cloud Sonar Importer __init__.py
+# Date: 2020-05-31
+# Gateway Version: 20.3.1
+# Description: Tanium Importer __init__.py
 
 type = 'ui'
 sub_pages = [
     {
-        'name'        : 'sonar_importer_page',
-        'title'       : u'Sonar Importer',
-        'endpoint'    : 'sonar_importer/sonar_importer_endpoint',
-        'description' : u'Import IPAM data from Kompira Cloud Sonar'
+        'name'        : 'tanium_importer_page',
+        'title'       : u'Tanium Importer',
+        'endpoint'    : 'tanium_importer/tanium_importer_endpoint',
+        'description' : u'Imports Tanium Client Information'
     },
 ]

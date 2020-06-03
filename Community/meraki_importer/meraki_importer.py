@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 # By: Akira Goto (agoto@bluecatnetworks.com)
-# Date: 2020-03-31
+# Date: 2020-03-301
 # Gateway Version: 20.1.1
 # Description: CISCO Meraki Importer.py
 
@@ -99,10 +99,10 @@ class MerakiImporter(object):
         if mc_mac is not None:
             mac_address = mc_mac.replace(':', '-').upper()
         return mac_address
-
+        
     def _construct_meraki_url(self, meraki_api, client):
         return meraki_api.get_client_detail_url(self.get_value('dashboard_url'), client['id'])
-
+        
     def _construct_linked_name(self, meraki_api, client):
         return "<a href='%s'  target='_blank'>%s</a>" % \
             (self._construct_meraki_url(meraki_api, client), client['name'])
@@ -122,12 +122,12 @@ class MerakiImporter(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return state
-
+    
     def _collect_clients(self, configuration, meraki_api, network_id):
         clients = []
         now = datetime.now()
         meraki_clients = meraki_api.get_clients(network_id)
-
+        
         for mc in meraki_clients:
             client = {}
             client['id'] = mc['id']
@@ -135,13 +135,17 @@ class MerakiImporter(object):
             client['order'] = util.ip42int(mc['ip'])
             client['name'] = mc['description'] if mc['description'] is not None else '-'
             client['system'] = mc['manufacturer']  if mc['manufacturer'] is not None else ''
-            if mc['os'] is not None:
-                client['system'] += '(' + mc['os'] + ')'
+            
+            if mc['os'] is not None and 0 < len(mc['os']):
+                if 0 < len(client['system']):
+                    client['system'] += ' - '
+                client['system'] += mc['os']
+                
             client['ipaddr'] = mc['ip']
             client['macaddr'] = self._convert_mac(mc['mac'])
             client['detail_link'] = self._construct_meraki_url(meraki_api, client)
             client['linked_name'] = self._construct_linked_name(meraki_api, client)
-
+            
             client['last_found'] = mc['lastSeen']
             lastfound = parser.parse(mc['lastSeen'])
             lastfound = lastfound.replace(tzinfo=None)
@@ -149,10 +153,10 @@ class MerakiImporter(object):
                 client['state'] = 'RECLAIM'
             else:
                 client['state'] = 'UNKNOWN'
-
+                
             clients.append(client)
         clients.sort(key = lambda client: client['order'])
-
+        
         return clients
 
     def _collect_ip4_networks(self, configuration, ip4_networks, ipaddr):
@@ -164,23 +168,23 @@ class MerakiImporter(object):
             end_address = util.ip42int(str(network.broadcast_address))
             if start_address <= pack_address <= end_address:
                 return
-
+                
         try:
             found = configuration.get_ip_range_by_ip(Entity.IP4Network, ipaddr)
             if found is not None:
                 ip4_networks.append(found)
-
+                
         except PortalException as e:
             print(safe_str(e))
-
+            
     def _compare_clients(self, configuration, clients):
         ip4_networks = []
         include_matches = self.get_value('include_matches')
         include_ipam_only = self.get_value('include_ipam_only')
-
+        
         for client in clients:
             self._collect_ip4_networks(configuration, ip4_networks, client['ipaddr'])
-
+            
         for ip4_network in ip4_networks:
             ip4_addresses = ip4_network.get_children_of_type(Entity.IP4Address)
             for ip4_address in ip4_addresses:
@@ -207,9 +211,9 @@ class MerakiImporter(object):
                     found['state'] = 'MATCH' if found['macaddr'] == macaddress else 'MISMATCH'
                     if include_matches == False and found['state'] == 'MATCH':
                         clients.remove(found)
-
+                    
         clients.sort(key = lambda client: client['order'])
-
+        
     def _update_mac_by_client(self, configuration, client):
         mac_address = None
         assignalbe_name = self._get_assignable_name(client)
@@ -219,7 +223,7 @@ class MerakiImporter(object):
                 mac_address.set_name(assignalbe_name)
         except PortalException as e:
             mac_address = configuration.add_mac_address(client['macaddr'], assignalbe_name)
-
+            
         mac_address.set_property('DetailLink', client['detail_link'])
         mac_address.set_property('System', client['system'])
         mac_address.set_property('ImportedSource', 'Meraki')
@@ -246,7 +250,7 @@ class MerakiImporter(object):
         except PortalException as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % safe_str(e))
-
+            
         self._update_mac_by_client(configuration, client)
 
     def _free_by_client(self, configuration, client):
@@ -266,17 +270,17 @@ class MerakiImporter(object):
             meraki_api = MerakiAPI(self.get_value('api_key'), debug=True)
             if not meraki_api.validate_api_key():
                 return succeed
-
+                
             organization = meraki_api.get_organization(self.get_value('org_name'))
             if organization is None:
                 return succeed
-
+                
             network = meraki_api.get_network(organization['id'], self.get_value('network_name'))
             if (network is not None) and (network['id'] != ''):
                 clients = self._collect_clients(configuration, meraki_api, network['id'])
                 self._compare_clients(configuration, clients)
                 self.set_clients(clients)
-
+                
         except Exception as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
@@ -294,3 +298,4 @@ class MerakiImporter(object):
             elif 'RECLAIM' == client['state']:
                 self._free_by_client(configuration, client)
         self.clear_clients()
+        

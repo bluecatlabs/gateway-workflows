@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,6 +23,7 @@ info=Import Juniper Mist Clients.
 require_message=This field is required.
 imported_message=Mist clients were successfully imported.
 failed_message=Failed to import, check configuration.
+label_mist_config=Juniper Mist Configuration
 label_org_id=Organization Id:
 label_api_token=API Token:
 label_site_name=Site Name:
@@ -32,6 +33,7 @@ label_client_list=Mist Client List
 label_col_ipaddr=IP Address
 label_col_macaddr=MAC Address
 label_col_name=Name
+label_col_system=System
 label_col_state=State
 label_col_lastfound=Last Discovered
 label_get_clients=Load

@@ -39,42 +39,51 @@ Description: CISCO Meraki Importer HTML -->
 <form id="meraki_importer_page_form" method="post"
     action="{{ url_for('meraki_importermeraki_importer_meraki_importer_page_form') }}"
         enctype="multipart/form-data" novalidate>
-    <hr/>
-    {{ render_field(form.api_key) }}
-    {{ render_field(form.org_name) }}
-    {{ render_field(form.network_name) }}
-    <hr/>
-    {{ render_field(form.dashboard_url) }}
-    <hr/>
-    <br/>
-    <table id="table"></table>
-    <div id="pager"></div>
-    <br/>
-    <table style="table-layout: fixed;">
-        <tr>
-            <td width="100">
-                <button id="get_clients" type="button" class="btn-default">
-                    {{ text['label_get_clients'] }}
-                </button>
-            </td>
-            <td width="20">
-                &nbsp;
-            </td>
-            <td width="160">
-                {{ render_field(form.include_matches) }} {{ text['label_include_matches'] }}
-            </td>
-            <td width="20">
-                &nbsp;
-            </td>
-            <td width="240">
-                {{ render_field(form.include_ipam_only) }} {{ text['label_include_ipam_only'] }}
-            </td>
-            <td width="300">
-                &nbsp;
-            </td>
-        </tr>
-    </table>
-    <hr/>
+    <div id="wide-content" class="wide-content">
+        <hr/>
+        <!-- Meraki Configuration Collapse Section -->
+        <a data-toggle="collapse" href="#merakiConfig" id="meraki-collapse" class="btn btn-default wide-content" style="text-align:left;">
+            {{ text['label_meraki_config'] }}<span class="glyphicon glyphicon-chevron-down"></span>
+        </a>
+        <div id="merakiConfig" class="collapse">
+            <br/>
+            {{ render_field(form.api_key) }}
+            {{ render_field(form.org_name) }}
+            {{ render_field(form.network_name) }}
+            <hr/>
+            {{ render_field(form.dashboard_url) }}
+        </div>
+        <hr/>
+        <br/>
+        <table id="table"></table>
+        <div id="pager"></div>
+        <br/>
+        <table style="table-layout: fixed;">
+            <tr>
+                <td width="100">
+                    <button id="get_clients" type="button" class="btn-default">
+                        {{ text['label_get_clients'] }}
+                    </button>
+                </td>
+                <td width="20">
+                    &nbsp;
+                </td>
+                <td width="160">
+                    {{ render_field(form.include_matches) }} {{ text['label_include_matches'] }}
+                </td>
+                <td width="20">
+                    &nbsp;
+                </td>
+                <td width="240">
+                    {{ render_field(form.include_ipam_only) }} {{ text['label_include_ipam_only'] }}
+                </td>
+                <td width="300">
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+        <hr/>
+    </div>
     <!-- don't remove the following token -->
     {{ form.csrf_token }}
     

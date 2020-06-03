@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,7 +43,7 @@ def get_configuration():
     if g.user:
         configuration = g.user.get_api().get_configuration(config.default_configuration)
     return configuration
-
+    
 
 class GenericFormTemplate(GatewayForm):
     """
@@ -54,11 +54,11 @@ class GenericFormTemplate(GatewayForm):
     """
     workflow_name = 'sonar_importer'
     workflow_permission = 'sonar_importer_page'
-
+    
     text=util.get_text(module_path(), config.language)
     invalid_url_message=text['invalid_url_message']
     require_message=text['require_message']
-
+    
     kompira_url = StringField(
         label=text['label_kompira_url'],
         validators=[URL(message=invalid_url_message)],
@@ -72,17 +72,17 @@ class GenericFormTemplate(GatewayForm):
         label=text['label_network_name'],
         validators=[DataRequired(message=require_message)]
     )
-
+    
     include_matches = BooleanField(
         label='',
         default='checked'
     )
-
+    
     include_ipam_only = BooleanField(
         label='',
         default='checked'
     )
-
+    
     submit = SubmitField(label=text['label_submit'])
 
 # The workflow name must be the first part of any endpoints defined in this file.
@@ -93,9 +93,9 @@ class GenericFormTemplate(GatewayForm):
 @util.exception_catcher
 def sonar_importer_sonar_importer_page():
     form = GenericFormTemplate()
-
+    
     sonar_importer = SonarImporter.get_instance(debug=True)
-
+    
     value = sonar_importer.get_value('kompira_url')
     if value is not None:
         form.kompira_url.data = value
@@ -111,7 +111,7 @@ def sonar_importer_sonar_importer_page():
     value = sonar_importer.get_value('include_ipam_only')
     if value is not None:
         form.include_ipam_only.data = value
-
+    
     return render_template(
         'sonar_importer_page.html',
         form=form,
@@ -124,7 +124,7 @@ def sonar_importer_sonar_importer_page():
 @util.exception_catcher
 def load_col_model():
     text=util.get_text(module_path(), config.language)
-
+    
     nodes = [
         {'index':'id', 'name':'id', 'hidden':True, 'sortable':False},
         {'index':'network_id', 'name':'network_id', 'hidden':True, 'sortable':False},
@@ -142,7 +142,11 @@ def load_col_model():
         },
         {
             'label': text['label_col_name'], 'index':'linked_name', 'name':'linked_name',
-            'width':200, 'sortable':False, 'formatter': 'link'
+            'width':140, 'sortable':False, 'formatter': 'link'
+        },
+        {
+            'label': text['label_col_system'], 'index':'system', 'name':'system',
+            'width':240, 'sortable':False
         },
         {
             'label': text['label_col_state'], 'index':'state', 'name':'state',
@@ -211,11 +215,11 @@ def push_selected_nodes():
     new_nodes = []
     node_ids = request.get_json()
     sonar_importer = SonarImporter.get_instance()
-
+    
     for node in sonar_importer.get_nodes():
         if node['id'] in node_ids:
             new_nodes.append(node)
-
+            
     sonar_importer.set_nodes(new_nodes)
     return jsonify(success=True)
 
@@ -241,11 +245,11 @@ def sonar_importer_sonar_importer_page_form():
         sonar_importer.set_value('include_matches', form.include_matches.data)
         sonar_importer.set_value('include_ipam_only', form.include_ipam_only.data)
         sonar_importer.save()
-
+        
         configuration = get_configuration()
         sonar_importer.import_nodes(configuration)
         sonar_importer.collect_nodes(configuration)
-
+        
         # Put form processing code here
         g.user.logger.info('SUCCESS')
         flash(text['imported_message'], 'succeed')

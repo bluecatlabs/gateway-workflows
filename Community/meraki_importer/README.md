@@ -30,7 +30,9 @@ When import is executed, BlueCat Address Manager will perform IP address reconci
 1. **BAM Default Configuration**  
 This workflow will be using the default configuration value in `/portal/bluecat_portal/config.py` in BlueCat Gateway container.  To set the default configuration, in BlueCat Gateway, go to Administration > Configurations > General Configuration.  
 In General Configuration, select the BAM Settings tab and enter the configuration name under "Default Configuration:" and save.  
-![screenshot](img/BAM_default_settings.jpg "BAM_default_settings")
+
+    <img src = "img/BAM_default_settings.jpg" width = "600px">  
+
 
 2. **Additional Python Code**  
 This workflow requires addtional python code.  
@@ -39,14 +41,15 @@ Copy directory *"sdwan"* under `additional/` to `/portal/bluecat_portal/customiz
 3. **jqGrid**  
 This workflow requires jqGrid.  
 Download jqGrid from [HERE](http://www.trirand.com/blog/?page_id=6).  
-After downloading, extract the following two files: *"ui.jqgrid.css"* and *"jquery.jqGrid.min.js"*.  
-Copy the two files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
+After downloading, extract the following three files: *"ui.jqgrid.css"*, *"jquery.jqGrid.min.js"* and *"grid.locale-xx.js"*.  
+*"grid.locale-xx.js"* will change depending on the locale you choose to use. (For instance, for Japan it will be *"grid.locale-ja.js"*)  
+Copy the three files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
 Make a new director `jqgrid` under `/portal/static/js/vendor/` if none exists.  
 
 
 ## Usage   
-1. **Setting Meraki Importer Parameters**  
-Set the following parameters.  
+1. **Setting Meraki Importer Parameters**
+Click *"Cisco Meraki Configuration"* to open up parameter settings menu and set the following parameters.   
 
     <img src = "img/meraki_importer1.jpg" width = "600px">  
 
@@ -74,7 +77,7 @@ Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI
   Enter the following into your browser search bar:  
   `https://{Dashboard-Instance}/api/v0/organizations/{Organization-ID}/networks`  
   Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com) and {Organization-ID} with your organization ID.  
-  <img src = "img/meraki_network_name_api.jpg" width = "500px">  
+  <img src = "img/meraki_network_name_api.jpg" height = "500px" width = "500px">  
 
 - Dashboard URL:  
 Enter the Meraki Dashboard URL in the following format:  

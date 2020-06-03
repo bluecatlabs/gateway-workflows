@@ -23,64 +23,19 @@ Description: CISCO Meraki Importer CSS */
     height:30px;
     vertical-align: baseline;
 }
-
 .ui-jqgrid .ui-jqgrid-htable th {
     height: 30px;
     vertical-align: baseline;
 }
-
 .ui-jqgrid tr.jqgrow td {
     vertical-align: baseline;
 }
-.hovertext
+.glyphicon
 {
-    border-bottom: 1px dotted;
-    text-decoration: none;
+    font-size: 10px;
+    margin-left: 4px;
 }
-.nav-tabs
-{
-    border-bottom: 0px solid;
-}
-
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover
-{
-    border-width: 0px;
-    background: transparent;
+.wide-content{
+    width: 840px;
 }
 
-.nav-tabs > li > a
-{
-    border: none;
-    padding: 10px 10px;
-}
-
-.nav-tabs > li.active > a, .nav-tabs > li > a:hover
-{
-    border: none;
-    color: inherit !important;
-    background: transparent;
-}
-
-.nav-tabs > li > a::after
-{
-    content: "";
-    background: #FFFFFF;
-    height: 2px;
-    position: absolute;
-    width: 100%;
-    left: 0px;
-    bottom: -1px;
-    transition: all 250ms ease 0s;
-    transform: scale(0);
-}
-
-.nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after
-{
-    transform: scale(1);
-}
-
-.tab-nav > li > a::after
-{
-    background: #21527d none repeat scroll 0% 0%;
-    color: #fff;
-}
