@@ -199,7 +199,7 @@ You can switch to a Japanese menu by doing the following.
     In General Configuration, select the *Customization* tab.  
     Under *Language:* type in `ja` and save.   
 
-      <img src = "img/langauge_ja.jpg" width = "400px" height = "300px">  
+        <img src = "img/langauge_ja.jpg" width = "500px" height = "300px">  
 
 
 2. **Appearance**  
