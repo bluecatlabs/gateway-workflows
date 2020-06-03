@@ -109,7 +109,7 @@ Replace {Dashboard-Instance}, {Network-Name} and {ID}.
   <img src = "img/meraki_dashboard_url_api.jpg" width = "600px">  
 
 
-2. **Loading Meraki Client Lists**  
+2. **Loading Meraki Client List**  
 
     <img src = "img/meraki_client_list_initial.jpg" width = "600px">  
 
@@ -197,8 +197,11 @@ You can switch to a Japanese menu by doing the following.
     ```  
     2. In the BlueCat Gateway Web UI, go to Administration > Configurations > General Configuration.   
     In General Configuration, select the *Customization* tab.  
-    Under *Language:* type in `ja` and save.  
-    ![screenshot](img/langauge_ja.jpg?raw=true "langauge_ja")  
+    Under *Language:* type in `ja` and save.   
+
+        <img src = "img/langauge_ja.jpg" width = "600px">  
+
+
 
 2. **Appearance**  
 This will make the base html menus a little bit wider.  
