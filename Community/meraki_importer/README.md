@@ -42,23 +42,24 @@ Copy directory *"sdwan"* under `additional/` to `/portal/bluecat_portal/customiz
 This workflow requires jqGrid.  
 Download jqGrid from [HERE](http://www.trirand.com/blog/?page_id=6).  
 After downloading, extract the following three files: *"ui.jqgrid.css"*, *"jquery.jqGrid.min.js"* and *"grid.locale-xx.js"*.  
-*"grid.locale-xx.js"* will change depending on the locale you choose to use. (For instance, for Japan it will be *"grid.locale-ja.js"*)  
+*"grid.locale-xx.js"* will change depending on the locale you choose to use.  
+(For instance, for Japan it will be *"grid.locale-ja.js"*)  
 Copy the three files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
 Make a new director `jqgrid` under `/portal/static/js/vendor/` if none exists.  
 
 4. **UDF**  
-This workflow requires the additional UDF to the MAC Address object in BAM.  
-Add the following UDF to the MAC Address object in BAM.  
+This workflow requires additional UDF to the **MAC Address object** in BAM.  
+Add the following UDF to the **MAC Address object** in BAM.  
   - System  
   Field Name: System    
   Display Name: System   
   Type: Text  
   - Imported Source    
-  Field Name: ImportedSource
+  Field Name: ImportedSource  
   Display Name: Imported Source   
   Type: Text  
   - Detail Link  
-  Field Name: DetailLink
+  Field Name: DetailLink  
   Display Name: Detail Link  
   Type: URL
 
