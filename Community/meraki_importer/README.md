@@ -202,7 +202,6 @@ You can switch to a Japanese menu by doing the following.
         <img src = "img/langauge_ja.jpg" width = "600px">  
 
 
-
 2. **Appearance**  
 This will make the base html menus a little bit wider.  
     1. Copy all files under the directory `additional/templates` to `/portal/templates` inside the Bluecat Gateway container.
