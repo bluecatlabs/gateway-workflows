@@ -48,7 +48,7 @@ Make a new director `jqgrid` under `/portal/static/js/vendor/` if none exists.
 
 
 ## Usage   
-1. **Setting Meraki Importer Parameters**
+1. **Setting Meraki Importer Parameters**  
 Click *"Cisco Meraki Configuration"* to open up parameter settings menu and set the following parameters.   
 
     <img src = "img/meraki_importer1.jpg" width = "600px">  
