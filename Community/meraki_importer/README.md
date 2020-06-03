@@ -77,7 +77,7 @@ Make sure it is the same name (case sensitive) as in the Meraki Dashboard web UI
   Enter the following into your browser search bar:  
   `https://{Dashboard-Instance}/api/v0/organizations/{Organization-ID}/networks`  
   Replace {Dashboard-Instance} with your Meraki Dashboard instance (xxx.meraki.com) and {Organization-ID} with your organization ID.  
-  <img src = "img/meraki_network_name_api.jpg" height = "300px" width = "500px">  
+  <img src = "img/meraki_network_name_api.jpg" width = "500px" height = "100px">  
 
 - Dashboard URL:  
 Enter the Meraki Dashboard URL in the following format:  
