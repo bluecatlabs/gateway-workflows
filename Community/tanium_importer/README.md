@@ -85,7 +85,7 @@ The retry counts and the intervals make it possible for the importer to retry th
 The number of retries for the API call.  
 The default and recommended value is **4**.
 
-- Intervals:  
+- Interval (Seconds):  
 The number of seconds between retries.  
 The default and recommended value is **3**.  
 
