@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,6 +35,10 @@ label_col_macaddr=MACアドレス
 label_col_name=名前
 label_col_system=システム
 label_col_state=状態
+label_state_unknown=不明
+label_state_match=一致
+label_state_mismatch=不一致
+label_state_reclaim=再利用可能
 label_col_lastfound=最終確認
 label_get_clients=取得
 label_submit=インポート

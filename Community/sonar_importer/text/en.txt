@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,6 +36,10 @@ label_col_macaddr=MAC Address
 label_col_name=Name
 label_col_system=System
 label_col_state=State
+label_state_unknown=Unknown
+label_state_match=Match
+label_state_mismatch=Mismatch
+label_state_reclaim=Reclaimable
 label_col_lastfound=Last Discovered
 label_get_nodes=Load
 label_submit=Import
