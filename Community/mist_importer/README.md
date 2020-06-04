@@ -30,7 +30,9 @@ When import is executed, BlueCat Address Manager will perform IP address reconci
 1. **BAM Default Configuration**  
 This workflow will be using the default configuration value in `/portal/bluecat_portal/config.py` in BlueCat Gateway container.  To set the default configuration, in BlueCat Gateway, go to Administration > Configurations > General Configuration.  
 In General Configuration, select the BAM Settings tab and enter the configuration name under "Default Configuration:" and save.  
-![screenshot](img/BAM_default_settings.jpg "BAM_default_settings")
+
+    <img src = "img/BAM_default_settings.jpg" width = "600px">  
+
 
 2. **Additional Python Code**  
 This workflow requires addtional python code.  
@@ -39,9 +41,27 @@ Copy directory *"mist"* under `additional/` to `/portal/bluecat_portal/customiza
 3. **jqGrid**  
 This workflow requires jqGrid.  
 Download jqGrid from [HERE](http://www.trirand.com/blog/?page_id=6).  
-After downloading, extract the following two files: *"ui.jqgrid.css"* and *"jquery.jqGrid.min.js"*.  
-Copy the two files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
+After downloading, extract the following three files: *"ui.jqgrid.css"*, *"jquery.jqGrid.min.js"* and *"grid.locale-xx.js"*.  
+*"grid.locale-xx.js"* will change depending on the locale you choose to use.  
+(For instance, for Japan it will be *"grid.locale-ja.js"*)  
+Copy the three files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
 Make a new director `jqgrid` under `/portal/static/js/vendor/` if none exists.  
+
+4. **UDF**  
+This workflow requires additional UDF to the **MAC Address object** in BAM.  
+Add the following UDF to the **MAC Address object** in BAM.  
+  - System  
+  Field Name: System    
+  Display Name: System   
+  Type: Text  
+  - Imported Source    
+  Field Name: ImportedSource  
+  Display Name: Imported Source   
+  Type: Text  
+  - Detail Link  
+  Field Name: DetailLink  
+  Display Name: Detail Link  
+  Type: URL
 
 
 ## Usage   
@@ -64,7 +84,7 @@ Please refer to the Mist "API Token" API documentation for further details.
 - Site Name:  
 This corresponds to the *Organization Name* in the **Organization settings** menu.  
 Make sure it is the same name (case sensitive) as in the Mist Dashboard web UI. (*Organization* -> *Settings*)  
-  <img src = "img/mist_org_name.jpg" width = "400px">  
+  <img src = "img/mist_org_name.jpg" width = "300px">  
   Please refer to the Mist "Organization" API documentation if you wish to obtain this via API.  
   [https://api.mist.com/api/v1/docs/Org#org-setting](https://api.mist.com/api/v1/docs/Org#org-setting)     
 
@@ -91,7 +111,7 @@ When this option is toggled on, it will load the clients which only exists in Bl
     + *"Reclaimable IP Address"* => An IP address that exists in BlueCat Address Manager, but not in Mist Dashboard. This may represent a device that was turned off at the time of the discovery, or the address may no longer exist on the network.
 
 **Mist Client List**    
-  <img src = "img/mist_client_list_loaded.jpg" width = "600px">   
+  <!-- <img src = "img/mist_client_list_loaded.jpg" width = "600px">    -->
 
 - IP Address  
 The IP Address of the loaded client.  
@@ -101,6 +121,9 @@ The MAC Address of the loaded client.
 
 - Name  
 The host name of the loaded client (if exists).  
+
+- System  
+The device type of the loaded client (if exists).  
 
 - State  
 The IP address state of the loaded client.  
@@ -125,6 +148,9 @@ After thoroughly checking the state of the loaded clients, select the clients yo
 
     Click *IMPORT* to import data into BlueCat Address Manager.  
     By Clicking *CANCEL*, the whole list will be cleared.  
+
+    **DHCP leased IP addresses**  
+    If the imported IP address happens to be a DHCP leased IP address, then it will **NOT** update the IP address and MAC address information in BlueCat Address Manager and will only add additional information obtained by Meraki Dashboard.  
 
 4. **Checking imported information**  
 Once imported, check the device information in BlueCat Address Manager.  
@@ -151,7 +177,9 @@ You can switch to a Japanese menu by doing the following.
     2. In the BlueCat Gateway Web UI, go to Administration > Configurations > General Configuration.   
     In General Configuration, select the *Customization* tab.  
     Under *Language:* type in `ja` and save.  
-    ![screenshot](img/langauge_ja.jpg?raw=true "langauge_ja")  
+
+            <img src = "img/langauge_ja.jpg" width = "500px" height = "400px">  
+
 
 2. **Appearance**  
 This will make the base html menus a little bit wider.  
