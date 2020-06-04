@@ -154,6 +154,14 @@ def tanium_importer_tanium_importer_page():
 def load_col_model():
     text=util.get_text(module_path(), config.language)
     
+    links = '<img src="{icon}" title="{title}" width="16" height="16">'
+    value_table = {
+        'UNKNOWN': links.format(icon='img/help.gif', title=text['label_state_unknown']),
+        'MATCH': links.format(icon='img/check.gif', title=text['label_state_match']),
+        'MISMATCH': links.format(icon='img/about.gif', title=text['label_state_mismatch']),
+        'RECLAIM': links.format(icon='img/data_delete.gif', title=text['label_state_reclaim'])
+    }
+
     col_model = [
         {'index':'id', 'name':'id', 'hidden':True, 'sortable':False},
         {'index':'order', 'name':'order', 'hidden':True, 'sortable':False},
@@ -192,12 +200,7 @@ def load_col_model():
             'width':50, 'align':'center', 'sortable':False,
             'formatter': 'select',
             'formatoptions': {
-                'value': {
-                    'UNKNOWN': '<img src="img/help.gif" title="Unknown" width="16" height="16">',
-                    'MATCH': '<img src="img/check.gif" title="Match" width="16" height="16">',
-                    'MISMATCH': '<img src="img/about.gif" title="Mismatch" width="16" height="16">',
-                    'RECLAIM': '<img src="img/data_delete.gif" title="Reclam" width="16" height="16">'
-                }
+                'value': value_table
             }
         },
         {
