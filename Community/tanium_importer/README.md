@@ -130,7 +130,7 @@ When this option is toggled on, it will load the clients which only exists in Bl
   <img src = "img/tanium_client_list_loaded.jpg" width = "600px">   
 
 - TA  
-Indicates whether a *"Tanium Agent"* is installed.  
+Indicates whether a *"Tanium Agent"* is installed.  Tanium Installed Unknown
   + This icon <img src = "img/TA_installed.jpg "TA_installed" width = "200px"> will show when a *"Tanium Agent"* is installed in the client.    
 
   + This icon ![screenshot](img/TA_not_installed.jpg "TA_not_installed") will show when a *"Tanium Agent"* is not installed in the client. These clients will only appear when the *"Include Discovered"* loading option is toggled on.  
