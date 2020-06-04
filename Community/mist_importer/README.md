@@ -143,7 +143,7 @@ Before reclaiming an IP address, please bear in mind that there is a good possib
 3. **Importing**  
 After thoroughly checking the state of the loaded clients, select the clients you wish to import by checking on the checkbox. You can either check them one by one or check all them by checking the top left check box in the list.  
 
-    <img src = "img/mist_client_list_check.jpg" width = "600px">  
+    <!-- <img src = "img/mist_client_list_check.jpg" width = "600px">   -->
 
 
     Click *IMPORT* to import data into BlueCat Address Manager.  
@@ -161,7 +161,7 @@ Once imported, check the device information in BlueCat Address Manager.
     In addition to the added information from Mist Dashboard, a direct link to the Mist Dashboard client information page will appear.  
 
 
-    <img src = "img/mist_client_info.jpg" width = "600px">  
+    <!-- <img src = "img/mist_client_info.jpg" width = "600px">   -->
 
 ---
 
@@ -178,7 +178,7 @@ You can switch to a Japanese menu by doing the following.
     In General Configuration, select the *Customization* tab.  
     Under *Language:* type in `ja` and save.  
 
-            <img src = "img/langauge_ja.jpg" width = "500px" height = "400px">  
+          <img src = "img/langauge_ja.jpg" width = "500px" height = "400px">  
 
 
 2. **Appearance**  
