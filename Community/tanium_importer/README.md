@@ -77,9 +77,9 @@ A username which is registered in the Tanium Dashboard.
 - Password:  
 The corresponding password for the username entered above.     
 
-**Retry count and Intervals**  
-Whenever loading Tanium clients via API, the Tanium server will fetch to each endpoint and acquire the latest information. This takes time and therefore loading all Tanium clients might take more than one API call.   
-The retry counts and the intervals make it possible for the importer to retry the API call until it acquires the necessary  client information.  
+  **Retry count and Intervals**  
+  Whenever loading Tanium clients via API, the Tanium server will fetch to each endpoint and acquire the latest information. This takes time and therefore loading all Tanium clients might take more than one API call.   
+  The retry counts and the intervals make it possible for the importer to retry the API call until it acquires the necessary  client information.  
 
 - Retry Count:  
 The number of retries for the API call.  
