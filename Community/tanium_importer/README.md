@@ -157,7 +157,7 @@ The IP address state of the loaded client.
   + This icon ![screenshot](img/data_delete.gif "data_delete") represents the state **Reclaimable**. When a client of this state is imported, it will reclaim the IP address in BlueCat Address Manager.  
 
 - Last Discovered  
-Timestamp of the last time Mist discovered the client. Tanium Dashboard will only retain this information up to 30 days. If a clients last discovered time is over 30 days plus the clients IP address is registered in BlueCat Address Manager, then the state of the client will appear as **Reclaimable** in the list.  
+Timestamp of the last time Tanium discovered the client. Tanium Dashboard will only retain this information up to 30 days. If a clients last discovered time is over 30 days plus the clients IP address is registered in BlueCat Address Manager, then the state of the client will appear as **Reclaimable** in the list.  
 **IMPORTANT:**  
 Before reclaiming an IP address, please bear in mind that there is a good possibility that the last discovered time has expired (gone over 30 days) but the IP address is actually still assigned and thus should not be reclaimed.    
 
