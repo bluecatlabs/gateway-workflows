@@ -126,6 +126,7 @@ When this option is toggled on, it will load the clients which only exists in Bl
     + *"Reclaimable IP Address"* => An IP address that exists in BlueCat Address Manager, but not in Tanium Dashboard. This may represent a device that was turned off at the time of the discovery, or the address may no longer exist on the network.
 
 **Tanium Client List**    
+
   <img src = "img/tanium_client_list_loaded.jpg" width = "600px">   
 
 - TA  
