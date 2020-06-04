@@ -97,7 +97,7 @@ Set the network(s) of the Tanium clients you wish to acquire with CIDR notation.
     Muliple networks can be targeted with a comma separator.  
     (e.g. `192.168.10.0/24, 10.10.10.0/24`)  
 
-    **"Include Discovered" Loading Option**
+    **"Include Discovered" Loading Option**  
     By toggling on this option, when loading, it will also load the clients which **DO NOT** have Tanium Agents installed.  
     This is possible because of the *"Discover"* function of Tanium.  
     Default is toggled off (meaning it will only load clients with Tanium Agents installed).  
@@ -127,6 +127,12 @@ When this option is toggled on, it will load the clients which only exists in Bl
 
 **Tanium Client List**    
   <img src = "img/tanium_client_list_loaded.jpg" width = "600px">   
+
+- TA  
+Indicates whether a *"Tanium Agent"* is installed.  
+  + This icon ![screenshot](img/TA_installed.jpg "TA_installed") will show when a *"Tanium Agent"* is installed in the client.    
+
+  + This icon ![screenshot](img/TA_not_installed.jpg "TA_not_installed") will show when a *"Tanium Agent"* is not installed in the client. These clients will only appear when the *"Include Discovered"* loading option is toggled on.  
 
 - IP Address  
 The IP Address of the loaded client.  
