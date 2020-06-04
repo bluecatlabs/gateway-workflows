@@ -86,7 +86,7 @@ The number of retries for the API call.
 The default and recommended value is **4**.
 
 - Intervals:  
-The number of seconds between retries.
+The number of seconds between retries.  
 The default and recommended value is **3**.  
 
 2. **Setting Target Networks**  
