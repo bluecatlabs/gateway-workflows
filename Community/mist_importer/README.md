@@ -150,8 +150,8 @@ After thoroughly checking the state of the loaded clients, select the clients yo
     Click *IMPORT* to import data into BlueCat Address Manager.  
     By Clicking *CANCEL*, the whole list will be cleared.  
 
-    **DHCP leased IP addresses**  
-    If the imported IP address happens to be a DHCP leased IP address, then it will **NOT** update the IP address and MAC address information in BlueCat Address Manager and will only add additional information obtained by Mist Dashboard.  
+    **DHCP range IP addresses**  
+    If the imported IP address happens to be within a DHCP range, then it will **NOT** update the IP address and MAC address information in BlueCat Address Manager and will only add additional information obtained by Mist Dashboard.  
 
 4. **Checking imported information**  
 Once imported, check the device information in BlueCat Address Manager.  
