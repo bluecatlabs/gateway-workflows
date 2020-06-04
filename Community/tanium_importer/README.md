@@ -94,13 +94,13 @@ Set the network(s) of the Tanium clients you wish to acquire with CIDR notation.
 
     <img src = "img/tanium_importer2.jpg" width = "600px">  
 
-Muliple networks can be targeted with a comma separator.  
-(e.g. 192.168.10.0/24, 10.10.10.0/24)  
+    Muliple networks can be targeted with a comma separator.  
+    (e.g. `192.168.10.0/24, 10.10.10.0/24`)  
 
-**"Include Discovered" Loading Option**
-By toggling on this option, when loading, it will also load the clients which **DO NOT** have Tanium Agents installed.  
-This is possible because of the *"Discover"* function of Tanium.  
-Default is toggled off (meaning it will only load clients with Tanium Agents installed).  
+    **"Include Discovered" Loading Option**
+    By toggling on this option, when loading, it will also load the clients which **DO NOT** have Tanium Agents installed.  
+    This is possible because of the *"Discover"* function of Tanium.  
+    Default is toggled off (meaning it will only load clients with Tanium Agents installed).  
 
 
 3. **Loading Tanium Client Lists**  
