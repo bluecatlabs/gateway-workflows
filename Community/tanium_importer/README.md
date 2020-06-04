@@ -133,7 +133,8 @@ When this option is toggled on, it will load the clients which only exists in Bl
 Indicates whether a *"Tanium Agent"* is installed.  
   + This icon ![screenshot](img/good.gif "good") will show when a *"Tanium Agent"* is installed in the client.  
 
-  + This icon ![screenshot](img/unknown.gif "unknown") will show when a *"Tanium Agent"* is not installed in the client. These clients will only appear when the *"Include Discovered"* loading option is toggled on.  
+  + This icon ![screenshot](img/unknown.gif "unknown") will show when a *"Tanium Agent"* is not installed in the client.  
+    These clients will only appear when the *"Include Discovered"* loading option is toggled on.  
 
 - IP Address  
 The IP Address of the loaded client.  
