@@ -30,7 +30,9 @@ When import is executed, BlueCat Address Manager will perform IP address reconci
 1. **BAM Default Configuration**  
 This workflow will be using the default configuration value in `/portal/bluecat_portal/config.py` in BlueCat Gateway container.  To set the default configuration, in BlueCat Gateway, go to Administration > Configurations > General Configuration.  
 In General Configuration, select the BAM Settings tab and enter the configuration name under "Default Configuration:" and save.  
-![screenshot](img/BAM_default_settings.jpg "BAM_default_settings")
+
+    <img src = "img/BAM_default_settings.jpg" width = "600px">  
+
 
 2. **Additional Python Code**  
 This workflow requires addtional python code.  
@@ -39,14 +41,34 @@ Copy directory *"sonar"* under `additional/` to `/portal/bluecat_portal/customiz
 3. **jqGrid**  
 This workflow requires jqGrid.  
 Download jqGrid from [HERE](http://www.trirand.com/blog/?page_id=6).  
-After downloading, extract the following two files: *"ui.jqgrid.css"* and *"jquery.jqGrid.min.js"*.  
-Copy the two files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
+After downloading, extract the following three files: *"ui.jqgrid.css"*, *"jquery.jqGrid.min.js"* and *"grid.locale-xx.js"*.  
+*"grid.locale-xx.js"* will change depending on the locale you choose to use.  
+(For instance, for Japan it will be *"grid.locale-ja.js"*)  
+Copy the three files to `/portal/static/js/vendor/jqgrid/` inside the Bluecat Gateway container.  
 Make a new director `jqgrid` under `/portal/static/js/vendor/` if none exists.  
+
+4. **UDF**  
+This workflow requires additional UDF to the **MAC Address object** in BAM.  
+Add the following UDF to the **MAC Address object** in BAM.  
+  - System  
+  Field Name: System    
+  Display Name: System   
+  Type: Text  
+  - Imported Source    
+  Field Name: ImportedSource  
+  Display Name: Imported Source   
+  Type: Text  
+  - Detail Link  
+  Field Name: DetailLink  
+  Display Name: Detail Link  
+  Type: URL
+
 
 
 ## Usage   
 1. **Setting Sonar Importer Parameters**  
-Set the following parameters.  
+Click the *"Kompira Cloud Sonar Configuration"* pull down menu to open up parameter settings.  
+Set the following parameters.    
 
     <img src = "img/sonar_importer1.jpg" width = "600px">  
 
@@ -103,6 +125,9 @@ The MAC Address of the loaded node.
 - Name  
 The host name of the loaded node (if exists).  
 
+- System  
+The vendor name of the loaded client (if exists).  
+
 - State  
 The IP address state of the loaded node.  
   + This icon ![screenshot](img/check.gif) represents the state **Matched**. When a node of this state is imported, it will not update the IP address and MAC address information in BlueCat Address Manager (since it is already a match) but will add additional information obtained by Kompira Cloud Dashboard.  
@@ -126,6 +151,10 @@ After thoroughly checking the state of the loaded nodes, select the nodes you wi
 
     Click *IMPORT* to import data into BlueCat Address Manager.  
     By Clicking *CANCEL*, the whole list will be cleared.  
+
+    **DHCP leased IP addresses**  
+    If the imported IP address happens to be a DHCP leased IP address, then it will **NOT** update the IP address and MAC address information in BlueCat Address Manager and will only add additional information obtained by Meraki Dashboard.  
+
 
 4. **Checking imported information**  
 Once imported, check the device information in BlueCat Address Manager.  
@@ -152,7 +181,9 @@ You can switch to a Japanese menu by doing the following.
     2. In the BlueCat Gateway Web UI, go to Administration > Configurations > General Configuration.   
     In General Configuration, select the *Customization* tab.  
     Under *Language:* type in `ja` and save.  
-    ![screenshot](img/langauge_ja.jpg?raw=true "langauge_ja")  
+
+        <img src = "img/langauge_ja.jpg" width = "500px" height = "400px">  
+
 
 2. **Appearance**  
 This will make the base html menus a little bit wider.  

@@ -66,7 +66,8 @@ Add the following UDF to the **MAC Address object** in BAM.
 
 ## Usage   
 1. **Setting Mist Importer Parameters**  
-Set the following parameters.  
+Click the *"Juniper Mist Configuration"* pull down menu to open up parameter settings.  
+Set the following parameters.    
 
     <img src = "img/mist_importer1.jpg" width = "600px">  
 
