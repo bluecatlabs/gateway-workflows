@@ -114,6 +114,7 @@ When this option is toggled on, it will load the nodes which only exists in Blue
     + *"Reclaimable IP Address"* => An IP address that exists in BlueCat Address Manager, but not in Kompira Cloud Dashboard. This may represent a device that was turned off at the time of the discovery, or the address may no longer exist on the network.
 
 **Sonar Node List**    
+
     <img src = "img/sonar_client_list_loaded.jpg" width = "600px">   
 
 - IP Address  
