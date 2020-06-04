@@ -137,9 +137,9 @@ The IP address state of the loaded client.
   + This icon ![screenshot](img/data_delete.gif "data_delete") represents the state **Reclaimable**. When a client of this state is imported, it will reclaim the IP address in BlueCat Address Manager.  
 
 - Last Discovered  
-Timestamp of the last time Mist discovered the client. Mist Dashboard will only retain this information up to 30 days. If a clients last discovered time is over 30 days plus the clients IP address is registered in BlueCat Address Manager, then the state of the client will appear as **Reclaimable** in the list.  
+Timestamp of the last time Mist discovered the client. The importer will determine whether an IP address is reclaimable or not depending on the last discovered time. If more than 30 days have passed since the last discovered time, the importer will assume the IP address is reclaimable and change the *"state"* icon of the client to **Reclaimable** (![screenshot](img/data_delete.gif "data_delete") )    
 **IMPORTANT:**  
-Before reclaiming an IP address, please bear in mind that there is a good possibility that the last discovered time has expired (gone over 30 days) but the IP address is actually still assigned and thus should not be reclaimed.    
+Before reclaiming an IP address, please bear in mind that there is a good possibility that even though an IP address shows as a **Reclaimable** state in the list, it is actually still assigned and thus should not be reclaimed. This will happen when more than 30 days have passed since the last discovered time. Make sure the IP address is reclaimable before actually reclaiming it.       
 
 3. **Importing**  
 After thoroughly checking the state of the loaded clients, select the clients you wish to import by checking on the checkbox. You can either check them one by one or check all them by checking the top left check box in the list.  
@@ -151,7 +151,7 @@ After thoroughly checking the state of the loaded clients, select the clients yo
     By Clicking *CANCEL*, the whole list will be cleared.  
 
     **DHCP leased IP addresses**  
-    If the imported IP address happens to be a DHCP leased IP address, then it will **NOT** update the IP address and MAC address information in BlueCat Address Manager and will only add additional information obtained by Meraki Dashboard.  
+    If the imported IP address happens to be a DHCP leased IP address, then it will **NOT** update the IP address and MAC address information in BlueCat Address Manager and will only add additional information obtained by Mist Dashboard.  
 
 4. **Checking imported information**  
 Once imported, check the device information in BlueCat Address Manager.  
