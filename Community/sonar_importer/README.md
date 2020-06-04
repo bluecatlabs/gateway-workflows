@@ -115,7 +115,8 @@ When this option is toggled on, it will load the nodes which only exists in Blue
 
 **Sonar Node List**    
 
-  <img src = "img/sonar_client_list_loaded.jpg" width = "600px">   
+    <img src = "img/sonar_client_list_loaded.jpg" width = "600px">   
+
 
 - IP Address  
 The IP Address of the loaded node.  
