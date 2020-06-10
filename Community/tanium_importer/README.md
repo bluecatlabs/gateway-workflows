@@ -166,7 +166,7 @@ Timestamp of the last time Tanium server discovered the client. The importer wil
 Before reclaiming an IP address, please bear in mind that there is a good possibility that even though an IP address shows as a **Reclaimable** state in the list, it is actually still assigned and thus should not be reclaimed. This will happen when more than 30 days have passed since the last discovered time. Make sure the IP address is reclaimable before actually reclaiming it.  
 
 3. **Importing**  
-After thoroughly checking the state of the loaded clients, select the clients you wish to import by checking on the checkbox. You can either check them one by one or check all them by checking the top left check box in the list.  
+After thoroughly checking the state of the loaded clients, select the clients you wish to import by checking on the checkbox. You can either select them one by one or select all by checking the top left check box in the list.  
 
     <img src = "img/tanium_client_list_check.jpg" width = "600px">  
 
