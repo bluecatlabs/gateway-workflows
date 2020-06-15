@@ -164,7 +164,13 @@ def load_col_model():
         },
         {
             'label': text['label_col_lastfound'], 'index':'last_found', 'name':'last_found',
-            'width':140, 'align':'center', 'sortable':False
+            'width':140, 'align':'center', 'sortable':False,
+            'formatter': 'date',
+            'formatoptions': {
+                'srcformat': 'ISO8601Long',
+                'newformat': 'Y-m-d H:i:s',
+                'userLocalTime': True
+            }
         }
     ]
     return jsonify(clients)

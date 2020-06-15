@@ -120,11 +120,13 @@ class MistImporter(object):
         
         for mc in mist_clients:
             client = {}
+            if self._debug:
+                print('mc:', mc)
             client['id'] = mc['_id']
             client['site_id'] = mc['site_id']
             client['order'] = util.ip42int(mc['ip'])
-            client['name'] = mc['hostname']
-            client['system'] = mc['manufacture']
+            client['name'] = mc['hostname'] if 'hostname' in mc.keys() else ''
+            client['system'] = mc['manufacture'] if mc['manufacture'] != 'Unknown' else ''
             
             if mc['family'] is not None and 0 < len(mc['family']):
                 if 0 < len(client['system']):
@@ -143,7 +145,7 @@ class MistImporter(object):
             
             lastfound = datetime.fromtimestamp(mc['last_seen'])
             lastfound = lastfound.replace(tzinfo=None)
-            client['last_found'] = lastfound.strftime('%Y-%m-%d %H:%M:%S')
+            client['last_found'] = lastfound.strftime('%Y-%m-%dT%H:%M:%S')
             if (now - lastfound) > timedelta(days=30):
                 client['state'] = 'RECLAIM'
             else:
