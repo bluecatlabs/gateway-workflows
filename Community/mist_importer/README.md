@@ -114,7 +114,7 @@ When this option is toggled on, it will load the clients which only exists in Bl
     + *"Reclaimable IP Address"* => An IP address that exists in BlueCat Address Manager, but not in Mist Cloud Instance. This may represent a device that was turned off at the time of the discovery, or the address may no longer exist on the network.
 
 **Mist Client List**    
-  <!-- <img src = "img/mist_client_list_loaded.jpg" width = "600px">    -->
+  <img src = "img/mist_client_list_loaded.jpg" width = "600px">   
 
 - IP Address  
 The IP Address of the loaded client.  
@@ -146,7 +146,7 @@ Before reclaiming an IP address, please bear in mind that there is a good possib
 3. **Importing**  
 After thoroughly checking the state of the loaded clients, select the clients you wish to import by checking on the checkbox. You can either select them one by one or select all by checking the top left check box in the list.  
 
-    <!-- <img src = "img/mist_client_list_check.jpg" width = "600px">   -->
+    <img src = "img/mist_client_list_check.jpg" width = "600px">  
 
 
     Click *IMPORT* to import data into BlueCat Address Manager.  
@@ -164,7 +164,7 @@ Once imported, check the device information in BlueCat Address Manager.
     In addition to the added information from Mist Cloud Instance, a direct link to the Mist Cloud Instance client information page will appear.  
 
 
-    <!-- <img src = "img/mist_client_info.jpg" width = "600px">   -->
+    <img src = "img/mist_client_info.jpg" width = "600px">  
 
 ---
 
