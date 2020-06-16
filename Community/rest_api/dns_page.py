@@ -89,6 +89,24 @@ cname_zone_ns = api.namespace(
     description='CName Record operations',
 )
 
+text_default_ns = api.namespace('text_records', description='Text Record operations')
+text_ns = api.namespace(
+    'text_records',
+    path='/configurations/<string:configuration>/views/<string:view>/text_records/',
+    description='Text Record operations',
+)
+
+text_zone_default_ns = api.namespace(
+    'text_records',
+    path='/zones/<path:zone>/text_records',
+    description='Text Record operations',
+)
+text_zone_ns = api.namespace(
+    'text_records',
+    path='/configurations/<string:configuration>/views/<string:view>/zones/<path:zone>/text_records/',
+    description='Text Record operations',
+)
+
 view_doc = dict(config_doc, view={'in': 'path', 'description': 'View name'})
 zone_doc = dict(view_doc, zone={'in': 'path', 'description': 'Recursive Zone name and subzone name'})
 absolute_name_doc = {'absolute_name': {'in': 'path', 'description': 'The FQDN of the record'}}
@@ -122,6 +140,15 @@ cname_parser.add_argument('linked_record', location="json", help='The name of th
 cname_patch_parser = cname_parser.copy()
 cname_patch_parser.add_argument('name', location="json", help='The name of the alias record')
 cname_patch_parser.remove_argument('absolute_name')
+
+text_parser = host_parser.copy()
+text_parser.remove_argument('ip4_address')
+text_parser.remove_argument('ttl')
+text_parser.remove_argument('properties')
+text_parser.add_argument('text', location="json", required=True, help='The text body of the Text record')
+
+text_patch_parser = text_parser.copy()
+text_patch_parser.remove_argument('absolute_name')
 
 zone_model = api.clone(
     'zones',
@@ -182,6 +209,21 @@ cname_patch_model = api.model(
         'ttl':  fields.Integer(description='The TTL of the CName record'),
         'properties':  fields.String(description='The properties of the CName record', default='attribute=value|'),
     },
+)
+
+text_model = api.model(
+  'text_records',
+  {
+    'absolute_name': fields.String(required=True, description='The FQDN of the Text record'),
+    'text': fields.String(required=True, description='The text body of the Text record'),
+  },
+)
+
+text_patch_model = api.model(
+  'text_records_patch',
+  {
+    'text': fields.String(description='The text body of the Text record'),
+  },
 )
 
 dns_defaults = {'configuration': config.default_configuration, 'view': config.default_view}
@@ -640,3 +682,96 @@ class CNameRecord(Resource):
         result = cname_record.to_json()
         return result
 
+@text_zone_ns.route('/')
+@text_zone_default_ns.route('/', defaults=dns_defaults)
+class TextRecordCollection(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    @text_ns.response(200, 'Found Text records.')
+    def get(self, configuration, view, zone=None):
+      """ Get all text records belonging to default or provided Configuration and View plus Zone hierarchy. """
+      configuration = g.user.get_api().get_configuration(configuration)
+      view = configuration.get_view(view)
+      zone_parent = view
+      zone_hierarchy = zone.split('/zones')
+      zone_entity = zone_parent.get_zone(zone_hierarchy[0])
+      zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+
+      text_records = zone.get_children_of_type(zone.TextRecord)
+      result = [text.to_json() for text in text_records]
+      return jsonify(result)
+
+    @util.rest_workflow_permission_required('rest_page')
+    @text_ns.response(201, 'Text Record successfully created.', model=entity_return_model)
+    @text_ns.expect(text_model, validate=True)
+    def post(self, configuration, view, zone=None):
+      """ Create a text record belonging to default or provided Configuration and View plus Zone hierarchy. """
+      data = host_parser.parse_args()
+      configuration = g.user.get_api().get_configuration(configuration)
+      view = configuration.get_view(view)
+
+      if zone is None:
+        absolute_name = data['absolute_name']
+      else:
+        zone_parent = view
+        zone_hierarchy = zone.split('/zones')
+        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
+        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+        absolute_name = data['absolute_name'] + '.' + zone.get_full_name()
+      text = data.get('text', '')
+      text_record = view.add_text_record(absolute_name, text)
+      result = text_record.to_json()
+      return result, 201
+
+@text_ns.route('/<string:absolute_name>/')
+@text_ns.doc(params=host_doc)
+@text_default_ns.route('/<string:absolute_name>/', defaults=dns_defaults)
+@text_default_ns.doc(params=absolute_name_doc)
+@text_ns.response(200, 'Text Record found.', model=entity_return_model)
+class TextRecord(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    def get(self, configuration, view, absolute_name):
+      """ Get specified text record belonging to default or provided Configuration and View plus Zone hierarchy. """
+      config = g.user.get_api().get_configuration(configuration)
+      view = config.get_view(view)
+
+      text_record = view.get_text_record(absolute_name)
+      if text_record is None:
+        return 'No matching Text Record(s) found', 404
+      result = text_record.to_json()
+      return jsonify(result)
+
+    @util.rest_workflow_permission_required('rest_page')
+    def delete(self, configuration, view, absolute_name):
+      """
+      Delete specified text record belonging to default or provided Configuration and View plus Zone hierarchy.
+      """
+      config = g.user.get_api().get_configuration(configuration)
+      view = config.get_view(view)
+
+      text_record = view.get_text_record(absolute_name)
+      if text_record is None:
+        return 'No matching Host Record(s) found', 404
+      text_record.delete()
+      return '', 204
+
+    @util.rest_workflow_permission_required('rest_page')
+    @text_ns.expect(text_patch_model, validate=True)
+    def patch(self, configuration, view, absolute_name):
+      """
+      Update specified text record belonging to default or provided Configuration and View plus Zone hierarchy.
+      """
+      data = text_patch_parser.parse_args()
+      configuration = g.user.get_api().get_configuration(configuration)
+      view = configuration.get_view(view)
+
+      absolute_name = data.get('absolute_name', absolute_name)
+      text_record = view.get_text_record(absolute_name)
+      if text_record is None:
+        return 'No matching Text Record(s) found', 404
+      if data['text'] is not None:
+        text_record.set_property('text', str(data.get('text')))
+      text_record.update()
+      result = text_record.to_json()
+      return result
