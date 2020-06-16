@@ -1,0 +1,11 @@
+{
+    "server_addr": "",
+    "user_id": "",
+    "password": "",
+    "target_networks": "",
+    "include_discovery": false,
+    "include_matches": false,
+    "include_ipam_only": false,
+    "retry_count": 4,
+    "interval": 3
+}
