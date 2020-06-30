@@ -34,7 +34,6 @@ from bluecat.constants import SelectiveDeploymentStatus
 
 import config.default_config as config
 from main_app import app
-# pylint: disable=relative-import
 from .component_logic import raw_entities_to_table_data
 
 from .selective_deployment_form import GenericFormTemplate

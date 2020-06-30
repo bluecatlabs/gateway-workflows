@@ -9,4 +9,4 @@ The Certified folder contains **Certified Workflows** developed and tested by Bl
 
 These Certified workflows will only work on Gateway versions 19.5.1 or greater
 
-Each release of BlueCat Gateway has a corresponding tag that can be used to download the version that is guaranteed to be compatible with that release.
+Each release of BlueCat Gateway has a corresponding tag that can be used to download the version that is guaranteed to be compatible with that release. New customers less familiar with GitHub can also import the Example workflows directly from the BlueCat Gateway user interface (Internet connection required).
