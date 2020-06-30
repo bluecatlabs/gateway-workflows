@@ -27,7 +27,6 @@ from bluecat.wtform_fields import CustomSearchButtonField
 from bluecat.wtform_fields import CustomSelectField
 from bluecat.wtform_fields import TableField
 
-# pylint: disable=relative-import
 from .component_logic import find_objects_by_type_endpoint
 from .component_logic import server_table_data_endpoint
 from .component_logic import get_object_types
