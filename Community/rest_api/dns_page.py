@@ -89,6 +89,24 @@ cname_zone_ns = api.namespace(
     description='CName Record operations',
 )
 
+text_default_ns = api.namespace('text_records', description='Text Record operations')
+text_ns = api.namespace(
+    'text_records',
+    path='/configurations/<string:configuration>/views/<string:view>/text_records/',
+    description='Text Record operations',
+)
+
+text_zone_default_ns = api.namespace(
+    'text_records',
+    path='/zones/<path:zone>/text_records',
+    description='Text Record operations',
+)
+text_zone_ns = api.namespace(
+    'text_records',
+    path='/configurations/<string:configuration>/views/<string:view>/zones/<path:zone>/text_records/',
+    description='Text Record operations',
+)
+
 view_doc = dict(config_doc, view={'in': 'path', 'description': 'View name'})
 zone_doc = dict(view_doc, zone={'in': 'path', 'description': 'Recursive Zone name and subzone name'})
 absolute_name_doc = {'absolute_name': {'in': 'path', 'description': 'The FQDN of the record'}}
@@ -112,6 +130,7 @@ host_patch_parser.replace_argument(
     required=False,
     help='The IPv4 addresses associated with the host record',
 )
+host_patch_parser.add_argument('name', location="json", help='The name of the record')
 host_patch_parser.remove_argument('absolute_name')
 
 cname_parser = host_parser.copy()
@@ -119,7 +138,17 @@ cname_parser.remove_argument('ip4_address')
 cname_parser.add_argument('linked_record', location="json", help='The name of the record to which this alias will link')
 
 cname_patch_parser = cname_parser.copy()
+cname_patch_parser.add_argument('name', location="json", help='The name of the alias record')
 cname_patch_parser.remove_argument('absolute_name')
+
+text_parser = host_parser.copy()
+text_parser.remove_argument('ip4_address')
+text_parser.remove_argument('ttl')
+text_parser.remove_argument('properties')
+text_parser.add_argument('text', location="json", required=True, help='The text body of the Text record')
+
+text_patch_parser = text_parser.copy()
+text_patch_parser.remove_argument('absolute_name')
 
 zone_model = api.clone(
     'zones',
@@ -152,6 +181,7 @@ host_model = api.model(
 host_patch_model = api.model(
     'host_records_patch',
     {
+        'name': fields.String(description='The name of the host record'),
         'ip4_address':  fields.String(description='The IPv4 addresses associated with the host record'),
         'ttl':  fields.Integer(description='The TTL of the host record'),
         'properties':  fields.String(description='The properties of the host record', default='attribute=value|'),
@@ -174,10 +204,26 @@ cname_model = api.model(
 cname_patch_model = api.model(
     'cname_records_patch',
     {
+        'name':  fields.String(description='The name of the alias record'),
         'linked_record':  fields.String(description='The name of the record to which this alias will link'),
         'ttl':  fields.Integer(description='The TTL of the CName record'),
         'properties':  fields.String(description='The properties of the CName record', default='attribute=value|'),
     },
+)
+
+text_model = api.model(
+  'text_records',
+  {
+    'absolute_name': fields.String(required=True, description='The FQDN of the Text record'),
+    'text': fields.String(required=True, description='The text body of the Text record'),
+  },
+)
+
+text_patch_model = api.model(
+  'text_records_patch',
+  {
+    'text': fields.String(description='The text body of the Text record'),
+  },
 )
 
 dns_defaults = {'configuration': config.default_configuration, 'view': config.default_view}
@@ -224,10 +270,7 @@ class Zone(Resource):
         2. zone_name1/zones/subzone_name2/zones/subzone_name3
         """
         configuration = g.user.get_api().get_configuration(configuration)
-        zone_parent = configuration.get_view(view)
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+        zone = generate_zone_fqdn(zone, configuration.get_view(view))
         if zone is None:
             return 'No matching Zone(s) found', 404
         return zone.to_json()
@@ -243,10 +286,7 @@ class Zone(Resource):
         2. zone_name1/zones/subzone_name2/zones/subzone_name3
         """
         configuration = g.user.get_api().get_configuration(configuration)
-        zone_parent = configuration.get_view(view)
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+        zone = generate_zone_fqdn(zone, configuration.get_view(view))
         if zone is None:
             return 'No matching Zone(s) found', 404
         zone.delete()
@@ -337,16 +377,40 @@ class ZoneCollection(Resource):
         data = entity_parser.parse_args()
         configuration = g.user.get_api().get_configuration(configuration)
         view = configuration.get_view(view)
-        zone_parent = view
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+        zone = generate_zone_fqdn(zone, view)
         if zone is None:
             return 'No matching Zone(s) found', 404
         zone_name = data['name']
         kwargs = util.properties_to_map(data['properties'])
         zone = view.add_zone('%s.%s' % (zone_name, zone.get_full_name()), **kwargs)
         return zone.to_json(), 201
+
+
+def generate_zone_fqdn(zone=None, view=None, data=None):
+    if view is not None:
+        if zone is None:
+            if data is not None:
+                if 'absolute_name' in data.keys():
+                    return data['absolute_name']
+        elif '/zone' not in zone:
+            zone_split = zone.split('.')
+            zone_split.reverse()
+            current = view
+            for z in zone_split:
+                current = current.get_zone(z)
+            if data is not None:
+                return data['absolute_name'].split('.')[0] + '.' + current.get_full_name()
+            else:
+                return current
+        else:
+            zone_parent = view
+            zone_hierarchy = zone.split('/zones')
+            zone_entity = zone_parent.get_zone(zone_hierarchy[0])
+            zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+            if data is not None:
+                return data['absolute_name'].split('.')[0] + '.' + zone.get_full_name()
+            else:
+                return zone
 
 
 def check_zone_in_path(zone_entity, pre_path, post_path, zone_parent, delimiter='/zones'):
@@ -385,11 +449,7 @@ class HostRecordCollection(Resource):
     def get(self, configuration, view, zone=None):
         """ Get all host records belonging to default or provided Configuration and View plus Zone hierarchy. """
         configuration = g.user.get_api().get_configuration(configuration)
-        view = configuration.get_view(view)
-        zone_parent = view
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+        zone = generate_zone_fqdn(zone, configuration.get_view(view))
 
         host_records = zone.get_children_of_type(zone.HostRecord)
         result = [host.to_json() for host in host_records]
@@ -403,15 +463,7 @@ class HostRecordCollection(Resource):
         data = host_parser.parse_args()
         configuration = g.user.get_api().get_configuration(configuration)
         view = configuration.get_view(view)
-
-        if zone is None:
-            absolute_name = data['absolute_name']
-        else:
-            zone_parent = view
-            zone_hierarchy = zone.split('/zones')
-            zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-            zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
-            absolute_name = data['absolute_name'] + '.' + zone.get_full_name()
+        absolute_name = generate_zone_fqdn(zone, view, data)
         ip4_address_list = data['ip4_address'].split(',')
         ttl = data.get('ttl', -1)
         properties = data.get('properties', '')
@@ -524,11 +576,13 @@ class HostRecord(Resource):
             return 'No matching Host Record(s) found', 404
         if data['properties'] is not None:
             properties = data.get('properties')
-            host_record.properties = util.properties_to_map(properties)
+            host_record._properties = util.properties_to_map(properties)
         if data['ip4_address'] is not None:
             host_record.set_property('addresses', data['ip4_address'])
         if data['ttl'] is not None:
             host_record.set_property('ttl', str(data.get('ttl')))
+        if data['name'] is not None:
+            host_record.name = data.get('name')
         host_record.update()
         result = host_record.to_json()
         return result
@@ -543,14 +597,10 @@ class CNameRecordCollection(Resource):
     def get(self, configuration, view, zone=None):
         """ Get all cname records belonging to default or provided Configuration and View plus Zone hierarchy. """
         configuration = g.user.get_api().get_configuration(configuration)
-        view = configuration.get_view(view)
+        zone = generate_zone_fqdn(zone, configuration.get_view(view))
         if zone is None:
             return 'No matching Zone(s) found', 404
-        zone_parent = view
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
-
+        
         host_records = zone.get_children_of_type(zone.AliasRecord)
         result = [host.to_json() for host in host_records]
         return jsonify(result)
@@ -563,15 +613,7 @@ class CNameRecordCollection(Resource):
         data = cname_parser.parse_args()
         configuration = g.user.get_api().get_configuration(configuration)
         view = configuration.get_view(view)
-
-        if zone is None:
-            absolute_name = data['absolute_name']
-        else:
-            zone_parent = view
-            zone_hierarchy = zone.split('/zones')
-            zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-            zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
-            absolute_name = data['absolute_name'] + '.' + zone.get_full_name()
+        absolute_name = generate_zone_fqdn(zone, view, data)
         ip4_address_list = data['linked_record']
         ttl = data.get('ttl', -1)
         properties = data.get('properties', '')
@@ -629,13 +671,107 @@ class CNameRecord(Resource):
             return 'No matching CName Record(s) found', 404
         if data['properties'] is not None:
             properties = data.get('properties')
-            cname_record.properties = util.properties_to_map(properties)
+            cname_record._properties = util.properties_to_map(properties)
         if data['linked_record'] is not None:
             cname_record.set_property('linkedRecordName', data['linked_record'])
         if data['ttl'] is not None:
             cname_record.set_property('ttl', str(data.get('ttl')))
-
+        if data['name'] is not None:
+            cname_record.name = data['name']
         cname_record.update()
         result = cname_record.to_json()
         return result
 
+@text_zone_ns.route('/')
+@text_zone_default_ns.route('/', defaults=dns_defaults)
+class TextRecordCollection(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    @text_ns.response(200, 'Found Text records.')
+    def get(self, configuration, view, zone=None):
+      """ Get all text records belonging to default or provided Configuration and View plus Zone hierarchy. """
+      configuration = g.user.get_api().get_configuration(configuration)
+      view = configuration.get_view(view)
+      zone_parent = view
+      zone_hierarchy = zone.split('/zones')
+      zone_entity = zone_parent.get_zone(zone_hierarchy[0])
+      zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+
+      text_records = zone.get_children_of_type(zone.TextRecord)
+      result = [text.to_json() for text in text_records]
+      return jsonify(result)
+
+    @util.rest_workflow_permission_required('rest_page')
+    @text_ns.response(201, 'Text Record successfully created.', model=entity_return_model)
+    @text_ns.expect(text_model, validate=True)
+    def post(self, configuration, view, zone=None):
+      """ Create a text record belonging to default or provided Configuration and View plus Zone hierarchy. """
+      data = host_parser.parse_args()
+      configuration = g.user.get_api().get_configuration(configuration)
+      view = configuration.get_view(view)
+
+      if zone is None:
+        absolute_name = data['absolute_name']
+      else:
+        zone_parent = view
+        zone_hierarchy = zone.split('/zones')
+        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
+        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+        absolute_name = data['absolute_name'] + '.' + zone.get_full_name()
+      text = data.get('text', '')
+      text_record = view.add_text_record(absolute_name, text)
+      result = text_record.to_json()
+      return result, 201
+
+@text_ns.route('/<string:absolute_name>/')
+@text_ns.doc(params=host_doc)
+@text_default_ns.route('/<string:absolute_name>/', defaults=dns_defaults)
+@text_default_ns.doc(params=absolute_name_doc)
+@text_ns.response(200, 'Text Record found.', model=entity_return_model)
+class TextRecord(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    def get(self, configuration, view, absolute_name):
+      """ Get specified text record belonging to default or provided Configuration and View plus Zone hierarchy. """
+      config = g.user.get_api().get_configuration(configuration)
+      view = config.get_view(view)
+
+      text_record = view.get_text_record(absolute_name)
+      if text_record is None:
+        return 'No matching Text Record(s) found', 404
+      result = text_record.to_json()
+      return jsonify(result)
+
+    @util.rest_workflow_permission_required('rest_page')
+    def delete(self, configuration, view, absolute_name):
+      """
+      Delete specified text record belonging to default or provided Configuration and View plus Zone hierarchy.
+      """
+      config = g.user.get_api().get_configuration(configuration)
+      view = config.get_view(view)
+
+      text_record = view.get_text_record(absolute_name)
+      if text_record is None:
+        return 'No matching Host Record(s) found', 404
+      text_record.delete()
+      return '', 204
+
+    @util.rest_workflow_permission_required('rest_page')
+    @text_ns.expect(text_patch_model, validate=True)
+    def patch(self, configuration, view, absolute_name):
+      """
+      Update specified text record belonging to default or provided Configuration and View plus Zone hierarchy.
+      """
+      data = text_patch_parser.parse_args()
+      configuration = g.user.get_api().get_configuration(configuration)
+      view = configuration.get_view(view)
+
+      absolute_name = data.get('absolute_name', absolute_name)
+      text_record = view.get_text_record(absolute_name)
+      if text_record is None:
+        return 'No matching Text Record(s) found', 404
+      if data['text'] is not None:
+        text_record.set_property('text', str(data.get('text')))
+      text_record.update()
+      result = text_record.to_json()
+      return result

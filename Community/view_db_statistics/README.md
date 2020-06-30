@@ -2,7 +2,10 @@
 **Bluecat Gateway Version:** 18.10.2 and greater  
 **BAM Version:** 9.0.0 and greater  
 
-This workflow will list relevant statistics of the BAM (BlueCat Address Manager) Database.   
+This workflow will list relevant statistics of the BAM (BlueCat Address Manager) Database.
+
+## Changes in this release  
+1. Using new Python API wrappers introduced in Gateway 20.3.1.  
 
 ## Prerequisites
 1. **BAM Default Configuration**  

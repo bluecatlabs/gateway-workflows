@@ -49,10 +49,19 @@ def edge_create_internal_ns_edge_create_internal_ns_page_form():
         else:
             print("Contacted the Edge")
 
-        # Create the Domain List
-        dl = edge_session.make_new_domain_list(form.domainlist_name.data, form.domainlist_desc.data)
-
-        edge_id = dl['id']
+        # Find the domain list ID
+        try:
+            # Create the Domain List if it doesn't exist
+            dl = edge_session.make_new_domain_list(form.domainlist_name.data, form.domainlist_desc.data)
+            edge_id = dl['id']
+            new_dl = True
+        except Exception as e:
+            # Find the ID of the Domain List if it already exists
+            domain_lists = edge_session.list_dl()
+            for dl in domain_lists:
+                if dl['name'] == form.domainlist_name.data:
+                    edge_id = dl['id']
+                    break
 
         zone_list = []
 
@@ -91,8 +100,12 @@ def edge_create_internal_ns_edge_create_internal_ns_page_form():
             edge_session.update_namespace_domain_list(namespace_id, [edge_id])
 
         # Put form processing code here
-        g.user.logger.info('Created Internal  Namespace: ' + dl['name'] + ' added: ' + str(new_dl_list['numOfValidDomains']) + ' Zones')
-        flash('Created Internal  Namespace: ' + dl['name'] + ' added: ' + str(new_dl_list['numOfValidDomains']) + ' Zones' , 'succeed')
+        if new_dl:
+            g.user.logger.info('Created Internal  Namespace: ' + dl['name'] + ' added: ' + str(new_dl_list['numOfValidDomains']) + ' Zones')
+            flash('Created Internal  Namespace: ' + dl['name'] + ' added: ' + str(new_dl_list['numOfValidDomains']) + ' Zones' , 'succeed')
+        else:
+            g.user.logger.info('Updated Internal  Namespace: ' + dl['name'] + ' added: ' + str(new_dl_list['numOfValidDomains']) + ' Zones')
+            flash('Updated Internal  Namespace: ' + dl['name'] + ' added: ' + str(new_dl_list['numOfValidDomains']) + ' Zones' , 'succeed')
         return redirect(url_for('edge_create_internal_nsedge_create_internal_ns_edge_create_internal_ns_page'))
     else:
         g.user.logger.info('Form data was not valid.')
