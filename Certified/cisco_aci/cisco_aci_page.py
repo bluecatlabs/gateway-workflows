@@ -14,7 +14,7 @@
 #
 # By: BlueCat Networks
 # Date: 2018-05-15
-# Gateway Version: 19.5.1
+# Gateway Version: 20.1.1
 # Description: Certified Gateway workflows
 
 """

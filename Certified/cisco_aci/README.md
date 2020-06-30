@@ -2,7 +2,7 @@
 This workflow applies to BlueCat customers who have transitioned to the Cisco ACI infrastructure for their data centers.
 
 ### Requirements
-**BlueCat Gateway version:** 19.5.1 and greater <br/>
+**BlueCat Gateway version:** 20.1.1 and greater <br/>
 **BAM version:** 9.1.0 and greater <br/>
 
 ### Description/Example Usage
