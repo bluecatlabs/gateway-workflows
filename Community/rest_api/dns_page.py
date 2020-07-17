@@ -145,7 +145,7 @@ text_parser = host_parser.copy()
 text_parser.remove_argument('ip4_address')
 text_parser.remove_argument('ttl')
 text_parser.remove_argument('properties')
-text_parser.add_argument('text', location="json", required=True, help='The text body of the Text record')
+text_parser.add_argument('txt', location="json", required=True, help='The text body of the Text record')
 
 text_patch_parser = text_parser.copy()
 text_patch_parser.remove_argument('absolute_name')
@@ -215,14 +215,14 @@ text_model = api.model(
   'text_records',
   {
     'absolute_name': fields.String(required=True, description='The FQDN of the Text record'),
-    'text': fields.String(required=True, description='The text body of the Text record'),
+    'txt': fields.String(required=True, description='The text body of the Text record'),
   },
 )
 
 text_patch_model = api.model(
   'text_records_patch',
   {
-    'text': fields.String(description='The text body of the Text record'),
+    'txt': fields.String(description='The text body of the Text record'),
   },
 )
 
@@ -600,7 +600,7 @@ class CNameRecordCollection(Resource):
         zone = generate_zone_fqdn(zone, configuration.get_view(view))
         if zone is None:
             return 'No matching Zone(s) found', 404
-        
+
         host_records = zone.get_children_of_type(zone.AliasRecord)
         result = [host.to_json() for host in host_records]
         return jsonify(result)
@@ -706,19 +706,12 @@ class TextRecordCollection(Resource):
     @text_ns.expect(text_model, validate=True)
     def post(self, configuration, view, zone=None):
       """ Create a text record belonging to default or provided Configuration and View plus Zone hierarchy. """
-      data = host_parser.parse_args()
+      data = text_parser.parse_args()
       configuration = g.user.get_api().get_configuration(configuration)
       view = configuration.get_view(view)
 
-      if zone is None:
-        absolute_name = data['absolute_name']
-      else:
-        zone_parent = view
-        zone_hierarchy = zone.split('/zones')
-        zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-        zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
-        absolute_name = data['absolute_name'] + '.' + zone.get_full_name()
-      text = data.get('text', '')
+      absolute_name = generate_zone_fqdn(zone, view, data)
+      text = data.get('txt', '')
       text_record = view.add_text_record(absolute_name, text)
       result = text_record.to_json()
       return result, 201
@@ -770,8 +763,8 @@ class TextRecord(Resource):
       text_record = view.get_text_record(absolute_name)
       if text_record is None:
         return 'No matching Text Record(s) found', 404
-      if data['text'] is not None:
-        text_record.set_property('text', str(data.get('text')))
+      if data['txt'] is not None:
+        text_record.set_property('txt', str(data.get('txt')))
       text_record.update()
       result = text_record.to_json()
       return result
