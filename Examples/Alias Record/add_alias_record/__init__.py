@@ -1,5 +1,4 @@
 # Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
-# -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,10 +13,9 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2018-09-27
-# Gateway Version: 18.10.1
-# Description: Certified Gateway workflows
-
+# Date: 2020-08-31
+# Gateway Version: 20.1.1
+# Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
 type = 'ui'

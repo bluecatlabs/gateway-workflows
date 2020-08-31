@@ -13,15 +13,13 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2018-09-27
-# Gateway Version: 18.10.1
-# Description: Example Gateway workflows
-
+# Date: 2020-08-31
+# Gateway Version: 20.1.1
+# Description: Example Gateway workflow
 
 """
 Add DHCP IPv4 address page
 """
-# Various Flask framework items.
 import os
 
 from flask import url_for, redirect, render_template, flash, g, request
