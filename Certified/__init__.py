@@ -13,4 +13,6 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Description: Community Gateway workflows contributions
+# Date: 2020-08-31
+# Gateway Version: 20.1.1
+# Description: Certified Gateway workflows
