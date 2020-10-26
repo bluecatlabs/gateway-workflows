@@ -1,4 +1,4 @@
-BlueCat Gateway 20.1.1
+BlueCat Gateway 20.3.1
 Example Selective deployment workflows
 
 Requirements: 

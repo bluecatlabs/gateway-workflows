@@ -6,7 +6,7 @@
 
 Effective immediately,
 the Certified folder is being Deprecated
-and will be removed with the release of BlueCat Gateway 20.10.1 in October, 2020.
+and will be removed with the release of BlueCat Gateway 20.11.1 in November, 2020.
 All of the BlueCat-supported content within the folder,
 including Certified workflows and the Cisco ACI workflow
 will be available as BlueCat Adaptive Plugins
@@ -20,7 +20,7 @@ These example workflows are NOT supported by BlueCat.
 
 ## **Customer Impact**
 
-Beginning in BlueCat Gateway v20.10.1,
+Beginning in BlueCat Gateway v20.11.1,
 the GitHub Import feature will no longer pull from Certified,
 only from the Examples folder.
 As previously mentioned, these example workflows are NOT supported by BlueCat.
