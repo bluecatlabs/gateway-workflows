@@ -34,7 +34,7 @@ from bluecat.server_endpoints import get_result_template
 
 
 def raw_table_data(*args, **kwargs):
-    """Returns table formatted data for display in the TableField component"""
+    """Returns table formatted data for display in the TableField component."""
     # pylint: disable=unused-argument
     return {
         "columns": [
@@ -46,7 +46,7 @@ def raw_table_data(*args, **kwargs):
             [18371164, "All", "CUSTOM"],
             [18371166, "None", "CUSTOM"],
             [18371168, "Localhost", "CUSTOM"],
-            [18371170, "Localnetworks", "CUSTOM"]
+            [18371170, "Localnetworks", "CUSTOM"],
         ]
     }
 

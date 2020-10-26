@@ -76,8 +76,8 @@ class GenericFormTemplate(GatewayForm):
         workflow_name=workflow_name,
         permissions=workflow_permission,
         label='Server table',
-        data_function=raw_table_data,
         server_side_method=server_table_data_endpoint,
+        data_function=raw_table_data,
         table_features={
             'searching': False,
             'paging': False,
