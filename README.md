@@ -68,9 +68,6 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 #### The Team:
 - David Cohen
 - Martin Minkov
-- Murtaza Haider
-- Maziar Esfandiarpoor
-- Hongbo Wang
 - Prerana Pradhan
 - Delme Herbert
 - Brian Shorland
@@ -98,6 +95,9 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Shanice Cohen
 - Chris Catral
 - Steven Diao
+- Murtaza Haider
+- Hongbo Wang
+- Maziar Esfandiarpoor
 
 ## License
 
