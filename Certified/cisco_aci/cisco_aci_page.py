@@ -15,13 +15,10 @@
 # By: BlueCat Networks
 # Date: 2020-11-26
 # Gateway Version: 20.3.1
-# Description: Certified Gateway workflows
-
+# Description: Certified Gateway workflow
 """
 Cisco ACI page
 """
-
-# Various Flask framework items.
 import os
 
 from acitoolkit.acisession import CredentialsError
