@@ -695,7 +695,7 @@ class TextRecordCollection(Resource):
       if zone is None:
         return 'No matching Zone(s) found', 404
 
-      text_records = zone.get_children_of_type(zone.TextRecord)
+      text_records = zone.get_children_of_type(zone.TXTRecord)
       result = [text.to_json() for text in text_records]
       return jsonify(result)
 
