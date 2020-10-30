@@ -691,13 +691,11 @@ class TextRecordCollection(Resource):
     def get(self, configuration, view, zone=None):
       """ Get all text records belonging to default or provided Configuration and View plus Zone hierarchy. """
       configuration = g.user.get_api().get_configuration(configuration)
-      view = configuration.get_view(view)
-      zone_parent = view
-      zone_hierarchy = zone.split('/zones')
-      zone_entity = zone_parent.get_zone(zone_hierarchy[0])
-      zone = check_zone_in_path(zone_entity, zone_hierarchy[0], zone_hierarchy[1:], zone_parent)
+      zone = generate_zone_fqdn(zone, configuration.get_view(view))
+      if zone is None:
+        return 'No matching Zone(s) found', 404
 
-      text_records = zone.get_children_of_type(zone.TextRecord)
+      text_records = zone.get_children_of_type(zone.TXTRecord)
       result = [text.to_json() for text in text_records]
       return jsonify(result)
 
