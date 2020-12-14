@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,9 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# By: Akira Goto (agoto@bluecatnetworks.com)
-# Date: 2019-08-28
-# Gateway Version: 19.5.1
+# By: BlueCat Networks
+# Date: 2019-12-20
+# Gateway Version: 18.10.2 and higher
 # Description: BlueCat Gateway module for DNS Edge API calls
 
 import os
@@ -26,8 +26,8 @@ import json
 
 api_url = {
     'get_token': '/v1/api/authentication/token',
-    'logout': '/v1/api/userManagement/authentication/logout',
-    'tos': '/v1/api/userManagement/tos',
+    'logout': '----Removed-----',
+    'tos': '/v1/api/tos',
     'get_domainlists': '/v1/api/list/dns',
     'get_domainlist': '/v1/api/list/dns/{id}',
     'update_domainlist': '/v1/api/list/dns/{id}/attachfile',
@@ -57,7 +57,7 @@ class EdgeAPI(object):
             headers = {'Authorization': 'Bearer '}
             response = requests.get(self._edgeurl + api_url['tos'], headers=headers)
             if response.status_code == 200:
-                if 'tosTimestamp' in response.json():
+                if 'timestamp' in response.json():
                     valid = True
         except requests.exceptions.RequestException as e:
             if self._debug:
@@ -92,11 +92,13 @@ class EdgeAPI(object):
         return success
 
     def logout(self):
-        try:
-            response = requests.post(self._edgeurl + api_url['logout'], headers=self._headers)
-        except requests.exceptions.RequestException as e:
-            if self._debug:
-                print('DEBUG: Exceptin <%s>' % str(e))
+        # No Longer Needed to call logout.
+        pass
+#         try:
+#             response = requests.post(self._edgeurl + api_url['logout'], headers=self._headers)
+#         except requests.exceptions.RequestException as e:
+#             if self._debug:
+#                 print('DEBUG: Exceptin <%s>' % str(e))
 
     def set_token(self, token):
         self._token = token
@@ -215,3 +217,5 @@ class EdgeAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return status
+        
+

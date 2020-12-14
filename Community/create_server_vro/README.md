@@ -1,5 +1,5 @@
 # **Community: Create Server - vRO User Group Content**
-This workflow was used in the 2019 User Groups to show creating a hostname and getting the next available IP Address.  
+This workflow was used in the 2020 User Groups to show creating a hostname and getting the next available IP Address.
 ___
 
 ### Requirements
@@ -42,7 +42,7 @@ ___
 
 ___
 
-©2019 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved.
+©2020 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved.
 This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted.
 Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
 

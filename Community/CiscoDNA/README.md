@@ -104,7 +104,7 @@ Preconditional requirement: the global pool has already been imported from BlueC
 As IP addresses are allocated or deallocated by DNA centre these are reflected dynamically within the BlueCat Address Manager
 
 
-Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -22,7 +22,7 @@
 
 from flask import g, jsonify
 from flask_restplus import fields, reqparse, Resource
-
+import bluecat.server_endpoints as se
 from bluecat import util
 from .configuration_page import config_defaults, entity_return_model
 from main_app import api
@@ -31,14 +31,14 @@ from main_app import api
 ip4_address_root_default_ns = api.namespace('ipv4_addresses', description='IPv4 Address operations')
 ip4_address_root_ns = api.namespace(
     'ipv4_addresses',
-    path='/configurations/<string:configuration>/ipv4_networks/',
+    path='/configurations/<string:configuration>/',
     description='IPv4 Address operations',
 )
 
 ip4_address_default_ns = api.namespace('ipv4_addresses', description='IPv4 Address operations')
 ip4_address_ns = api.namespace(
     'ipv4_addresses',
-    path='/configurations/<string:configuration>/ipv4_networks/',
+    path='/configurations/<string:configuration>/',
     description='IPv4 Address operations',
 )
 
@@ -128,9 +128,15 @@ ip4_address_post_parser.add_argument('hostinfo', location="json", help='The host
 ip4_address_post_parser.add_argument('action', location="json", help='The action for address assignment')
 ip4_address_post_parser.add_argument('properties', location="json", help='The properties of the record')
 
+linked_root_default_ns = api.namespace('linked', description='Linked operations')
+linked_root_ns = api.namespace(
+    'linked',
+    path='/linked/',
+    description='Linkeds operations',
+)
 
-@ip4_address_ns.route('/<string:network>/get_next_ip/')
-@ip4_address_default_ns.route('/<string:network>/get_next_ip/', defaults=config_defaults)
+@ip4_address_ns.route('/ipv4_networks/<string:network>/get_next_ip/')
+@ip4_address_default_ns.route('/ipv4_networks/<string:network>/get_next_ip/', defaults=config_defaults)
 @ip4_address_ns.response(404, 'IPv4 address not found')
 class IPv4NextIP4Address(Resource):
 
@@ -159,6 +165,78 @@ class IPv4NextIP4Address(Resource):
 
         return result, 201
 
+
+@ip4_address_ns.route('/ipv4_address/<string:ipv4_address>/')
+@ip4_address_default_ns.route('/ipv4_address/<string:ipv4_address>/', defaults=config_defaults)
+class IPv4Address(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    @ip4_address_ns.response(200, 'IP4 Address found.', model=entity_return_model)
+    def get(self, configuration, ipv4_address):
+        """
+        Get an IP4 Address
+
+        """
+        configuration = g.user.get_api().get_configuration(configuration)
+
+        try:
+            result = se.get_address_data(configuration.get_id(), ipv4_address)
+            if result['status'] == 'FAIL':
+                raise Exception
+            name = ""; ip_id = 0; properties = ""
+            if result['data']['state'] != 'UNALLOCATED':
+                ip = configuration.get_ip4_address(ipv4_address)
+                ip_id = ip.get_id()
+                name = ip.get_name()
+                properties = ""
+                for prop, value in ip.get_properties().items():
+                    properties += prop + "=" + value + "|"
+
+            response = {
+                'id': ip_id,
+                'name': name,
+                'properties': properties,
+                'type': 'IP4Address'
+            }
+            return response
+        except Exception:
+            return 'IPv4 address not found', 404
+    
+    @util.rest_workflow_permission_required('rest_page')
+    @ip4_address_ns.response(201, 'IP Address successfully created.', model=entity_return_model)
+    @ip4_address_ns.expect(ip4_address_post_model, validate=True)
+    def post(self, configuration, ipv4_address):
+        """
+        Assign an IP4 Address
+
+        """
+        try:
+            data = ip4_address_post_parser.parse_args()
+            mac = data.get('mac_address', '')
+            hostinfo = data.get('hostinfo', '')
+            action = data.get('action', '')
+            properties = data.get('properties', '')
+            
+            configuration = g.user.get_api().get_configuration(configuration)
+            address = configuration.assign_ip4_address(ipv4_address, mac, hostinfo, action, properties)
+            result = address.to_json()
+
+            return result, 201
+        except Exception as e:
+            return str(e), 500
+
+    @util.rest_workflow_permission_required('rest_page')
+    def delete(self, configuration, ipv4_address):
+        """
+        Delete IPv4 Address
+        """
+        try:
+            configuration = g.user.get_api().get_configuration(configuration)
+            address = configuration.get_ip4_address(ipv4_address)
+            address.delete()
+            return '', 204
+        except Exception as e:
+            return str(e), 500
 
 @ip4_block_ns.route('/<path:block>/get_next_network/')
 @ip4_block_default_ns.route('/<path:block>/get_next_network/', defaults=config_defaults)
@@ -351,3 +429,24 @@ class IPv4Network(Resource):
         result = network_range.to_json()
         return jsonify(result)
 
+@linked_root_ns.route('/<int:tag_id>')
+class LinkedIPv4NetWork(Resource):
+
+    @util.rest_workflow_permission_required('rest_page')
+    @linked_root_ns.response(200, 'IPv4 Network found.', model=entity_return_model)
+    def get(self, tag_id):
+        """
+        Get IPv4 Network linked with tags.
+        """
+        try: 
+            results = []
+            tag = g.user.get_api().get_entity_by_id(tag_id)
+            networks = tag.get_linked_entities(tag.IP4Network)
+            for network in networks:
+                results.append(network.to_json())
+            if len(results) == 0:
+                return 'No IPv4 Network linked.', 404
+            return jsonify(results)
+        except Exception as e:
+            return str(e), 500
+       

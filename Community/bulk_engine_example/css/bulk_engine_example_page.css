@@ -1,0 +1,10 @@
+/* Copyright 2019 BlueCat Networks. All rights reserved. */
+/* Custom styles for your page go in here. */
+#data_box {
+    width:500px;
+    height: 400px;
+}
+
+pre {
+    width:500px;
+}

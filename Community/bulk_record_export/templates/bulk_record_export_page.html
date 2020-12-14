@@ -1,0 +1,28 @@
+<!-- Copyright 2019 BlueCat Networks. All rights reserved. -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/bulk_record_export_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+    <p>{{ text['info'] }}</p>
+    <!--Your page's HTML goes here.-->
+    {% from "form_helper.html" import render_form %}
+    {{ render_form(form, action=url_for('bulk_record_exportbulk_record_export_bulk_record_export_page_form'), id="bulk_record_export_page_form") }}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="js/bulk_record_export_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}

@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks. All rights reserved.
+# Copyright 2020 BlueCat Networks. All rights reserved.
 from bluecat.wtform_fields import SimpleAutocompleteField, ValidatingStringField
 from .create_server_vro_logic import get_ip4_networks_endpoint
 # Import Javascript Helpers

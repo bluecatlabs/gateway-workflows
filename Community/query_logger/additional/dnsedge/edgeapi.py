@@ -1,4 +1,22 @@
-# Copyright 2019 BlueCat Networks. All rights reserved.
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# -*- coding: utf-8 -*-
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# By: BlueCat Networks
+# Date: 2019-12-20
+# Gateway Version: 18.10.2 and higher
+# Description: BlueCat Gateway module for DNS Edge API calls
 
 import os
 import sys
@@ -7,9 +25,9 @@ import json
 
 
 api_url = {
-    'login': '/v1/api/userManagement/authentication/login',
-    'logout': '/v1/api/userManagement/authentication/logout',
-    'tos': '/v1/api/userManagement/tos',
+    'get_token': '/v1/api/authentication/token',
+    'logout': '----Removed-----',
+    'tos': '/v1/api/tos',
     'get_domainlists': '/v1/api/list/dns',
     'get_domainlist': '/v1/api/list/dns/{id}',
     'update_domainlist': '/v1/api/list/dns/{id}/attachfile',
@@ -39,7 +57,7 @@ class EdgeAPI(object):
             headers = {'Authorization': 'Bearer '}
             response = requests.get(self._edgeurl + api_url['tos'], headers=headers)
             if response.status_code == 200:
-                if 'tosTimestamp' in response.json():
+                if 'timestamp' in response.json():
                     valid = True
         except requests.exceptions.RequestException as e:
             if self._debug:
@@ -49,15 +67,21 @@ class EdgeAPI(object):
                 print('DEBUG: Exceptin <%s>' % str(e))
         return valid
 
-    def login(self, username, password):
+    def login(self, client_id, secret):
         success = False
         try:
-            data = { "username": username, "password": password }
-            headers = {'Authorization': 'Bearer '}
-            response = requests.post(self._edgeurl + api_url['login'], json=data, headers=headers)
+            body = {
+                'grantType': 'ClientCredentials',
+                'clientCredentials': {
+                    'clientId': client_id,
+                    'clientSecret': secret
+                }
+            }
+            headers = { 'Content-type': 'application/json' }
+            response = requests.post(self._edgeurl + api_url['get_token'], json=body, headers=headers)
             if response.status_code == 200:
                 result = response.json()
-                self._headers =  {'Authorization': 'Bearer ' + result['auth_token']}
+                self._headers =  {'Authorization': 'Bearer ' + result['accessToken']}
                 success = True
             else:
                 if self._debug:
@@ -68,11 +92,13 @@ class EdgeAPI(object):
         return success
 
     def logout(self):
-        try:
-            response = requests.post(self._edgeurl + api_url['logout'], headers=self._headers)
-        except requests.exceptions.RequestException as e:
-            if self._debug:
-                print('DEBUG: Exceptin <%s>' % str(e))
+        # No Longer Needed to call logout.
+        pass
+#         try:
+#             response = requests.post(self._edgeurl + api_url['logout'], headers=self._headers)
+#         except requests.exceptions.RequestException as e:
+#             if self._debug:
+#                 print('DEBUG: Exceptin <%s>' % str(e))
 
     def set_token(self, token):
         self._token = token
@@ -175,16 +201,15 @@ class EdgeAPI(object):
     def get_service_point_status_url(self, sp_address):
         return 'http://' + sp_address + api_url['get_service_point_status']
 
-    def get_service_point_status(self, sp_address):
+    def get_service_point_status(self, sp_address, timeout=1):
         status = None
         try:
-            response = requests.get('http://' + sp_address + api_url['get_service_point_status'], timeout=1)
+            response = requests.get('http://' + sp_address + api_url['get_service_point_status'], timeout=timeout)
             if response.status_code == 200:
                 status = response.json()
             else:
                 if self._debug:
                     print('DEBUG: failed response <%s>' % str(vars(response)))
-                raise EdgeException(response)
         except requests.exceptions.RequestException as e:
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))

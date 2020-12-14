@@ -1,2 +1,0 @@
-title=Add Host Record Example
-info=

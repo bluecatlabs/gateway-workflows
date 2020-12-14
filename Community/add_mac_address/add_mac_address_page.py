@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks. All rights reserved.
+# Copyright 2020 BlueCat Networks. All rights reserved.
 import os
 import sys
 
@@ -76,7 +76,7 @@ def add_mac_address_add_mac_address_page_form():
 
         # Add MAC address
         try:
-            mac_address = configuration.add_mac_address(form.mac_address.data, form.mac_address_name, mac_pool)
+            mac_address = configuration.add_mac_address(form.mac_address.data, form.mac_address_name.data, mac_pool)
         except BAMException as e:
             g.user.logger.error('%s' % e, msg_type=g.user.logger.EXCEPTION)
             if 'Duplicate of another item' in util.safe_str(e):

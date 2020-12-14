@@ -1,2 +1,0 @@
-title=Update Host Record Example
-info=

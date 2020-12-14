@@ -67,21 +67,22 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 
 #### The Team:
 - David Cohen
-- Steven Diao
-- Murtaza Haider
-- Chris Catral
-- Delme Herbert
 - Martin Minkov
+- Murtaza Haider
+- Maziar Esfandiarpoor
+- Hongbo Wang
+- Prerana Pradhan
+- Delme Herbert
 - Brian Shorland
 
 #### Professional Services:
 - Chris Storz
 - Chris Meyer
+- Bill Morton
 - Timothy Noel
 - Ze'ev Romm
 
 #### Special Thanks:
-- Bill Morton
 - Glenn McAllister
 - Robert Barnhardt™
 - Roy Reshef
@@ -95,10 +96,12 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Raymond Leong
 - Rohina Dhunjeebhoy
 - Shanice Cohen
+- Chris Catral
+- Steven Diao
 
 ## License
 
-Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

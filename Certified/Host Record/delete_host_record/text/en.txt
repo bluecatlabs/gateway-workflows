@@ -1,0 +1,2 @@
+title=Delete Host Record
+info=

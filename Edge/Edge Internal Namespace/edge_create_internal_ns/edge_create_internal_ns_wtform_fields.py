@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks. All rights reserved.
+# Copyright 2020 BlueCat Networks. All rights reserved.
 from bluecat.wtform_fields import SimpleAutocompleteField, ValidatingStringField
 # Import Javascript Helpers
 from bluecat.ui_components.wtform_widgets import SuperSelect

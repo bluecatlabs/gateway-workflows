@@ -1,2 +1,0 @@
-title=UI Table Component
-info=Example usage of a Table UI Component as applied to a get_by_object_types API call
