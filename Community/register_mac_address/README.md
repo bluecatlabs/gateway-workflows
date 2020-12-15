@@ -22,7 +22,8 @@ Add the following UDF to MAC Pool Objects > MAC Address object in BAM.
 ## Usage   
 
 1. **MAC Address Register**  
-![screenshot](img/mac_address_reg1.jpg?raw=true "mac_address_reg1")  
+  <img src = "img/mac_address_reg1.jpg" width = "600px"> 
+<!-- ![screenshot](img/mac_address_reg1.jpg?raw=true "mac_address_reg1")   -->
 
 Enter the following information:  
 - *Asset Code (Name)*  
