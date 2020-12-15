@@ -2,8 +2,7 @@
 **Bluecat Gateway Version:** 18.10.2 and greater  
 **BAM Version:** 9.0.0 and greater  
 
-This workflow will register a specified MAC address tied to a certain location.  
-It assumes a MAC address filtering scenario where the DHCP server will only lease an IP address to a pre-registered MAC address tied to a certain location.  
+This workflow will register a specific MAC address.   
 
 ## Prerequisites
 1. **BAM Default Configuration**  
