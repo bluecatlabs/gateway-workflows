@@ -46,7 +46,7 @@ INV_PC0000112,B4:AE:2B:22:43:D1,ITLAB-MAC-Pool,Demo MAC address 8
 2. **Import CSV file in BlueCat Gateway**  
 Click "Choose File" and select the corresponding CSV file.  
 The Group List will be populated as below:  
-    <img src = "img/mac_address_reg1.jpg" width = "600px"> 
+    <img src = "img/Bulk_mac1.jpg" width = "600px"> 
 <!-- ![screenshot](img/Bulk_mac1.jpg?raw=true "Bulk_mac1")   -->
 
 3. **Add users to BAM**  
