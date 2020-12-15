@@ -51,9 +51,10 @@ The Group List will be populated as below:
 
 3. **Add users to BAM**  
 Click "REGISTER".  
+Check that the *Succeed* message shows.  
 ![screenshot](img/Bulk_mac2.jpg?raw=true "Bulk_mac2")  
 
-4. **Check BAM to see results**  
+1. **Check BAM to see results**  
 
 ---
 
