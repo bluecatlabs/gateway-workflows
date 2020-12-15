@@ -1,10 +1,31 @@
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# -*- coding: utf-8 -*-
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# By: BlueCat Networks
+# Date: 2019-03-14
+# Gateway Version: 18.10.2
+# Description: Bulk Register MAC Address text file */
+
 title=MACアドレスの一括登録
 info=MACアドレスをネットワークに接続可能な様に一括登録する。
+success=正常に登録されました。
 file_legend=読み組むファイルを設定してください。
 label_asset_code=資産管理番号
 label_mac_address=MACアドレス
-label_employee_code=従業員コード
-label_update_date=更新日付
+label_mac_pool=MACプール
+label_comments=備考
 label_file=ファイル:
 label_list=MACアドレス一覧:
 label_submit=登録

@@ -42,10 +42,10 @@ def table_features():
     
     return {
         "columns": [
-            {"title": text['label_asset_code']},
-            {"title": text['label_mac_address']},
-            {"title": text['label_employee_code']},
-            {"title": text['label_update_date']},
+            {"title": text['label_asset_code'], 'width': 80},
+            {"title": text['label_mac_address'], 'width': 80},
+            {"title": text['label_mac_pool'], 'width': 100},
+            {"title": text['label_comments'], 'width': 140}
         ],
         "columnDefs": [],
         "searching": False,
