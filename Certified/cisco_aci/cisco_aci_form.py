@@ -13,10 +13,9 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2019-05-15
-# Gateway Version: 20.1.1
-# Description: Certified Gateway workflows
-
+# Date: 2020-12-16
+# Gateway Version: 20.3.1
+# Description: Certified Gateway workflow
 """
 Cisco ACI form
 """
@@ -108,7 +107,7 @@ def raw_table_data(*args, checked=True, **kwargs):
                        {"orderable": False, "targets": [1, 2, 3]}],
         'lengthMenu': [5, 20, 30, 40, 50, 100, 500, 1000],
         'escapeRender': [0],
-        "sDom": '<"H"l<"check_all_button">fr>t<"F"ip>'
+        "dom": '<"H"l<"check_all_button">fr>t<"F"ip>'
     }
 
 
@@ -192,7 +191,7 @@ class GenericFormTemplate(GatewayForm):
         workflow_name=workflow_name,
         permissions=workflow_permission,
         label='',
-        table_features=raw_table_data(),
+        data_function=raw_table_data,
         is_disabled_on_start=False,
     )
 

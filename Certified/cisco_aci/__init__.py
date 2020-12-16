@@ -1,5 +1,4 @@
 # Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
-# -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,18 +13,18 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2019-05-15
-# Gateway Version: 20.1.1
-# Description: Certified Cisco ACI Workflows
+# Date: 2020-12-16
+# Gateway Version: 20.3.1
+# Description: Certified Cisco ACI Workflow
 
 
 # pylint: disable=redefined-builtin,missing-docstring
 type = 'ui'
 sub_pages = [
     {
-        'name'        : 'cisco_aci_page',
-        'title'       : u'Cisco ACI',
-        'endpoint'    : 'cisco_aci/cisco_aci_endpoint',
-        'description' : u'cisco_aci'
+        'name'       : 'cisco_aci_page',
+        'title'      : 'Cisco ACI',
+        'endpoint'   : 'cisco_aci/cisco_aci_endpoint',
+        'description': 'cisco_aci'
     },
 ]

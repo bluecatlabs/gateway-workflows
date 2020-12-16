@@ -1,5 +1,4 @@
 // Copyright 2020 BlueCat Networks. All rights reserved.
-// JavaScript for your page goes in here.
 
 function process_render_options(data) {
     var target = '_all';

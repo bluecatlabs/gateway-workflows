@@ -1,0 +1,31 @@
+BlueCat Gateway 20.3.1
+Example Selective deployment workflows
+
+Requirements: 
+• Address Manager and DNS/DHCP Server v8.3.2 or greater.
+• BDDS v8.3.2 or greater – BDDS appliances should be configured with necessary deployment roles and be under Address Manager control.
+
+In addition to Python wrappers for the Selective Deployment APIs, Example Selective Deployment workflows are now available on the BlueCat Labs GitHub repository, helping to complete BlueCat's Integrity solution of this API feature with UI-based Gateway workflows.
+
+There is a standalone Selective Deployment workflow as well as new Add, Update, and Delete Host Record workflows that include the ‘Deploy Now’ functionality. BlueCat recommends using these workflows as a template that you can modify to suit the needs of your environment.
+
+By default, all Example Selective Deployment workflows invoke the selectiveDeploy API method using the ‘related’ property. This will deploy a record and any of its associated records. These Example workflows use related deployments as a precaution against broken record chains if modifying or deleting records.
+
+For more details on the Selective Deployment API methods, refer to the DNS Integrity Gateway Help & Documentation or Administration Guide, or the Address Manager 8.3.2 API Guide available on BlueCat Customer Care.
+
+Selective Deployment Example workflow
+Select or search for a DNS record that has previously been added or modified. A table displays all DNS records. You can select and deploy DNS records. The status of deployment is displayed in the same form.
+
+1. Select your Configuration, View and Zone, and then click Search. The table populates with related DNS records. 
+2. Click the check boxes at the end of each row to select them to deploy, and click Deploy. The system returns either a Success, Queued, or an explanation of failure message.
+
+Add, Delete, and Update Host Record Example workflows
+These workflows are the same workflows as previously found on Github, however, these workflows include a Deploy Now checkbox, which invokes the selective deployment API. These workflows are purely example templates for you to modify for your use.
+
+1. Select the Configuration, View, Zone, Host Record, Name, and IPv4 Address. 
+2. Select the Deploy Now check box, and click Submit. The system returns either a Success, Queued, or an explanation of failure message.
+
+Note: When you are working with selective deployment, keep in mind the following:
+
+• If you navigate away from the form, you will lose the deployment status.
+• If you add a new record and deploy while waiting for a previous deployment, the status message of the previous deployment will be overwritten.

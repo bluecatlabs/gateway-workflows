@@ -13,6 +13,6 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2020-08-31
-# Gateway Version: 20.1.1
+# Date: 2020-12-16
+# Gateway Version: 20.3.1
 # Description: Example Gateway workflows
