@@ -1,0 +1,2 @@
+title=Dump Records
+info=Press the button and dump out the Host Record, Generic A, and Alias records from the default Configuration. Data is generated in CSV format
