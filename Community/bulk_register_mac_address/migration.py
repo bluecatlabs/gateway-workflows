@@ -25,7 +25,6 @@ import os
 import sys
 
 from paramiko import SSHClient, AutoAddPolicy
-from scp import SCPClient
 from suds import WebFault
 from urllib.parse import urlparse
 

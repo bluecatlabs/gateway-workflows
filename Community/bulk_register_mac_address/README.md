@@ -18,14 +18,6 @@ Add the following UDF to MAC Pool Objects > MAC Address object in BAM.
   Display Name: Comments   
   Type: Text  
   
-1. **Python3 scp module**  
-This workflow requires the python scp module.  
-Install scp module using PIP3 inside the BlueCat Gateway container.
-```
-$pip3 install scp
-
-```
-
 ## Usage  
 
 1. **Create a CSV file**  
@@ -44,17 +36,14 @@ INV_PC0000112,B4:AE:2B:22:43:D1,ITLAB-MAC-Pool,Demo MAC address 8
 
 ```
 2. **Import CSV file in BlueCat Gateway**  
-Click "Choose File" and select the corresponding CSV file.  
-The Group List will be populated as below:  
-    <img src = "img/Bulk_mac1.jpg" width = "600px"> 
+Click "Choose File" and select the corresponding CSV file.    
+    <img src = "img/Bulk_mac1.jpg" width = "600px">   
 <!-- ![screenshot](img/Bulk_mac1.jpg?raw=true "Bulk_mac1")   -->
-
-3. **Add users to BAM**  
 Click "REGISTER".  
 Check that the *Succeed* message shows.  
 ![screenshot](img/Bulk_mac2.jpg?raw=true "Bulk_mac2")  
 
-1. **Check BAM to see results**  
+3. **Check BAM to see results**  
 
 ---
 
