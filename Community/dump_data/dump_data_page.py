@@ -41,22 +41,19 @@ def get_records_info(zone, entity_types):
     records = []
     for entity_type in entity_types:
         for record in zone.get_children_of_type(entity_type):
-            record_info = None
             if record.get_type() == Entity.GenericRecord:
                 if record.get_property('type') == 'A':
-                    record_info = {'record_id': record.get_id(),
+                    records.append({'record_id': record.get_id(),
                                    'record_type': '{} - {}'.format(record.get_type(), 'A'),
-                                   'record_Name': record.get_full_name(),
+                                   'record_name': record.get_full_name(),
                                    'record_link':  record.get_property('rdata'),
-                                   'properties': util.map_to_properties(record.get_properties())}
+                                   'properties': util.map_to_properties(record.get_properties())})
             else:
-                record_info = {'record_id': record.get_id(),
+                records.append({'record_id': record.get_id(),
                                'record_type': record.get_type(),
                                'record_name': record.get_full_name(),
-                               'record_link':  '|'.join(record.get_addresses()) if record.get_type() == Entity.HostRecord else record.get_property('linkedRecordName'),
-                               'properties': util.map_to_properties(record.get_properties())}
-            if record_info:
-                records.append(record_info)
+                               'record_link':  '|'.join(record.get_addresses()) if record.get_type() == Entity.HostRecord else record.get_linked_record_name(),
+                               'properties': util.map_to_properties(record.get_properties())})
 
     return records
 
@@ -64,7 +61,7 @@ def get_records_info(zone, entity_types):
 def get_records(zone):
     found_records = []
 
-    found_records.extend(get_records_info(zone, [Entity.HostRecord, Entity.AliasRecord]))
+    found_records.extend(get_records_info(zone, [Entity.HostRecord, Entity.AliasRecord, Entity.GenericRecord]))
 
     for sub_zone in zone.get_zones():
         found_records.extend(get_records(sub_zone))
@@ -78,10 +75,14 @@ def generate_csv_string(data, column_headers):
 
     csv_writer.writerow(column_headers)
 
+    column_translation = []
+    for column in column_headers:
+        column_translation.append(column.lower().replace(' ', '_'))
+
     for row in data:
         row_data = []
-        for column in column_headers:
-            row_data.append(row[column.lower().replace(' ', '_')])
+        for column in column_translation:
+            row_data.append(row[column])
         csv_writer.writerow(row_data)
 
     return string_output.getvalue()
