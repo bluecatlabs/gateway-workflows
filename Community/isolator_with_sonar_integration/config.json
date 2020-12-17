@@ -1,0 +1,10 @@
+{
+    "kompira_url": "https://bluecat.cloud.kompira.jp",
+    "api_token": "AqOeWlnSpKo+fe8hPEbLYNw+51R0Uzc1uOnrN4s+",
+    "network_name": "Lab Network",
+    "include_matches": true,
+    "edge_url": "https://api-ce4028bf.pilot.bluec.at",
+    "edge_client_id": "b9e56374-8f8b-45c2-869d-4807e1a987a5",
+    "edge_secret": "4271b26c-6290-485c-b809-009bcea32548",
+    "edge_policy_name": "KDDI Isolation"
+}
