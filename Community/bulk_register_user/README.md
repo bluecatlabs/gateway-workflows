@@ -40,7 +40,7 @@ EM20174671, default, data@itlab.bcnlab.corp,Soong,Data, REGULAR, GUI
 ```
 2. **Import CSV file in BlueCat Gateway**  
 Click "Choose File" and select the corresponding CSV file.  
-The User List will be populated as below:  
+The *User List* will be populated as below:  
 ![screenshot](img/Bulk_user1.jpg?raw=true "Bulk_user1")  
 
 3. **Add users to BAM**  
