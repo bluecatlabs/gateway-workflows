@@ -24,7 +24,8 @@ Unless required by applicable law or agreed to in writing, software
 
 This workflow will isolate specific IP addresses by adding them into BlueCat DNS Edge policies.     
 This workflow will load the node device information stored in the Kompira Cloud Instance and isolate specific nodes according to BlueCat DNS Edge policy. 
-When isolate is executed, selected IP addresses will be added into the BlueCat DNS Edge CI existing policy. It will also automatically register the MAC Addresses associated with the selected IP addresses to the *"DENY"* MAC Pool in BlueCat Address Manager prohibiting further DHCP leases.  
+When isolate is executed, selected IP addresses will be added into the BlueCat DNS Edge CI existing policy.   
+It will also automatically register the MAC Addresses associated with the selected IP addresses to the *"DENY"* MAC Pool in BlueCat Address Manager prohibiting further DHCP leases.  
 
 ## Prerequisites  
 1. **BAM Default Configuration**  
