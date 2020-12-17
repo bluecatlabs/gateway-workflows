@@ -22,7 +22,7 @@ Unless required by applicable law or agreed to in writing, software
 **Bluecat Gateway Version:** v20.3.1 and greater  
 **BlueCat Address Manager Version:** v9.2 and greater  
 
-This workflow will isolate specific IP addresses and prevent them from making any DNS queries.    
+This workflow will isolate specific IP addresses by adding them into BlueCat DNS Edge policies.     
 This workflow will load the node device information stored in the Kompira Cloud Instance and isolate specific nodes according to BlueCat DNS Edge policy. 
 When isolate is executed, selected IP addresses will be added into the BlueCat DNS Edge CI existing policy.    
 
