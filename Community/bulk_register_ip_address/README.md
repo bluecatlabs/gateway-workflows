@@ -35,7 +35,7 @@ Click "Choose File" and select the corresponding CSV file.
 The *IP Address List* will be populated as below:  
 ![screenshot](img/Bulk_IP1.jpg?raw=true "Bulk_IP1")  
 
-3. **Assign IP Address to BAM**  
+3. **Assign IP Addresses to BAM**  
 Click "REGISTER".  
 ![screenshot](img/Bulk_IP2.jpg?raw=true "Bulk_IP2")  
 
