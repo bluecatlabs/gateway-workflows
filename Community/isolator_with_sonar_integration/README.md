@@ -185,7 +185,7 @@ Check to see that selected IP address(es) have been added to the existing policy
 Check to see associated MAC Address(es) have been registered to the *"DENY"* MAC Pool in BlueCat Address Manager.   
 By registering associated MAC Address(es) to the *"DENY"* MAC Pool, it will prohibit further DHCP leases from the BlueCat DHCP server.  
 
-    <img src = "img/deny_mac.jpg" width = "600px">  
+    <img src = "img/deny_mac.jpg" width = "300px">  
 
 ---
 
