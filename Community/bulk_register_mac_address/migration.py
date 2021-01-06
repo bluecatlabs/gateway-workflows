@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,27 +15,10 @@
 #
 # By: BlueCat Networks
 # Date: 2019-03-14
-# Gateway Version: 18.10.2
+# Gateway Version: 20.12.1
 # Description: Bulk Register MAC Address Migration
 
-# Various Flask framework items.
-import codecs
-import datetime
-import os
-import sys
-
-from paramiko import SSHClient, AutoAddPolicy
-from suds import WebFault
-from urllib.parse import urlparse
-
-from bluecat import route, tag, util
-from bluecat.entity import Entity
-from bluecat.api_exception import BAMException, PortalException
-from bluecat.internal.wrappers.generic_getters import get_entity_by_name
-from bluecat_portal import config
-from bluecat.util import safe_str
-
-from main_app import app
+from bluecat.api_exception import PortalException
 
 def get_mac_address(configuration, address):
     mac_addr = None

@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,11 +15,10 @@
 #
 # By: Akira Goto (agoto@bluecatnetworks.com)
 # Date: 2020-06-10
-# Gateway Version: 20.3.1
+# Gateway Version: 20.12.1
 # Description: Isolator with Kompira Cloud Sonar Integration.py
 
 import os
-import sys
 import json
 import ipaddress
 
@@ -34,7 +33,6 @@ from bluecat.api_exception import BAMException, PortalException
 
 from sonar.sonarapi import SonarAPI
 from dnsedge.edgeapi import EdgeAPI
-
 
 #
 # Should be in API

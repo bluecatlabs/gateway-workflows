@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +15,12 @@
 #
 # By: BlueCat Networks
 # Date: 2019-03-14
-# Gateway Version: 18.10.2
+# Gateway Version: 20.12.1
 # Description: Bulk Register MAC Address Form
 
 import os
 
-from wtforms import FileField, SubmitField
+from wtforms import FileField
 
 from bluecat import util
 import config.default_config as config
@@ -70,6 +70,7 @@ class GenericFormTemplate(GatewayForm):
         permissions=workflow_permission,
         label=text['label_list'],
         table_features=table_features(),
+        buttons=[],
         is_disabled_on_start=False
     )
     

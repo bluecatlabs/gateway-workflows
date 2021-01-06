@@ -1,4 +1,4 @@
-// Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+// Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,10 +14,11 @@
 //
 // By: Akira Goto (agoto@bluecatnetworks.com)
 // Date: 2019-10-30
-// Gateway Version: 19.8.1
+// Gateway Version: 20.12.1
 // Description: Fixpoint Kompira Cloud Sonar Importer JS
 
 var nodeColModel = []
+var nodeTitle = ''
 
 function load_col_model() {
     $.ajax({
@@ -26,9 +27,8 @@ function load_col_model() {
         async: false
     })
     .done(function(data) {
-        for (var i in data) {
-            nodeColModel.push(data[i]);
-        }
+        nodeTitle = data.title;
+        nodeColModel = data.columns;
     })
     .fail(function() {
         alert('Failed to fetch servers.');
@@ -116,12 +116,12 @@ $(document).ready(function()
         url: '/sonar_importer/load_nodes',
         datatype: 'json',
         colModel: nodeColModel,
-        height: 190,
+        height: 200,
         rowNum: 10000,
         pager : '#pager',
         scroll: true,
         multiselect: true,
-        caption: 'Sonar Node List'
+        caption: nodeTitle
     });
     
     $('#get_nodes').on('click', function(e)
