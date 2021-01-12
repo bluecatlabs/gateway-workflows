@@ -1,4 +1,4 @@
-// Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+// Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,9 +14,10 @@
 //
 // By: Akira Goto (agoto@bluecatnetworks.com)
 // Date: 2019-10-30
-// Gateway Version: 19.8.1
+// Gateway Version: 20.12.1
 // Description: Juniper Mist Importer JS
 
+var clientTitle = ''
 var clientColModel = []
 
 function load_col_model() {
@@ -26,9 +27,8 @@ function load_col_model() {
         async: false
     })
     .done(function(data) {
-        for (var i in data) {
-            clientColModel.push(data[i]);
-        }
+        clientTitle = data.title;
+        clientColModel = data.columns;
     })
     .fail(function() {
         alert('Failed to fetch servers.');
@@ -58,7 +58,8 @@ function get_clients() {
     $.ajax({
         type: "GET",
         url: '/mist_importer/get_clients',
-        async: false
+        async: false,
+        cache: false
     })
     .done(function(data) {
         if (data.length == 0) {
@@ -116,12 +117,12 @@ $(document).ready(function()
         url: '/mist_importer/load_clients',
         datatype: 'json',
         colModel: clientColModel,
-        height: 190,
+        height: 198,
         rowNum: 10000,
         pager : '#pager',
         scroll: true,
         multiselect: true,
-        caption: 'Mist Client List'
+        caption: clientTitle
     });
     
     $('#get_clients').on('click', function(e)

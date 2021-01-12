@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +20,8 @@
 #
 # -Update info-
 # By: Akira Goto (agoto@bluecatnetworks.com)
-# Date: 2020-04-30
-# Gateway Version: 20.3.1
+# Date: 2020-01-07
+# Gateway Version: 20.12.1
 # Description: Service Point Watcher state_logger.py
 
 import logging

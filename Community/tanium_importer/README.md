@@ -1,4 +1,4 @@
-<!--  Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+<!--  Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
  -*- coding: utf-8 -*-
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@ Unless required by applicable law or agreed to in writing, software
 
  By: Akira Goto (agoto@bluecatnetworks.com)
  Date: 2020-05-31
- Gateway Version: 20.3.1
+ Gateway Version: 20.12.1
  Description: Tanium Importer README.md -->  
 
 # Tanium Importer  
@@ -212,4 +212,4 @@ This will make the base html menus a little bit wider.
 - Ryu Tamura (rtamura@bluecatnetworks.com)  
 
 ## License
-©2020 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
+©2021 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.

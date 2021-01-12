@@ -1,4 +1,4 @@
-// Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+// Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// By: Akira Goto (agoto@bluecatnetworks.com)
-// Date: 2019-08-28
-// Gateway Version: 19.5.1
+// By: BlueCat Networks
+// Date: 2019-04-25
+// Gateway Version: 20.12.1
 // Description: SDWAN Firewall Rule Updater JS
 
 var colModel = []

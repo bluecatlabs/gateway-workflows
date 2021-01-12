@@ -58,7 +58,8 @@ function get_nodes() {
     $.ajax({
         type: "GET",
         url: '/sonar_importer/get_nodes',
-        async: false
+        async: false,
+        cache: false
     })
     .done(function(data) {
         if (data.length == 0) {
@@ -116,7 +117,7 @@ $(document).ready(function()
         url: '/sonar_importer/load_nodes',
         datatype: 'json',
         colModel: nodeColModel,
-        height: 200,
+        height: 198,
         rowNum: 10000,
         pager : '#pager',
         scroll: true,

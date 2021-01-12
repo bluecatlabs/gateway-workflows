@@ -1,4 +1,4 @@
-<!-- Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+<!-- Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -12,12 +12,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-By: Akira Goto (agoto@bluecatnetworks.com)
-Date: 2019-08-28
-Gateway Version: 19.5.1
+By: BlueCat Networks
+Date: 2019-04-25
+Gateway Version: 20.12.1
 Description: SDWAN Firewall Rule Updater HTML -->
 
-{% extends "base.html" %}
+{% extends "base-no-box.html" %}
 
 {% block css %}
 <link rel="stylesheet" href="/js/vendor/jqgrid/ui.jqgrid.css" />
@@ -53,12 +53,12 @@ Description: SDWAN Firewall Rule Updater HTML -->
     </li>
 </ul>
 
-<div class="panel" id="main-container">
+<div class="panel" id="main-container" style="width: 460px;">
     <form id="sdwan_firewall_rule_updater_page_form" method="post"
         action="{{ url_for('sdwan_firewall_rule_updatersdwan_firewall_rule_updater_sdwan_firewall_rule_updater_page_form') }}"
             enctype="multipart/form-data" novalidate>
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="edge-pane">
+            <div role="tabpanel" class="tab-pane active" style="width: 460px;" id="edge-pane">
                 <hr/>
                 {{ render_field(form.edge_url) }}
                 <hr/>
@@ -67,7 +67,7 @@ Description: SDWAN Firewall Rule Updater HTML -->
                 {{ render_field(form.edge_secret) }}
                 <hr/>
             </div>
-            <div role="tabpanel" class="tab-pane" id="domain-pane">
+            <div role="tabpanel" class="tab-pane" style="width: 460px;" id="domain-pane">
                 <hr/>
                 <br/>
                 <table id="table"></table>
@@ -96,8 +96,7 @@ Description: SDWAN Firewall Rule Updater HTML -->
                             <button id="add_row" type="button" class="btn-default">
                                 {{ text['label_add'] }}
                             </button>
-                            &nbsp;
-                            <button id="delete_row" type="button" class="btn-default">
+                            <button id="delete_row" type="button" class="btn-default" style="margin-left: 10px;">
                                 {{ text['label_delete'] }}
                             </button>
                         </td>
@@ -105,7 +104,7 @@ Description: SDWAN Firewall Rule Updater HTML -->
                 </table>
                 <hr/>
             </div>
-            <div role="tabpanel" class="tab-pane" id="sdwan-pane">
+            <div role="tabpanel" class="tab-pane" style="width: 460px;" id="sdwan-pane">
                 <hr/>
                 {{ render_field(form.sdwan_key) }}
                 {{ render_field(form.sdwan_orgname) }}
@@ -113,7 +112,7 @@ Description: SDWAN Firewall Rule Updater HTML -->
                 {{ render_field(form.sdwan_delimit_key) }}
                 <hr/>
             </div>
-            <div role="tabpanel" class="tab-pane" id="execution-pane">
+            <div role="tabpanel" class="tab-pane" style="width: 460px;" id="execution-pane">
                 <hr/>
                 {{ render_field(form.last_execution) }}
                 {{ render_field(form.execution_interval) }}
@@ -132,14 +131,22 @@ Description: SDWAN Firewall Rule Updater HTML -->
         <!-- don't remove the following token -->
         {{ form.csrf_token }}
 
-        <div class="row">
-            <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
-                {{ text['label_submit'] }}
-            </button>
+        <div class="row" style="margin-left: 2px;">
+            <div style="display: inline-block;">
+                <div class="input-group">
+                    <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
+                        {{ text['label_submit'] }}
+                    </button>
+                </div>
+            </div>
             &nbsp;
-            <button id="cancel" name="cancel" type="button" class="btn-default">
-                {{ text['label_cancel'] }}
-            </button>
+            <div style="display: inline-block;">
+                <div class="input-group">
+                    <button id="cancel" name="cancel" type="button" class="btn-default">
+                        {{ text['label_cancel'] }}
+                    </button>
+                </div>
+            </div>
         </div>
     </form>
 </div>

@@ -14,8 +14,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2020-05-31
-# Gateway Version: 20.3.1
+# Date: 2019-08-28
+# Gateway Version: 19.5.1 or greater
 # Description: BlueCat Gateway module for Tanium API calls
 
 import os
