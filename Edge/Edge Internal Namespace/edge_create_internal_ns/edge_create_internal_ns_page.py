@@ -50,6 +50,7 @@ def edge_create_internal_ns_edge_create_internal_ns_page_form():
             print("Contacted the Edge")
 
         # Find the domain list ID
+        new_dl = False
         try:
             # Create the Domain List if it doesn't exist
             dl = edge_session.make_new_domain_list(form.domainlist_name.data, form.domainlist_desc.data)
