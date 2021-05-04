@@ -71,6 +71,8 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Prerana Pradhan
 - Delme Herbert
 - Brian Shorland
+- Chester Wu
+- Lucas Tran
 
 #### Professional Services:
 - Chris Storz
