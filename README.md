@@ -74,12 +74,10 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Chester Wu
 - Lucas Tran
 
-#### Professional Services:
-- Chris Storz
-- Chris Meyer
+#### Integration & Innovation Team:
 - Bill Morton
-- Timothy Noel
-- Ze'ev Romm
+- Chris Meyer
+- Jubin George
 
 #### Special Thanks:
 - Glenn McAllister
@@ -100,10 +98,12 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Murtaza Haider
 - Hongbo Wang
 - Maziar Esfandiarpoor
+- Chris Storz
+
 
 ## License
 
-Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
