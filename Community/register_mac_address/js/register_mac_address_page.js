@@ -17,18 +17,4 @@
 // Gateway Version: 18.10.2
 // Description: Register MAC Address JS
 
-// JavaScript for your page goes in here.
 
-$(function() {
-    var dateFormat = 'yy/mm/dd';
-
-    $("#submit_date").prop("disabled", false);
-	$("#submit_date").datepicker({
-        dateFormat: dateFormat
-    });
-
-    $("#expiry_date").prop("disabled", false);
-	$("#expiry_date").datepicker({
-        dateFormat: dateFormat
-    });
-});

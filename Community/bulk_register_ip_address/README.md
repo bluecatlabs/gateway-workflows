@@ -32,10 +32,10 @@ IP Address, Host Name, MAC Address, Comments
 ```
 2. **Import CSV file in BlueCat Gateway**  
 Click "Choose File" and select the corresponding CSV file.  
-The Group List will be populated as below:  
+The *IP Address List* will be populated as below:  
 ![screenshot](img/Bulk_IP1.jpg?raw=true "Bulk_IP1")  
 
-3. **Assign IP Address to BAM**  
+3. **Assign IP Addresses to BAM**  
 Click "REGISTER".  
 ![screenshot](img/Bulk_IP2.jpg?raw=true "Bulk_IP2")  
 
@@ -67,4 +67,4 @@ This will make the base html menus a little bit wider.
 
 
 ## License
-©2020 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
+©2021 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.

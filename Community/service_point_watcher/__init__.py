@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
 #
 # By: Akira Goto (agoto@bluecatnetworks.com)
 # Date: 2019-08-28
-# Gateway Version: 19.5.1
+# Gateway Version: 20.12.1
 # Description: SDWAN Firewall Rule Updater __init__.py
 
 type = 'ui'

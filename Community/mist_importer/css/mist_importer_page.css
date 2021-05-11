@@ -1,4 +1,4 @@
-/* Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+/* Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,21 +14,25 @@ limitations under the License.
 
 By: Akira Goto (agoto@bluecatnetworks.com)
 Date: 2019-10-30
-Gateway Version: 19.8.1
+Gateway Version: 20.12.1
 Description: Juniper Mist Importer CSS */
 
 @import url("/js/vendor/jquery-ui/jquery-ui.min.css");
 
 .ui-jqgrid .ui-jqgrid-titlebar {
-    height:30px;
+    height:32px;
+    font-size: 16px;
     vertical-align: baseline;
+    color: white;
+    background-color: #0068A4;
 }
 .ui-jqgrid .ui-jqgrid-htable th {
-    height: 30px;
-    vertical-align: baseline;
+    height: 28px;
+    vertical-align: middle;
+    background-color: #DBE3EF;
 }
 .ui-jqgrid tr.jqgrow td {
-    vertical-align: baseline;
+    vertical-align: middle;
 }
 .glyphicon
 {

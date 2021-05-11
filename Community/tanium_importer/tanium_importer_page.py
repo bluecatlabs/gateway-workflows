@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
 #
 # By: Akira Goto (agoto@bluecatnetworks.com)
 # Date: 2020-05-31
-# Gateway Version: 20.3.1
+# Gateway Version: 20.12.1
 # Description: Tanium Importer page.py
 
 import os
@@ -214,7 +214,7 @@ def load_col_model():
             }
         }
     ]
-    return jsonify(col_model)
+    return jsonify({'title': text['label_client_list'], 'columns': col_model})
 
 @route(app, '/tanium_importer/get_clients')
 @util.workflow_permission_required('tanium_importer_page')

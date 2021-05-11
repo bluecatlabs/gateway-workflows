@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +15,12 @@
 #
 # By: Akira Goto (agoto@bluecatnetworks.com)
 # Date: 2019-10-30
-# Gateway Version: 19.8.1
+# Gateway Version: 20.12.1
 # Description: Fixpoint Kompira Cloud Sonar Importer page.py
 
 # Various Flask framework items.
 import os
 import sys
-import codecs
 
 from flask import request, url_for, redirect, render_template, flash, g, jsonify
 from wtforms.validators import URL, DataRequired
@@ -175,7 +174,7 @@ def load_col_model():
             }
         }
     ]
-    return jsonify(nodes)
+    return jsonify({'title': text['label_node_list'], 'columns': nodes})
 
 @route(app, '/sonar_importer/get_nodes')
 @util.workflow_permission_required('sonar_importer_page')

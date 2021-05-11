@@ -34,10 +34,27 @@ Description: Register MAC Address HTML -->
 {% block custom %}
 
     <p>{{ text['info'] }}</p>
-    <!--Your page's HTML goes here.-->
-    {% from "form_helper.html" import render_form %}
-    {{ render_form(form, action=url_for('register_mac_addressregister_mac_address_register_mac_address_page_form'), id="register_mac_address_page_form") }}
-
+    {% from "form_helper.html" import render_field %}
+    <form id="register_mac_address_page_form" method="post"
+        action="{{ url_for('register_mac_addressregister_mac_address_register_mac_address_page_form') }}"
+            enctype="multipart/form-data" novalidate>
+        <hr/>
+        {{ render_field(form.asset_code) }}
+        {{ form.unique_check }} {{ text['label_unique_check'] }}
+        <br/>
+        <br/>
+        {{ render_field(form.mac_address) }}
+        {{ render_field(form.mac_pool) }}
+        {{ render_field(form.comments) }}
+        
+        <!--don't remove the following token-->
+        {{ form.csrf_token }}
+        
+        <hr/>
+        <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
+            {{ text['label_submit'] }}
+        </button>
+    </form>
 {% endblock %}
 
 {% block scripts %}

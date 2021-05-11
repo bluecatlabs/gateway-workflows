@@ -1,4 +1,4 @@
-# Copyright 2019 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,11 +15,10 @@
 #
 # By: Akira Goto (agoto@bluecatnetworks.com)
 # Date: 2019-10-30
-# Gateway Version: 19.8.1
+# Gateway Version: 20.12.1
 # Description: Fixpoint Kompira Cloud Sonar Importer.py
 
 import os
-import sys
 import json
 import ipaddress
 
@@ -30,7 +29,7 @@ from threading import Lock
 from bluecat import util
 from bluecat.util import safe_str
 from bluecat.entity import Entity
-from bluecat.api_exception import BAMException, PortalException
+from bluecat.api_exception import PortalException
 
 from sonar.sonarapi import SonarAPI
 

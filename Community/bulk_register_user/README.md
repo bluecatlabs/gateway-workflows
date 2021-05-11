@@ -40,7 +40,7 @@ EM20174671, default, data@itlab.bcnlab.corp,Soong,Data, REGULAR, GUI
 ```
 2. **Import CSV file in BlueCat Gateway**  
 Click "Choose File" and select the corresponding CSV file.  
-The Group List will be populated as below:  
+The *User List* will be populated as below:  
 ![screenshot](img/Bulk_user1.jpg?raw=true "Bulk_user1")  
 
 3. **Add users to BAM**  
@@ -74,4 +74,4 @@ This will make the base html menus a little bit wider.
 - Ryu Tamura (rtamura@bluecatnetworks.com)  
 
 ## License
-©2020 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
+©2021 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.

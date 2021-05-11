@@ -1,4 +1,4 @@
-<!-- Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+<!-- Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@ limitations under the License.
 
 By: Akira Goto (agoto@bluecatnetworks.com)
 Date: 2019-08-28
-Gateway Version: 19.5.1
+Gateway Version: 20.12.1
 Description: Service Point Watcher HTML -->
 
 {% extends "base-no-box.html" %}
@@ -54,7 +54,7 @@ Description: Service Point Watcher HTML -->
         action="{{ url_for('service_point_watcherservice_point_watcher_service_point_watcher_page_form') }}"
             enctype="multipart/form-data" novalidate>
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="splist-pane">
+            <div role="tabpanel" class="tab-pane active wide-content" id="splist-pane">
                 <br/>
                 <hr/>
                 <br/>
@@ -67,8 +67,7 @@ Description: Service Point Watcher HTML -->
                             <button id="get_service_points" type="button" class="btn-default">
                                 {{ text['label_get_service_points'] }}
                             </button>
-                            &nbsp;
-                            <button id="delete_service_points" type="button" class="btn-default">
+                            <button id="delete_service_points" type="button" class="btn-default" style="margin-left: 10px;">
                                 {{ text['label_delete'] }}
                             </button>
                         </td>
@@ -119,8 +118,7 @@ Description: Service Point Watcher HTML -->
                             <button id="add_row" type="button" class="btn-default">
                                 {{ text['label_add'] }}
                             </button>
-                            &nbsp;
-                            <button id="delete_row" type="button" class="btn-default">
+                            <button id="delete_row" type="button" class="btn-default" style="margin-left: 10px;">
                                 {{ text['label_delete'] }}
                             </button>
                         </td>
@@ -132,14 +130,22 @@ Description: Service Point Watcher HTML -->
         <!-- don't remove the following token -->
         {{ form.csrf_token }}
 
-        <div class="row">
-            <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
-                {{ text['label_submit'] }}
-            </button>
+        <div class="row" style="margin-left: 2px;">
+            <div style="display: inline-block;">
+                <div class="input-group">
+                    <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
+                        {{ text['label_submit'] }}
+                    </button>
+                </div>
+            </div>
             &nbsp;
-            <button id="cancel" name="cancel" type="button" class="btn-default">
-                {{ text['label_cancel'] }}
-            </button>
+            <div style="display: inline-block;">
+                <div class="input-group">
+                    <button id="cancel" name="cancel" type="button" class="btn-default">
+                        {{ text['label_cancel'] }}
+                    </button>
+                </div>
+            </div>
         </div>
     </form>
 </div>

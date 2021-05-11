@@ -1,4 +1,4 @@
-<!-- Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+<!-- Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@ limitations under the License.
 
 By: Akira Goto (agoto@bluecatnetworks.com)
 Date: 2020-03-31
-Gateway Version: 20.1.1
+Gateway Version: 20.12.1
 Description: CISCO Meraki Importer HTML -->
 
 {% extends "base-no-box.html" %}
@@ -87,14 +87,22 @@ Description: CISCO Meraki Importer HTML -->
     <!-- don't remove the following token -->
     {{ form.csrf_token }}
     
-    <div class="row">
-        <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
-            {{ text['label_submit'] }}
-        </button>
+    <div class="wide-content">
+        <div style="display: inline-block;">
+            <div class="input-group">
+                <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
+                    {{ text['label_submit'] }}
+                </button>
+            </div>
+        </div>
         &nbsp;
-        <button id="cancel" name="cancel" type="button" class="btn-default">
-            {{ text['label_cancel'] }}
-        </button>
+        <div style="display: inline-block;">
+            <div class="input-group">
+                <button id="cancel" name="cancel" type="button" class="btn-default">
+                    {{ text['label_cancel'] }}
+                </button>
+            </div>
+        </div>
     </div>
 </form>
 

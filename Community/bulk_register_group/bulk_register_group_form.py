@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
 #
 # By: BlueCat Networks
 # Date: 2019-03-14
-# Gateway Version: 18.10.2
+# Gateway Version: 20.12.1
 # Description: Bulk Register Group Form
 
 import os
@@ -46,8 +46,8 @@ def table_features():
             {"title": text['title_comments']},
         ],
         "columnDefs": [
-            {"width": "45%", "targets": [0]},
-            {"width": "25%", "targets": [1]},
+            {"width": "40%", "targets": [0]},
+            {"width": "30%", "targets": [1]},
             {"width": "30%", "targets": [2]},
         ],
         'searching': False,
@@ -70,6 +70,7 @@ class GenericFormTemplate(GatewayForm):
         permissions=workflow_permission,
         label=text['label_list'],
         table_features=table_features(),
+        buttons=[],
         is_disabled_on_start=False
     )
 

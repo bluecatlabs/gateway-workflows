@@ -1,4 +1,4 @@
-// Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+// Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,31 +14,10 @@
 //
 // By: BlueCat Networks
 // Date: 2019-03-14
-// Gateway Version: 18.10.2
+// Gateway Version: 20.12.1
 // Description: Bulk Register MAC Address JS
 
 // JavaScript for your page goes in here.
-
-function load_from_xml(table, stream) {
-    var parser = new DOMParser();
-    var dom = parser.parseFromString(stream, 'text/xml');
-    console.log('parse done');
-
-    var table = $("#mac_address_list").DataTable();
-    var rows = dom.documentElement.getElementsByTagName('Row');
-
-    for (i = 1; i < rows.length ;i++) {
-        var value_nodes = rows[i].getElementsByTagName('Data');
-        if (2 < value_nodes.length) {
-            var asset_code = value_nodes[0].firstChild.nodeValue;
-            var mac_address = value_nodes[1].firstChild.nodeValue;
-            var employee_code = value_nodes[2].firstChild.nodeValue;
-            var update_date = value_nodes[3].firstChild.nodeValue;
-            console.log('No ' + i + '= ' + asset_code + ', ' + mac_address + ', ' + employee_code + ', ' + update_date);
-            table.row.add([asset_code, mac_address, employee_code, update_date]);
-        }
-    }
-};
 
 function load_from_csv(table, stream) {
     var lines = stream.split("\n");
@@ -48,10 +27,10 @@ function load_from_csv(table, stream) {
         if (2 < columns.length) {
             var asset_code = (columns[0]).trim();
             var mac_address = (columns[1]).trim();
-            var employee_code = (columns[2]).trim();
-            var update_date = (columns[3]).trim();
-            console.log('No ' + i + '= ' + asset_code + ', ' + mac_address + ', ' + employee_code + ', ' + update_date);
-            table.row.add([asset_code, mac_address, employee_code, update_date]);
+            var mac_pool = (columns[2]).trim();
+            var comments = (columns[3]).trim();
+            console.log('No ' + i + '= ' + asset_code + ', ' + mac_address + ', ' + mac_pool, comments);
+            table.row.add([asset_code, mac_address, mac_pool, comments]);
         }
     }
 };
@@ -75,10 +54,7 @@ $(document).ready(function()
             var fileName = file.name.toUpperCase();
 
             table.clear();
-            if (fileName.endsWith(".XML")) {
-                load_from_xml(table, stream);
-            }
-            else if (fileName.endsWith(".CSV")) {
+            if (fileName.endsWith(".CSV")) {
                 load_from_csv(table, stream);
             }
             table.draw(false);

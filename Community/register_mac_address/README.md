@@ -2,8 +2,7 @@
 **Bluecat Gateway Version:** 18.10.2 and greater  
 **BAM Version:** 9.0.0 and greater  
 
-This workflow will register a specified MAC address tied to a certain location.  
-It assumes a MAC address filtering scenario where the DHCP server will only lease an IP address to a pre-registered MAC address tied to a certain location.  
+This workflow will register a specific MAC address.   
 
 ## Prerequisites
 1. **BAM Default Configuration**  
@@ -14,69 +13,41 @@ In General Configuration, select the BAM Settings tab and enter the configuratio
 2. **UDF**  
 This workflow requires the following UDF.  
 Add the following UDF to MAC Pool Objects > MAC Address object in BAM.  
-  - Update Date  
-  Field Name: UpdateDate   
-  Display Name: Update Date  
-  Type: Date  
-  - User Names  
-  Field Name: UserNames  
-  Display Name: User Names    
-  Type: Text
-  - Asset Code  
-  Field Name: AssetCode  
-  Display Name: Asset Code    
-  Type: Text
-  - Employee Code  
-  Field Name: EmployeeCode   
-  Display Name: Employee Code    
-  Type: Text
-
-3. **Network and DHCP Range**  
-This workflow requires a predefined network and a DHCP range for DHCP lease.  
-Create an arbitrarily network and a DHCP range within that network.  
-
-4. **MAC Pool**  
-This workflow requires a predefined MAC pool for MAC address registration.  
-Create an arbitrarily MAC pool and check *Enable Instant Deployment for changes to this MAC Pool*  
-![screenshot](img/mac_address_reg1.jpg?raw=true "mac_address_reg1")  
-
-5. **Tag Groups / Tags**  
-This workflow requires the following tag groups / tags.    
-  - Make a *Locations* tag group in BAM  
-![screenshot](img/mac_address_reg2.jpg?raw=true "mac_address_reg2")  
-
-  - Make an arbitrarily tag in tag group *Locations* in BAM.  
-
-6. **Tag Object**  
-Tag the predefined network and MAC pool which was created in 3 and 4 to the tag created in 5.  
+  - Comments    
+  Field Name: Comments   
+  Display Name: Comments  
+  Type: Text  
 
 
 ## Usage   
 
 1. **MAC Address Register**  
-Enter the following information:  
-- *MAC Address*  
-Type in the MAC address to register.  
-- *Device Group*  
-Select a device group. Any group will suffice.  
-- *Asset Code*  
-Type in an arbitrarily asset code of the registering MAC address  
-- *Employee Code*  
-Type in an arbitrarily employee code of the registering MAC address.  
-- *Location*  
-Select the location of the registering MAC address.  
-The tags created under the tag group *Locations* will appear as a dropdown menu.  
-- *Submit Date*  
-Specify a submit date. You can either type in a specific date or choose from the calendar.  
-- *Expiry Date*  
-Specify a expiry date. You can either type in a specific date or choose from the calendar.  
+  <img src = "img/mac_address_reg1.jpg" width = "600px"> 
+<!-- ![screenshot](img/mac_address_reg1.jpg?raw=true "mac_address_reg1")   -->
 
-![screenshot](img/mac_address_reg3.jpg?raw=true "mac_address_reg3")  
+Enter the following information:  
+- *Asset Code (Name)*  
+Enter an identifiable name for the MAC Address.  
+This field is mandatory.   
+- *Check Uniqueness for Asset Code (Name)*  
+When this option is checked, it will check against duplicate asset code (name) within the same MAC Pool.  
+Check this option if you **DO NOT** want duplicate asset code (name) registered within the same MAC Pool.  
+This option will only work when a MAC Address is registered to a specific MAC Pool.  
+- *MAC Address*  
+Enter the MAC Address you wish to register.  
+Either separators (Dash or Colon) can be used.  
+This field is mandatory.    
+- *MAC Pool*  
+From the drop down list, select a MAC Pool to be registered to.  
+Select "None" if the MAC Address will not belong to a MAC Pool.  
+- *Comments*  
+Type in any other comments / description if you wish.  
+This field is optional.    
 
 Click *SUBMIT*  
-
+![screenshot](img/mac_address_reg2.jpg?raw=true "mac_address_reg2")  
 Check that the *MAC Address has been successfully registered.* message shows.  
-![screenshot](img/mac_address_reg4.jpg?raw=true "mac_address_reg4")   
+ 
 
 ---
 

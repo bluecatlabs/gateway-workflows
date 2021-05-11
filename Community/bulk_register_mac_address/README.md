@@ -13,51 +13,37 @@ In General Configuration, select the BAM Settings tab and enter the configuratio
 2. **UDF**  
 This workflow requires the following UDF.  
 Add the following UDF to MAC Pool Objects > MAC Address object in BAM.  
-  - Asset Code  
-  Field Name: AssetCode    
-  Display Name: Asset Code   
+  - Comments  
+  Field Name: Comments    
+  Display Name: Comments   
   Type: Text  
-  - Employee Code    
-  Field Name: EmployeeCode
-  Display Name: Employee Code   
-  Type: Text  
-  - Update Date  
-  Field Name: UpdateDate
-  Display Name: Update Date  
-  Type: Date  
-
-3. **Python3 scp module**  
-This workflow requires the python scp module.  
-Install scp module using PIP3 inside the BlueCat Gateway container.
-```
-$pip3 install scp
-
-```
-
+  
 ## Usage  
 
 1. **Create a CSV file**  
-Create a CSV file which has "Asset Code", "MAC Address", "Employee Code", and "Update Date" data.  
+Create a CSV file which has "Asset Code", "MAC Address", "MAC Pool", and "Comments" data.  
 For example:   
 ```
-Asset Code, MAC Address, Employee Code, Update Date
-AIP14062009, 74:2B:62:89:CF:5E, EM20153354, 2016/06/23
-AIP13112813, F8:0F:41:9A:AB:CF, EM20062464, 2016/06/16
-PAS15034264, 28:18:78:FB:68:24, EM19913122, 2016/06/23
-AIP13112675, F8:0F:41:9A:A4:DB, EM20003453, 2016/06/23
-INV_PC0000078, 32:59:B7:15:CD:BB, EM19863245, 2016/06/16
-INV_PC0000078, 30:59:B7:15:CC:BA, EM20103149, 2016/06/16
-INV_PC0000112, B6:AE:2B:22:42:D0, EM20093621, 2016/06/21
-INV_PC0000112, B4:AE:2B:22:43:D1, EM20174671, 2016/06/21
+Asset Code,MAC Address,MAC Pool,Comments
+AIP14062009,74:2B:62:89:CF:5E,ITLAB-MAC-Pool,Demo MAC address 1
+AIP13112813,F8:0F:41:9A:AB:CF,ITLAB-MAC-Pool,Demo MAC address 2
+PAS15034264,28:18:78:FB:68:24,ITLAB-MAC-Pool,Demo MAC address 3
+AIP13112675,F8:0F:41:9A:A4:DB,ITLAB-MAC-Pool,Demo MAC address 4
+INV_PC0000078,32:59:B7:15:CD:BB,ITLAB-MAC-Pool,Demo MAC address 5
+INV_PC0000078,30:59:B7:15:CC:BA,ITLAB-MAC-Pool,Demo MAC address 6
+INV_PC0000112,B6:AE:2B:22:42:D0,ITLAB-MAC-Pool,Demo MAC address 7
+INV_PC0000112,B4:AE:2B:22:43:D1,ITLAB-MAC-Pool,Demo MAC address 8
 
 ```
 2. **Import CSV file in BlueCat Gateway**  
-Click "Choose File" and select the corresponding CSV file.  
-The Group List will be populated as below:  
-![screenshot](img/Bulk_mac1.jpg?raw=true "Bulk_mac1")  
+Click "Choose File" and select the corresponding CSV file.    
+The *MAC Address List* will be populated as below:  
+    <img src = "img/Bulk_mac1.jpg" width = "600px">   
+<!-- ![screenshot](img/Bulk_mac1.jpg?raw=true "Bulk_mac1")   -->
 
-3. **Add users to BAM**  
-Click "REGISTER".  
+3. **Add Mac Addresses to BAM**  
+Click *REGISTER*.  
+Check that the *Succeed* message shows.  
 ![screenshot](img/Bulk_mac2.jpg?raw=true "Bulk_mac2")  
 
 4. **Check BAM to see results**  
@@ -87,4 +73,4 @@ This will make the base html menus a little bit wider.
 - Ryu Tamura (rtamura@bluecatnetworks.com)  
 
 ## License
-©2020 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
+©2021 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.

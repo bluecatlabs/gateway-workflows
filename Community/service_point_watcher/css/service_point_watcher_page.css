@@ -1,4 +1,4 @@
-/* Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+/* Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,23 +14,27 @@ limitations under the License.
 
 By: Akira Goto (agoto@bluecatnetworks.com)
 Date: 2019-08-28
-Gateway Version: 19.5.1
+Gateway Version: 20.12.1
 Description: Service Point Watcher CSS */
 
 @import url("/js/vendor/jquery-ui/jquery-ui.min.css");
 
 .ui-jqgrid .ui-jqgrid-titlebar {
-    height:30px;
+    height:32px;
+    font-size: 16px;
     vertical-align: baseline;
+    color: white;
+    background-color: #0068A4;
 }
 
 .ui-jqgrid .ui-jqgrid-htable th {
-    height: 30px;
-    vertical-align: baseline;
+    height: 28px;
+    vertical-align: middle;
+    background-color: #DBE3EF;
 }
 
 .ui-jqgrid tr.jqgrow td {
-    vertical-align: baseline;
+    vertical-align: middle;
 }
 .hovertext
 {
@@ -83,4 +87,7 @@ Description: Service Point Watcher CSS */
 {
     background: #21527d none repeat scroll 0% 0%;
     color: #fff;
+}
+.wide-content{
+    width: 800px;
 }

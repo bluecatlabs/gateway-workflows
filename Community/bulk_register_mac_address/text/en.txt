@@ -1,11 +1,31 @@
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
+# -*- coding: utf-8 -*-
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# By: BlueCat Networks
+# Date: 2019-03-14
+# Gateway Version: 20.12.1
+# Description: Bulk Register MAC Address text file */
+
 title=Bulk MAC Address Registration
 info=Bulk register MAC Addresses to grant network access.
 success=Succeed.
 file_legend=Specify a file to read.
 label_asset_code=Asset Code
 label_mac_address=MAC Address
-label_employee_code=Employee Code
-label_update_date=Update Date
+label_mac_pool=MAC Pool
+label_comments=Comments
 label_file=File:
 label_list=MAC Address List:
 label_submit=Register

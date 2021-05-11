@@ -30,16 +30,30 @@ from main_app import app
 
 from .register_mac_address_form import get_resource_text
 from .register_mac_address_form import GenericFormTemplate
+from .register_mac_address_form import UniqueNameValidator
 
-def get_mac_pool(tag_id):
-    mac_pool = None
+def get_configuration():
+    configuration = None
     if g.user:
-        tag = g.user.get_api().get_entity_by_id(tag_id)
-        print('tag (%d) is found.' % tag.get_id())
-        mac_pools = tag.get_linked_entities(Entity.MACPool)
-        mac_pool = next(mac_pools, None)
-        if mac_pool is None:
-            print('MAC Pool is not found.')
+        configuration = g.user.get_api().get_configuration(config.default_configuration)
+    return configuration
+
+def get_mac_pools(configuration):
+    mac_pools = [(0, 'None')]
+    try:
+        children = configuration.get_children_of_type(configuration.MACPool)
+        for child in children:
+            mac_pools.append((child.get_id(), child.get_name()))
+    except PortalException:
+        pass
+    return mac_pools
+
+def get_mac_pool(configuration, mac_pool_id):
+    mac_pool = None
+    try:
+        mac_pool = configuration._api.get_entity_by_id(mac_pool_id)
+    except PortalException:
+        pass
     return mac_pool
 
 def get_mac_address(configuration, address):
@@ -50,43 +64,6 @@ def get_mac_address(configuration, address):
         pass
     return mac_addr
 
-def get_configuration():
-    configuration = None
-    if g.user:
-        configuration = g.user.get_api().get_configuration(config.default_configuration)
-    return configuration
-    
-def get_tag_tree(base, tag):
-    result = []
-    if base != '':
-        base += '.' + tag.get_name()
-    else:
-        base = tag.get_name()
-        
-    result.append((tag.get_id(), base))
-    children = tag.get_tags()
-    for c in children:
-        result.extend(get_tag_tree(base, c))
-    return result	
-
-def get_device_groups():
-    text=get_resource_text()
-    device_groups = [
-        (1, text['label_general_group']),
-        (2, text['label_design_group']), 
-        (3, text['label_production_group'])
-    ]
-    return device_groups
-    
-def get_locations():
-    result = []
-    if g.user:
-        tag_group = g.user.get_api().get_tag_group_by_name('Locations')
-        children = tag_group.get_tags()
-        for c in children:
-            result.extend(get_tag_tree('', c))
-    return result
-
 
 # The workflow name must be the first part of any endpoints defined in this file.
 # If you break this rule, you will trip up on other people's endpoint names and
@@ -96,8 +73,8 @@ def get_locations():
 @util.exception_catcher
 def register_mac_address_register_mac_address_page():
     form = GenericFormTemplate()
-    form.device_group.choices = get_device_groups()
-    form.location.choices = get_locations()
+    configuration = get_configuration()
+    form.mac_pool.choices = get_mac_pools(configuration)
     return render_template(
         'register_mac_address_page.html',
         form=form,
@@ -110,32 +87,33 @@ def register_mac_address_register_mac_address_page():
 @util.exception_catcher
 def register_mac_address_register_mac_address_page_form():
     form = GenericFormTemplate()
-    form.device_group.choices = get_device_groups()
-    form.location.choices = get_locations()    
+    configuration = get_configuration()
+    form.mac_pool.choices = get_mac_pools(configuration)
+    text = get_resource_text()
+    mac_pool = get_mac_pool(configuration, form.mac_pool.data)
+    if (mac_pool is not None) and (form.unique_check.data):
+        validator = UniqueNameValidator(
+            message=text['exist_message'],
+            mac_addresses=mac_pool.get_linked_entities(Entity.MACAddress)
+        )
+        form.asset_code.validators.append(validator)
     if form.validate_on_submit():
-        configuration = get_configuration()
-        if configuration is not None:
-            mac_pool = get_mac_pool(form.location.data)
-            if mac_pool is None:
-                g.user.logger.info('Configuration Error, No MAC Pool is associated.')
-                text = get_resource_text()
-                flash(text['config_error'])
-                return render_template('register_mac_address_page.html', form=form,
-                                        text=text, options=g.user.get_options())
-
-            mac_address = get_mac_address(configuration, form.mac_address.data)
-            if mac_address is not None:
-                print('MAC Address %s (%d) is in configuration' % (form.mac_address.data, mac_address.get_id()))
-                mac_address.set_mac_pool(mac_pool)
-            else:
-                print('MAC Address %s is NOT in configuration' % form.mac_address.data)
-                mac_address = configuration.add_mac_address(form.mac_address.data, '', mac_pool)
-            mac_address.set_property('AssetCode', form.asset_code.data)
-            mac_address.set_property('EmployeeCode', form.employee_code.data)
-            mac_address.update()
+        mac_address = get_mac_address(configuration, form.mac_address.data)
+        asset_code = form.asset_code.data
+        if mac_address is not None:
+            print('MAC Address %s (%d) is in configuration' % (form.mac_address.data, mac_address.get_id()))
+            if asset_code != '':
+                mac_address.set_name(asset_code)
+                mac_address.set_property('Comments', form.comments.data)
+                mac_address.update()
+            mac_address.set_mac_pool(mac_pool)
+        else:
+            print('MAC Address %s is NOT in configuration' % form.mac_address.data)
+            properties = 'Comments=' + form.comments.data
+            mac_address = \
+                configuration.add_mac_address(form.mac_address.data, asset_code, mac_pool, properties)
         # Put form processing code here
         g.user.logger.info('SUCCESS')
-        text = get_resource_text()
         flash(text['success'], 'succeed')
         return redirect(url_for('register_mac_addressregister_mac_address_register_mac_address_page'))
     else:
@@ -143,6 +121,6 @@ def register_mac_address_register_mac_address_page_form():
         return render_template(
             'register_mac_address_page.html',
             form=form,
-            text=get_resource_text(),
+            text=text,
             options=g.user.get_options(),
         )

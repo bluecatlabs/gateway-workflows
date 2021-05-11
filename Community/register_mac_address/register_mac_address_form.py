@@ -20,16 +20,27 @@
 
 import datetime
 import os
+import re
+
 
 from flask_wtf.form import FlaskForm
-from wtforms import StringField, SelectField, DateTimeField, SubmitField
-from wtforms.validators import DataRequired, MacAddress
+from wtforms import StringField, SelectField, TextAreaField, BooleanField, SubmitField
+from wtforms.validators import DataRequired, Regexp, ValidationError
 
 from bluecat import util
 import config.default_config as config
 
 from bluecat.wtform_extensions import GatewayForm
-from bluecat.wtform_fields import CustomStringField, CustomSelectField, CustomSubmitField
+
+class UniqueNameValidator:
+    def __init__(self, message='Already Exist', mac_addresses=[]):
+        self.mac_addresses = mac_addresses
+        self.message = message
+        
+    def __call__(self, form, field):
+        for mac_address in self.mac_addresses:
+            if field.data == mac_address.get_name():
+                raise ValidationError(self.message)
 
 def module_path():
     return os.path.dirname(os.path.abspath(str(__file__)))
@@ -43,53 +54,35 @@ class GenericFormTemplate(GatewayForm):
     workflow_permission = 'register_mac_address_page'
     
     text = get_resource_text()
-    require_message=text['require_message']
+    require_message = text['require_message']
+    invalid_message = text['invalid_message']
     
-    mac_address = CustomStringField(
+    asset_code = StringField(
+        label=text['label_asset_code'],
+        validators=[DataRequired(message=require_message)]
+    )
+    
+    unique_check = BooleanField(
+        label=''
+    )
+    
+    mac_address = StringField(
         label=text['label_mac_address'],
         default='FF:FF:FF:FF:FF:FF',
-        is_disabled_on_start=False,
-        validators=[DataRequired(message=require_message), MacAddress()]
+        validators=[
+            DataRequired(message=require_message), 
+            Regexp(r'^[0-9a-fA-F]{2}[:-]([0-9a-fA-F]{2}[:-]){4}[0-9a-fA-F]{2}$', message=invalid_message)
+        ]
     )
     
-    device_group = CustomSelectField(
-        label=text['label_device_group'],
-        coerce=int,
-        is_disabled_on_start=False,
-        validators=[]
-    )
-
-    asset_code = CustomStringField(
-        label=text['label_asset_code'],
-        is_disabled_on_start=False,
-        validators=[DataRequired(message=require_message)]
+    mac_pool = SelectField(
+        label=text['label_mac_pool'],
+        coerce=int
     )
     
-    employee_code = CustomStringField(
-        label=text['label_employee_code'],
-        is_disabled_on_start=False,
-        validators=[DataRequired(message=require_message)]
-    )
-
-    location = CustomSelectField(
-        label=text['label_location'],
-        coerce=int,
-        is_disabled_on_start=False
+    comments = TextAreaField(
+        label=text['label_comments'],
+        render_kw={'rows': 1}
     )
     
-    submit_date = DateTimeField(
-        label=text['label_submit_date'],
-        default=datetime.datetime.now(),
-        format='%Y/%m/%d'
-    )
-    
-    expiry_date = DateTimeField(
-        label=text['label_expiry_date'],
-        default=datetime.datetime.now() + datetime.timedelta(days=365),
-        format='%Y/%m/%d'
-    )
-
-    submit = CustomSubmitField(
-        label=text['label_submit'],
-        is_disabled_on_start=False
-    )
+    submit = SubmitField()

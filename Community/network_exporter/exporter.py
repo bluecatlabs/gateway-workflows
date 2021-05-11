@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -160,6 +160,17 @@ def construct_structure_row(indent, entity):
             row.append(entity.get_property(prop['id']))
     return row
     
+def is_in_dhcp_range(dhcp_ranges, address):
+    result = False
+    for dhcp_range in dhcp_ranges:
+        start_ip = util.ip42int(dhcp_range.get_property('start'))
+        end_ip = util.ip42int(dhcp_range.get_property('end'))
+        ip4_address = util.int2ip4(address)
+        if start_ip <= address and address <= end_ip:
+            result = True
+            break
+    return result
+
 # -----------------------------------
 # IP Address CSV writing functions.
 # -----------------------------------
@@ -197,6 +208,19 @@ def write_ip4_address(writer, ip4_address):
             row.append(ip4_address.get_property(id))
     writer.writerow(row)
     
+def write_dhcp_blunk_address(writer, address):
+    row = []
+    props = col_config['address']
+    for prop in props:
+        id = prop['id']
+        if id == 'ip_address':
+            row.append(util.int2ip4(int(address)))
+        elif id == 'state':
+            row.append('DHCP_UNASSIGNED')
+        else:
+            row.append('')
+    writer.writerow(row)
+    
 def write_ip4_addresses(writer, ip4_network, ip4_addresses):
     for ip4_address in ip4_addresses:
         write_ip4_address(writer, ip4_address)
@@ -214,6 +238,8 @@ def write_full_ip4_addresses(writer, ip4_network, ip4_addresses):
     start_address = util.ip42int(str(network.network_address))
     end_address = util.ip42int(str(network.broadcast_address))
     
+    dhcp_ranges = list(ip4_network.get_children_of_type(Entity.DHCP4Range))
+    
     mask = int(cidr.split('/')[1])
     if mask <= 30:
         write_blunk_address(writer, start_address, NETWORKID_DISPLAY_NAME)
@@ -228,6 +254,8 @@ def write_full_ip4_addresses(writer, ip4_network, ip4_addresses):
             except StopIteration:
                 ip4_address = None
                 pass
+        elif is_in_dhcp_range(dhcp_ranges, address):
+            write_dhcp_blunk_address(writer, address)
         else:
             write_blunk_address(writer, address, '')
             
@@ -368,6 +396,20 @@ def write_ip4_address_for_excel(sheet, start_column, index, ip4_address):
             
     write_row_for_excel(sheet, start_column, index, row)
     
+def write_dhcp_blunk_address_for_excel(sheet, start_column, index, address):
+    row = []
+    props = col_config['address']
+    for prop in props:
+        id = prop['id']
+        if id == 'ip_address':
+            row.append(util.int2ip4(int(address)))
+        elif id == 'state':
+            row.append('DHCP_UNASSIGNED')
+        else:
+            row.append('')
+            
+    write_row_for_excel(sheet, start_column, index, row)
+    
 def write_ip4_addresses_for_excel(sheet, start_column, start_row, ip4_network, ip4_addresses):
     index = start_row + 1
     
@@ -389,6 +431,8 @@ def write_full_ip4_addresses_for_excel(sheet, start_column, start_row, ip4_netwo
     start_address = util.ip42int(str(network.network_address))
     end_address = util.ip42int(str(network.broadcast_address))
     
+    dhcp_ranges = list(ip4_network.get_children_of_type(Entity.DHCP4Range))
+    
     mask = int(cidr.split('/')[1])
     if mask <= 30:
         write_blunk_address_for_excel(sheet, start_column, index, start_address, NETWORKID_DISPLAY_NAME)
@@ -403,6 +447,8 @@ def write_full_ip4_addresses_for_excel(sheet, start_column, start_row, ip4_netwo
                 ip4_address = next(iter_address)
             except StopIteration:
                 pass
+        elif is_in_dhcp_range(dhcp_ranges, address):
+            write_dhcp_blunk_address_for_excel(sheet, start_column, index, address)
         else:
             write_blunk_address_for_excel(sheet, start_column, index, address, '')
         index += 1

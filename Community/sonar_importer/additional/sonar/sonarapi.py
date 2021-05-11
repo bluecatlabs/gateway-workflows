@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
 #
 # By: BlueCat Networks
 # Date: 2019-10-30
-# Gateway Version: 19.8.1 or greater
+# Gateway Version: 20.12.1
 # Description: BlueCat Gateway module for Fixpoint Kompira Cloud Sonar API calls
 
 import os
