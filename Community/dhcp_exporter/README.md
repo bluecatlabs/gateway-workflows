@@ -93,16 +93,16 @@ For example:
     "gwidth": 180
 }
 ```
-    *id* corresponds to the Field Name of the UDF's object.  
-    *title* corresponds to name of the column for both the BlueCat Gateway web UI and the exported spreadsheet.  
-    *width* corresponds to the width of the column when exported to a spreadsheet. Larger numbers mean wider columns.  
-    *gwidth* corresponds to the width of the column shown on the BlueCat Gateway web UI. Larger numbers mean wider columns.  
+  *id* corresponds to the Field Name of the UDF's object.  
+  *title* corresponds to name of the column for both the BlueCat Gateway web UI and the exported spreadsheet.  
+  *width* corresponds to the width of the column when exported to a spreadsheet. Larger numbers mean wider columns.  
+  *gwidth* corresponds to the width of the column shown on the BlueCat Gateway web UI. Larger numbers mean wider columns.  
 
-    When the value of *width* is set to *0*, it will completely hide the column from the BlueCat Gateway web UI.  
-    When the value of *gwidth* is set to *0*, it will not be exported to the spreadsheet. 
+  When the value of *width* is set to *0*, it will completely hide the column from the BlueCat Gateway web UI.  
+  When the value of *gwidth* is set to *0*, it will not be exported to the spreadsheet. 
 
-    Make sure the corresponding UDFs exist on BAM prior to adding additional columns.  
-    Edit the *config_ja.json* file for Japanese.  
+  Make sure the corresponding UDFs exist on BAM prior to adding additional columns.  
+  Edit the *config_ja.json* file for Japanese.  
 
 2. **Language**  
 You can switch to a Japanese menu by doing the following.  
