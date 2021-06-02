@@ -51,23 +51,23 @@ Create a new directory `jqgrid` under `/portal/static/js/vendor/` if none exists
 This workflow uses the following optional UDFs.  
 If the following UDFs are not created, the value in the workflow table and in the exported spreadsheets will be blank.  
 
-Add the following UDF to IPv4 Objects > IPv4 Block object in BAM.  
-  - Comments  
-  Field Name: Comments   
-  Display Name: Comments  
-  Type: Text    
+    Add the following UDF to IPv4 Objects > IPv4 Block object in BAM.  
+      - Comments  
+      Field Name: Comments   
+      Display Name: Comments  
+      Type: Text    
 
-Add the following UDF to IPv4 Objects > IPv4 Address Range object in BAM.  
-  - Comments  
-  Field Name: Comments   
-  Display Name: Comments  
-  Type: Text  
+    Add the following UDF to IPv4 Objects > IPv4 Address Range object in BAM.  
+      - Comments  
+      Field Name: Comments   
+      Display Name: Comments  
+      Type: Text  
 
-Add the following UDF to IPv4 Objects > IPv4 Network object in BAM.  
-  - Comments  
-  Field Name: Comments   
-  Display Name: Comments  
-  Type: Text  
+    Add the following UDF to IPv4 Objects > IPv4 Network object in BAM.  
+      - Comments  
+      Field Name: Comments   
+      Display Name: Comments  
+      Type: Text  
 
 
 
