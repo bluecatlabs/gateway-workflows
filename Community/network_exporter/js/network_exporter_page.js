@@ -1,4 +1,4 @@
-// Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+// Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 //
 // By: BlueCat Networks
 // Date: 2019-04-25
-// Gateway Version: 18.10.2
+// Gateway Version: 21.5.1
 // Description: Network Exporter JS
 
 // JavaScript for your page goes in here.
@@ -28,7 +28,8 @@ function load_col_model() {
     $.ajax({
         type: 'GET',
         url: '/network_exporter/load_col_model',
-        async: false
+        async: false,
+        cache: false
     })
     .done(function(data) {
         for (var i in data) {
@@ -45,10 +46,10 @@ $(document).ready(function()
 {
     load_col_model();
 
-	var grid = $('#table');
+    var grid = $('#table');
 
-	grid.jqGrid({
-	    url: '/network_exporter/load_initial_data',
+    grid.jqGrid({
+        url: '/network_exporter/load_initial_data',
         datatype: 'json',
         colModel: colModel,
         jsonReader: {
@@ -63,24 +64,24 @@ $(document).ready(function()
         treeGridModel: 'adjacency',
         treedatatype: 'json',
         ExpandColumn: 'range'
-	});
+    });
 
-	grid.on('jqGridBeforeExpandTreeGridRow', function(event, rowid, record, children) {
-	    console.log('rowid(%d)', rowid);
-	    var id = record.id;
-	    var level = record.level;
-	    if (0 == children.length) {
-		    $.ajax({url: '/network_exporter/load_children_data/' + id + '/' + level})
+    grid.on('jqGridBeforeExpandTreeGridRow', function(event, rowid, record, children) {
+        console.log('rowid(%d)', rowid);
+        var id = record.id;
+        var level = record.level;
+        if (0 == children.length) {
+            $.ajax({url: '/network_exporter/load_children_data/' + id + '/' + level})
                 .done(function(data)
                 {
-            	    for (var i in data) {
-            	        grid.jqGrid('addChildNode', data[i].id, id, data[i]);
-            	    }
-            	})
-            	.fail(function()
-            	{
-            		alert('Failed to fetch servers.');
-            	})
+                    for (var i in data) {
+                        grid.jqGrid('addChildNode', data[i].id, id, data[i]);
+                    }
+                })
+                .fail(function()
+                {
+                    alert('Failed to fetch servers.');
+                })
 	    }
 	    return true;
 	});

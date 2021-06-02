@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
 #
 # By: BlueCat Networks
 # Date: 2019-03-14
-# Gateway Version: 18.10.2
+# Gateway Version: 21.5.1
 # Description: Network Exporter Page
 
 # Various Flask framework items.
@@ -172,7 +172,9 @@ def load_file(id, format, contents, mode):
         mimetype = XLSX_MIMETYPE
         export_as_excel(g.user.get_api(), dirname, filename, id, contents, full)
         
-    return send_file(dirname + '/' + filename,
+    ret = send_file(dirname + '/' + filename,
                          mimetype=mimetype,
                          attachment_filename=filename,
-                         as_attachment=True) 
+                         as_attachment=True)
+    os.remove(dirname + '/' + filename)
+    return ret

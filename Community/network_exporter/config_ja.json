@@ -51,7 +51,7 @@
         {
             "id": "state",
             "title": "状態",
-            "width": 18
+            "width": 14
         },
         {
             "id": "Owner",
@@ -64,6 +64,22 @@
             "width": 40
         }
     ],
+    "type_names": {
+        "IP4Block": "ブロック",
+        "IP4Network": "ネットワーク",
+        "IP4Address": "IPアドレス"
+    },
+    "state_names": {
+        "GATEWAY": "ゲートウェイ",
+        "STATIC": "静的",
+        "RESERVED": "予約済み",
+        "DHCP_UNASSIGNED": "DHCP 未割り当て",
+        "DHCP_ALLOCATED": "DHCP 割り当て済み",
+        "DHCP_RESERVED": "DHCP 予約済み",
+        "DHCP_EXCLUDED": "DHCP 除外",
+        "DHCP_FREE": "DHCP 空き",
+        "DHCP_ABANDONED": "DHCP 放棄"
+    },
     "excel": {
         "title_cell_index": "B2",
         "start_column": "B",

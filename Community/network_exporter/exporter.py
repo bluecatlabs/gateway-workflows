@@ -15,7 +15,7 @@
 #
 # By: BlueCat Networks
 # Date: 2019-03-14
-# Gateway Version: 18.10.2
+# Gateway Version: 21.5.1
 # Description: Network Exporter exporter
 
 # Various Flask framework items.
@@ -117,6 +117,7 @@ def set_common_props(node, parent, level, entity):
 
 def set_props(node, entity):
     props = col_config['range']
+    type_names = col_config['type_names']
     for prop in props:
         id = prop['id']
         if id == 'range':
@@ -124,7 +125,7 @@ def set_props(node, entity):
         elif id == 'name':
             node[id] = entity.get_name()
         elif id == 'type':
-            node[id] = entity.get_type()
+            node[id] = type_names[entity.get_type()]
         else:
             node[id] = entity.get_property(id)
         
@@ -145,6 +146,7 @@ def construct_ip4_network_node(parent, level, entity):
 def construct_structure_row(indent, entity):
     row = []
     props = col_config['range']
+    type_names = col_config['type_names']
     for prop in props:
         if prop['id'] == 'range':
             nw_range = ''
@@ -155,7 +157,7 @@ def construct_structure_row(indent, entity):
         elif prop['id'] == 'name':
             row.append(entity.get_name())
         elif prop['id'] == 'type':
-            row.append(entity.get_type())
+            row.append(type_names[entity.get_type()])
         else:
             row.append(entity.get_property(prop['id']))
     return row
@@ -198,12 +200,15 @@ def write_blunk_address(writer, address, name):
 def write_ip4_address(writer, ip4_address):
     row = []
     props = col_config['address']
+    state_names = col_config['state_names']
     for prop in props:
         id = prop['id']
         if id == 'ip_address':
             row.append(ip4_address.get_address())
         elif id == 'name':
             row.append(ip4_address.get_name())
+        elif id == 'state':
+            row.append(state_names[ip4_address.get_state()])
         else:
             row.append(ip4_address.get_property(id))
     writer.writerow(row)
@@ -211,12 +216,13 @@ def write_ip4_address(writer, ip4_address):
 def write_dhcp_blunk_address(writer, address):
     row = []
     props = col_config['address']
+    state_names = col_config['state_names']
     for prop in props:
         id = prop['id']
         if id == 'ip_address':
             row.append(util.int2ip4(int(address)))
         elif id == 'state':
-            row.append('DHCP_UNASSIGNED')
+            row.append(state_names['DHCP_UNASSIGNED'])
         else:
             row.append('')
     writer.writerow(row)
@@ -385,12 +391,15 @@ def write_blunk_address_for_excel(sheet, start_column, index, address, name):
 def write_ip4_address_for_excel(sheet, start_column, index, ip4_address):
     row = []
     props = col_config['address']
+    state_names = col_config['state_names']
     for prop in props:
         id = prop['id']
         if id == 'ip_address':
             row.append(ip4_address.get_address())
         elif id == 'name':
             row.append(ip4_address.get_name())
+        elif id == 'state':
+            row.append(state_names[ip4_address.get_state()])
         else:
             row.append(ip4_address.get_property(id))
             
@@ -399,12 +408,13 @@ def write_ip4_address_for_excel(sheet, start_column, index, ip4_address):
 def write_dhcp_blunk_address_for_excel(sheet, start_column, index, address):
     row = []
     props = col_config['address']
+    state_names = col_config['state_names']
     for prop in props:
         id = prop['id']
         if id == 'ip_address':
             row.append(util.int2ip4(int(address)))
         elif id == 'state':
-            row.append('DHCP_UNASSIGNED')
+            row.append(state_names['DHCP_UNASSIGNED'])
         else:
             row.append('')
             
@@ -546,7 +556,7 @@ def export_as_excel(api, dirname, filename, id, contents, full):
     start_row = excel_config['start_row']
     linked_cells = {}
 
-    workbook = openpyxl.load_workbook(dirname + '/templates/MeiryoUI.xlsx')
+    workbook = openpyxl.load_workbook(dirname + '/templates/Default.xlsx')
     sheet = workbook.active
     entity = api.get_entity_by_id(id)
     if contents == 'struct' or contents == 'both':
