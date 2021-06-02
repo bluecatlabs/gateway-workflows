@@ -1,0 +1,58 @@
+{
+    "encoding": "shift-jis",
+    "props": [
+        {
+            "id": "range",
+            "title": "Range",
+            "width": 32,
+            "gwidth": 300
+        },
+        {
+            "id": "name",
+            "title": "Name",
+            "width": 20,
+            "gwidth": 160
+        },
+        {
+            "id": "type",
+            "title": "Type",
+            "width": 14,
+            "gwidth": 100
+        },
+        {
+            "id": "gateway",
+            "title": "Gateway",
+            "width": 18,
+            "gwidth": 0
+        },
+        {
+            "id": "macAddress",
+            "title": "MAC Address",
+            "width": 18,
+            "gwidth": 0
+        },
+        {
+            "id": "options",
+            "title": "Options",
+            "width": 50,
+            "gwidth": 0
+        },
+        {
+            "id": "Comments",
+            "title": "Comments",
+            "width": 40,
+            "gwidth": 180
+        }
+    ],
+    "type_names": {
+        "IP4Block": "Block",
+        "IP4Network": "Network",
+        "DHCP4Range": "DHCP Range",
+        "IP4Address": "DHCP Reserved"
+    },
+    "excel": {
+        "title_cell_index": "B2",
+        "start_column": "B",
+        "start_row": 4
+    }
+}

@@ -1,0 +1,58 @@
+{
+    "encoding": "shift-jis",
+    "props": [
+        {
+            "id": "range",
+            "title": "範囲",
+            "width": 34,
+            "gwidth": 300
+        },
+        {
+            "id": "name",
+            "title": "名前",
+            "width": 20,
+            "gwidth": 160
+        },
+        {
+            "id": "type",
+            "title": "タイプ",
+            "width": 14,
+            "gwidth": 100
+        },
+        {
+            "id": "gateway",
+            "title": "ゲートウェイ",
+            "width": 18,
+            "gwidth": 0
+        },
+        {
+            "id": "macAddress",
+            "title": "MACアドレス",
+            "width": 18,
+            "gwidth": 0
+        },
+        {
+            "id": "options",
+            "title": "オプション",
+            "width": 50,
+            "gwidth": 0
+        },
+        {
+            "id": "Comments",
+            "title": "備考",
+            "width": 40,
+            "gwidth": 180
+        }
+    ],
+    "type_names": {
+        "IP4Block": "ブロック",
+        "IP4Network": "ネットワーク",
+        "DHCP4Range": "DHCP 範囲",
+        "IP4Address": "DHCP 予約済み"
+    },
+    "excel": {
+        "title_cell_index": "B2",
+        "start_column": "B",
+        "start_row": 4
+    }
+}
