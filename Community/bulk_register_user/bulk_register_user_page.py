@@ -36,7 +36,7 @@ from .bulk_register_user_form import GenericFormTemplate
 def update_password(user, password):
     options = []
     try:
-        user._api_client.service.updateUserPassword(user.get_id(), password, options)
+        user._api_client.updateUserPassword(user.get_id(), password, options)
     except WebFault as e:
         print('Exception at update_password(%s)' % util.safe_str(e))
         raise BAMException(safe_str(e))
