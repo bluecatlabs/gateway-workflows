@@ -93,8 +93,8 @@ For example:
     "gwidth": 180
 }
 ```  
-
-
+d
+d
     *id* corresponds to the Field Name of the UDF's object.  
     *title* corresponds to name of the column for both the BlueCat Gateway web UI and the exported spreadsheet.  
     *width* corresponds to the width of the column when exported to a spreadsheet. Larger numbers mean wider columns.  
