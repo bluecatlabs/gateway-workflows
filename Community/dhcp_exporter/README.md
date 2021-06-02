@@ -71,7 +71,7 @@ Choose format:  *Excel* or *CSV*.
 Check *Export Network Structure* if you wish to export the network structure alongside the DHCP data.  
 Click *DOWNLOAD*  
 ![screenshot](img/dhcp_exporter2.jpg?raw=true "network_exporter2")  
-If you wish to export the whole configuration, then **do not** specify any blocks / networks, just choose the format and click *DOWNLOAD* (Depending on the BAM data, this will take some time to export).  
+If you wish to export the whole configuration, then **do not** specify any blocks / networks, just choose the format and click *DOWNLOAD* (Depending on the data size, this will take some time to export).  
 
 3. **Exported file**  
 Open the exported file.  
@@ -96,8 +96,8 @@ The above is an example where the column *Options* will be hidden in the BlueCat
 ## Additional  
 
 1. **Adding additional UDF columns**  
-If you wish to add more UDF columns to the table, you can do so by editing the `config_en.json` file.  
-Add data to the `props` section of the JSON file for additional UDF columns.  
+If you wish to add more UDF columns to the table, you can do so by editing the config file (either `config_en.json` or `config_ja.json`).  
+Add data to the `props` section of the config file for additional UDF columns.  
 For example:  
 ```
 {
