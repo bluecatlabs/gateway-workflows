@@ -71,19 +71,33 @@ Choose format:  *Excel* or *CSV*.
 Check *Export Network Structure* if you wish to export the network structure alongside the DHCP data.  
 Click *DOWNLOAD*  
 ![screenshot](img/dhcp_exporter2.jpg?raw=true "network_exporter2")  
+If you wish to export the whole configuration, then **do not** specify any blocks / networks, just choose the format and click *DOWNLOAD* (Depending on the BAM data, this will take some time to export).  
 
 3. **Exported file**  
 Open the exported file.  
 Check that the DHCP data within the specified block / network has been exported.  
 ![screenshot](img/dhcp_exporter3.jpg?raw=true "network_exporter3")  
 
+4. **Editing the appearance of columns**  
+You can show / hide columns or change the length of the columns by editing the *width* or the *gwidth* section in the config file (either `config_en.json` or `config_ja.json`).  
+*width* corresponds to the width of the column on the exported spreadsheet file and *gwidth* corresponds to the width of the column on the BlueCat Gateway Web UI. Setting the value to *0* will hide the column.  
+```
+{
+    "id": "options",
+    "title": "Options",
+    "width": 50,
+    "gwidth": 0
+}
+```  
+The above is an example where the column *Options* will be hidden in the BlueCat Gateway UI.  
+
 ---
 
 ## Additional  
 
 1. **Adding additional UDF columns**  
-If you wish to add more UDF columns to the table, you can do so by editing the *config_en.json* file.  
-Add data to the *"props"* section of the JSON file for additional UDF columns.  
+If you wish to add more UDF columns to the table, you can do so by editing the `config_en.json` file.  
+Add data to the `props` section of the JSON file for additional UDF columns.  
 For example:  
 ```
 {
@@ -99,15 +113,15 @@ For example:
 *width* corresponds to the width of the column when exported to a spreadsheet. Larger numbers mean wider columns.  
 *gwidth* corresponds to the width of the column shown on the BlueCat Gateway web UI. Larger numbers mean wider columns.  
 
-When the value of *width* is set to *0*, it will completely hide the column from the BlueCat Gateway web UI.  
-When the value of *gwidth* is set to *0*, it will not be exported to the spreadsheet. 
+When the value of *width* is set to *0*, the spreadsheet will be exported with the corresponding column hidden.  
+When the value of *gwidth* is set to *0*, it will hide the column from the BlueCat Gateway web UI.  
 
 Make sure the corresponding UDFs exist on BAM prior to adding additional columns.  
-Edit the *config_ja.json* file for Japanese.  
+Edit the `config_ja.json` file for Japanese.  
 
 2. **Language**  
 You can switch to a Japanese menu by doing the following.  
-    1. Create *ja.txt* in the BlueCat Gateway container.  
+    1. Create `ja.txt` in the BlueCat Gateway container.  
     ```
     cd /portal/Administration/create_workflow/text/  
     cp en.txt ja.txt  
