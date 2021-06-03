@@ -1,8 +1,11 @@
 # Bulk User Registration  
-**Bluecat Gateway Version:** 18.10.2 and greater  
+**Bluecat Gateway Version:** 21.5.1 and greater  
 **BAM Version:** 9.0.0 and greater  
 
 This workflow will add users in bulk from a CSV file.  
+
+## Changes in this release  
+1. This release supports the updated Gateway libraries for version 21.5.1 and greater. This workflow will not work with Gateway versions prior to 21.5.1.  
 
 ## Prerequisites
 1. **BAM Default Configuration**  
