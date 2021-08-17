@@ -69,9 +69,9 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - David Cohen
 - Martin Minkov
 - Prerana Pradhan
-- Delme Herbert
 - Brian Shorland
 - Chester Wu
+- Edwin Christie
 - Lucas Tran
 
 #### Integration & Innovation Team:
@@ -99,7 +99,7 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Hongbo Wang
 - Maziar Esfandiarpoor
 - Chris Storz
-
+- Delme Herbert
 
 ## License
 

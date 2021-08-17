@@ -14,7 +14,7 @@
 #
 # By: BlueCat Networks
 # Date: 2021-05-04
-# Gateway Version: 20.6.1
+# Gateway Version: 20.12.1
 # Description: Example Gateway workflow
 
 """this file is used to add different elements into the page"""
