@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,89 +29,82 @@ from .component_logic import raw_table_data
 
 class GenericFormTemplate(GatewayForm):
     """class used to structure all the elements on the page"""
-    workflow_name = 'selective_deployment'
-    workflow_permission = 'selective_deployment_page'
+
+    workflow_name = "selective_deployment"
+    workflow_permission = "selective_deployment_page"
 
     configuration = Configuration(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='Configuration',
+        label="Configuration",
         required=True,
         coerce=int,
         clear_below_on_change=False,
         is_disabled_on_start=False,
-        on_complete=['call_view'],
-        enable_dependencies={'on_complete': ['view']},
-        disable_dependencies={'on_change': ['view']},
-        clear_dependencies={'on_change': ['view']}
+        on_complete=["call_view"],
+        enable_dependencies={"on_complete": ["view"]},
+        disable_dependencies={"on_change": ["view"]},
+        clear_dependencies={"on_change": ["view"]},
     )
 
     view = View(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='View',
+        label="View",
         required=True,
         one_off=True,
         clear_below_on_change=False,
         display_message=True,
-        enable_dependencies={'on_complete': ['zone']},
-        disable_dependencies={'on_change': ['zone']},
-        clear_dependencies={'on_change': ['zone']},
+        enable_dependencies={"on_complete": ["zone"]},
+        disable_dependencies={"on_change": ["zone"]},
+        clear_dependencies={"on_change": ["zone"]},
         should_cascade_disable_on_change=True,
-        should_cascade_clear_on_change=True
+        should_cascade_clear_on_change=True,
     )
 
     zone = Zone(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='Zone',
+        label="Zone",
         required=True,
         start_initialized=True,
         display_message=True,
-        inputs={
-            'zone': 'zone',
-            'configuration': 'configuration',
-            'view': 'view'
-        },
+        inputs={"zone": "zone", "configuration": "configuration", "view": "view"},
         clear_below_on_change=False,
-        enable_dependencies={'on_complete': ['search']},
-        disable_dependencies={'on_change': ['search'],
-                              'on_click': ['search']},
-        clear_dependencies={'on_change': ['search'],
-                            'on_click': ['search']},
+        enable_dependencies={"on_complete": ["search"]},
+        disable_dependencies={"on_change": ["search"], "on_click": ["search"]},
+        clear_dependencies={"on_change": ["search"], "on_click": ["search"]},
         should_cascade_disable_on_change=True,
         should_cascade_clear_on_change=True,
-
     )
 
     search = CustomSearchButtonField(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        default='Search Objects',
-        inputs={'zone': 'zone', 'view': 'view', 'configuration': 'configuration'},
+        default="Search Objects",
+        inputs={"zone": "zone", "view": "view", "configuration": "configuration"},
         server_side_method=find_objects_by_type_endpoint,
         display_message=True,
-        label='SEARCH DNS',
-        on_complete=['call_output_table'],
-        enable_dependencies={'on_complete': ['deploy', 'output_table']},
-        disable_dependencies={'on_change': ['deploy', 'output_table']},
+        label="SEARCH DNS",
+        on_complete=["call_output_table"],
+        enable_dependencies={"on_complete": ["deploy", "output_table"]},
+        disable_dependencies={"on_change": ["deploy", "output_table"]},
         clear_below_on_change=False,
         should_cascade_disable_on_change=True,
         should_cascade_clear_on_change=True,
-
     )
 
     output_table = TableField(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='',
+        label="",
         data_function=raw_table_data,
-        table_features={'lengthMenu': [10, 20, 30, 40, 50, 100, 500, 1000]}
+        table_features={"lengthMenu": [10, 20, 30, 40, 50, 100, 500, 1000]},
     )
 
     deploy = CustomButtonField(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='Deploy',
+        label="Deploy",
         display_message=True,
     )

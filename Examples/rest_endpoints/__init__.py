@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,12 +18,12 @@
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
-type = 'api'
+type = "api"
 sub_pages = [
     {
-        'name'        : 'rest_endpoints',
-        'title'       : 'Simple RESTful API Endpoints',
-        'endpoint'    : 'rest_endpoints/get_test',
-        'description' : 'Simple RESTful API Endpoints'
+        "name": "rest_endpoints",
+        "title": "Simple RESTful API Endpoints",
+        "endpoint": "rest_endpoints/get_test",
+        "description": "Simple RESTful API Endpoints",
     }
 ]

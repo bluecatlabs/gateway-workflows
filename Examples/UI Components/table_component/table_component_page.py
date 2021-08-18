@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import config.default_config as config
 from .table_component_form import GenericFormTemplate
 from main_app import app
 
+
 def module_path():
     """
     Get module path.
@@ -39,11 +40,12 @@ def module_path():
     """
     return os.path.dirname(os.path.abspath(str(__file__)))
 
+
 # The workflow name must be the first part of any endpoints defined in this file.
 # If you break this rule, you will trip up on other people's endpoint names and
 # chaos will ensue.
-@route(app, '/table_component/table_component_endpoint')
-@util.workflow_permission_required('table_component_page')
+@route(app, "/table_component/table_component_endpoint")
+@util.workflow_permission_required("table_component_page")
 @util.exception_catcher
 def table_component_table_component_page():
     """
@@ -53,7 +55,7 @@ def table_component_table_component_page():
     """
     form = GenericFormTemplate()
     return render_template(
-        'table_component_page.html',
+        "table_component_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
         options=g.user.get_options(),

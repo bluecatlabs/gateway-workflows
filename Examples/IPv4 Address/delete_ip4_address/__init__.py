@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,12 +19,12 @@
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
-type = 'ui'
+type = "ui"
 sub_pages = [
     {
-        'name'        : 'delete_ip4_address_page',
-        'title'       : 'Delete IPv4 Address',
-        'endpoint'    : 'delete_ip4_address/delete_ip4_address_endpoint',
-        'description' : 'Delete IP4 Address'
+        "name": "delete_ip4_address_page",
+        "title": "Delete IPv4 Address",
+        "endpoint": "delete_ip4_address/delete_ip4_address_endpoint",
+        "description": "Delete IP4 Address",
     },
 ]

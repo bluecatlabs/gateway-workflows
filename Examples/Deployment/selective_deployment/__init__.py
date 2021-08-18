@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@
 
 # pylint: disable=redefined-builtin
 """Selective Deployment workflow"""
-type = 'ui'
+type = "ui"
 sub_pages = [
     {
-        'name'        : 'selective_deployment_page',
-        'title'       : 'Selective Deployment',
-        'endpoint'    : 'selective_deployment/selective_deployment_endpoint',
-        'description' : 'selective deployment'
+        "name": "selective_deployment_page",
+        "title": "Selective Deployment",
+        "endpoint": "selective_deployment/selective_deployment_endpoint",
+        "description": "selective deployment",
     },
 ]

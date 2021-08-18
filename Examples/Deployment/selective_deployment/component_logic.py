@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ def raw_table_data(*args, **kwargs):
             {"title": "Select"},
         ],
         "data": [],
-        "columnDefs": [{"width": "10%", "targets": [3]}]
+        "columnDefs": [{"width": "10%", "targets": [3]}],
     }
 
 
@@ -65,53 +65,57 @@ def raw_entities_to_table_data(entities, in_search):
     :param in_search: a boolean variable the the stat of the table is in search or not
     :param return: Dictionary of data parsable by the UI Table Component
     """
-    data = {
-
-        'columns': [],
-        'data': []}
+    data = {"columns": [], "data": []}
 
     if in_search:
-        data['columns'] = [{'title': 'Id'},
-                           {'title': 'Name'},
-                           {'title': 'Type'},
-                           {'title': 'Select'}]
+        data["columns"] = [
+            {"title": "Id"},
+            {"title": "Name"},
+            {"title": "Type"},
+            {"title": "Select"},
+        ]
     else:
-        data['columns'] = [{'title': 'Id'},
-                           {'title': 'Name'},
-                           {'title': 'Type'},
-                           {'title': 'Status'}]
+        data["columns"] = [
+            {"title": "Id"},
+            {"title": "Name"},
+            {"title": "Type"},
+            {"title": "Status"},
+        ]
 
     # Iterate through each entity
     for entries in entities:
         if in_search:
-            data['data'].append([entries.get_id(),
-                                 entries.name,
-                                 entries.get_type(),
-                                 '<input type="checkbox" name=%s>' % entries.get_id()])
+            data["data"].append(
+                [
+                    entries.get_id(),
+                    entries.name,
+                    entries.get_type(),
+                    '<input type="checkbox" name=%s>' % entries.get_id(),
+                ]
+            )
         else:
             new_entries = g.user.get_api().get_entity_by_id(entries)
-            data['data'].append([new_entries.get_id(),
-                                 new_entries.name,
-                                 new_entries.get_type(),
-                                 entities[entries]])
+            data["data"].append(
+                [new_entries.get_id(), new_entries.name, new_entries.get_type(), entities[entries]]
+            )
 
     return data
 
 
 def find_objects_by_type_endpoint(workflow_name, element_id, permissions, result_decorator=None):
     """Endpoint for retrieving the selected objects"""
-    endpoint = 'find_objects_by_type'
-    function_endpoint = '%sfind_objects_by_type' % workflow_name
+    endpoint = "find_objects_by_type"
+    function_endpoint = "%sfind_objects_by_type" % workflow_name
     view_function = app.view_functions.get(function_endpoint)
     if view_function is not None:
         return endpoint
     if not result_decorator:
         result_decorator = empty_decorator
 
-    g.user.logger.info('Creating endpoint %s', endpoint)
-    g.user.logger.info('element id %s', element_id)
+    g.user.logger.info("Creating endpoint %s", endpoint)
+    g.user.logger.info("element id %s", element_id)
 
-    @route(app, '/%s/%s' % (workflow_name, endpoint), methods=['POST'])
+    @route(app, "/%s/%s" % (workflow_name, endpoint), methods=["POST"])
     @rest_workflow_permission_required(permissions)
     @rest_exception_catcher
     def find_objects_by_type():
@@ -119,43 +123,38 @@ def find_objects_by_type_endpoint(workflow_name, element_id, permissions, result
         """Retrieve a list of properties for the table"""
 
         try:
-
-            if g.user.get_api().get_version() < '8.3.2':
-                result = get_result_template()
-                result['status'] = 'FAIL'
-                result['message'] = 'BAM must be Version 8.3.2 or greater'
-                return jsonify(result_decorator(result))
-
-            configuration = g.user.get_api().get_entity_by_id(request.form['configuration'])
-            view = configuration.get_view(request.form['view'])
-            zone_string = request.form['zone'].split('.')
+            configuration = g.user.get_api().get_entity_by_id(request.form["configuration"])
+            view = configuration.get_view(request.form["view"])
+            zone_string = request.form["zone"].split(".")
 
             zone = view
-            for i in range(len(zone_string)-1, -1, -1):
+            for i in range(len(zone_string) - 1, -1, -1):
                 zone = zone.get_zone(zone_string[i])
 
-            entities = chain(zone.get_children_of_type('HostRecord'),
-                             zone.get_children_of_type('AliasRecord'),
-                             zone.get_children_of_type('TXTRecord'),
-                             zone.get_children_of_type('HINFORecord'),
-                             zone.get_children_of_type('SRVRecord'),
-                             zone.get_children_of_type('MXRecord'),
-                             zone.get_children_of_type('NAPTRRecord'))
+            entities = chain(
+                zone.get_children_of_type("HostRecord"),
+                zone.get_children_of_type("AliasRecord"),
+                zone.get_children_of_type("TXTRecord"),
+                zone.get_children_of_type("HINFORecord"),
+                zone.get_children_of_type("SRVRecord"),
+                zone.get_children_of_type("MXRecord"),
+                zone.get_children_of_type("NAPTRRecord"),
+            )
 
             data = raw_entities_to_table_data(entities, True)
 
             result = get_result_template()
-            data["columnDefs"] = [{"width": "10%", "targets": [3], 'render': ''}]
-            if not data['data']:
-                result['message'] = 'No DNS Records Found'
-            result['status'] = 'SUCCESS'
-            result['data'] = {"table_field": data}
+            data["columnDefs"] = [{"width": "10%", "targets": [3], "render": ""}]
+            if not data["data"]:
+                result["message"] = "No DNS Records Found"
+            result["status"] = "SUCCESS"
+            result["data"] = {"table_field": data}
             return jsonify(result_decorator(result))
 
-        except Exception as error: # pylint: disable=broad-except
+        except Exception as error:  # pylint: disable=broad-except
             result = get_result_template()
-            result['status'] = 'FAIL'
-            result['message'] = str(error)
+            result["status"] = "FAIL"
+            result["message"] = str(error)
 
             return jsonify(result_decorator(result))
 

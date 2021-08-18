@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,12 +19,12 @@
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
-type = 'ui'
+type = "ui"
 sub_pages = [
     {
-        'name'        : 'add_host_record_page',
-        'title'       : 'Add Host Record',
-        'endpoint'    : 'add_host_record/add_host_record_endpoint',
-        'description' : 'Add Host Record'
+        "name": "add_host_record_page",
+        "title": "Add Host Record",
+        "endpoint": "add_host_record/add_host_record_endpoint",
+        "description": "Add Host Record",
     },
 ]

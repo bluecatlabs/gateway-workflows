@@ -52,4 +52,4 @@ When you are working with selective deployment, keep in mind the following:
   previous deployment, the status message of the previous deployment will be overwritten.
 ___
 
-©2020 BlueCat Networks (USA) Inc. and its affiliates (collectively 'BlueCat'). All rights reserved.
+©2021 BlueCat Networks (USA) Inc. and its affiliates (collectively 'BlueCat'). All rights reserved.

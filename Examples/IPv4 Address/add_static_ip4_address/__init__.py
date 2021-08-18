@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,12 +19,12 @@
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
-type = 'ui'
+type = "ui"
 sub_pages = [
     {
-        'name'        : 'add_static_ip4_address_page',
-        'title'       : 'Add Static IPv4 Address',
-        'endpoint'    : 'add_static_ip4_address/add_static_ip4_address_endpoint',
-        'description' : 'Add Static IP4 Address'
+        "name": "add_static_ip4_address_page",
+        "title": "Add Static IPv4 Address",
+        "endpoint": "add_static_ip4_address/add_static_ip4_address_endpoint",
+        "description": "Add Static IP4 Address",
     },
 ]

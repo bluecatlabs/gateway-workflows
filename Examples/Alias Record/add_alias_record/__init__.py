@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,12 +18,12 @@
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
-type = 'ui'
+type = "ui"
 sub_pages = [
     {
-        'name'        : 'add_alias_record_page',
-        'title'       : 'Add Alias Record',
-        'endpoint'    : 'add_alias_record/add_alias_record_endpoint',
-        'description' : 'Add Alias Record'
+        "name": "add_alias_record_page",
+        "title": "Add Alias Record",
+        "endpoint": "add_alias_record/add_alias_record_endpoint",
+        "description": "Add Alias Record",
     },
 ]

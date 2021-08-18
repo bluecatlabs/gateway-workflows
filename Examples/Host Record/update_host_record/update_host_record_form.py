@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,93 +21,98 @@
 Update host record form
 """
 from wtforms import SubmitField
-from bluecat.wtform_fields import Configuration, View, Zone, HostRecord, CustomStringField, PlainHTML, CustomBooleanField
+from bluecat.wtform_fields import (
+    Configuration,
+    View,
+    Zone,
+    HostRecord,
+    CustomStringField,
+    PlainHTML,
+    CustomBooleanField,
+)
 from bluecat.server_endpoints import get_host_records_endpoint
 from bluecat.wtform_extensions import GatewayForm
 
 
 class GenericFormTemplate(GatewayForm):
-    """ Form to generate HTML and Javascript for the update_host_record workflow
+    """Form to generate HTML and Javascript for the update_host_record workflow
 
     Note:
         When updating the form, remember to make the corresponding changes to the workflow pages
     """
-    workflow_name = 'update_host_record'
-    workflow_permission = 'update_host_record_page'
+
+    workflow_name = "update_host_record"
+    workflow_permission = "update_host_record_page"
     configuration = Configuration(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='Configuration',
+        label="Configuration",
         required=True,
         coerce=int,
         clear_below_on_change=False,
         is_disabled_on_start=False,
-        on_complete=['call_view'],
-        enable_dependencies={'on_complete': ['view']},
-        disable_dependencies={'on_change': ['view']},
-        clear_dependencies={'on_change': ['view']}
+        on_complete=["call_view"],
+        enable_dependencies={"on_complete": ["view"]},
+        disable_dependencies={"on_change": ["view"]},
+        clear_dependencies={"on_change": ["view"]},
     )
 
     view = View(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='View',
+        label="View",
         required=True,
         one_off=True,
         clear_below_on_change=False,
-        enable_dependencies={'on_complete': ['parent_zone']},
-        disable_dependencies={'on_change': ['parent_zone']},
-        clear_dependencies={'on_change': ['parent_zone']},
+        enable_dependencies={"on_complete": ["parent_zone"]},
+        disable_dependencies={"on_change": ["parent_zone"]},
+        clear_dependencies={"on_change": ["parent_zone"]},
         should_cascade_disable_on_change=True,
-        should_cascade_clear_on_change=True
+        should_cascade_clear_on_change=True,
     )
 
     parent_zone = Zone(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='Zone',
+        label="Zone",
         required=True,
         start_initialized=True,
-        inputs={'zone': 'parent_zone', 'configuration': 'configuration', 'view': 'view'},
+        inputs={"zone": "parent_zone", "configuration": "configuration", "view": "view"},
         clear_below_on_change=False,
-        enable_dependencies={'on_complete': ['host_record']},
-        disable_dependencies={'on_change': ['host_record']},
-        clear_dependencies={'on_change': ['host_record', 'name', 'ip4_address']},
+        enable_dependencies={"on_complete": ["host_record"]},
+        disable_dependencies={"on_change": ["host_record"]},
+        clear_dependencies={"on_change": ["host_record", "name", "ip4_address"]},
         should_cascade_disable_on_change=True,
-        should_cascade_clear_on_change=True
+        should_cascade_clear_on_change=True,
     )
 
     host_record = HostRecord(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='Host Record',
+        label="Host Record",
         required=True,
         inputs={
-            'configuration': 'configuration',
-            'view': 'view',
-            'parent_zone': 'parent_zone',
-            'host_record': 'host_record'
+            "configuration": "configuration",
+            "view": "view",
+            "parent_zone": "parent_zone",
+            "host_record": "host_record",
         },
-        server_outputs={'on_complete': {'name': 'name', 'addresses': 'ip4_address'}},
+        server_outputs={"on_complete": {"name": "name", "addresses": "ip4_address"}},
         server_side_output_method=get_host_records_endpoint,
         clear_below_on_change=False,
-        enable_dependencies={'on_complete': ['submit', 'name', 'ip4_address', 'deploy_now']},
-        disable_dependencies={'on_change': ['submit', 'name', 'ip4_address', 'deploy_now']},
+        enable_dependencies={"on_complete": ["submit", "name", "ip4_address", "deploy_now"]},
+        disable_dependencies={"on_change": ["submit", "name", "ip4_address", "deploy_now"]},
         should_cascade_disable_on_change=True,
     )
 
-    seperator = PlainHTML('<hr>')
+    separator = PlainHTML("<hr>")
 
-    name = CustomStringField(
-        label='New Host Name',
-        required=True
-    )
+    name = CustomStringField(label="New Host Name", required=True)
 
     ip4_address = CustomStringField(
-        label='IPv4 Address (multiple IPv4 addresses must be seperated by a comma)',
-        required=True
+        label="IPv4 Address (multiple IPv4 addresses must be separated by a comma)", required=True
     )
 
-    deploy_now = CustomBooleanField(label='Deploy Now')
+    deploy_now = CustomBooleanField(label="Deploy Now")
 
-    submit = SubmitField(label='Update')
+    submit = SubmitField(label="Update")

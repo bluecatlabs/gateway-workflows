@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -40,11 +40,12 @@ def module_path():
     """
     return os.path.dirname(os.path.abspath(str(__file__)))
 
+
 # The workflow name must be the first part of any endpoints defined in this file.
 # If you break this rule, you will trip up on other people's endpoint names and
 # chaos will ensue.
-@route(app, '/delete_host_record/delete_host_record_endpoint')
-@util.workflow_permission_required('delete_host_record_page')
+@route(app, "/delete_host_record/delete_host_record_endpoint")
+@util.workflow_permission_required("delete_host_record_page")
 @util.exception_catcher
 def delete_host_record_delete_host_record_page():
     """
@@ -55,14 +56,16 @@ def delete_host_record_delete_host_record_page():
     form = GenericFormTemplate()
     # Remove this line if your workflow does not need to select a configuration
     form.configuration.choices = util.get_configurations(default_val=True)
-    return render_template('delete_host_record_page.html',
-                           form=form,
-                           text=util.get_text(module_path(), config.language),
-                           options=g.user.get_options())
+    return render_template(
+        "delete_host_record_page.html",
+        form=form,
+        text=util.get_text(module_path(), config.language),
+        options=g.user.get_options(),
+    )
 
 
-@route(app, '/delete_host_record/form', methods=['POST'])
-@util.workflow_permission_required('delete_host_record_page')
+@route(app, "/delete_host_record/form", methods=["POST"])
+@util.workflow_permission_required("delete_host_record_page")
 @util.exception_catcher
 def delete_host_record_delete_host_record_page_form():
     """
@@ -79,52 +82,59 @@ def delete_host_record_delete_host_record_page_form():
             # Retrieve form attributes
             configuration = g.user.get_api().get_entity_by_id(form.configuration.data)
 
-            view = configuration.get_view(request.form['view'])
+            view = configuration.get_view(request.form["view"])
 
             # Retrieve host record
-            host_record = view.get_host_record(request.form['host_record'] + '.' + request.form['parent_zone'])
+            host_record = view.get_host_record(
+                request.form["host_record"] + "." + request.form["parent_zone"]
+            )
 
             # Retrieve host record attributes for flash message
-            host_record_name = host_record.get_property('absoluteName')
-            host_record_id = util.safe_str(host_record.get_id())
+            host_record_name = host_record.get_property("absoluteName")
+            host_record_id = str(host_record.get_id())
 
             # Delete host record
             host_record.delete()
 
             # Put form processing code here
-            g.user.logger.info('Success - Host  (A) Record ' + host_record_name + ' Deleted with Object ID: ' +
-                               host_record_id)
-            flash('Success - Host  (A) Record ' + host_record_name + ' Deleted with Object ID: ' +
-                  host_record_id, 'succeed')
+            success_msg = f"Success - Host (A) Record {host_record_name} deleted with object ID: {host_record_id}"
+            g.user.logger.info(success_msg)
+            flash(success_msg, "succeed")
 
             # Perform Selective Deployment (RELATED Scope) on host record if checkbox is checked
             if form.deploy_now.data:
                 entity_id_list = [host_record.get_id()]
                 deploy_token = g.user.get_api().selective_deploy(entity_id_list)
-                return render_template('delete_host_record_page.html',
-                                       form=form,
-                                       status_token=deploy_token,
-                                       text=util.get_text(module_path(), config.language),
-                                       options=g.user.get_options())
-            return redirect(url_for('delete_host_recorddelete_host_record_delete_host_record_page'))
+                return render_template(
+                    "delete_host_record_page.html",
+                    form=form,
+                    status_token=deploy_token,
+                    text=util.get_text(module_path(), config.language),
+                    options=g.user.get_options(),
+                )
+            return redirect(url_for("delete_host_recorddelete_host_record_delete_host_record_page"))
         except Exception as e:
-            flash(util.safe_str(e))
+            flash(str(e))
             # Log error and render workflow page
-            g.user.logger.warning('%s' % util.safe_str(e), msg_type=g.user.logger.EXCEPTION)
-            return render_template('delete_host_record_page.html',
-                                   form=form,
-                                   text=util.get_text(module_path(), config.language),
-                                   options=g.user.get_options())
+            g.user.logger.warning(f"EXCEPTION THROWN: {e}")
+            return render_template(
+                "delete_host_record_page.html",
+                form=form,
+                text=util.get_text(module_path(), config.language),
+                options=g.user.get_options(),
+            )
     else:
-        g.user.logger.info('Form data was not valid.')
-        return render_template('delete_host_record_page.html',
-                               form=form,
-                               text=util.get_text(module_path(), config.language),
-                               options=g.user.get_options())
+        g.user.logger.info("Form data was not valid.")
+        return render_template(
+            "delete_host_record_page.html",
+            form=form,
+            text=util.get_text(module_path(), config.language),
+            options=g.user.get_options(),
+        )
 
 
-@route(app, '/delete_host_record/get_deploy_status', methods=['POST'])
-@util.rest_workflow_permission_required('delete_host_record_page')
+@route(app, "/delete_host_record/get_deploy_status", methods=["POST"])
+@util.rest_workflow_permission_required("delete_host_record_page")
 @util.rest_exception_catcher
 def get_deploy_status():
     """
@@ -132,34 +142,36 @@ def get_deploy_status():
     :return:
     """
     result = get_result_template()
-    deploy_token = request.form['deploy_token']
+    deploy_token = request.form["deploy_token"]
     try:
         task_status = g.user.get_api().get_deployment_task_status(deploy_token)
-        result['status'] = task_status['status']
+        result["status"] = task_status["status"]
 
-        if task_status['status'] == SelectiveDeploymentStatus.FINISHED:
-            deploy_errors = task_status['response']['errors']
+        if task_status["status"] == SelectiveDeploymentStatus.FINISHED:
+            deploy_errors = task_status["response"]["errors"]
 
             # Deployment failed
             if deploy_errors:
-                result['data'] = "FAILED"
-                result['message'] = deploy_errors
-                raise Exception('Deployment Error: ' + str(deploy_errors))
+                result["data"] = "FAILED"
+                result["message"] = deploy_errors
+                raise Exception("Deployment Error: " + str(deploy_errors))
 
             # Deployment succeeded
-            elif task_status['response']['views']:
-                task_result = task_status['response']['views'][0]['zones'][0]['records'][0]['result']
-                result['data'] = task_result
+            if task_status["response"]["views"]:
+                task_result = task_status["response"]["views"][0]["zones"][0]["records"][0][
+                    "result"
+                ]
+                result["data"] = task_result
 
             # Deployment finished with no changes
             else:
-                result['data'] = 'FINISHED'
+                result["data"] = "FINISHED"
 
-            g.user.logger.info('Deployment Task Status: ' + str(task_status))
+            g.user.logger.info("Deployment Task Status: " + str(task_status))
 
         # Deployment queued/started
         else:
-            result['data'] = task_status['status']
+            result["data"] = task_status["status"]
     # pylint: disable=broad-except
     except Exception as e:
         g.user.logger.warning(e)

@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,12 +19,12 @@
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
-type = 'ui'
+type = "ui"
 sub_pages = [
     {
-        'name'        : 'table_component_page',
-        'title'       : 'UI Table Component',
-        'endpoint'    : 'table_component/table_component_endpoint',
-        'description' : 'Search through a configuration object for any type of child subobject'
+        "name": "table_component_page",
+        "title": "UI Table Component",
+        "endpoint": "table_component/table_component_endpoint",
+        "description": "Search through a configuration object for any type of child subobject",
     },
 ]
