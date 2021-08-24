@@ -72,6 +72,7 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Brian Shorland
 - Chester Wu
 - Edwin Christie
+- Mike Leaver
 - Lucas Tran
 
 #### Integration & Innovation Team:
