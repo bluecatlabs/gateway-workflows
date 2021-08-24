@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-05-04
-# Gateway Version: 20.6.1
+# Date: 2021-08-23
+# Gateway Version: 20.12.1
 # Description: Example Gateway workflow
 
 """
@@ -32,7 +32,7 @@ def autologin_func():
     username and password in a workflow file.
     :return: username and password
     """
-    return 'testuser', 'testuser'
+    return "testuser", "testuser"
 
 
 def get_configurations():
@@ -41,18 +41,19 @@ def get_configurations():
     :return: List of BAM configurations
     """
     res = {}
-    res['username'] = g.user.get_username()
+    res["username"] = g.user.get_username()
     configs = []
     for c in g.user.get_api().get_configurations():
-        configs.append({'id': c.get_id(), 'name': c.get_name()})
-    res['configs'] = configs
+        configs.append({"id": c.get_id(), "name": c.get_name()})
+    res["configs"] = configs
     return jsonify(res)
+
 
 #
 # Example rest GET call
 #
-@route(app, '/rest_endpoints/get_test')
-@util.rest_workflow_permission_required('rest_endpoints')
+@route(app, "/rest_endpoints/get_test")
+@util.rest_workflow_permission_required("rest_endpoints")
 @util.rest_exception_catcher
 def rest_get_test():
     """
@@ -68,8 +69,8 @@ def rest_get_test():
 #
 # Example rest PUT call
 #
-@route(app, '/rest_endpoints/put_test', methods=['PUT'])
-@util.rest_workflow_permission_required('rest_endpoints')
+@route(app, "/rest_endpoints/put_test", methods=["PUT"])
+@util.rest_workflow_permission_required("rest_endpoints")
 @util.rest_exception_catcher
 def rest_put_test():
     """
@@ -77,13 +78,13 @@ def rest_put_test():
 
     :return:
     """
-    return jsonify({'result': request.get_json()['foo'] + ' plus some extra'})
+    return jsonify({"result": request.get_json()["foo"] + " plus some extra"})
 
 
 #
 # Autologin Example
 #
-@route(app, '/rest_endpoints/list_configurations', methods=['GET', 'POST'])
+@route(app, "/rest_endpoints/list_configurations", methods=["GET", "POST"])
 @util.autologin(autologin_func)
 @util.rest_exception_catcher
 def rest_test_autologin():
@@ -99,7 +100,7 @@ def rest_test_autologin():
 #
 # Example of an endpoint with no authentication required
 #
-@route(app, '/rest_endpoints/no_auth_test')
+@route(app, "/rest_endpoints/no_auth_test")
 @util.rest_exception_catcher
 def rest_test_no_auth():
     """
@@ -108,4 +109,4 @@ def rest_test_no_auth():
     :return:
     """
     # Permission check is not applicable here
-    return jsonify({'answer': 42})
+    return jsonify({"answer": 42})

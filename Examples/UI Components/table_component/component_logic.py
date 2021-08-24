@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-05-04
-# Gateway Version: 20.6.1
+# Date: 2021-08-23
+# Gateway Version: 20.12.1
 # Description: Example Gateway workflow
 
 """
@@ -47,7 +47,7 @@ def raw_table_data(*args, **kwargs):
             [18371166, "None", "CUSTOM"],
             [18371168, "Localhost", "CUSTOM"],
             [18371170, "Localnetworks", "CUSTOM"],
-        ]
+        ],
     }
 
 
@@ -56,18 +56,19 @@ def get_object_types(default_val=False):
     result = []
     if g.user:
         if default_val:
-            result.append(('1', 'Please Select'))
+            result.append(("1", "Please Select"))
 
         for name, data in entity.Entity.__dict__.items():
             if not isinstance(data, str):
                 continue
-            if '__' in name[:2]:
+            if "__" in name[:2]:
                 continue
             result.append((name, name))
 
     result.sort()
 
     return result
+
 
 def raw_entities_to_table_data(entities):
     """
@@ -88,31 +89,36 @@ def raw_entities_to_table_data(entities):
     :param return: Dictionary of data parsable by the UI Table Componenent
     """
     # pylint: disable=redefined-outer-name
-    data = {'columns': [{'title': 'id'},
-                        {'title': 'name'},
-                        {'title': 'type'},],
-            'data': []}
+    data = {
+        "columns": [
+            {"title": "id"},
+            {"title": "name"},
+            {"title": "type"},
+        ],
+        "data": [],
+    }
 
     # Iterate through each entity
     for entity in entities:
-        data['data'].append([entity.get_id(), entity.name, entity.get_type()])
+        data["data"].append([entity.get_id(), entity.name, entity.get_type()])
 
     return data
+
 
 def find_objects_by_type_endpoint(workflow_name, element_id, permissions, result_decorator=None):
     """Endpoint for retrieving the selected objects"""
     # pylint: disable=unused-argument
-    endpoint = 'find_objects_by_type'
-    function_endpoint = '%sfind_objects_by_type' % workflow_name
+    endpoint = "find_objects_by_type"
+    function_endpoint = "%sfind_objects_by_type" % workflow_name
     view_function = app.view_functions.get(function_endpoint)
     if view_function is not None:
         return endpoint
     if not result_decorator:
         result_decorator = empty_decorator
 
-    g.user.logger.info('Creating endpoint %s', endpoint)
+    g.user.logger.info("Creating endpoint %s", endpoint)
 
-    @route(app, '/%s/%s' % (workflow_name, endpoint), methods=['POST'])
+    @route(app, "/%s/%s" % (workflow_name, endpoint), methods=["POST"])
     @rest_workflow_permission_required(permissions)
     @rest_exception_catcher
     # pylint: disable=unused-variable
@@ -120,8 +126,8 @@ def find_objects_by_type_endpoint(workflow_name, element_id, permissions, result
         """Retrieve a list of properties for the table"""
         # pylint: disable=broad-except
         try:
-            keyword = request.form['keyword']
-            object_type = request.form['object_type']
+            keyword = request.form["keyword"]
+            object_type = request.form["object_type"]
 
             # Get entities based on the selection
             entities = g.user.get_api().get_by_object_types(keyword, object_type)
@@ -131,18 +137,20 @@ def find_objects_by_type_endpoint(workflow_name, element_id, permissions, result
 
             # If no entities were found reutrn with failure state and message
             result = get_result_template()
-            if len(data['data']) == 0:
-                result['status'] = 'FAIL'
-                result['message'] = 'No entities of type "{TYPE}" were found.'.format(TYPE=object_type)
+            if len(data["data"]) == 0:
+                result["status"] = "FAIL"
+                result["message"] = 'No entities of type "{TYPE}" were found.'.format(
+                    TYPE=object_type
+                )
             else:
-                result['status'] = 'SUCCESS'
-            result['data'] = {"table_field": data}
+                result["status"] = "SUCCESS"
+            result["data"] = {"table_field": data}
             return jsonify(result_decorator(result))
 
         except Exception as e:
             result = get_result_template()
-            result['status'] = 'FAIL'
-            result['message'] = str(e)
+            result["status"] = "FAIL"
+            result["message"] = str(e)
             return jsonify(result_decorator(result))
 
     return endpoint
@@ -151,42 +159,39 @@ def find_objects_by_type_endpoint(workflow_name, element_id, permissions, result
 def server_table_data_endpoint(workflow_name, element_id, permissions, result_decorator=None):
     """Endpoint for server table data"""
     # pylint: disable=unused-argument
-    endpoint = 'server_table_data'
-    function_endpoint = '%sserver_table_data' % workflow_name
+    endpoint = "server_table_data"
+    function_endpoint = "%sserver_table_data" % workflow_name
     view_function = app.view_functions.get(function_endpoint)
     if view_function is not None:
         return endpoint
     if not result_decorator:
         result_decorator = empty_decorator
 
-    g.user.logger.info('Creating endpoint %s', endpoint)
+    g.user.logger.info("Creating endpoint %s", endpoint)
 
-    @route(app, '/%s/%s' % (workflow_name, endpoint), methods=['POST'])
+    @route(app, "/%s/%s" % (workflow_name, endpoint), methods=["POST"])
     @rest_workflow_permission_required(permissions)
     @rest_exception_catcher
     # pylint: disable=unused-variable
     def server_table_data():
         """Retrieve server side table data"""
-        keyword = request.form['keyword']
-        object_type_id = request.form['object_type']
+        keyword = request.form["keyword"]
+        object_type_id = request.form["object_type"]
 
         response = get_result_template()
-        response['status'] = 'SUCCESS'
-        response['message'] = 'Retrieved server side table data'
-        response['data'] = {
-            'table_field': {
-                'searching': False,
-                'paging': False,
-                'ordering': False,
-                'info': False,
-                'lengthChange': False,
-                'columns': [
-                    {'title': 'keyword'},
-                    {'title': 'object_type'}
-                ],
-                'data': [
+        response["status"] = "SUCCESS"
+        response["message"] = "Retrieved server side table data"
+        response["data"] = {
+            "table_field": {
+                "searching": False,
+                "paging": False,
+                "ordering": False,
+                "info": False,
+                "lengthChange": False,
+                "columns": [{"title": "keyword"}, {"title": "object_type"}],
+                "data": [
                     [keyword, object_type_id],
-                ]
+                ],
             }
         }
         return jsonify(result_decorator(response))

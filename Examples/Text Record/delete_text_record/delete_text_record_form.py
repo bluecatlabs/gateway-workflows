@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-05-04
-# Gateway Version: 20.6.1
+# Date: 2021-08-23
+# Gateway Version: 20.12.1
 # Description: Example Gateway workflow
 
 """
@@ -28,101 +28,97 @@ from bluecat.server_endpoints import get_text_records_endpoint
 
 
 class GenericFormTemplate(GatewayForm):
-    """ Form to generate HTML and Javascript for the update_text_record workflow
+    """Form to generate HTML and Javascript for the update_text_record workflow
 
     Note:
         When updating the form, remember to make the corresponding changes to the workflow pages
     """
-    workflow_name = 'delete_text_record'
-    workflow_permission = 'delete_text_record_page'
+
+    workflow_name = "delete_text_record"
+    workflow_permission = "delete_text_record_page"
     configuration = Configuration(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='Configuration',
+        label="Configuration",
         required=True,
         coerce=int,
         clear_below_on_change=False,
         is_disabled_on_start=False,
-        on_complete=['call_view'],
-        enable_dependencies={'on_complete': ['view']},
-        disable_dependencies={'on_change': ['view']},
-        clear_dependencies={'on_change': ['view']}
+        on_complete=["call_view"],
+        enable_dependencies={"on_complete": ["view"]},
+        disable_dependencies={"on_change": ["view"]},
+        clear_dependencies={"on_change": ["view"]},
     )
 
     view = View(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='View',
+        label="View",
         required=True,
         one_off=True,
         clear_below_on_change=False,
-        enable_dependencies={'on_complete': ['parent_zone']},
-        disable_dependencies={'on_change': ['parent_zone']},
-        clear_dependencies={'on_change': ['parent_zone']},
+        enable_dependencies={"on_complete": ["parent_zone"]},
+        disable_dependencies={"on_change": ["parent_zone"]},
+        clear_dependencies={"on_change": ["parent_zone"]},
         should_cascade_disable_on_change=True,
-        should_cascade_clear_on_change=True
+        should_cascade_clear_on_change=True,
     )
 
     parent_zone = Zone(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label='Zone',
+        label="Zone",
         required=True,
         start_initialized=True,
-        inputs={'zone': 'parent_zone', 'configuration': 'configuration', 'view': 'view'},
+        inputs={"zone": "parent_zone", "configuration": "configuration", "view": "view"},
         clear_below_on_change=False,
-        enable_dependencies={'on_complete': ['text_record', 'search']},
-        disable_dependencies={'on_change': ['text_record', 'search']},
-        clear_dependencies={'on_change': ['text_record', 'search']},
+        enable_dependencies={"on_complete": ["text_record", "search"]},
+        disable_dependencies={"on_change": ["text_record", "search"]},
+        clear_dependencies={"on_change": ["text_record", "search"]},
         should_cascade_disable_on_change=True,
-        should_cascade_clear_on_change=True
+        should_cascade_clear_on_change=True,
     )
 
-    text_record = CustomStringField(
-        label='Text Record',
-        required=True
-    )
+    text_record = CustomStringField(label="Text Record", required=True)
 
     search = CustomSearchButtonField(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        default='Search',
+        default="Search",
         inputs={
-            'configuration': 'configuration',
-            'view': 'view',
-            'parent_zone': 'parent_zone',
-            'name': 'text_record'
+            "configuration": "configuration",
+            "view": "view",
+            "parent_zone": "parent_zone",
+            "name": "text_record",
         },
         server_side_method=get_text_records_endpoint,
         display_message=True,
-        on_complete=['populate_txt_list'],
-        enable_dependencies={'on_complete': ['txt_filter', 'txt_list']},
-        disable_dependencies={'on_change': ['txt_filter', 'txt_list'],
-                              'on_click': ['txt_filter', 'txt_list']},
-        clear_dependencies={'on_change': ['txt_filter', 'txt_list'],
-                            'on_click': ['txt_filter', 'txt_list']},
+        on_complete=["populate_txt_list"],
+        enable_dependencies={"on_complete": ["txt_filter", "txt_list"]},
+        disable_dependencies={
+            "on_change": ["txt_filter", "txt_list"],
+            "on_click": ["txt_filter", "txt_list"],
+        },
+        clear_dependencies={
+            "on_change": ["txt_filter", "txt_list"],
+            "on_click": ["txt_filter", "txt_list"],
+        },
         should_cascade_disable_on_change=True,
-        should_cascade_clear_on_change=True
+        should_cascade_clear_on_change=True,
     )
 
-    txt_filter = CustomStringField(
-        label='Filter',
-        is_disabled_on_error=True
-    )
+    txt_filter = CustomStringField(label="Filter", is_disabled_on_error=True)
 
     txt_list = FilteredSelectField(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        filter_field='txt_filter',
-        choices=[(0, '')],
+        filter_field="txt_filter",
+        choices=[(0, "")],
         coerce=int,
         is_disabled_on_error=True,
-        enable_dependencies={'on_complete': ['submit']},
-        disable_dependencies={'on_change': ['submit']},
-        should_cascade_disable_on_change=True
+        enable_dependencies={"on_complete": ["submit"]},
+        disable_dependencies={"on_change": ["submit"]},
+        should_cascade_disable_on_change=True,
     )
 
-    submit = SubmitField(
-        label='Delete',
-        render_kw={'disabled': True}
-    )
+    submit = SubmitField(label="Delete", render_kw={"disabled": True})

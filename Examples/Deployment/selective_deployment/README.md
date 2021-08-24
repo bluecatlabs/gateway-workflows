@@ -1,9 +1,8 @@
 # **Example Selective Deployment Workflow**
 ## Select a DNS record for deployment
 
-**BlueCat Gateway Version:** 20.6.1 or greater <br/>
+**BlueCat Gateway Version:** 20.12.1 or greater <br/>
 **BAM version:** 9.1.0 and greater <br/>
-**DNS/DHCP Server version:** 8.3.2 and greater <br/>
 
 ### Dependencies
 DNS/DHCP server appliances should be configured with necessary deployment roles and be under Address Manager control. Full deployment to DNS/DHCP server required prior to performing selective deployment. <br/>

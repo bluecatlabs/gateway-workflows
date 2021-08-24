@@ -14,17 +14,17 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-05-04
-# Gateway Version: 20.6.1
+# Date: 2021-08-23
+# Gateway Version: 20.12.1
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
-type = 'ui'
+type = "ui"
 sub_pages = [
     {
-        'name'        : 'delete_text_record_page',
-        'title'       : 'Delete Text Record',
-        'endpoint'    : 'delete_text_record/delete_text_record_endpoint',
-        'description' : 'Delete Text Record'
+        "name": "delete_text_record_page",
+        "title": "Delete Text Record",
+        "endpoint": "delete_text_record/delete_text_record_endpoint",
+        "description": "Delete Text Record",
     },
 ]

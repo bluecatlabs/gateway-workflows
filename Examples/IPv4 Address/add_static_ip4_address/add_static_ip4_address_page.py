@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-05-04
-# Gateway Version: 20.6.1
+# Date: 2021-08-23
+# Gateway Version: 20.12.1
 # Description: Example Gateway workflow
 
 """
@@ -42,8 +42,8 @@ def module_path():
 # The workflow name must be the first part of any endpoints defined in this file.
 # If you break this rule, you will trip up on other people's endpoint names and
 # chaos will ensue.
-@route(app, '/add_static_ip4_address/add_static_ip4_address_endpoint')
-@util.workflow_permission_required('add_static_ip4_address_page')
+@route(app, "/add_static_ip4_address/add_static_ip4_address_endpoint")
+@util.workflow_permission_required("add_static_ip4_address_page")
 @util.exception_catcher
 def add_static_ip4_address_add_static_ip4_address_page():
     """
@@ -55,15 +55,15 @@ def add_static_ip4_address_add_static_ip4_address_page():
     # Remove this line if your workflow does not need to select a configuration
     form.configuration.choices = util.get_configurations(default_val=True)
     return render_template(
-        'add_static_ip4_address_page.html',
+        "add_static_ip4_address_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options()
+        options=g.user.get_options(),
     )
 
 
-@route(app, '/add_static_ip4_address/form', methods=['POST'])
-@util.workflow_permission_required('add_static_ip4_address_page')
+@route(app, "/add_static_ip4_address/form", methods=["POST"])
+@util.workflow_permission_required("add_static_ip4_address_page")
 @util.exception_catcher
 def add_static_ip4_address_add_static_ip4_address_page_form():
     """
@@ -79,52 +79,64 @@ def add_static_ip4_address_add_static_ip4_address_page_form():
         try:
             # Retrieve form attributes
             configuration = g.user.get_api().get_entity_by_id(form.configuration.data)
-            selected_view = request.form.get('view', '')
-            selected_hostname = request.form.get('hostname', '')
-            hostinfo = ''
-            if selected_view != '' and selected_hostname != '':
+            selected_view = request.form.get("view", "")
+            selected_hostname = request.form.get("hostname", "")
+            hostinfo = ""
+            if selected_view != "" and selected_hostname != "":
                 view = configuration.get_view(selected_view)
-                hostinfo = util.safe_str(selected_hostname) \
-                           + '.' \
-                           + util.safe_str(request.form.get('zone', '')) \
-                           + ',' \
-                           + util.safe_str(view.get_id()) \
-                           + ',' \
-                           + 'true' \
-                           + ',' \
-                           + 'false'
-            properties = 'name=' + form.description.data
+                hostinfo = (
+                    selected_hostname
+                    + "."
+                    + str(request.form.get("zone", ""))
+                    + ","
+                    + str(view.get_id())
+                    + ","
+                    + "true"
+                    + ","
+                    + "false"
+                )
+            properties = "name=" + form.description.data
 
             # Assign ip4 object
-            ip4_object = configuration.assign_ip4_address(request.form.get('ip4_address', ''),
-                                                          form.mac_address.data,
-                                                          hostinfo,
-                                                          'MAKE_STATIC',
-                                                          properties)
+            ip4_object = configuration.assign_ip4_address(
+                request.form.get("ip4_address", ""),
+                form.mac_address.data,
+                hostinfo,
+                "MAKE_STATIC",
+                properties,
+            )
 
             # Put form processing code here
-            g.user.logger.info('Success - Static IP4 Address '
-                               + ip4_object.get_property('address')
-                               + ' Added with Object ID: '
-                               + util.safe_str(ip4_object.get_id()))
-            flash('Success - Static IP4 Address '
-                  + ip4_object.get_property('address')
-                  + ' Added with Object ID: '
-                  + util.safe_str(ip4_object.get_id()),
-                  'succeed')
-            page = 'add_static_ip4_addressadd_static_ip4_address_add_static_ip4_address_page'
+            g.user.logger.info(
+                "Success - Static IP4 Address "
+                + ip4_object.get_property("address")
+                + " Added with Object ID: "
+                + str(ip4_object.get_id())
+            )
+            flash(
+                "Success - Static IP4 Address "
+                + ip4_object.get_property("address")
+                + " Added with Object ID: "
+                + str(ip4_object.get_id()),
+                "succeed",
+            )
+            page = "add_static_ip4_addressadd_static_ip4_address_add_static_ip4_address_page"
             return redirect(url_for(page))
         except Exception as e:
-            flash(util.safe_str(e))
+            flash(str(e))
             # Log error and render workflow page
-            g.user.logger.warning('%s' % util.safe_str(e), msg_type=g.user.logger.EXCEPTION)
-            return render_template('add_static_ip4_address_page.html',
-                                   form=form,
-                                   text=util.get_text(module_path(), config.language),
-                                   options=g.user.get_options())
+            g.user.logger.warning(f"EXCEPTION THROWN: {e}")
+            return render_template(
+                "add_static_ip4_address_page.html",
+                form=form,
+                text=util.get_text(module_path(), config.language),
+                options=g.user.get_options(),
+            )
     else:
-        g.user.logger.info('Form data was not valid.')
-        return render_template('add_static_ip4_address_page.html',
-                               form=form,
-                               text=util.get_text(module_path(), config.language),
-                               options=g.user.get_options())
+        g.user.logger.info("Form data was not valid.")
+        return render_template(
+            "add_static_ip4_address_page.html",
+            form=form,
+            text=util.get_text(module_path(), config.language),
+            options=g.user.get_options(),
+        )
