@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-08-23
-# Gateway Version: 20.12.1
+# Date: 2021-05-04
+# Gateway Version: 20.6.1
 # Description: Example Gateway workflow
 
 """
@@ -26,69 +26,74 @@ from bluecat.wtform_extensions import GatewayForm
 
 
 class GenericFormTemplate(GatewayForm):
-    """Form to generate HTML and Javascript for the add_alias_record workflow
+    """ Form to generate HTML and Javascript for the add_alias_record workflow
 
     Note:
         When updating the form, remember to make the corresponding changes to the workflow pages
     """
-
-    workflow_name = "add_alias_record"
-    workflow_permission = "add_alias_record_page"
+    workflow_name = 'add_alias_record'
+    workflow_permission = 'add_alias_record_page'
     configuration = Configuration(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Configuration",
+        label='Configuration',
         required=True,
         coerce=int,
         is_disabled_on_start=False,
-        on_complete=["call_view"],
-        enable_dependencies={"on_complete": ["view"]},
-        disable_dependencies={"on_change": ["view"]},
-        clear_dependencies={"on_change": ["view"]},
+        on_complete=['call_view'],
+        enable_dependencies={'on_complete': ['view']},
+        disable_dependencies={'on_change': ['view']},
+        clear_dependencies={'on_change': ['view']}
     )
 
     view = View(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="View",
+        label='View',
         required=True,
         one_off=True,
-        on_complete=["call_zone", "call_linked_record_zone"],
-        enable_dependencies={"on_complete": ["zone", "linked_record_zone", "submit"]},
-        disable_dependencies={"on_change": ["zone", "linked_record_zone", "select_one", "submit"]},
+        on_complete=['call_zone', 'call_linked_record_zone'],
+        enable_dependencies={'on_complete': ['zone', 'linked_record_zone', 'submit']},
+        disable_dependencies={'on_change': ['zone', 'linked_record_zone', 'select_one', 'submit']},
         should_cascade_disable_on_change=True,
-        clear_dependencies={"on_change": ["zone", "linked_record_zone", "select_one"]},
-        should_cascade_clear_on_change=True,
+        clear_dependencies={'on_change': ['zone', 'linked_record_zone', 'select_one']},
+        should_cascade_clear_on_change=True
     )
 
     zone = Zone(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Alias Zone",
+        label='Alias Zone',
         required=True,
-        enable_dependencies={"on_complete": ["name"]},
-        disable_dependencies={"on_change": ["name"]},
+        enable_dependencies={'on_complete': ['name']},
+        disable_dependencies={'on_change': ['name']},
         should_cascade_disable_on_change=True,
-        clear_dependencies={"on_change": ["name"]},
-        should_cascade_clear_on_change=True,
+        clear_dependencies={'on_change': ['name']},
+        should_cascade_clear_on_change=True
     )
 
     name = CustomStringField(
-        workflow_name=workflow_name, permissions=workflow_permission, label="Name", required=True
+        workflow_name=workflow_name,
+        permissions=workflow_permission,
+        label='Name',
+        required=True
     )
 
     linked_record_zone = Zone(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Linked Record Zone",
+        label='Linked Record Zone',
         required=True,
-        enable_dependencies={"on_complete": ["host_record"]},
-        disable_dependencies={"on_change": ["host_record"]},
+        enable_dependencies={'on_complete': ['host_record']},
+        disable_dependencies={'on_change': ['host_record']},
         should_cascade_disable_on_change=True,
-        clear_dependencies={"on_change": ["host_record"]},
-        should_cascade_clear_on_change=True,
+        clear_dependencies={'on_change': ['host_record']},
+        should_cascade_clear_on_change=True
     )
 
-    host_record = CustomStringField(label="Linked Record", required=True)
+    host_record = CustomStringField(
+        label='Linked Record',
+        required=True
+    )
 
-    submit = SubmitField(label="Submit")
+    submit = SubmitField(label='Submit')

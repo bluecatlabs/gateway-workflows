@@ -13,17 +13,17 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-08-23
-# Gateway Version: 20.12.1
+# Date: 2021-05-04
+# Gateway Version: 20.6.1
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
-type = "api"
+type = 'api'
 sub_pages = [
     {
-        "name": "rest_endpoints",
-        "title": "Simple RESTful API Endpoints",
-        "endpoint": "rest_endpoints/get_test",
-        "description": "Simple RESTful API Endpoints",
+        'name'        : 'rest_endpoints',
+        'title'       : 'Simple RESTful API Endpoints',
+        'endpoint'    : 'rest_endpoints/get_test',
+        'description' : 'Simple RESTful API Endpoints'
     }
 ]

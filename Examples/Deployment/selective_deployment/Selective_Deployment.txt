@@ -1,9 +1,9 @@
-BlueCat Gateway 20.12.1
+BlueCat Gateway 20.3.1
 Example Selective deployment workflows
 
 Requirements: 
-• Address Manager v9.1.0 or greater.
-• BDDS – BDDS appliances should be configured with necessary deployment roles and be under Address Manager control.
+• Address Manager and DNS/DHCP Server v8.3.2 or greater.
+• BDDS v8.3.2 or greater – BDDS appliances should be configured with necessary deployment roles and be under Address Manager control.
 
 In addition to Python wrappers for the Selective Deployment APIs, Example Selective Deployment workflows are now available on the BlueCat Labs GitHub repository, helping to complete BlueCat's Integrity solution of this API feature with UI-based Gateway workflows.
 
@@ -11,7 +11,7 @@ There is a standalone Selective Deployment workflow as well as new Add, Update, 
 
 By default, all Example Selective Deployment workflows invoke the selectiveDeploy API method using the ‘related’ property. This will deploy a record and any of its associated records. These Example workflows use related deployments as a precaution against broken record chains if modifying or deleting records.
 
-For more details on the Selective Deployment API methods, refer to the DNS Integrity Gateway Help & Documentation or Administration Guide, or the Address Manager API Guide available on BlueCat Customer Care.
+For more details on the Selective Deployment API methods, refer to the DNS Integrity Gateway Help & Documentation or Administration Guide, or the Address Manager 8.3.2 API Guide available on BlueCat Customer Care.
 
 Selective Deployment Example workflow
 Select or search for a DNS record that has previously been added or modified. A table displays all DNS records. You can select and deploy DNS records. The status of deployment is displayed in the same form.

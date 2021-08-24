@@ -1,7 +1,7 @@
 # **Example UI Table Component Workflows**
 ## Search for UI Table Components
 
-**BlueCat Gateway Version:** 20.12.1 or greater <br/>
+**BlueCat Gateway Version:** 20.6.1 or greater <br/>
 **BAM version:** 9.1.0 or greater <br/>
 **Dependencies:** None <br/>
 **Description/Example Usage:** The UI Table Components workflow provides an example of generating a table of search results in a UI workflow. It returns an array of entities by searching for keywords associated with objects of a specified object type. You can search for an object type using a keyword. This workflow is intended for customers to familiarize themselves with how to build a table component in their UI workflows.

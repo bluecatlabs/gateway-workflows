@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-08-23
-# Gateway Version: 20.12.1
+# Date: 2021-05-04
+# Gateway Version: 20.6.1
 # Description: Example Gateway workflow
 
 """
@@ -26,58 +26,61 @@ from bluecat.wtform_extensions import GatewayForm
 
 
 class GenericFormTemplate(GatewayForm):
-    """Form to generate HTML and Javascript for the add_text_record workflow
+    """ Form to generate HTML and Javascript for the add_text_record workflow
 
     Note:
         When updating the form, remember to make the corresponding changes to the workflow pages
     """
-
-    workflow_name = "add_text_record"
-    workflow_permission = "add_text_record_page"
+    workflow_name = 'add_text_record'
+    workflow_permission = 'add_text_record_page'
     configuration = Configuration(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Configuration",
+        label='Configuration',
         required=True,
         coerce=int,
         clear_below_on_change=False,
         is_disabled_on_start=False,
-        on_complete=["call_view"],
-        enable_dependencies={"on_complete": ["view"]},
-        disable_dependencies={"on_change": ["view"]},
-        clear_dependencies={"on_change": ["view"]},
+        on_complete=['call_view'],
+        enable_dependencies={'on_complete': ['view']},
+        disable_dependencies={'on_change': ['view']},
+        clear_dependencies={'on_change': ['view']}
     )
 
     view = View(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="View",
+        label='View',
         required=True,
         one_off=True,
-        on_complete=["call_zone"],
+        on_complete=['call_zone'],
         clear_below_on_change=False,
-        enable_dependencies={"on_complete": ["zone"]},
-        disable_dependencies={"on_change": ["zone"]},
-        clear_dependencies={"on_change": ["zone"]},
+        enable_dependencies={'on_complete': ['zone']},
+        disable_dependencies={'on_change': ['zone']},
+        clear_dependencies={'on_change': ['zone']},
         should_cascade_disable_on_change=True,
-        should_cascade_clear_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
     zone = Zone(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Zone",
+        label='Zone',
         required=True,
         clear_below_on_change=False,
-        enable_dependencies={"on_complete": ["name", "text", "submit"]},
-        disable_dependencies={"on_change": ["name", "text", "submit"]},
-        clear_dependencies={"on_change": ["name", "text"]},
+        enable_dependencies={'on_complete': ['name', 'text', 'submit']},
+        disable_dependencies={'on_change': ['name', 'text', 'submit']},
+        clear_dependencies={'on_change': ['name', 'text']},
         should_cascade_disable_on_change=True,
-        should_cascade_clear_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
-    name = CustomStringField(label="Name")
+    name = CustomStringField(
+        label='Name'
+    )
 
-    text = CustomStringField(label="Text")
+    text = CustomStringField(
+        label='Text'
+    )
 
-    submit = SubmitField(label="Submit")
+    submit = SubmitField(label='Submit')

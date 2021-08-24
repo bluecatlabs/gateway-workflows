@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-08-23
-# Gateway Version: 20.12.1
+# Date: 2021-05-04
+# Gateway Version: 20.6.1
 # Description: Example Gateway workflow
 
 """
@@ -32,80 +32,86 @@ def filter_unallocated(res):
     :param res:
     :return:
     """
-    if res["status"] == "SUCCESS" and res["data"]["state"] != "UNALLOCATED":
-        res["status"] = "FAIL"
-        res["message"] = "IP status must be unallocated."
+    if res['status'] == 'SUCCESS' and res['data']['state'] != 'UNALLOCATED':
+        res['status'] = 'FAIL'
+        res['message'] = 'IP status must be unallocated.'
     return res
 
 
 class GenericFormTemplate(GatewayForm):
-    """Form to generate HTML and Javascript for the add_dhcp_ip4_address workflow
+    """ Form to generate HTML and Javascript for the add_dhcp_ip4_address workflow
 
     Note:
         When updating the form, remember to make the corresponding changes to the workflow pages
     """
-
-    workflow_name = "add_dhcp_ip4_address"
-    workflow_permission = "add_dhcp_ip4_address_page"
+    workflow_name = 'add_dhcp_ip4_address'
+    workflow_permission = 'add_dhcp_ip4_address_page'
     configuration = Configuration(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Configuration",
+        label='Configuration',
         required=True,
         coerce=int,
         clear_below_on_change=False,
         is_disabled_on_start=False,
-        on_complete=["call_view"],
-        enable_dependencies={"on_complete": ["view"]},
-        disable_dependencies={"on_change": ["view"]},
-        clear_dependencies={"on_change": ["view"]},
+        on_complete=['call_view'],
+        enable_dependencies={'on_complete': ['view']},
+        disable_dependencies={'on_change': ['view']},
+        clear_dependencies={'on_change': ['view']}
     )
 
     view = View(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="View",
+        label='View',
         required=True,
         one_off=True,
         clear_below_on_change=False,
-        on_complete=["call_zone"],
-        enable_dependencies={"on_complete": ["zone"]},
-        disable_dependencies={"on_change": ["zone"]},
-        clear_dependencies={"on_change": ["zone"]},
+        on_complete=['call_zone'],
+        enable_dependencies={'on_complete': ['zone']},
+        disable_dependencies={'on_change': ['zone']},
+        clear_dependencies={'on_change': ['zone']},
         should_cascade_disable_on_change=True,
-        should_cascade_clear_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
     zone = Zone(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Zone",
+        label='Zone',
         required=True,
         clear_below_on_change=False,
-        enable_dependencies={"on_complete": ["ip4_address"]},
-        disable_dependencies={"on_change": ["ip4_address"]},
-        clear_dependencies={"on_change": ["ip4_address", "hostname", "mac_address", "description"]},
+        enable_dependencies={'on_complete': ['ip4_address']},
+        disable_dependencies={'on_change': ['ip4_address']},
+        clear_dependencies={'on_change': ['ip4_address', 'hostname', 'mac_address', 'description']},
         should_cascade_disable_on_change=True,
-        should_cascade_clear_on_change=True,
+        should_cascade_clear_on_change=True
     )
 
     ip4_address = IP4Address(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Address",
+        label='Address',
         required=True,
-        inputs={"configuration": "configuration", "address": "ip4_address"},
+        inputs={'configuration': 'configuration', 'address': 'ip4_address'},
         result_decorator=filter_unallocated,
         clear_below_on_change=False,
-        enable_dependencies={"on_complete": ["hostname", "mac_address", "description", "submit"]},
-        disable_dependencies={"on_change": ["hostname", "mac_address", "description", "submit"]},
+        enable_dependencies={'on_complete': ['hostname', 'mac_address', 'description', 'submit']},
+        disable_dependencies={'on_change': ['hostname', 'mac_address', 'description', 'submit']},
         should_cascade_disable_on_change=True,
     )
 
-    hostname = CustomStringField(label="Hostname", required=True)
+    hostname = CustomStringField(
+        label='Hostname',
+        required=True
+    )
 
-    mac_address = CustomStringField(label="MAC Address")
+    mac_address = CustomStringField(
+        label='MAC Address'
+    )
 
-    description = CustomStringField(label="Description")
+    description = CustomStringField(
+        label='Description'
+    )
 
-    submit = SubmitField(label="Submit")
+    submit = SubmitField(label='Submit')

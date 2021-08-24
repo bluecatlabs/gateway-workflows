@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-08-23
-# Gateway Version: 20.12.1
+# Date: 2021-05-04
+# Gateway Version: 20.6.1
 # Description: Example Gateway workflow
 
 """
@@ -33,66 +33,58 @@ def filter_allocated(res):
     :param res:
     :return:
     """
-    if res["status"] == "SUCCESS" and res["data"]["state"] == "UNALLOCATED":
-        res["status"] = "FAIL"
-        res["message"] = "IP status must be unallocated."
+    if res['status'] == 'SUCCESS' and res['data']['state'] == 'UNALLOCATED':
+        res['status'] = 'FAIL'
+        res['message'] = 'IP status must be unallocated.'
     return res
 
 
 class GenericFormTemplate(GatewayForm):
-    """Form to generate HTML and Javascript for the update_ip4_address workflow
+    """ Form to generate HTML and Javascript for the update_ip4_address workflow
 
     Note:
         When updating the form, remember to make the corresponding changes to the workflow pages
     """
-
-    workflow_name = "update_ip4_address"
-    workflow_permission = "update_ip4_address_page"
+    workflow_name = 'update_ip4_address'
+    workflow_permission = 'update_ip4_address_page'
     configuration = Configuration(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Configuration",
+        label='Configuration',
         required=True,
         coerce=int,
         clear_below_on_change=False,
         is_disabled_on_start=False,
-        enable_dependencies={"on_complete": ["ip4_address"]},
-        disable_dependencies={"on_change": ["ip4_address"]},
-        clear_dependencies={"on_change": ["ip4_address"]},
+        enable_dependencies={'on_complete': ['ip4_address']},
+        disable_dependencies={'on_change': ['ip4_address']},
+        clear_dependencies={'on_change': ['ip4_address']}
     )
 
     ip4_address = IP4Address(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Address",
+        label='Address',
         required=True,
         clear_below_on_change=False,
-        inputs={"configuration": "configuration", "address": "ip4_address"},
-        server_outputs={
-            "on_validate": {
-                "state": "address_state",
-                "mac_address": "mac_address",
-                "name": "description",
-            }
-        },
+        inputs={'configuration': 'configuration', 'address': 'ip4_address'},
+        server_outputs={'on_validate': {'state': 'address_state', 'mac_address': 'mac_address', 'name': 'description'}},
         server_side_output_method=get_ip4_address_endpoint,
         result_decorator=filter_allocated,
         should_cascade_clear_on_change=True,
         should_cascade_disable_on_change=True,
-        enable_dependencies={
-            "on_complete": ["address_state", "mac_address", "description", "submit"]
-        },
-        disable_dependencies={
-            "on_change": ["address_state", "mac_address", "description", "submit"]
-        },
+        enable_dependencies={'on_complete': ['address_state', 'mac_address', 'description', 'submit']},
+        disable_dependencies={'on_change': ['address_state', 'mac_address', 'description', 'submit']}
     )
 
-    line_break = PlainHTML("<hr>")
+    line_break = PlainHTML('<hr>')
 
-    address_state = CustomStringField(label="Address State", readonly=True)
+    address_state = CustomStringField(
+        label='Address State',
+        readonly=True
+    )
 
-    mac_address = CustomStringField(label="MAC Address")
+    mac_address = CustomStringField(label='MAC Address')
 
-    description = CustomStringField(label="Description")
+    description = CustomStringField(label='Description')
 
-    submit = SubmitField(label="Update")
+    submit = SubmitField(label='Update')

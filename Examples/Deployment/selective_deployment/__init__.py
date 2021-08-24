@@ -13,18 +13,18 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-08-23
-# Gateway Version: 20.12.1
+# Date: 2021-05-04
+# Gateway Version: 20.6.1
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin
 """Selective Deployment workflow"""
-type = "ui"
+type = 'ui'
 sub_pages = [
     {
-        "name": "selective_deployment_page",
-        "title": "Selective Deployment",
-        "endpoint": "selective_deployment/selective_deployment_endpoint",
-        "description": "selective deployment",
+        'name'        : 'selective_deployment_page',
+        'title'       : 'Selective Deployment',
+        'endpoint'    : 'selective_deployment/selective_deployment_endpoint',
+        'description' : 'selective deployment'
     },
 ]

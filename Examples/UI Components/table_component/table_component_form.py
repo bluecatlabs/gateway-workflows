@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-08-23
-# Gateway Version: 20.12.1
+# Date: 2021-05-04
+# Gateway Version: 20.6.1
 # Description: Example Gateway workflow
 
 """
@@ -33,47 +33,56 @@ from .component_logic import raw_table_data
 
 
 class GenericFormTemplate(GatewayForm):
-    """Form template to generate html and javascript for page"""
-
-    workflow_name = "table_component"
-    workflow_permission = "table_component_page"
+    """ Form template to generate html and javascript for page
+    """
+    workflow_name = 'table_component'
+    workflow_permission = 'table_component_page'
 
     object_type = CustomSelectField(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Object Type",
+        label='Object Type',
         choices_function=get_object_types,
         required=True,
-        is_disabled_on_start=False,
+        is_disabled_on_start=False
     )
 
-    keyword = CustomStringField(label="Keyword", is_disabled_on_start=False, required=True)
+    keyword = CustomStringField(
+        label='Keyword',
+        is_disabled_on_start=False,
+        required=True
+    )
 
     search = CustomSearchButtonField(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        default="Search Objects",
-        inputs={"keyword": "keyword", "object_type": "object_type"},
+        default='Search Objects',
+        inputs={'keyword': 'keyword', 'object_type': 'object_type'},
         server_side_method=find_objects_by_type_endpoint,
         display_message=True,
-        on_complete=["call_output_table", "call_server_table"],
-        is_disabled_on_start=False,
+        on_complete=['call_output_table', 'call_server_table'],
+        is_disabled_on_start=False
     )
 
     output_table = TableField(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="",
+        label='',
         data_function=raw_table_data,
-        on_complete=["custom_js_table_loaded"],
+        on_complete=['custom_js_table_loaded']
     )
 
     server_table = TableField(
         workflow_name=workflow_name,
         permissions=workflow_permission,
-        label="Server table",
+        label='Server table',
         server_side_method=server_table_data_endpoint,
         data_function=raw_table_data,
-        table_features={"searching": False, "paging": False, "ordering": False, "info": False},
-        inputs={"keyword": "keyword", "object_type": "object_type"},
+        table_features={
+            'searching': False,
+            'paging': False,
+            'ordering': False,
+            'info': False
+        },
+        inputs={'keyword': 'keyword', 'object_type': 'object_type'}
     )

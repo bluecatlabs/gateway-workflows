@@ -14,17 +14,17 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-08-23
-# Gateway Version: 20.12.1
+# Date: 2021-05-04
+# Gateway Version: 20.6.1
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
-type = "ui"
+type = 'ui'
 sub_pages = [
     {
-        "name": "table_component_page",
-        "title": "UI Table Component",
-        "endpoint": "table_component/table_component_endpoint",
-        "description": "Search through a configuration object for any type of child subobject",
+        'name'        : 'table_component_page',
+        'title'       : 'UI Table Component',
+        'endpoint'    : 'table_component/table_component_endpoint',
+        'description' : 'Search through a configuration object for any type of child subobject'
     },
 ]

@@ -14,17 +14,17 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-08-23
-# Gateway Version: 20.12.1
+# Date: 2021-05-04
+# Gateway Version: 20.6.1
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
-type = "ui"
+type = 'ui'
 sub_pages = [
     {
-        "name": "add_static_ip4_address_page",
-        "title": "Add Static IPv4 Address",
-        "endpoint": "add_static_ip4_address/add_static_ip4_address_endpoint",
-        "description": "Add Static IP4 Address",
+        'name'        : 'add_static_ip4_address_page',
+        'title'       : 'Add Static IPv4 Address',
+        'endpoint'    : 'add_static_ip4_address/add_static_ip4_address_endpoint',
+        'description' : 'Add Static IP4 Address'
     },
 ]

@@ -14,17 +14,17 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-08-23
-# Gateway Version: 20.12.1
+# Date: 2021-05-04
+# Gateway Version: 20.6.1
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin,missing-docstring
-type = "ui"
+type = 'ui'
 sub_pages = [
     {
-        "name": "update_host_record_page",
-        "title": "Update Host Record",
-        "endpoint": "update_host_record/update_host_record_endpoint",
-        "description": "Update Host Record",
+        'name'        : 'update_host_record_page',
+        'title'       : 'Update Host Record',
+        'endpoint'    : 'update_host_record/update_host_record_endpoint',
+        'description' : 'Update Host Record'
     },
 ]

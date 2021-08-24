@@ -29,6 +29,6 @@ Customers running Gateway 20.6.1 or earlier
 will not be able to import Certified workflows
 when performing GitHub Import,
 or the import operation will exit with an error in the log files.
-**BlueCat advises all customers on versions 20.12.1 and earlier
+**BlueCat advises all customers on versions 20.6.1 and earlier
 to upgrade to the latest BlueCat Gateway version
 in order to maintain operation of the GitHub Import functionality.**
