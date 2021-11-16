@@ -28,11 +28,11 @@ This field is mandatory.
 Click *SUBMIT*  
 ![screenshot](img/mac_address_del2.jpg?raw=true "mac_address_del2")  
 Check the message shows MAC address is deleted.  
-
- 
+  
+   
  ![screenshot](img/mac_address_del3.jpg?raw=true "mac_address_del3")  
- If the MAC address is associated to IP Address, it will not delete it.
- Check the message including the associated IP address.
+ If the MAC address is associated to IP Address, it will not delete it.  
+ Check the message including the associated IP address.  
  
 ---
 
