@@ -26,7 +26,7 @@ Either separators (Dash or Colon) can be used.
 This field is mandatory.    
 
 Click *SUBMIT*  
-![screenshot](img/mac_address_con2.jpg?raw=true "mac_address_con2")  
+![screenshot](img/mac_address_del2.jpg?raw=true "mac_address_del2")  
 Check the message shows MAC address is deleted.  
  
  ![screenshot](img/mac_address_del3.jpg?raw=true "mac_address_del3")  
