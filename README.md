@@ -66,14 +66,14 @@ Description: Brief description of what the workflow does and the expected behavi
 BlueCat Gateway would be so much less without the following people. Thank you for contributing your time to making this project a success.
 
 #### The Team:
-- David Cohen
+- Anita Cheng
 - Martin Minkov
-- Prerana Pradhan
 - Brian Shorland
 - Chester Wu
 - Edwin Christie
 - Mike Leaver
-- Lucas Tran
+- Aman Tawakley
+- Roy Fisher
 
 #### Integration & Innovation Team:
 - Bill Morton
@@ -101,6 +101,9 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Maziar Esfandiarpoor
 - Chris Storz
 - Delme Herbert
+- David Cohen
+- Prerana Pradhan
+- Lucas Tran
 
 ## License
 
