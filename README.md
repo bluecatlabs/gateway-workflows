@@ -74,6 +74,7 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Mike Leaver
 - Aman Tawakley
 - Roy Fisher
+- Chris Collins
 
 #### Integration & Innovation Team:
 - Bill Morton
