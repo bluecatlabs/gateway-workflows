@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 2021-08-23
-// Gateway Version: 20.12.1
+// Date: 2021-11-30
+// Gateway Version: 21.5.1
 // Description: Example Gateway workflow
 
 // JavaScript for your page goes in here.
