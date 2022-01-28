@@ -107,6 +107,8 @@ text_zone_ns = api.namespace(
     description='Text Record operations',
 )
 
+server_ns = api.namespace('server', path='/server/', description='Server operations')
+
 view_doc = dict(config_doc, view={'in': 'path', 'description': 'View name'})
 zone_doc = dict(view_doc, zone={'in': 'path', 'description': 'Recursive Zone name and subzone name'})
 absolute_name_doc = {'absolute_name': {'in': 'path', 'description': 'The FQDN of the record'}}
@@ -160,6 +162,8 @@ external_host_parser.remove_argument('ip4_address')
 external_host_parser.remove_argument('properties')
 external_host_parser.remove_argument('ttl')
 
+server_full_deploy_parser = reqparse.RequestParser()
+server_full_deploy_parser.add_argument('server_id', location="json", required=True, help="The object ID of the server you are deploying.")
 
 external_host_model = api.model(
     'external_host_records',
@@ -226,9 +230,14 @@ text_patch_model = api.model(
   },
 )
 
+server_full_deploy_model = api.model(
+    'server_full_deploy',
+    {
+        'server_id': fields.Integer(required=True, description='The object ID of the server you are deploying.'),
+    },
+)
+
 dns_defaults = {'configuration': config.default_configuration, 'view': config.default_view}
-
-
 
 @view_ns.route('/<string:view>/')
 @view_default_ns.route('/<string:view>/', defaults=config_defaults)
@@ -766,3 +775,19 @@ class TextRecord(Resource):
       text_record.update()
       result = text_record.to_json()
       return result
+
+# TODO Error handling
+#      Accept server name instead of ID
+@server_ns.route('/full_deploy/')
+class ServerFullDeploy(Resource):
+    @util.rest_workflow_permission_required('rest_page')
+    @server_ns.response(201, 'Full Deploy Started')
+    @server_ns.expect(server_full_deploy_model, validate=True)
+    def post(self):
+        """
+        Deploy the server. When invoking this method, the server is immediately deployed.
+        """
+        data = server_full_deploy_parser.parse_args()
+        server_id = int(data.get('server_id'))
+        # deploy_server_config does not return anything to tell if this was successful
+        g.user.get_api().spec_api.deploy_server_config(server_id, {"services": "DNS", "forceDNSFullDeployment": "true"})
