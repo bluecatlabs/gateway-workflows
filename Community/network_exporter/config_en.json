@@ -46,7 +46,7 @@
         {
             "id": "macAddress",
             "title": "MAC Address",
-            "width": 18
+            "width": 20
         },
         {
             "id": "state",
@@ -64,6 +64,22 @@
             "width": 40
         }
     ],
+    "type_names": {
+        "IP4Block": "Block",
+        "IP4Network": "Network",
+        "IP4Address": "IP Address"
+    },
+    "state_names": {
+        "GATEWAY": "Gateway",
+        "STATIC": "Static",
+        "RESERVED": "Reserved",
+        "DHCP_UNASSIGNED": "DHCP Unassigned",
+        "DHCP_ALLOCATED": "DHCP Allocated",
+        "DHCP_RESERVED": "DHCP Reserved",
+        "DHCP_EXCLUDED": "DHCP Excluded",
+        "DHCP_FREE": "DHCP Free",
+        "DHCP_ABANDONED": "DHCP Abandoned"
+    },
     "excel": {
         "title_cell_index": "B2",
         "start_column": "B",

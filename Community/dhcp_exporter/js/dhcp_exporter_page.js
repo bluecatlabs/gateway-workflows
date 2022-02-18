@@ -13,11 +13,9 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 2019-04-25
+// Date: 2021-06-01
 // Gateway Version: 21.5.1
-// Description: Network Exporter JS
-
-// JavaScript for your page goes in here.
+// Description: DHCP Exporter JS
 
 var colModel = [
     {label:'id',name:'id',index:'id',width:100,sortable:false,hidden:true},
@@ -27,7 +25,7 @@ var colModel = [
 function load_col_model() {
     $.ajax({
         type: 'GET',
-        url: '/network_exporter/load_col_model',
+        url: '/dhcp_exporter/load_col_model',
         async: false,
         cache: false
     })
@@ -42,14 +40,14 @@ function load_col_model() {
 }
 
 
-$(document).ready(function()
-{
+
+$(document).ready(function() {
     load_col_model();
 
     var grid = $('#table');
 
     grid.jqGrid({
-        url: '/network_exporter/load_initial_data',
+        url: '/dhcp_exporter/load_initial_data',
         datatype: 'json',
         colModel: colModel,
         jsonReader: {
@@ -71,36 +69,33 @@ $(document).ready(function()
         var id = record.id;
         var level = record.level;
         if (0 == children.length) {
-            $.ajax({url: '/network_exporter/load_children_data/' + id + '/' + level})
-                .done(function(data)
-                {
+            $.ajax({url: '/dhcp_exporter/load_children_data/' + id + '/' + level})
+                .done(function(data) {
                     for (var i in data) {
                         grid.jqGrid('addChildNode', data[i].id, id, data[i]);
                     }
                 })
-                .fail(function()
-                {
+                .fail(function() {
                     alert('Failed to fetch servers.');
                 })
-	    }
-	    return true;
-	});
-
-	var download = $('#download');
-
-	download.click(function() {
-	    $("body").addClass("waiting");
-	    var rowid = grid.getGridParam('selrow');
-	    var format = $('#format option:selected').val()
-	    var contents = $('#contents option:selected').val()
-	    var full = $('#full_output').prop('checked')
-	    if (rowid == null) {
-	        rowid = 0
-	    }
-	    var a = document.createElement('a');
-	    a.download = 'exported.csv'
-	    a.href = '/network_exporter/load_file/' + rowid + '/' + format + '/' + contents + '/' + (full ? 'full' : 'skip');
-	    a.click();
-	    $("body").removeClass("waiting");
-	});
+        }
+        return true;
+    });
+    
+    var download = $('#download');
+    
+    download.click(function() {
+        $("body").addClass("waiting");
+        var rowid = grid.getGridParam('selrow');
+        var format = $('#format option:selected').val()
+        var full = $('#full_output').prop('checked')
+        if (rowid == null) {
+            rowid = 0
+        }
+        var a = document.createElement('a');
+        a.download = 'exported.csv'
+        a.href = '/dhcp_exporter/load_file/' + rowid + '/' + format + '/' + (full ? 'full' : 'skip');
+        a.click();
+        $("body").removeClass("waiting");
+    });
 });

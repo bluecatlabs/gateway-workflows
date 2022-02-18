@@ -1,4 +1,4 @@
-# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,20 +52,24 @@ class EdgeAPI(object):
         self._debug = debug
         
     def validate_edgeurl(self):
-        valid = False
-        try:
-            headers = {'Authorization': 'Bearer '}
-            response = requests.get(self._edgeurl + api_url['tos'], headers=headers)
-            if response.status_code == 200:
-                if 'timestamp' in response.json():
-                    valid = True
-        except requests.exceptions.RequestException as e:
-            if self._debug:
-                print('DEBUG: Exceptin <%s>' % str(e))
-        except requests.exceptions.ConnectionError as e:
-            if self._debug:
-                print('DEBUG: Exceptin <%s>' % str(e))
-        return valid
+        # The following Code does not work anymore, so just returning True for now on.
+        return True
+#         valid = False
+#         try:
+#             headers = {'Authorization': 'Bearer '}
+#             response = requests.get(self._edgeurl + api_url['tos'], headers=headers)
+#             print('response.status_code = %d' % response.status_code)
+#             if response.status_code == 200:
+#                 if 'timestamp' in response.json():
+#                     valid = True
+#         except requests.exceptions.RequestException as e:
+#             if self._debug:
+#                 print('DEBUG: Exceptin <%s>' % str(e))
+#         except requests.exceptions.ConnectionError as e:
+#             if self._debug:
+#                 print('DEBUG: Exceptin <%s>' % str(e))
+#         print('url (%s) validation result = ' % self._edgeurl, valid)
+#         return valid
         
     def login(self, client_id, secret):
         success = False

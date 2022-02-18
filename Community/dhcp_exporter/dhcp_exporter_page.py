@@ -14,9 +14,9 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2019-03-14
+# Date: 2021-05-01
 # Gateway Version: 21.5.1
-# Description: Network Exporter Page
+# Description: DHCP Exporter Page
 
 # Various Flask framework items.
 import datetime
@@ -54,8 +54,8 @@ class GenericFormTemplate(GatewayForm):
     Note:
         When updating the form, remember to make the corresponding changes to the workflow pages
     """
-    workflow_name = 'network_exporter'
-    workflow_permission = 'network_exporter_page'
+    workflow_name = 'dhcp_exporter'
+    workflow_permission = 'dhcp_exporter_page'
     
     text=get_resource_text()
     
@@ -63,14 +63,7 @@ class GenericFormTemplate(GatewayForm):
         label=text['label_format'],
         choices= [('excel','Excel'), ('csv','CSV')]
     )
-    contents = SelectField(
-        label=text['label_contents'],
-        choices= [
-            ('struct', text['title_structure']),
-            ('ip', text['title_ip_address']),
-            ('both', text['title_both'])
-        ]
-    )
+    
     full_output = BooleanField(
         label='',
         default='checked'
@@ -80,48 +73,48 @@ class GenericFormTemplate(GatewayForm):
 # The workflow name must be the first part of any endpoints defined in this file.
 # If you break this rule, you will trip up on other people's endpoint names and
 # chaos will ensue.
-@route(app, '/network_exporter/network_exporter_endpoint')
-@util.workflow_permission_required('network_exporter_page')
+@route(app, '/dhcp_exporter/dhcp_exporter_endpoint')
+@util.workflow_permission_required('dhcp_exporter_page')
 @util.exception_catcher
-def network_exporter_network_exporter_page():
+def dhcp_exporter_dhcp_exporter_page():
     form = GenericFormTemplate()
     return render_template(
-        'network_exporter_page.html',
+        'dhcp_exporter_page.html',
         form=form,
         text=get_resource_text(),
         options=g.user.get_options(),
     )
 
-@route(app, '/network_exporter/form', methods=['POST'])
-@util.workflow_permission_required('network_exporter_page')
+@route(app, '/dhcp_exporter/form', methods=['POST'])
+@util.workflow_permission_required('dhcp_exporter_page')
 @util.exception_catcher
-def network_exporter_network_exporter_page_form():
+def dhcp_exporter_dhcp_exporter_page_form():
     form = GenericFormTemplate()
-    print('network_exporter_network_exporter_page_form is called!!')
+    print('dhcp_exporter_dhcp_exporter_page_form is called!!')
     if form.validate_on_submit():
         # Put form processing code here
         g.user.logger.info('SUCCESS')
         flash('success', 'succeed')
-        return redirect(url_for('network_exporternetwork_exporter_network_exporter_page'))
+        return redirect(url_for('dhcp_exporterdhcp_exporter_dhcp_exporter_page'))
     else:
         g.user.logger.info('Form data was not valid.')
         return render_template(
-            'network_exporter_page.html',
+            'dhcp_exporter_page.html',
             form=form,
             text=get_resource_text(),
             options=g.user.get_options(),
         )
 
-@route(app, '/network_exporter/load_col_model')
-@util.workflow_permission_required('network_exporter_page')
+@route(app, '/dhcp_exporter/load_col_model')
+@util.workflow_permission_required('dhcp_exporter_page')
 @util.exception_catcher
 def load_col_model():
     nodes = []
     load_config(module_path(), nodes)
     return jsonify(nodes)
 
-@route(app, '/network_exporter/load_initial_data')
-@util.workflow_permission_required('network_exporter_page')
+@route(app, '/dhcp_exporter/load_initial_data')
+@util.workflow_permission_required('dhcp_exporter_page')
 @util.exception_catcher
 def load_initial_data():
     nodes = []
@@ -134,8 +127,8 @@ def load_initial_data():
 
     return jsonify(nodes)
 
-@route(app, '/network_exporter/load_children_data/<int:id>/<int:level>')
-@util.workflow_permission_required('network_exporter_page')
+@route(app, '/dhcp_exporter/load_children_data/<int:id>/<int:level>')
+@util.workflow_permission_required('dhcp_exporter_page')
 @util.exception_catcher
 def load_children_data(id, level):
     nodes = []
@@ -152,10 +145,10 @@ def load_children_data(id, level):
             
     return jsonify(nodes)
 
-@route(app, '/network_exporter/load_file/<int:id>/<format>/<contents>/<mode>')
-@util.workflow_permission_required('network_exporter_page')
+@route(app, '/dhcp_exporter/load_file/<int:id>/<format>/<mode>')
+@util.workflow_permission_required('dhcp_exporter_page')
 @util.exception_catcher
-def load_file(id, format, contents, mode):
+def load_file(id, format, mode):
     full = True if mode == 'full' else False
     now = datetime.datetime.now()
     dirname = module_path()
@@ -166,11 +159,11 @@ def load_file(id, format, contents, mode):
     if format == 'csv':
         filename = CSV_FILE_NAME.format(now)
         mimetype = CSV_MIMETYPE
-        export_as_csv(g.user.get_api(), dirname, filename, id, contents, full)
+        export_as_csv(g.user.get_api(), dirname, filename, id, full)
     else:
         filename = XLSX_FILE_NAME.format(now)
         mimetype = XLSX_MIMETYPE
-        export_as_excel(g.user.get_api(), dirname, filename, id, contents, full)
+        export_as_excel(g.user.get_api(), dirname, filename, id, full)
         
     ret = send_file(dirname + '/' + filename,
                          mimetype=mimetype,

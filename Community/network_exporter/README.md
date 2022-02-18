@@ -1,3 +1,23 @@
+<!--  Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
+ -*- coding: utf-8 -*-
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+By: BlueCat Networks
+Date: 2019-03-14
+Gateway Version: 21.5.1
+ Description: Network Exporter README.md -->  
+
 # Network Exporter  
 **Bluecat Gateway Version:** 18.10.2 and greater  
 **BAM Version:** 9.0.0 and greater  
@@ -141,4 +161,4 @@ This will make the base html menus a little bit wider.
 - Ryu Tamura (rtamura@bluecatnetworks.com)  
 
 ## License
-©2020 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.
+©2021 BlueCat Networks (USA) Inc. and its affiliates (collectively ‘ BlueCat’). All rights reserved. This document contains BlueCat confidential and proprietary information and is intended only for the person(s) to whom it is transmitted. Any reproduction of this document, in whole or in part, without the prior written consent of BlueCat is prohibited.

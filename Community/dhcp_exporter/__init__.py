@@ -14,16 +14,16 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2019-03-14
+# Date: 2019-06-01
 # Gateway Version: 21.5.1
-# Description: Network Exporter init
+# Description: DHCP Exporter init
 
 type = 'ui'
 sub_pages = [
     {
-        'name'        : 'network_exporter_page',
-        'title'       : "Network Exporter",
-        'endpoint'    : 'network_exporter/network_exporter_endpoint',
-        'description' : "Exports specified network"
+        'name'        : 'dhcp_exporter_page',
+        'title'       : u'DHCP Exporter',
+        'endpoint'    : 'dhcp_exporter/dhcp_exporter_endpoint',
+        'description' : u'Export DHCP information as Excel/CSV Format specified network'
     },
 ]

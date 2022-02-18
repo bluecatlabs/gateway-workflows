@@ -13,13 +13,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 By: BlueCat Networks
-Date: 2019-03-14
+Date: 2021-06-01
 Gateway Version: 21.5.1
-Description: Network Exporter CSS */
+Description: DHCP Exporter CSS */
 
 /* Custom styles for your page go in here. */
 
-@import url("/js/vendor/jquery-ui/jquery-ui.min.css");
+@import url("/js/vendor/jquery-ui/jquery-ui.min.redmond.css");
 
 .ui-jqgrid .ui-jqgrid-titlebar {
     height:30px;

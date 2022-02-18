@@ -1,4 +1,4 @@
-# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
 # -*- coding: utf-8 -*-
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,10 +32,6 @@ api_url = {
     'get_domainlist': '/v1/api/list/dns/{id}',
     'update_domainlist': '/v1/api/list/dns/{id}/attachfile',
     
-    'get_policies': '/v5/api/policies',
-    'get_policy': '/v5/api/policies/{id}',
-    'update_policy': '/v5/api/policies/{id}',
-    
     'get_sites': '/v3/api/sites',
     'get_service_points': '/v1/api/servicePoints',
     
@@ -56,20 +52,24 @@ class EdgeAPI(object):
         self._debug = debug
         
     def validate_edgeurl(self):
-        valid = False
-        try:
-            headers = {'Authorization': 'Bearer '}
-            response = requests.get(self._edgeurl + api_url['tos'], headers=headers)
-            if response.status_code == 200:
-                if 'timestamp' in response.json():
-                    valid = True
-        except requests.exceptions.RequestException as e:
-            if self._debug:
-                print('DEBUG: Exceptin <%s>' % str(e))
-        except requests.exceptions.ConnectionError as e:
-            if self._debug:
-                print('DEBUG: Exceptin <%s>' % str(e))
-        return valid
+        # The following Code does not work anymore, so just returning True for now on.
+        return True
+#         valid = False
+#         try:
+#             headers = {'Authorization': 'Bearer '}
+#             response = requests.get(self._edgeurl + api_url['tos'], headers=headers)
+#             print('response.status_code = %d' % response.status_code)
+#             if response.status_code == 200:
+#                 if 'timestamp' in response.json():
+#                     valid = True
+#         except requests.exceptions.RequestException as e:
+#             if self._debug:
+#                 print('DEBUG: Exceptin <%s>' % str(e))
+#         except requests.exceptions.ConnectionError as e:
+#             if self._debug:
+#                 print('DEBUG: Exceptin <%s>' % str(e))
+#         print('url (%s) validation result = ' % self._edgeurl, valid)
+#         return valid
         
     def login(self, client_id, secret):
         success = False
@@ -153,66 +153,6 @@ class EdgeAPI(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
                 
-    def get_policies(self):
-        policies = []
-        try:
-            response = requests.get(self._edgeurl + api_url['get_policies'], headers=self._headers)
-            if response.status_code == 200:
-                policies = response.json()
-            else:
-                if self._debug:
-                    print('DEBUG: failed response <%s>' % str(vars(response)))
-                raise EdgeException(response)
-        except requests.exceptions.RequestException as e:
-            if self._debug:
-                print('DEBUG: Exceptin <%s>' % str(e))
-        return policies
-        
-    def get_policy_by_name(self, name):
-        policy = None
-        try:
-            policies = self.get_policies()
-            for p in policies:
-                if name == p['name']:
-                    policy = p
-                    break
-        except Exception as e:
-            if self._debug:
-                print('DEBUG: Exceptin <%s>' % str(e))
-                
-        return policy
-        
-    def get_policy(self, id):
-        policy = {}
-        try:
-            response = requests.get(self._edgeurl + api_url['get_policy'].format(id=id), headers=self._headers)
-            if response.status_code == 200:
-                policy = response.json()
-            else:
-                if self._debug:
-                    print('DEBUG: failed response <%s>' % str(vars(response)))
-                raise EdgeException(response)
-        except requests.exceptions.RequestException as e:
-            if self._debug:
-                print('DEBUG: Exceptin <%s>' % str(e))
-        return policy
-        
-    def update_policy(self, id, policy):
-        success = False
-        try:
-            response = requests.put(self._edgeurl + api_url['update_policy'].format(id=id), \
-                json=policy, headers=self._headers)
-            if response.status_code == 200 or response.status_code == 204:
-                success = True
-            else:
-                if self._debug:
-                    print('DEBUG: failed response <%s>' % str(vars(response)))
-                raise EdgeException(response)
-        except requests.exceptions.RequestException as e:
-            if self._debug:
-                print('DEBUG: Exceptin <%s>' % str(e))
-        return success
-        
     def get_sites(self):
         sites = []
         try:

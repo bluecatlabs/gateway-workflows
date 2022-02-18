@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 By: BlueCat Networks
-Date: 2019-03-14
+Date: 2021-06-01
 Gateway Version: 21.5.1
 Description: Network Exporter HTML -->
 
@@ -21,7 +21,7 @@ Description: Network Exporter HTML -->
 
 {% block css %}
 <link rel="stylesheet" href="/js/vendor/jqgrid/ui.jqgrid.css" />
-<link rel="stylesheet" href="css/network_exporter_page.css?version={{ g.version | urlencode }}">
+<link rel="stylesheet" href="css/dhcp_exporter_page.css?version={{ g.version | urlencode }}">
 {% endblock %}
 
 {% block title %}
@@ -51,12 +51,6 @@ Description: Network Exporter HTML -->
                 <td width = "20">
                     &nbsp;
                 </td>
-                <td width = "200">
-                    {{ render_field(form.contents) }}
-                </td>
-                <td width = "40">
-                    &nbsp;
-                </td>
                 <td width = "280">
                     {{ render_field(form.full_output) }} {{ text['full_text'] }}
                 </td>
@@ -72,5 +66,5 @@ Description: Network Exporter HTML -->
 
 {% block scripts %}
 <script src="/js/vendor/jqgrid/jquery.jqGrid.min.js" ></script>
-<script src="js/network_exporter_page.js?version={{ g.version | urlencode }}"></script>
+<script src="js/dhcp_exporter_page.js?version={{ g.version | urlencode }}"></script>
 {% endblock %}

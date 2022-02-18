@@ -13,17 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# By: BlueCat Networks
-# Date: 2019-03-14
+# By: Akira Goto (agoto@bluecatnetworks.com)
+# Date: 2021-06-01
 # Gateway Version: 21.5.1
-# Description: Network Exporter init
+# Description: DHCP Exporter text files
 
-type = 'ui'
-sub_pages = [
-    {
-        'name'        : 'network_exporter_page',
-        'title'       : "Network Exporter",
-        'endpoint'    : 'network_exporter/network_exporter_endpoint',
-        'description' : "Exports specified network"
-    },
-]
+title=DHCP Exporter
+info=Exports DHCP Information specified Network
+label_format=Format:
+full_text=Export Network Structure
+sheet_title_for_configuration=Configuration:
+sheet_title_for_block=Block:
+sheet_title_for_network=Network:
+network_id_display_name=Network ID
+broadcast_display_name=Broadcast
