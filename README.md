@@ -69,10 +69,11 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Anita Cheng
 - Martin Minkov
 - Brian Shorland
-- Chester Wu
 - Edwin Christie
 - Mike Leaver
 - Aman Tawakley
+- Nishant Malhotra
+- Nathan Wickham
 - Roy Fisher
 - Chris Collins
 
@@ -105,10 +106,11 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - David Cohen
 - Prerana Pradhan
 - Lucas Tran
+- Chester Wu
 
 ## License
 
-Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
+Copyright 2017-2022 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
