@@ -124,7 +124,6 @@ def find_objects_by_type_endpoint(workflow_name, element_id, permissions, result
     # pylint: disable=unused-variable
     def find_objects_by_type():
         """Retrieve a list of properties for the table"""
-        # pylint: disable=broad-except
         try:
             keyword = request.form["keyword"]
             object_type = request.form["object_type"]

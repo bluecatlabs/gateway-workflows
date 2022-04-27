@@ -71,7 +71,6 @@ def add_static_ip4_address_add_static_ip4_address_page_form():
 
     :return:
     """
-    # pylint: disable=broad-except
     form = GenericFormTemplate()
     # Remove this line if your workflow does not need to select a configuration
     form.configuration.choices = util.get_configurations(default_val=True)

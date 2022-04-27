@@ -72,7 +72,6 @@ def add_host_record_add_host_record_page_form():
 
     :return:
     """
-    # pylint: disable=broad-except
     form = GenericFormTemplate()
     form.configuration.choices = util.get_configurations(default_val=True)
 
@@ -175,7 +174,6 @@ def get_deploy_status():
         # Deployment queued/started
         else:
             result["data"] = task_status["status"]
-    # pylint: disable=broad-except
     except Exception as e:
         g.user.logger.warning(e)
 

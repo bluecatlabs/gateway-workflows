@@ -117,7 +117,6 @@ def update_objects():
             "zone": request.form["zone"],
             "dns_records_list": request.form["dns_records_list"],
         }
-    # pylint: disable=broad-except
     except Exception as e:
         result = get_result_template()
         result["status"] = "FAIL"
@@ -161,7 +160,6 @@ def deploy_objects():
             "dns_records_list": dns_records_list,
         }
         g.user.logger.info(token)
-    # pylint: disable=broad-except
     except Exception as e:
         result = get_result_template()
         result["status"] = "FAIL"

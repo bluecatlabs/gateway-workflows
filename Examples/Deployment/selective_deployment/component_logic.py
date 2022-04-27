@@ -151,7 +151,7 @@ def find_objects_by_type_endpoint(workflow_name, element_id, permissions, result
             result["data"] = {"table_field": data}
             return jsonify(result_decorator(result))
 
-        except Exception as error:  # pylint: disable=broad-except
+        except Exception as error:
             result = get_result_template()
             result["status"] = "FAIL"
             result["message"] = str(error)

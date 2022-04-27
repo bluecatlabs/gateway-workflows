@@ -71,7 +71,6 @@ def update_text_record_update_text_record_page_form():
 
     :return:
     """
-    # pylint: disable=broad-except
     form = GenericFormTemplate()
     # Remove this line if your workflow does not need to select a configuration
     form.configuration.choices = util.get_configurations(default_val=True)
