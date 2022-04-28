@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020-2022 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-12-15
-# Gateway Version: 21.5.1
+# Date: 2022-04-28
+# Gateway Version: 22.4.1
 # Description: Example Gateway workflow
 
 """this file is responsible to selective deploying certain dns records
@@ -117,7 +117,6 @@ def update_objects():
             "zone": request.form["zone"],
             "dns_records_list": request.form["dns_records_list"],
         }
-    # pylint: disable=broad-except
     except Exception as e:
         result = get_result_template()
         result["status"] = "FAIL"
@@ -161,7 +160,6 @@ def deploy_objects():
             "dns_records_list": dns_records_list,
         }
         g.user.logger.info(token)
-    # pylint: disable=broad-except
     except Exception as e:
         result = get_result_template()
         result["status"] = "FAIL"

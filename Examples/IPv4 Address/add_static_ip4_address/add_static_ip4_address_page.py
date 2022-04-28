@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020-2022 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2021-12-15
-# Gateway Version: 21.5.1
+# Date: 2022-04-28
+# Gateway Version: 22.4.1
 # Description: Example Gateway workflow
 
 """
@@ -71,7 +71,6 @@ def add_static_ip4_address_add_static_ip4_address_page_form():
 
     :return:
     """
-    # pylint: disable=broad-except
     form = GenericFormTemplate()
     # Remove this line if your workflow does not need to select a configuration
     form.configuration.choices = util.get_configurations(default_val=True)
