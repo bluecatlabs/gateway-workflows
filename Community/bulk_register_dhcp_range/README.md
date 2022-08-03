@@ -41,11 +41,11 @@ Block, Pool Name, Network, Gateway, Tag Name, DHCP Range
 2. **Import CSV file**  
    Click "Choose File" and select the corresponding CSV file.  
    The _IP Address List_ will be populated as below:  
-   ![screenshot](img/Bulk_DHCP1.jpg 'Bulk_IP1')
+   ![screenshot](img/Bulk_DHCP1.jpg 'Bulk_DHCP1')
 
 3. **Create DHCP Range (with block/network etc) in BAM**  
    Click "REGISTER".  
-   ![screenshot](img/Bulk_DHCP2.jpg 'Bulk_IP2')
+   ![screenshot](img/Bulk_DHCP2.jpg 'Bulk_DHCP2')
 
 4. **Check BAM to see results**
 
