@@ -26,12 +26,12 @@ Block, Pool Name, Network, Gateway, Tag Name, DHCP Range
 10.114.0.0/16, MacPool3, 10.114.205.0/24, 10.114.205.254, NetworkTag4, 10.114.205.30-10.112.205.253
 ```
 
-> **Block**: Specify a block in CIDR format. If the specified block doesn't exist in BAM, it will create one for you.
-> **Pool Name**: (optional) Specify the name of the MAC Address Pool to which you wish to link the Allow MAC Pool DHCP deployment option to. The specified MAC Pool needs to exist in BAM in advance. The Allow MAC Pool DHCP deployment option will be set at the specified **_block_** level. When not specified, no Allow MAC Pool DHCP deployment option will be set.  
-> **Network**: Specify a network in CIDR format. If the specified network doesn't exist in BAM, it will create one for you.
-> **Gateway**: (optional) Specify the default gateway IP address for the network. When not specified, the default gateway IP address will be the default one when networks are created.
-> **Tag Name**: (optional) Specify a Tag name if you wish to tag the network to a shared network tag. If the specified tag name doesn't exist in BAM, it will create one for you. A Tag Group must exist in BAM in advance.  
-> **DHCP Range**: Specify the DHCP range within the network. The format is {Starting IP}-{Ending IP}.
+**Block**: Specify a block in CIDR format. If the specified block doesn't exist in BAM, it will create one for you.  
+**Pool Name**: (optional) Specify the name of the MAC Address Pool to which you wish to link the Allow MAC Pool DHCP deployment option to. The specified MAC Pool needs to exist in BAM in advance. The Allow MAC Pool DHCP deployment option will be set at the specified **_block_** level. When not specified, no Allow MAC Pool DHCP deployment option will be set.  
+**Network**: Specify a network in CIDR format. If the specified network doesn't exist in BAM, it will create one for you.  
+**Gateway**: (optional) Specify the default gateway IP address for the network. When not specified, the default gateway IP address will be the default one when networks are created.  
+**Tag Name**: (optional) Specify a Tag name if you wish to tag the network to a shared network tag. If the specified tag name doesn't exist in BAM, it will create one for you. A Tag Group must exist in BAM in advance.  
+**DHCP Range**: Specify the DHCP range within the network. The format is {Starting IP}-{Ending IP}.
 
 2. **Import CSV file**  
    Click "Choose File" and select the corresponding CSV file.  
@@ -49,17 +49,18 @@ Block, Pool Name, Network, Gateway, Tag Name, DHCP Range
 ## Additional
 
 1. **Language**  
-   You can switch to a Japanese menu by doing the following.  
-    1. Create _ja.txt_ in the BlueCat Gateway container.  
-    ` cd /portal/Administration/create_workflow/text/ cp en.txt ja.txt `  
-    2. In the BlueCat Gateway web UI, go to Administration > Configurations > General Configuration.  
-    In General Configuration, select the _Customization_ tab.  
-    Under _Language:_ type in `ja` and save.  
-    ![screenshot](img/langauge_ja.jpg?raw=true 'langauge_ja')
+   You can switch to a Japanese menu by doing the following.
+
+   1. Create _ja.txt_ in the BlueCat Gateway container.  
+      `cd /portal/Administration/create_workflow/text/ cp en.txt ja.txt`
+   2. In the BlueCat Gateway web UI, go to Administration > Configurations > General Configuration.  
+      In General Configuration, select the _Customization_ tab.  
+      Under _Language:_ type in `ja` and save.  
+      ![screenshot](img/langauge_ja.jpg?raw=true 'langauge_ja')
 
 2. **Appearance**  
-   This will make the base html menus a little bit wider.  
-    1. Copy all files under the directory `additional/templates` to `/portal/templates` inside the Bluecat Gateway container.
+   This will make the base html menus a little bit wider.
+   1. Copy all files under the directory `additional/templates` to `/portal/templates` inside the Bluecat Gateway container.
 
 ## Author
 
