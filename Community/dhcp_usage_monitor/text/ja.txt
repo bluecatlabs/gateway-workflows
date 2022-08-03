@@ -1,0 +1,58 @@
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
+# -*- coding: utf-8 -*-
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# By: BlueCat Networks
+# Date: 2022-07-10
+# Gateway Version: 22.4.1
+# Description: DHCP Usage Monitor Updater text files
+
+title=DHCP使用率監視
+info=ブロック/ネットワーク単位でのDHCP使用率の監視を行います。
+separator=：
+
+saved_message=設定情報は正常に保存されました。
+failed_message=保存が失敗しました。構成を確認して下さい。
+
+dhcp_alert_message=Network: {network}: HD-Ratio Became {status}. (HD ratio: {usage:.1f}% Low Watermark: {low_watermark:.1f}% High Watermark: {high_watermark:.1f}%)
+
+label_usage_tab=DHCP使用率
+label_auto_update=自動更新
+label_dulist=DHCP使用率一覧
+label_upload_file=ファイル
+label_col_range=ブロック/ネットワーク
+label_col_low_watermark=低基準値(%)
+label_col_high_watermark=高基準値(%)
+label_col_status=状態
+label_col_usage=使用率(%)
+label_col_dhcp_count=DHCP IP数
+label_col_leased_count=リース済IP数
+label_st_unknown=不明
+label_st_normal=通常
+label_st_lower=低い
+label_st_higher=高い
+
+label_trap_tab=SNMPトラップ設定
+label_tslist=SNMPトラップサーバ一覧
+label_col_ipaddress=IPアドレス
+label_col_port=ポート
+label_col_snmpver=バージョン
+label_col_comstr=コミュニティ文字列
+
+label_add=追加
+label_update=更新
+label_delete=削除
+
+label_submit=保存
+label_cancel=キャンセル

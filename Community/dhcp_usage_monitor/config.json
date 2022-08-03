@@ -1,0 +1,7 @@
+{
+	"bam_ip": "",
+	"bam_user": "",
+	"bam_pass": "",
+	"execution_interval": 60,
+	"trap_servers": []
+}

@@ -1,0 +1,174 @@
+<!-- Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+By: BlueCat Networks
+Date: 2022-07-10
+Gateway Version: Version: 22.4.1
+Description: DHCP Usage Monitor HTML -->
+
+{% extends "base-no-box.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/js/vendor/jqgrid/ui.jqgrid.css" />
+<link rel="stylesheet" href="css/dhcp_usage_monitor_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+<script type="text/javascript">
+    const text_resource = {{ text | tojson }};
+</script>
+
+
+<p>{{ text['info'] }}</p>
+
+{% from "form_helper.html" import render_field %}
+<ul class="nav nav-tabs" id="myTab">
+    <li role="presentation" class="active">
+        <a id="dulist-tab" href="#dulist-pane" role="tab" data-toggle="tab">{{ text['label_usage_tab'] }}</a>
+    </li>
+    <li role="presentation">
+        <a id="trap-tab" href="#trap-pane" role="tab" data-toggle="tab">{{ text['label_trap_tab'] }}</a>
+    </li>
+</ul>
+
+<div class="panel" id="main-container">
+    <form id="dhcp_usage_monitor_page_form" method="post"
+        action="{{ url_for('dhcp_usage_monitordhcp_usage_monitor_dhcp_usage_monitor_page_form') }}"
+            enctype="multipart/form-data" novalidate>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="dulist-pane" style="width: 770px;">
+                <hr/>
+                <div class="parallel-col" style="float: right;">
+                    <input type="checkbox" id="auto_update" name="auto_update" checked>
+                    <label for="auto_update">{{ text['label_auto_update'] }}</label>
+                </div>
+                <br/>
+                <table id="dhcp_usage_list"></table>
+                <div id="du_pager"></div>
+                <br/>
+                <div class="parallel-col" style="width: 220px;">
+                    {{ render_field(form.range) }}
+                </div>
+                <div class="parallel-col" style="width: 86px; padding-left: 4px;">
+                    {{ render_field(form.low_watermark) }}
+                </div>
+                <div class="parallel-col" style="width: 86px; padding-left: 4px;">
+                    {{ render_field(form.high_watermark) }}
+                </div>
+                <div class="parallel-col" style="float: right;">
+                    {{ render_field(form.upload_file) }}
+                </div>
+                <br/>
+                <br/>
+                <div class="parallel-col">
+                    <div class="input-group">
+                        <button id="add_du_list" name="add_du_list" type="button" class="btn-default">
+                            {{ text['label_add'] }}
+                        </button>
+                    </div>
+                </div>
+                <div class="parallel-col" style="padding-left: 10px;">
+                    <div class="input-group">
+                        <button id="update_du_list" name="update_du_list" type="button" class="btn-default">
+                            {{ text['label_update'] }}
+                        </button>
+                    </div>
+                </div>
+                <div class="parallel-col" style="float: right;">
+                    <div class="input-group" style="float: right;">
+                        <button id="delete_du_list" name="delete_du_list" type="button" class="btn-default">
+                            {{ text['label_delete'] }}
+                        </button>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="trap-pane" style="width: 580px;">
+                <hr/>
+                <table id="trap_server_list"></table>
+                <div id="ts_pager"></div>
+                <br/>
+                <div class="parallel-col" style="width: 126px;">
+                    {{ render_field(form.ipaddress) }}
+                </div>
+                <div class="parallel-col" style="width: 74px; padding-left: 4px;">
+                    {{ render_field(form.port) }}
+                </div>
+                <div class="parallel-col" style="width: 84px; padding-left: 4px;">
+                    {{ render_field(form.snmpver) }}
+                </div>
+                <div class="parallel-col" style="width: 278px; float: right;">
+                    {{ render_field(form.comstr) }}
+                </div>
+                <br/>
+                <div class="parallel-col">
+                    <div class="input-group">
+                        <button id="add_ts_list" name="add_ts_list" type="button" class="btn-default">
+                            {{ text['label_add'] }}
+                        </button>
+                    </div>
+                </div>
+                <div class="parallel-col" style="padding-left: 10px;">
+                    <div class="input-group">
+                        <button id="update_ts_list" name="update_ts_list" type="button" class="btn-default">
+                            {{ text['label_update'] }}
+                        </button>
+                    </div>
+                </div>
+                <div class="parallel-col" style="float: right;">
+                    <div class="input-group" style="float: right;">
+                        <button id="delete_ts_list" name="delete_ts_list" type="button" class="btn-default">
+                            {{ text['label_delete'] }}
+                        </button>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+        </div>
+        <!-- don't remove the following token -->
+        {{ form.csrf_token }}
+
+        <div class="row" style="margin-left: 2px;">
+            <div style="display: inline-block;">
+                <div class="input-group">
+                    <button id="submit" name="submit" type="submit" class="btn-primary" value="submit">
+                        {{ text['label_submit'] }}
+                    </button>
+                </div>
+            </div>
+            <div style="display: inline-block; padding-left: 10px;">
+                <div class="input-group">
+                    <button id="cancel" name="cancel" type="button" class="btn-default">
+                        {{ text['label_cancel'] }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/vendor/jqgrid/jquery.jqGrid.min.js" ></script>
+<script src="js/dhcp_usage_monitor_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}

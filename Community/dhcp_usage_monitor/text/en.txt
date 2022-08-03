@@ -1,0 +1,59 @@
+# Copyright 2021 BlueCat Networks (USA) Inc. and its affiliates
+# -*- coding: utf-8 -*-
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# By: BlueCat Networks
+# Date: 2022-07-10
+# Gateway Version: 22.4.1
+# Description: DHCP Usage Monitor Updater text files
+
+title=DHCP Usage Monitor
+info=Monitor DHCP Usage by specified Block/Network.
+
+separator=:
+
+saved_message=Settings are saved successfully.
+failed_message=Failed to save, Please confirm settings.
+
+dhcp_alert_message=Network: {network}: HD-Ratio Became {status}. (HD ratio: {usage:.1f}% Low Watermark: {low_watermark:.1f}% High Watermark: {high_watermark:.1f}%)
+
+label_usage_tab=DHCP Usages
+label_auto_update=Auto Update
+label_dulist=DHCP Usages
+label_upload_file=File
+label_col_range=Block/Network
+label_col_low_watermark=Low(%)
+label_col_high_watermark=High(%)
+label_col_status=Status
+label_col_usage=Usage(%)
+label_col_dhcp_count=DHCP IP Count
+label_col_leased_count=Leased IP Count
+label_st_unknown=Unknown
+label_st_normal=Normal
+label_st_lower=Lower
+label_st_higher=Higher
+
+label_trap_tab=SNMP Trap Settings
+label_tslist=SNMP Trap Servers
+label_col_ipaddress=IP Address
+label_col_port=Port
+label_col_snmpver=Version
+label_col_comstr=Community String
+
+label_add=Add
+label_update=Update
+label_delete=Delete
+
+label_submit=Save
+label_cancel=Cancel
