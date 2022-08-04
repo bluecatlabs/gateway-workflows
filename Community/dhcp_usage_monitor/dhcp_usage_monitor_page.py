@@ -23,7 +23,7 @@ import sys
 import codecs
 
 from flask import url_for, redirect, render_template, flash, g, jsonify, request
-from wtforms import StringField, SelectField, SubmitField, FileField
+from wtforms import StringField, PasswordField, SelectField, SubmitField, FileField
 from wtforms.fields import IntegerField
 
 from bluecat.wtform_extensions import GatewayForm
@@ -49,6 +49,7 @@ class GenericFormTemplate(GatewayForm):
     text=util.get_text(module_path(), config.language)
     separator = text['separator']
     
+    # Top Pane
     range = StringField(
         label=text['label_col_range'] + separator
     )
@@ -66,6 +67,7 @@ class GenericFormTemplate(GatewayForm):
         label=text['label_upload_file'] + separator
     )
     
+    # Trap Pan
     ipaddress = StringField(
         label=text['label_col_ipaddress'] + separator
     )
@@ -81,6 +83,22 @@ class GenericFormTemplate(GatewayForm):
     )
     comstr = StringField(
         label=text['label_col_comstr'] + separator
+    )
+    
+    # BAM Pan
+    bam_ip = StringField(
+        label=text['label_bam_ip']
+    )
+    bam_user = StringField(
+        label=text['label_bam_user']
+    )
+    bam_pass = PasswordField(
+        label=text['label_bam_pass']
+    )
+    interval = IntegerField(
+        label=text['label_interval'],
+        default=360,
+        render_kw={'style': 'text-align: right;', 'min': '0'}
     )
     
     submit = SubmitField(label=text['label_submit'])
@@ -277,6 +295,12 @@ def update_trap_servers():
 @util.ui_secure_endpoint
 def dhcp_usage_monitor_dhcp_usage_monitor_page():
     form = GenericFormTemplate()
+    du_monitor = DUMonitor.get_instance()
+    
+    form.bam_ip.data = du_monitor.get_value('bam_ip')
+    form.bam_user.data = du_monitor.get_value('bam_user')
+    form.interval.data = du_monitor.get_value('execution_interval')
+    
     return render_template(
         'dhcp_usage_monitor_page.html',
         form=form,
@@ -290,8 +314,20 @@ def dhcp_usage_monitor_dhcp_usage_monitor_page():
 @util.exception_catcher
 @util.ui_secure_endpoint
 def dhcp_usage_monitor_dhcp_usage_monitor_page_form():
+    form = GenericFormTemplate()
     text=util.get_text(module_path(), config.language)
     du_monitor = DUMonitor.get_instance()
+    
+    if form.bam_ip.data != du_monitor.get_value('bam_ip'):
+        du_monitor.set_value('bam_ip', form.bam_ip.data)
+    if form.bam_user.data != du_monitor.get_value('bam_user'):
+        du_monitor.set_value('bam_user', form.bam_user.data)
+    if form.bam_pass.data != '':
+        du_monitor.set_value('bam_pass', form.bam_pass.data)
+    if form.interval.data != du_monitor.get_value('execution_interval'):
+        du_monitor.set_value('execution_interval', form.interval.data)
+        du_monitor.register_job()
+        
     du_monitor.save()
     g.user.logger.info('SUCCESS')
     flash(text['saved_message'], 'succeed')

@@ -37,8 +37,8 @@ label_col_low_watermark=Low(%)
 label_col_high_watermark=High(%)
 label_col_status=Status
 label_col_usage=Usage(%)
-label_col_dhcp_count=DHCP IP Count
-label_col_leased_count=Leased IP Count
+label_col_dhcp_count=DHCP IP Cnt
+label_col_leased_count=Leased IP Cnt
 label_st_unknown=Unknown
 label_st_normal=Normal
 label_st_lower=Lower
@@ -54,6 +54,12 @@ label_col_comstr=Community String
 label_add=Add
 label_update=Update
 label_delete=Delete
+
+label_bam_tab=BAM Settings
+label_bam_ip=BAM IP Address:
+label_bam_user=BAM API User:
+label_bam_pass=BAM Password:
+label_interval=Monitering Interval (sec):
 
 label_submit=Save
 label_cancel=Cancel

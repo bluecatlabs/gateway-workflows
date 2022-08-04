@@ -387,6 +387,11 @@ $(document).ready(function() {
         $('#submit').prop('disabled', false);
     });
     
+    $('#bam_ip, #bam_user, #bam_pass, #interval').change(function(e) {
+        $('#submit').prop('disabled', false);
+    });
+    
+    
     $('#submit').on('click', function(e) {
         update_dhcp_usages();
         update_trap_servers();

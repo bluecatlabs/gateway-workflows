@@ -54,5 +54,11 @@ label_add=追加
 label_update=更新
 label_delete=削除
 
+label_bam_tab=BAM設定
+label_bam_ip=BAM IPアドレス；
+label_bam_user=BAM APIユーザ：
+label_bam_pass=BAM パスワード：
+label_interval=監視間隔（秒）：
+
 label_submit=保存
 label_cancel=キャンセル

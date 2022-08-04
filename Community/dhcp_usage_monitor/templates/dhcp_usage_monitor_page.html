@@ -48,6 +48,9 @@ Description: DHCP Usage Monitor HTML -->
     <li role="presentation">
         <a id="trap-tab" href="#trap-pane" role="tab" data-toggle="tab">{{ text['label_trap_tab'] }}</a>
     </li>
+    <li role="presentation">
+        <a id="bam-tab" href="#bam-pane" role="tab" data-toggle="tab">{{ text['label_bam_tab'] }}</a>
+    </li>
 </ul>
 
 <div class="panel" id="main-container">
@@ -141,6 +144,14 @@ Description: DHCP Usage Monitor HTML -->
                         </button>
                     </div>
                 </div>
+                <hr/>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="bam-pane" style="width: 580px;">
+                <hr/>
+                {{ render_field(form.bam_ip) }}
+                {{ render_field(form.bam_user) }}
+                {{ render_field(form.bam_pass) }}
+                {{ render_field(form.interval) }}
                 <hr/>
             </div>
         </div>

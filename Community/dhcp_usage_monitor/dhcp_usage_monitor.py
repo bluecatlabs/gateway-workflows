@@ -220,6 +220,8 @@ class DUMonitor(object):
         if 0 == len(dhcp_usages):
             return False
         bam_ip = self.get_value('bam_ip')
+        if bam_ip is None or bam_ip == '':
+            return False
         with Client(f"http://{bam_ip}") as client:
             client.login(self.get_value('bam_user'), self.get_value('bam_pass'))
             try:
@@ -267,6 +269,7 @@ class DUMonitor(object):
             if self._debug:
                 print('DEBUG: Exceptin <%s>' % str(e))
         return succeed
+        
 #
 # Followings are code that should be executed when this module is loaded.
 #
