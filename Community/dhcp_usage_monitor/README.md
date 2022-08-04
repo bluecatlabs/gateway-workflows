@@ -145,12 +145,13 @@ This workflow will retrieve specified block / network information from BAM and m
 
    2. Click `Choose File` and select the corresponding CSV file.
    3. Click `Add` to populated the DHCP Usage list.
+   4. Click `Save` to save the configuration.
 
 5. **SNMP Trap**  
    A SNMP trap can be set to trigger once the usage either goes lower or higher than the specified watermark.
    1. Click the `SNMP Trap Settings` menu on the top.
    2. Populate each item.  
-      ![screenshot](img/dhcp_monitor8.jpg)
+      ![screenshot](img/dhcp_monitor8.jpg)  
       Information on each items are the following.
       - IP Address:
         IP Address of the SNMP trap server.
