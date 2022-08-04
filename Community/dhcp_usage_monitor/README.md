@@ -51,39 +51,28 @@ This workflow will retrieve specified block / network information from BAM and m
 
 ## Setting It Up
 
-1. **Populate config file**  
-   Open _config.json_ file within the workflow and populate the following section.
+1. **Setting BAM User**  
+   Click the `BAM Settings` menu on the top.  
+   Populate each item.  
+   Information for each item is the following:
 
-   > _BAM_IP_: IP address of BAM  
-   > _BAM_user_: Unique user name in BAM  
-   > _BAM_pass_: Password for the user  
-   > _execution interval_: The interval of monitoring the DHCP usage (in seconds). The default value is 60  
-   > _trap_servers_: Do not populate and ignore at this time
+   > _BAM IP ADDRESS_: IP address of BAM  
+   > _BAM API USER_: Unique user name in BAM  
+   > _BAM PASSWORD_: Password for the user  
+   > _MONITORING INTERVAL(SEC)_: The interval of monitoring the DHCP usage (in seconds). The default value is 60
 
-   An example file will look like the following.
-
-   ```
-   {
-    "bam_ip": "192.168.201.5",
-    "bam_user": "dhcp_mon_user",
-    "bam_pass": "dhcp_mon_password",
-    "execution_interval": 60,
-    "trap_servers": []
-   }
-   ```
-
-2. **Restarting the BlueCat Gateway container**  
-   At this point, restart the BlueCat Gateway container to reflect the configurations.
-   ```
-   sudo docker restart bluecat_gateway
-   ```
+   ![screenshot](img/dhcp_monitor10.jpg)  
+   Click `Save` and save configutation.
 
 ## Usage
 
 1. **Select a block or a network**  
    Enter the block / network to add to the list.  
    ![screenshot](img/dhcp_monitor1.jpg 'dhcp_monitor1')  
-   Type in the full detail or start typing and select from one of the appearing candidates. Only existing blocks / networks in BAM are able to be added.
+   Type in the full detail or start typing and select from one of the appearing candidates.  
+   Blocks can take in either a CIDR format or a range format.  
+   Networks can only take in CIDR format.  
+   Only existing blocks / networks in BAM are able to be added.
 
    ![screenshot](img/dhcp_monitor3.jpg/)  
    Then choose the overall low and high watermarks for that block / network.
@@ -110,9 +99,9 @@ This workflow will retrieve specified block / network information from BAM and m
      A red circle ![screenshot](img/bad.gif) will be shown when the DHCP usage has exceeded the specified high watermark.
    - Usage (%)  
      The overall usage within the specified block / network in percentage.
-   - DHCP IP Count  
-     The overall number of DHCP IP addresses available within the specified block / network.
-   - Leased IP Count  
+   - DHCP IP Cnt  
+     The overall number of DHCP IP addresses within the specified block / network.
+   - Leased IP Cnt  
      The overall number of DHCP IP addresses which are currently leased within the specified block / network.
 
    Checking the `AUTO UPDATE` check box will automatically refresh the list every 10 seconds.  
