@@ -49,52 +49,122 @@ This workflow will retrieve specified block / network information from BAM and m
    Create a user in BAM if not created.  
    Refer to the BAM Administration Guide for more details.
 
-## Setting Up
+## Setting It Up
 
 1. **Populate config file**  
-   Open _config.json_ file and populate the following section.
+   Open _config.json_ file within the workflow and populate the following section.
+
    > _BAM_IP_: IP address of BAM  
    > _BAM_user_: Unique user name in BAM  
    > _BAM_pass_: Password for the user  
-   > _execution interval_: The interval of checking the DHCP usage (in seconds). The default value is 60  
+   > _execution interval_: The interval of monitoring the DHCP usage (in seconds). The default value is 60  
    > _trap_servers_: Do not populate and ignore at this time
+
+   An example file will look like the following.
+
+   ```
+   {
+    "bam_ip": "192.168.201.5",
+    "bam_user": "dhcp_mon_user",
+    "bam_pass": "dhcp_mon_password",
+    "execution_interval": 60,
+    "trap_servers": []
+   }
+   ```
+
+2. **Restarting the BlueCat Gateway container**  
+   At this point, restart the BlueCat Gateway container to reflect the configurations.
+   ```
+   sudo docker restart bluecat_gateway
+   ```
 
 ## Usage
 
-1. **Create CSV file**  
-   Create a CSV file which has "Block", "Pool Name", "Network", "Gateway", "Tag Name", "DHCP Range" data.  
-   For example:
+1. **Select a block or a network**  
+   Enter the block / network to add to the list.  
+   ![screenshot](img/dhcp_monitor1.jpg 'dhcp_monitor1')  
+   Type in the full detail or start typing and select from one of the appearing candidates. Only existing blocks / networks in BAM are able to be added.
 
-```csv
-Block, Pool Name, Network, Gateway, Tag Name, DHCP Range
-10.112.0.0/16, MacPool1, 10.112.194.0/24, , NetworkTag1, 10.112.194.30-10.112.194.254
-10.112.0.0/16, MacPool2, 10.112.200.0/24, , NetworkTag2, 10.112.200.30-10.112.200.254
-10.114.0.0/16, MacPool3, 10.114.203.0/24, 10.114.203.254, , 10.114.203.30-10.112.203.253
-10.114.0.0/16, MacPool3, 10.114.205.0/24, 10.114.205.254, NetworkTag4, 10.114.205.30-10.112.205.253
-```
+   ![screenshot](img/dhcp_monitor3.jpg/)
+   Then choose the overall low and high watermarks for that block / network.
 
-**Block**: Specify a block in CIDR format. If the specified block doesn't exist in BAM, it will create one for you.
+   Click `Add` to add the selected block / network to the list.  
+   Repeat the process to add multiple blocks / networks to the list.
 
-**Pool Name**: (optional) Specify the name of the MAC Address Pool to which you wish to link the Allow MAC Pool DHCP deployment option to. The specified MAC Pool needs to exist in BAM in advance. The Allow MAC Pool DHCP deployment option will be set at the specified **_block_** level. When not specified, no Allow MAC Pool DHCP deployment option will be set.
+2. **Save monitor configuration**  
+   Once you have added blocks / networks to the list, you can save the configured list by clicking `Save`.  
+   Information on each column are the following.  
+   ![screenshot](img/dhcp_monitor2.jpg 'dhcp_monitor2')
 
-**Network**: Specify a network in CIDR format. If the specified network doesn't exist in BAM, it will create one for you.
+   - Block/Network  
+     The specified block / network to monitor overall DHCP usage.
 
-**Gateway**: (optional) Specify the default gateway IP address for the network. When not specified, the default gateway IP address will be the default one when networks are created.
+   - Low (%)  
+     The specified low watermark percentage.
+   - High (%)  
+     The specified high watermark percentage.
+   - Status  
+     Status of DHCP usage.  
+     A green circle ![screenshot](img/good.gif) will be shown when the DHCP usage is within the specified low and high watermarks.  
+     A yellow circle ![screenshot](img/warning.gif) will be shown when the DHCP usage is lower than the specified low watermark.  
+     A red circle ![screenshot](img/bad.gif) will be shown when the DHCP usage has exceeded the specified high watermark.
+   - Usage (%)  
+     The overall usage within the specified block / network in percentage.
+   - DHCP IP Count  
+     The overall number of DHCP IP addresses available within the specified block / network.
+   - Leased IP Count  
+     The overall number of DHCP IP addresses which are currently leased within the specified block / network.
 
-**Tag Name**: (optional) Specify a Tag name if you wish to tag the network to a shared network tag. If the specified tag name doesn't exist in BAM, it will create one for you. A Tag Group must exist in BAM in advance.
+   Checking the `AUTO UPDATE` check box will automatically refresh the list every 10 seconds.  
+    ![screenshot](img/dhcp_monitor4.jpg)
 
-**DHCP Range**: Specify the DHCP range within the network. The format is {Starting IP}-{Ending IP}.
+3. **Updating the watermark**  
+   If you wish to update the watermark of an existing block / network in the list,
 
-2. **Import CSV file**  
-   Click "Choose File" and select the corresponding CSV file.  
-   The _IP Address List_ will be populated as below:  
-   ![screenshot](img/Bulk_DHCP1.jpg 'Bulk_DHCP1')
+   1. Click the existing block / network in the list and highlight.  
+      ![screenshot](img/dhcp_monitor5.jpg)
+   2. Update the watermark percentage.  
+      ![screeshot](img/dhcp_monitor6.jpg)
+   3. Click `Update` and check that the list has been updated.
+   4. Save the new watermark by clicking `Save`.  
+      ![screenshot](img/dhcp_monitor7.jpg)
 
-3. **Create DHCP Range (with block/network etc) in BAM**  
-   Click "REGISTER".  
-   ![screenshot](img/Bulk_DHCP2.jpg 'Bulk_DHCP2')
+4. **Add blocks / networks from a CSV file**  
+   If there are many blocks / networks to add, there is an option to add them via CSV file.
 
-4. **Check BAM to see results**
+   1. Create a CSV file which has "Block/Networks", "Low Watermark (percentage)" and "High Waterwark (percentage)" data.  
+      For example:
+
+      ```csv
+      block/network,low_watermark,high_watermark
+      192.168.4.0/24,0,95
+      192.168.5.0/24,0,95
+      192.168.6.0/24,0,95
+      192.168.7.0/24,0,95
+      ```
+
+   2. Click `Choose File` and select the corresponding CSV file.
+   3. Click `Add` to populated the DHCP Usage list.
+
+5. **SNMP Trap**  
+   A SNMP trap can be set to trigger once the usage either goes lower or higher than the specified watermark.
+   1. Click the `SNMP Trap Settings` menu on the top.
+   2. Populate each item.  
+      ![screenshot](img/dhcp_monitor8.jpg)
+      Information on each items are the following.
+      - IP Address:
+        IP Address of the SNMP trap server.
+      - Port:
+        Port number of the SNMP trap server.
+      - Version:  
+        SNMP version for the SNMP trap server from the drop-down menu: either v1 or v2c.
+      - Community String:  
+         The SNMP community string. This string is used to validate the trap server registering to receive traps.
+        Click `Add` to add the trap server information to the `SNMP Trap Servers` list.  
+        ![screenshot](img/dhcp_monitor9.jpg)  
+        Repeat process if you have multiple trap servers to set.
+   3. Save configuration  
+      Click `Save` and save current configuration.
 
 ---
 
@@ -103,16 +173,10 @@ Block, Pool Name, Network, Gateway, Tag Name, DHCP Range
 1. **Language**  
    You can switch to a Japanese menu by doing the following.
 
-   1. Create _ja.txt_ in the BlueCat Gateway container.  
-      `cd /portal/Administration/create_workflow/text/ cp en.txt ja.txt`
-   2. In the BlueCat Gateway web UI, go to Administration > Configurations > General Configuration.  
+   - In the BlueCat Gateway web UI, go to Administration > Configurations > General Configuration.  
       In General Configuration, select the _Customization_ tab.  
       Under _Language:_ type in `ja` and save.  
       ![screenshot](img/langauge_ja.jpg?raw=true 'langauge_ja')
-
-2. **Appearance**  
-   This will make the base html menus a little bit wider.
-   1. Copy all files under the directory `additional/templates` to `/portal/templates` inside the Bluecat Gateway container.
 
 ## Author
 
