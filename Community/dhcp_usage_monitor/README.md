@@ -149,10 +149,12 @@ This workflow will retrieve specified block / network information from BAM and m
 
 5. **SNMP Trap**  
    A SNMP trap can be set to trigger once the usage either goes lower or higher than the specified watermark.
+
    1. Click the `SNMP Trap Settings` menu on the top.
    2. Populate each item.  
       ![screenshot](img/dhcp_monitor8.jpg)  
       Information on each items are the following.
+
       - IP Address:
         IP Address of the SNMP trap server.
       - Port:
@@ -161,9 +163,11 @@ This workflow will retrieve specified block / network information from BAM and m
         SNMP version for the SNMP trap server from the drop-down menu: either v1 or v2c.
       - Community String:  
          The SNMP community string. This string is used to validate the trap server registering to receive traps.
-        Click `Add` to add the trap server information to the `SNMP Trap Servers` list.  
-        ![screenshot](img/dhcp_monitor9.jpg)  
-        Repeat process if you have multiple trap servers to set.
+
+      Click `Add` to add the trap server information to the `SNMP Trap Servers` list.  
+       ![screenshot](img/dhcp_monitor9.jpg)  
+       Repeat process if you have multiple trap servers to set.
+
    3. Save configuration  
       Click `Save` and save current configuration.
 
