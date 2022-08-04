@@ -85,7 +85,7 @@ This workflow will retrieve specified block / network information from BAM and m
    ![screenshot](img/dhcp_monitor1.jpg 'dhcp_monitor1')  
    Type in the full detail or start typing and select from one of the appearing candidates. Only existing blocks / networks in BAM are able to be added.
 
-   ![screenshot](img/dhcp_monitor3.jpg/)
+   ![screenshot](img/dhcp_monitor3.jpg/)  
    Then choose the overall low and high watermarks for that block / network.
 
    Click `Add` to add the selected block / network to the list.  
