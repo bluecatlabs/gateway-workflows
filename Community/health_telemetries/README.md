@@ -5,17 +5,17 @@
 
 This set of workflows takes advantage of the new health telemetries feature offered from Integrity version 9.4.0. It is comprised of four individual workflows.
 
-- **Health Telemetries**  
+- [**Health Telemetries**](./health_telemetries/)  
   This workflow is an API only workflow.  
   It acquires the health telemetry data from BDDS and stores them, in other words this workflow acts as the HTTP endpoint for all health telemetry data.
 
-- **DNS Activity Viewer**  
+- [**DNS Activity Viewer**](./dns_activity_viewer/)  
   This workflow will fetch DNS activity telemetry data from the _Health Telemetires_ workflow and list recent events in the GUI.
 
-- **DNS Statistics Viewer**  
+- [**DNS Statistics Viewer**](./dns_statistics_viewer/)  
   This workflow will fetch DNS statistics telemetry data from the _Health Telemetries_ workflow and list recent events in the GUI.
 
-- **DHCP Statistics Viewer**  
+- [**DHCP Statistics Viewer**](./dhcp_statistics_viewer/)  
   This workflow will fetch DHCP statistics telemetry data from the _Health Telemetries_ workflow and list recent events in the GUI.
 
 ## Prerequisites
