@@ -18,7 +18,7 @@ This set of workflows takes advantage of the new health telemetries feature offe
 - [**DHCP Statistics Viewer**](./dhcp_statistics_viewer/)  
   This workflow will fetch DHCP statistics telemetry data from the _Health Telemetries_ workflow and list recent events in the GUI.
 
-The purpose of these set of workflows are to quickly ascertain what kind of data are sent by the health telemetry service. The accumilated data is stored in memory plus the log files that are created by the workflow. This is obviously finite and is not by any means the best way to store data for a longer period of time. Alternative ways to store data or the use of SIEM tools such as Splunk is recommended.
+The purpose of these set of workflows are to quickly ascertain what kind of data are sent by the health telemetry service. The accumilated data is stored in memory plus the log files that are created by the workflow. This is obviously finite and is not by any means the best way to store data for a longer period of time. Alternative ways to store data or the use of SIEM tools such as Splunk is recommended for proper use of the health telemetry data.
 
 ## Prerequisites
 
