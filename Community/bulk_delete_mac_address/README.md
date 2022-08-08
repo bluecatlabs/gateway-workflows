@@ -1,4 +1,4 @@
-# Bulk DHCP Range Registration
+# Bulk MAC Address Deletion
 
 **Bluecat Gateway Version:** 18.10.2 and greater  
 **BAM Version:** 9.0.0 and greater
