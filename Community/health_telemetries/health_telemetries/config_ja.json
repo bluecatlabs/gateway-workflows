@@ -1,0 +1,160 @@
+{
+    "max_buffer_size": 300,
+    "activity": {
+        "filters": [
+            {
+                "key": "dataType",
+                "value": "Message"
+            }
+        ],
+        "fields": [
+            {
+                "id": "id",
+                "name": "Key",
+                "data_id": "key",
+                "type": "string"
+            },
+            {
+                "id": "time",
+                "name": "日時",
+                "data_id": "time",
+                "type": "datetime"
+            },
+            {
+                "id": "server_id",
+                "name": "サーバ名",
+                "data_id": "serverId",
+                "type": "string"
+            },
+            {
+                "id": "source_address",
+                "name": "ソース アドレス",
+                "data_id": "sourceAddress",
+                "type": "string"
+            },
+            {
+                "id": "data_type",
+                "name": "データタイプ",
+                "data_id": "dataType",
+                "type": "string"
+            },
+            {
+                "id": "message_type",
+                "name": "メッセージタイプ",
+                "data_id": "messageType",
+                "type": "string"
+            }
+        ],
+        "store": false
+    },
+    "dns": {
+        "filters": [
+        ],
+        "fields": [
+            {
+                "id": "id",
+                "name": "key",
+                "data_id": "key",
+                "type": "string"
+            },
+            {
+                "id": "time",
+                "name": "日時",
+                "data_id": "time",
+                "type": "datetime"
+            },
+            {
+                "id": "server_id",
+                "name": "サーバ名",
+                "data_id": "serverId",
+                "type": "string"
+            },
+            {
+                "id": "query_success",
+                "name": "クエリ成功",
+                "data_id": "data.nsstats.QrySuccess",
+                "type": "integer"
+            },
+            {
+                "id": "query_failure",
+                "name": "クエリ失敗",
+                "data_id": "data.nsstats.QryFailure",
+                "type": "integer"
+            },
+            {
+                "id": "query_auth_ans",
+                "name": "権威回答",
+                "data_id": "data.nsstats.QryAuthAns",
+                "type": "integer"
+            },
+            {
+                "id": "query_no_auth_ans",
+                "name": "非権威回答",
+                "data_id": "data.nsstats.QryNoauthAns",
+                "type": "integer"
+            },
+            {
+                "id": "query_recursion",
+                "name": "再帰問合せ",
+                "data_id": "data.nsstats.QryRecursion",
+                "type": "integer"
+            }
+        ],
+        "store": false
+    },
+    "dhcp": {
+        "filters": [
+        ],
+        "fields": [
+            {
+                "id": "id",
+                "name": "key",
+                "data_id": "key",
+                "type": "string"
+            },
+            {
+                "id": "time",
+                "name": "日時",
+                "data_id": "time",
+                "type": "datetime"
+            },
+            {
+                "id": "server_id",
+                "name": "サーバ名",
+                "data_id": "serverId",
+                "type": "string"
+            },
+            {
+                "id": "lease_per_second",
+                "name": "LPS",
+                "data_id": "data.leasesPerSecond",
+                "type": "float"
+            },
+            {
+                "id": "discover_received",
+                "name": "Discover受信",
+                "data_id": "data.discoverReceived",
+                "type": "integer"
+            },
+            {
+                "id": "request_received",
+                "name": "Request受信",
+                "data_id": "data.requestReceived",
+                "type": "integer"
+            },
+            {
+                "id": "offer_sent",
+                "name": "Offer送信",
+                "data_id": "data.offerSent",
+                "type": "integer"
+            },
+            {
+                "id": "ack_sent",
+                "name": "ACK送信",
+                "data_id": "data.ackSent",
+                "type": "integer"
+            }
+        ],
+        "store": true
+    }
+}

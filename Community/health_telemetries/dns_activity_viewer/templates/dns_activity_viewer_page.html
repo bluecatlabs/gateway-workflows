@@ -1,0 +1,71 @@
+<!-- Copyright 2022 BlueCat Networks (USA) Inc. and its affiliates
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+By: BlueCat Networks Inc
+Date: 2022-05-01
+Gateway Version: 21.11.2
+Description: Health Telemetry DNS Activity Viewer Main Page HTML -->
+
+{% extends "base-no-box.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/js/vendor/jqgrid/ui.jqgrid.css" />
+<link rel="stylesheet" href="css/dns_activity_viewer_page.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block custom %}
+
+<p>{{ text['info'] }}</p>
+{% from "form_helper.html" import render_field %}
+<form id="dns_activity_viewer_page_form" method="post">
+    <div id="wide-content" class="wide-content">
+        <hr/>
+        <div class="parallel-col" style="float: right; margin-right: 4px;">
+            <input type="checkbox" id="auto_refresh" name="auto_refresh" checked="checked"/>
+            <label for="include_all">{{ text['label_auto_refresh'] }}</label>
+        </div>
+        <br/>
+        <table id="activity_list"></table>
+        <div id="pager"></div>
+        <br/>
+        <textarea id="detail" name="detail" rows="16" readonly></textarea>
+        <hr/>
+    </div>
+    <!-- don't remove the following token -->
+    {{ form.csrf_token }}
+    <div id="wide-content" class="wide-content">
+        <div class="parallel-col">
+            <div class="input-group">
+                <button id="refresh" name="refresh" type="button" class="btn-default">
+                    {{ text['label_refresh'] }}
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/vendor/jqgrid/jquery.jqGrid.min.js" ></script>
+<script src="js/dns_activity_viewer_page.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}
