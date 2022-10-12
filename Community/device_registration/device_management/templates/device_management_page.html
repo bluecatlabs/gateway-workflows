@@ -1,0 +1,177 @@
+{# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates. All Rights Reserved. #}
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="css/device_management_page.css?version={{ g.version | urlencode }}">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+<h1 id="title">Register Device</h1>
+{% endblock %}
+
+{% block custom %}
+
+    <div class='dialog-ovelay' style="display: none;" id="spinning-wheel">
+        <i class='fa fa-spinner fa-spin' style="font-size: 60px; margin-left: 48%; margin-top: 20%; color: #01b5ff"></i>
+    </div>
+
+    <div class="delete-popup" role="alert">
+        <div class="overlay"></div>
+        <div class="delete-popup-container">
+            <p>
+                <span class="glyphicon form-control-feedback glyphicon-remove" id="trash-icon"></span>
+                Are you sure you want to delete this device?
+            </p>
+            <ul class="delete-buttons">
+                <li class="accept-delete">Yes</li>
+                <li class="cancel-delete">No</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="unassign-popup" role="alert">
+        <div class="overlay"></div>
+        <div class="delete-popup-container">
+            <p>
+                <span class="glyphicon form-control-feedback glyphicon-remove" id="trash-icon"></span>
+                Are you sure you want to unassign this IP Address?
+            </p>
+            <ul class="delete-buttons">
+                <li class="accept-unassign">Yes</li>
+                <li class="cancel-unassign">No</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div style="position: absolute; top: 38px; left: 460px; display: none; width: 100%; color: gray" class="download-csv-mess">
+        Downloading devices as csv
+        <span class="loading"></span>
+    </div>
+
+    <div class="container">
+        <div class="notification">
+        </div>
+
+        <div class="form">
+            <div id='addDevice-text'>Enter MAC address to register a new device.</div>
+            <hr>
+            <div class="dp-row">
+                <div class="dp-column-description">
+                    <div class="dp-input">
+                        <label for="description">Description</label><br>
+                        <input type="text" id="description" name="description"><br>
+                    </div>
+                </div>
+            </div>
+            <div class="dp-row">
+                <div class="dp-column">
+                    <div class="dp-input" style="position: relative;">
+                        <label for="mac-address">MAC Address</label><br>
+                        <div id='multiple-ip-mess' style="font-size: 12px; color: green; position: absolute; top: 2px; left: 78px; display: none;">(Associated with multiple IP Addresses)</div>
+                        <input type="text" id="mac-address" name="mac-address"><br>
+                        <span class="glyphicon glyphicon-mac form-control-feedback glyphicon-remove" style="color: #a94442;"></span>
+                        <span class="glyphicon glyphicon-mac form-control-feedback glyphicon-ok" style="color: #3b753d;"></span>
+                    </div>
+                    <div class="dp-input">
+                        <label for="device-group">Device Group</label><br>
+                        <select id="device-group">
+                        </select>
+                        <br>
+                    </div>
+                    <div class="dp-input">
+                        <label for="ip-network">IP Network (Subnet)</label><br>
+                        <select id="ip-network">
+                        </select>
+                        <br>
+                    </div>
+                    <div class="dp-input">
+                        <label for="dns-domain">DNS Domain</label><br>
+                        <select id="dns-domain">
+                        </select>
+                        <br>
+                    </div>
+                    <div class="dp-input">
+                        <label for="account-id">Account ID</label><br>
+                        <input type="text" id="account-id" name="account-id"><br>
+                    </div>
+                </div>
+                <div class="dp-column">
+                    <div class="dp-input" style="position: relative;">
+                        <label for="name">Name</label><br>
+                        <input type="text" id="name" name="name" onkeypress="return /^\S/i.test(event.key)"><br>
+                        <span class="glyphicon form-control-feedback glyphicon-remove" style="color: #a94442;"></span>
+                        <span class="glyphicon form-control-feedback glyphicon-ok" style="color: #3b753d;"></span>
+                    </div>
+                    <div class="dp-input">
+                        <label for="location">Location</label><br>
+                        <select id="location">
+                        </select>
+                        <br>
+                    </div>
+                    <div class="dp-input">
+                        <label for="network-detail">IP Network Details</label><br>
+                        <div class="textAreaWrapper">
+                            <textarea id="network-detail" class="disabled" style="height: 100%;">
+                            </textarea>
+                            <div class="textContent">
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="dp-input">
+                        <label for="ip-address">IP Address</label><br>
+                        <input type="text" id="ip-address" name="ip-address" class="disabled"><br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edit-mode" style="flex-wrap: wrap;">
+                    <p style="font-size: 16px; font-weight: 600;">Audit</p>
+                    <div class="table" id="auditTable">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                    <th>Date/Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+
+            <hr style="margin-top: 0px">
+            
+            <span class="add-mode">
+                <button class="dp-addNext blocked">Add</button>
+                <button class="dp-clear">Clear</button>
+            </span>
+            <span class="edit-mode">
+                <span>
+                    <button class="dp-update blocked">Update</button>
+                    <button class="dp-clearUpdate">Clear</button>
+                </span>
+                <span>
+                    <button class="dp-unassign blocked">Unassign IP Address</button>
+                    <button class="dp-delete">Delete</button>
+                </span>
+            </span>
+        </div>
+        <div class="table"></div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="js/device_management_page.js?version={{ g.version | urlencode }}"></script>
+<script src="js/common.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}

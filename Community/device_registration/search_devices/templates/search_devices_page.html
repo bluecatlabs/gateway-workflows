@@ -1,0 +1,148 @@
+{# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates. All Rights Reserved. #}
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css" >
+<link rel="stylesheet" href="css/search_devices_page.css?version={{ g.version | urlencode }}">
+<link rel="stylesheet" href="css/pagination.css?version={{ g.version | urlencode }}">
+{% endblock %}
+
+{% block title %}
+{{ text['title'] }}
+{% endblock %}
+
+{% block heading %}
+<h1 id="title">Search</h1>
+{% endblock %}
+
+{% block custom %}
+
+    <div class='dialog-ovelay' style="display: none;" id="spinning-wheel">
+        <i class='fa fa-spinner fa-spin' style="font-size: 60px; margin-left: 48%; margin-top: 20%; color: #01b5ff"></i>
+    </div>
+
+    <div style="position: absolute; top: 38px; left: 460px; display: none; width: 100%; color: green" class="download-csv-mess">
+        Downloading devices as csv
+        <span class="loading"></span>
+    </div>
+
+    <div class="container">
+        <div class="notification hide"></div>
+        <div class="form">
+            <div>Enter MAC address or select Device Group and Location to search.</div>
+            <hr>
+            <div class="dp-row">
+                <div class="dp-column">
+                    <div class="dp-input" style="position: relative;">
+                        <label for="mac-address">MAC Address</label><br>
+                        <input type="text" id="mac-address" name="mac-address"><br>
+                        <span class="glyphicon form-control-feedback glyphicon-remove" style="color: #a94442;"></span>
+                        <span class="glyphicon form-control-feedback glyphicon-ok" style="color: #3b753d;"></span>
+                    </div>
+                    <div class="dp-input">
+                        <label for="device-group">Device Group</label><br>
+                        <select id="device-group">
+                            <option value="">Please Select</option>
+                        </select>
+                        <br>
+                    </div>
+                    <div class="dp-input">
+                        <label for="ip-network">IP Network (Subnet)</label><br>
+                        <select id="ip-network" class="disabled">
+                            <option value="">Please Select</option>
+                        </select>
+                        <br>
+                    </div>
+                    <div class="dp-input">
+                        <label for="dns-domain">DNS Domain</label><br>
+                        <select id="dns-domain" class="disabled">
+                            <option value="">Please Select</option>
+                        </select>
+                        <br>
+                    </div>
+                    <div class="dp-input">
+                        <label for="ip-address">IP Address</label><br>
+                        <input type="text" id="ip-address" name="ip-address"><br>
+                    </div>
+                </div>
+                <div class="dp-column">
+                    <div class="dp-input">
+                        <label for="name">Name</label><br>
+                        <input type="text" id="name" name="name"><br>
+                    </div>
+                    <div class="dp-input">
+                        <label for="location">Location</label><br>
+                        <select id="location" class="disabled">
+                            <option value="">Please Select</option>
+                        </select>
+                        <br>
+                    </div>
+                    <div class="dp-input">
+                        <label for="network-detail">IP Network Details</label><br>
+                        <div class="textAreaWrapper">
+                            <textarea id="network-detail" class="disabled" style="height: 100%;">
+                            </textarea>
+                            <div class="textContent">
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="dp-input">
+                        <label for="account-id">Account ID</label><br>
+                        <input type="text" id="account-id" name="account-id" class="disabled"><br>
+                    </div>
+                </div>
+            </div>
+            <hr style="margin-top: 0px">
+            <div style="max-width: calc(780px - 48px); display: flex; justify-content: space-between;">
+                <span class="buttonWrapper">
+                    <button class="dp-search blocked" >Search</button>
+                    <button class="clear-search">Clear</button>
+                </span>
+                <button class="download-csv blocked" style="margin-right: 0;">Download CSV</button>
+                <button class="stop-download-csv" style="margin-right: 0; display: none;">Stop download CSV</button>
+            </div>
+           
+        </div>
+
+        <div class="data-table">
+            <div id="data-container">
+                <div class="table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Device Name</th>
+                                <th>IP Address</th>
+                                <th>MAC Address</th>
+                                <th>Account ID</th>
+                                <th>FQDN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="pagination-container">
+                <div>
+                    <ul>
+                        <li class="button" id="previous">Previous</li>
+                        <li>
+                            <span id="current-page">1</span>
+                            /
+                            <span id="total-count"></span>
+                        </li>
+                        <li class="button" id="next">Next</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="js/search_devices_page.js?version={{ g.version | urlencode }}"></script>
+<script src="js/common.js?version={{ g.version | urlencode }}"></script>
+{% endblock %}

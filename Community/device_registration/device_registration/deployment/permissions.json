@@ -1,0 +1,62 @@
+{
+    "admin": {
+        "group_settings": [
+            "admin",
+            "all"
+        ],
+        "mongo_configuration": [
+            "admin",
+            "all"
+        ],
+        "workflow_export_import": [
+            "admin",
+            "all"
+        ],
+        "workflow_permissions": [
+            "admin",
+            "all"
+        ]
+    },
+    "service_registration": {
+        "service_registration_page": [
+            "all"
+        ]
+    },
+    "configs": {
+        "general_configuration": [
+            "admin",
+            "all"
+        ],
+        "mail_configuration": [
+            "admin",
+            "all"
+        ]
+    },
+    "create_workflow": {
+        "workflow_page": [
+            "admin",
+            "all"
+        ]
+    },
+    "encrypt_password": {
+        "encrypt_password_page": [
+            "all",
+            "admin"
+        ]
+    },
+    "device_management_page": {
+        "device_management_page": [
+            "all"
+        ]
+    },
+    "search_devices_page": {
+        "search_devices_page_page": [
+            "all"
+        ]
+    },
+    "device_registration": {
+        "device_registration_page": [
+            "all"
+        ]
+    }
+}

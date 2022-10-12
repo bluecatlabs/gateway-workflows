@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data PUBLIC "-//BlueCat Networks/Proteus Migration Specification 9.2//EN" "http://www.bluecatnetworks.com/proteus-migration-9.2.dtd">
+<data>
+	<object-field name="ip4ar-vlan-id" display-name="VLAN ID" type="text" object-name="ip4-address-range" required="false"/>
+	<object-field name="mac-account-id" display-name="Account ID" type="text" object-name="mac" required="false"/>
+	<object-field name="mac-audit-trail" display-name="Audit Trail" type="text" object-name="mac" required="false"/>
+	<object-field name="mac-description" display-name="Description" type="text" object-name="mac" required="false"/>
+	<object-field name="mac-location" display-name="Location" type="text" object-name="mac" required="false"/>
+	<object-field name="zone-location-code" display-name="Location code" type="text" object-name="zone" required="false"/>
+	<object-field name="preference" display-name="Preference" type="boolean" object-name="zone" required="false" default-value="false"/>
+	<object-field name="preference" display-name="Preference" type="boolean" object-name="location" required="false" default-value="false"/>
+	<object-field name="preference" display-name="Preference" type="boolean" object-name="tag" required="false" default-value="false"/>
+	<object-field name="preference" display-name="Preference" type="boolean" object-name="ip4-network" required="false" default-value="false"/>
+</data>

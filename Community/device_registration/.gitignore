@@ -1,0 +1,41 @@
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+.metals/
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.coveragerc
+.coverage.*
+.cache
+coverage.xml
+coverage-report/
+coverage-html/
+venv_unittest/
+
+*.cover
+.hypothesis/
+.pytest_cache/
+report/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# mypy
+.idea/
+logs/
+
+# MacOS
+.DS_Store
