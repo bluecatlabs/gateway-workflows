@@ -71,9 +71,10 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Brian Shorland
 - Edwin Christie
 - Mike Leaver
-- Aman Tawakley
 - Nishant Malhotra
 - Nathan Wickham
+- Ajay Basnet
+- Andreas Avramidis
 - Roy Fisher
 - Chris Collins
 
@@ -107,6 +108,7 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Prerana Pradhan
 - Lucas Tran
 - Chester Wu
+- Aman Tawakley
 
 ## License
 
