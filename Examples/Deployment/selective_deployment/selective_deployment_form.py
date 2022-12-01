@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2022-04-28
-# Gateway Version: 22.4.1
+# Date: 2022-11-30
+# Gateway Version: 22.11.1
 # Description: Example Gateway workflow
 
 """this file is used to add different elements into the page"""

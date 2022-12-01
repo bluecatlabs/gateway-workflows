@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2022-04-28
-# Gateway Version: 22.4.1
+# Date: 2022-11-30
+# Gateway Version: 22.11.1
 # Description: Example Gateway workflow
 
 """This file is responsible for populating the out put table in selective deploy"""
