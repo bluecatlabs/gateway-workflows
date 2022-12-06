@@ -1,7 +1,7 @@
 # **Example Selective Deployment Workflow**
 ## Select a DNS record for deployment
 
-**BlueCat Gateway Version:** 21.8.1 or greater <br/>
+**BlueCat Gateway Version:** 22.11.1 or greater <br/>
 **BAM version:** 9.2.0 or greater <br/>
 
 ### Dependencies
