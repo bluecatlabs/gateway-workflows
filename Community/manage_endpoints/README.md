@@ -1,4 +1,4 @@
-# Device Registration Portal
+# Portal for Endpoint Registration and IP Address Management
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -35,7 +35,7 @@
     </li>
     <li><a href="#reference">Reference</a>
       <ul>
-        <li><a href="#rest-api-document">Rest API Document</a></li>
+        <li><a href="#rest-api-documentation">REST API Documentation</a></li>
         <li><a href="#property-options">Property Options</a></li>
       </ul>
     </li>
@@ -43,21 +43,20 @@
 </details>
 
 ## About
-The BlueCat Device Registration Portal provides a single, centralized API and UI for making instant registers and management for network devices where the management of that data is spread across multiple accounts, groups, location, networks and DNS providers.
+This portal for endpoint registration and IP address management provides a self-service UI for managing the registration of devices on the network. Each device is registered with a unique MAC address and is assigned to a device group. Most registered devices also have a fixed IP address assigned that is registered in DNS and reserved in DHCP.
+
 
 
 ## Requirements
 
 - BlueCat Gateway Version: 22.4.1 or greater
 - BAM/BDDS Version: 9.4 or greater
-- Windows Server Version: 2012 or later
 
 
 ## BAM setup
 
-### Setup focus database
-   1. Add license to workflow
-   2. Add host entry to BAM:
+### Setup database access for Gateway
+   1. Add Gateway host IP addresses to database ACL on BAM:
     
         ```
         ssh root@<BAM IP>
@@ -72,7 +71,9 @@ The BlueCat Device Registration Portal provides a single, centralized API and UI
             <IP address>         Access IP Address
         ```
    
-   3. Add access method:
+   Alternative method:
+
+   1. Add Gateway host IP addresses to database ACL on BAM:
     
         ```
         Access to directory : /etc/postgresql/9.6/main
@@ -83,18 +84,18 @@ The BlueCat Device Registration Portal provides a single, centralized API and UI
             <IP address>         Access IP Address
         ```
       
-   4. Reboot BAM
+   2. Reboot BAM
         ```
         su admin
         reboot
         ```
 
-### Setup UDFs
+### Add User-Defined fields to Address Manager object schema
 
 
    1. In BAM **Administration** under **Data Management**, select **Migration**
    2. Click **Browse** and upload attach migration XML file *portal-udfs.xml*
-   3. Click **Queue** button to add UPFs
+   3. Click **Queue** button to add UDFs
 
    ![Setup UDF](images/migration.png?raw=true)
 
@@ -102,7 +103,7 @@ The BlueCat Device Registration Portal provides a single, centralized API and UI
 
 ### Setup Tag Group
 
-Support for <a href="#register-device-ui">Register Device UI</a> 
+Create a Tag Group to manage device groups. Devices (MAC address objects) must be linked to a device group before they can be managed in the <a href="#register-device-ui">Register Device UI</a> 
 
 #### Device Registration Tag Group
 
@@ -110,24 +111,25 @@ Support for <a href="#register-device-ui">Register Device UI</a>
 
    ![Device Tag](images/tag.png?raw=true)
    
-   3. Create **Device Group** Tags in **Service Registration**
+   3. Create **Device Group** Tags in **Device Registration**
    
    > Example: Computer, Workstation, Server ...
 
    ![Device Tag](images/create_tag.png?raw=true)
    
-   3. In each **Device Group** Tag add preference to select default Device Group in Register Device Page
+   4. In each **Device Group** Tag set the preference field to select the default Device Group in the Register Device page
    
-   > Preference are used to display default Device Group in Register Device page
+   > Preference fields are used to select the default Device Group in the Register Device page
 
    ![Device Tag](images/Preference.png?raw=true)
 
 
 ### Setup Location
 
-Support for <a href="#register-registration-ui">Register Device UI</a> 
+The <a href="#register-registration-ui">Register Device UI</a> uses a new location field on MAC address objects, 
+where the location is a location code from the Locations group in Address Manager
 
-#### Device Registration Location
+#### Add locations for Device Registration
 
    1. Select **Locations** in **Group**
    
@@ -145,13 +147,13 @@ Support for <a href="#register-registration-ui">Register Device UI</a>
 
 
 ### Add Zone
-#### If don't want to setup manual, please use the add zone API in **Rest API Document**. Go to <a href="#rest-api-document">Rest API Document</a>
+#### If don't want to add zones manually, use the add zone API in **REST API Documentation**. Go to <a href="#rest-api-document">REST API Documentation</a>
 
 1. Select the **Configuration** > **View** > **Zone**
 2. Add.
 3. Add **Location code**
 4. Under **Deployment Roles**, click **New** and select **DNS Role**.
-5. Under Role, select a DNS deployment role from the Type drop-down menu: `Master` or `Hidden Master` (BAMv9.3 is `Primary`)
+5. Under Role, select a DNS deployment role from the Type drop-down menu: `Primary` or `Hidden Primary`
 6. Click **Select Server Interface**.
 - Under **Servers**, click a server name
 - Under **Server Interfaces**, select the server interface and click **Add**.
@@ -161,7 +163,7 @@ Support for <a href="#register-registration-ui">Register Device UI</a>
 ![Zone](images/new_zone.png?raw=true)
 
 
-#### Note: zone must be added  **Deployable**
+#### Note: the **Deployable** flag on the zone must be enabled
    
 
 ### Add IP Network
@@ -174,7 +176,7 @@ Support for <a href="#register-device-UI">Register Device UI</a>.
 3. Set required fields
 4. Select **Location**
 5. Click **Add**.
-6. In NetWork, under Details, add Tag in **Device Registration** tag group to add current Network to **Device Group**
+6. In Network, under Details, add a Tag from the **Device Registration** tag group to add current Network to **Device Group**
  
 ![Network](images/network.png?raw=true)
 
@@ -195,24 +197,24 @@ the **DNS**
 ## Deployment
 ### Deploy Docker Container
 
-1. Pull image from Registry:
+1. Pull image from a docker registry:
 
     ```
-    docker login registry.bluecatlabs.net/
+    docker login <docker-registry-name>
     docker pull <image-registry-name>:<tag>
     ```
     
-    > Example: docker pull registry.bluecatlabs.net/professional-services/japac-tma/device_registration:drp-22.1-rc1
+    > Example: docker pull quay.io/university_nam_portal:22.1
 
-    Or copy the <drp-image>.tar.gz file to the host machine and run cmd:
+    Or copy the <image>.tar.gz file to the host machine and run cmd:
     
     ```
-    docker load -i <drp-image>.tar.gz
+    docker load -i <image>.tar.gz
     ```
 
 2. Run Gateway Container
     
-    If Hybrid DNS Update only:
+    To deploy the Gateway container on Docker:
 
     ```
     docker run -d --name <container-name> -p <port>:8000  \
@@ -233,19 +235,30 @@ the **DNS**
         
         Where
                                             
-             <admin-username>         Name of the BlueCat Gateway user that will be used to provide linked Loccation, IP Network and DNS Domain from tag Device Group for non-admin user.
-             <admin-password>         Encrypted password for the BlueCat Gateway user that will be used to provide linked Loccation, IP Network and DNS Domain from tag Device Group for non-admin user.                    
+             <admin-username>         Name of the BlueCat Gateway machine user that will be used to access Address Manager to search for linked Location, IP Network and DNS Domain from tag Device Group for non-admin user.
+             <admin-password>         Encrypted password for this user               
         
         ```
 
-    - If Device Registration Portal with Gateway version *22.4.1* or later:
-      1. Additional to `environment`:
-      - `SESSION_COOKIE_SECURE`=`false`
-      2. Configure **Security** in Gateway UI:
-      - **Content Security Policy** to accept to load CSS by enter URLs to `Policy` input
-      - **Cache Control**: `No Cache`
+    - To encrypt the password, either use the /encrypt/credential/ API in a running instance, or use:
+       ```
+       read PASSWORD
+       docker run --rm -i <image-name>:<tag> python3 - $PASSWORD <<EOF
+       <<EOF
+       from sys import argv
+       from bluecat.util.util import encrypt_key
+       print(encrypt_key(argv[1].encode()).decode())
+       EOF
+       ```
 
-      ![Cache Control](images/cache_control.png?raw=true)
+    - Configure Gateway security and cache control:
+      1. To enable unencrypted HTTP connections to Gateway within a secure network, add to the docker environment:
+        - `SESSION_COOKIE_SECURE`=`false`
+     2. Configure **Security** in Gateway UI:
+        - **Content Security Policy** to accept to load CSS by enter URLs to `Policy` input
+        - **Cache Control**: `No Cache`
+
+     ![Cache Control](images/cache_control.png?raw=true)
     
 
 ## Workflow UI
@@ -269,10 +282,10 @@ the **DNS**
        
       ![Register Device](images/register_device.png?raw=true)
 
->   Note: Add button is enable while user imported name, account ID and valid MAC address.
-    Clear button is used to clear name, account ID, MAC address fields and display default Device Group, Location, IP Network and DNS Domain.
+>   Note: Add button is enabled when the user has entered a name, an account ID and a valid MAC address.
+    Clear button is used to clear name, account ID, MAC address fields and display the default Device Group, Location, IP Network and DNS Domain.
       
-   2. Examples for MAC address formats:
+   2. Examples of supported MAC address formats:
 
        | MAC Address                 |
        | --- |
@@ -282,16 +295,16 @@ the **DNS**
        | 1A-2B-3C-4d-5e-6f |
        | 1A2B.3C4d.123     |
 
-   3. Register New Device:
+   3. Register a new device:
    - To register a new device, first the user has to enter the device’s MAC address in the **MAC Address** field.
    - The **Device Group**, **Location**, **IP Network**, and **DNS Domain** can be selected from the dropdown list.
-   - The **Add** button is disabled when **Mac Address**, **Name** and **Account ID** are empty.
+   - The **Add** button is disabled when **MAC Address**, **Name** and **Account ID** are empty.
    - Click **Add** button to add new device.
    - Click **Clear** button to clear input data.
     
 ### Update Device
 
-   1. Input the corresponding information:
+   1. These fields are displayed:
     
        | Fields                | Description                                                        |
        |--------------------------------------------------------------------| --- |
@@ -312,12 +325,12 @@ the **DNS**
        
       ![Update Device](images/update_device.png?raw=true)
 
->   Note: User can update Description, Name and Account ID.
+>   Note: The user can update Description, Name and Account ID.
 
 
 ### Search
 
-   1. Input the corresponding information:
+   1. Input information in the fields you want to search on, and leave other fields empty:
     
        | Fields                | Description                                           |
        |-------------------------------------------------------| --- |
@@ -334,15 +347,15 @@ the **DNS**
       ![Search](images/search.png?raw=true)
 
 
->   Note: User can search devices by 4 options:
-> - Mac Address 
+>   Note: The following searches are available. Search by:
+> - MAC Address 
 > - Name 
 > - IP Address 
 > - Device Group, Location, IP Network and DNS Domain
 
 
 ## Reference
-### Rest API Document
+### Rest API Documentation
  
-Access UI API Document in **http://`ip`:`port`/api/v1/**
-> Example: http://192.168.88.170:5000/api/v1/
+Access Swagger-UI API documentation at **http://`<host>`:`<port>`/api/v1/**
+> Example: http://192.0.2.170/api/v1/
