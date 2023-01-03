@@ -77,7 +77,6 @@ This portal for endpoint registration and IP address management provides a self-
     
         ```
         Access to directory : /etc/postgresql/9.6/main
-        sudo nano pg_hba.conf
         add the following line in #IPv4 local connections section: "host all postgres <IP Address>/32 md5"
         
         where:
