@@ -1,3 +1,4 @@
+# Copyright 2023 BlueCat Networks (USA) Inc. and its affiliates. All Rights Reserved.
 import json, ipaddress
 
 from flask import g

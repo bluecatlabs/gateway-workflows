@@ -1,4 +1,4 @@
-# Copyright 2020 BlueCat Networks (USA) Inc. and its affiliates. All Rights Reserved.
+# Copyright 2023 BlueCat Networks (USA) Inc. and its affiliates. All Rights Reserved.
 import os
 import sys
 from flask import render_template, g

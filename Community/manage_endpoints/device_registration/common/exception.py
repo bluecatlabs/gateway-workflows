@@ -1,3 +1,4 @@
+# Copyright 2023 BlueCat Networks (USA) Inc. and its affiliates. All Rights Reserved.
 from bluecat.api_exception import safe_str
 
 
