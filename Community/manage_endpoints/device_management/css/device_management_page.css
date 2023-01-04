@@ -1,0 +1,326 @@
+html {
+  overflow-y: overlay;
+}
+
+.dialog-ovelay {
+  position: fixed;
+  width: 100%;
+  height: 10000px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99999999;
+}
+
+.container {
+  padding: 0;
+}
+
+.notification {
+  margin-bottom: 30px;
+  display: none;
+  color: #76ce66;
+}
+
+.notification--fail {
+  color: red;
+}
+
+.add-switch:hover {
+  text-decoration: underline;
+}
+
+hr {
+  max-width: calc(780px - 48px);
+}
+
+.dp-row {
+  max-width: 780px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: -24px;
+  margin-right: -24px;
+}
+
+.dp-column {
+  width: 50%;
+  padding: 0 24px;
+}
+
+.dp-column-description {
+  width: 100%;
+  padding: 0 24px;
+}
+
+@media (max-width: 740px) {
+  .dp-column {
+    width: 100%;
+  }
+}
+
+.form-control {
+  margin: 4px 0 10px 0;
+}
+
+.dp-input > .blockEdit {
+  border: 1px solid rgba(128, 128, 128, 0.5) !important;
+  pointer-events: none;
+}
+
+.dp-input > .hideIcon {
+  display: none !important;
+}
+
+.dp-input > .disabled {
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  pointer-events: none;
+}
+
+.dp-input > .textAreaWrapper > .disabled {
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  pointer-events: none;
+}
+
+.dp-input > .valid {
+  border-color: #3b753d;
+}
+
+.dp-input > .valid:focus {
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgba(59, 117, 61, 0.6);
+}
+
+.dp-input > .invalid {
+  border-color: #a94442;
+}
+
+.dp-input > .invalid:focus {
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgba(169, 68, 66, 0.6);
+}
+
+.glyphicon {
+  position: absolute;
+  top: calc(50% - 19px);
+  display: none;
+}
+
+#trash-icon {
+  position: relative;
+  display: inline-block;
+  color: #a94442;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
+
+.dp-input > .valid ~ .glyphicon-ok {
+  display: block;
+}
+
+.dp-input > .invalid ~ .glyphicon-remove {
+  display: block;
+}
+
+.dp-input > textarea {
+  height: 126px;
+}
+
+.textAreaWrapper {
+  position: relative;
+  margin: 4px 0 10px;
+  padding: 0;
+  height: 126px;
+}
+
+.textContent {
+  position: absolute;
+  top: 0;
+  padding: 6px 12px;
+  overflow-x: auto;
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.detail-title {
+  text-transform: uppercase;
+  width: 80px;
+  display: inline-block;
+}
+
+.content {
+  display: inline-block;
+}
+
+.textContent > ul > li {
+  white-space: nowrap;
+  margin-bottom: 6px;
+}
+
+.edit-mode {
+  display: flex;
+  justify-content: space-between;
+  max-width: calc(780px - 48px);
+}
+
+.dp-delete {
+  margin-right: 0;
+}
+
+button {
+  color: #fff;
+  background-color: #0b4e78;
+  margin-top: 16px;
+  margin-right: 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 2px;
+}
+
+.blocked {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+.blocked:hover {
+  background-color: rgba(128, 128, 128, 0.5);
+}
+
+button:hover {
+  background-color: rgba(11, 78, 120, 0.8);
+}
+
+.delete-popup {
+  opacity: 0;
+  display: none;
+  z-index: 99;
+  position: absolute;
+  top: 40%;
+  left: calc(100% - 200px);
+  width: 420px;
+}
+.unassign-popup {
+  opacity: 0;
+  display: none;
+  z-index: 99;
+  position: absolute;
+  top: 40%;
+  left: calc(100% - 200px);
+  width: 420px;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.delete-popup.is-visible {
+  opacity: 1;
+  display: block;
+  animation: popupFadein 0.1s;
+}
+.unassign-popup.is-visible {
+  opacity: 1;
+  display: block;
+  animation: popupFadein 0.1s;
+}
+
+@keyframes popupFadein {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.delete-popup-container {
+  z-index: 999;
+  position: relative;
+  border-radius: 2px;
+  color: #000 !important;
+  padding: 20px;
+}
+.unassign-popup-container {
+  z-index: 999;
+  position: relative;
+  border-radius: 2px;
+  color: #000 !important;
+  padding: 20px;
+}
+
+.delete-popup-container > p {
+  color: #000 !important;
+  padding: 10px 0px 20px 0;
+  margin-bottom: 0;
+  font-size: 16px;
+}
+
+.is-visible .delete-popup-container {
+  background-color: #fff;
+}
+
+.delete-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+
+.delete-buttons > li {
+  width: 45%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  cursor: pointer;
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+.delete-buttons > li:hover {
+  background-color: rgba(128, 128, 128, 0.8);
+}
+
+.delete-buttons > li:first-child {
+  background-color: #0b4e78;
+}
+
+.delete-buttons > li:first-child:hover {
+  background-color: rgba(10, 78, 120, 0.8);
+}
+
+th {
+  font-weight: 700;
+  text-align: left;
+}
+
+.loading {
+    color: gray;
+}
+
+.loading:after {
+  display: inline-block;
+  animation: dotty steps(1,end) 1s infinite;
+  content: '';
+}
+
+@keyframes dotty {
+  0%   { content: ''; }
+  25%  { content: '.'; }
+  50%  { content: '..'; }
+  75%  { content: '...'; }
+  100% { content: ''; }
+}

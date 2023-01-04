@@ -1,0 +1,126 @@
+#pagination-container {
+    max-width: calc(780px - 48px);
+}
+
+#pagination-container ul {
+    display: flex;
+    justify-content: center;
+    color: #0093b8;
+    align-items: center;
+}
+
+.data-table {
+    max-width: calc(780px - 48px);
+}
+
+#current-page {
+    width: 30px;
+    text-align: center;
+}
+
+.button {
+    cursor: pointer;
+    padding: 2px 7px;
+    border-radius: 2px;
+}
+
+.button:hover {
+    background-color: #0b4e78;
+    color: #fff;
+}
+
+.button-disable {
+    color: gray;
+    cursor: default;
+    pointer-events: none;
+}
+
+.fixed-column {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.name-column {
+    max-width: 140px;
+    padding-right: 15px;
+}
+
+.ip-column {
+    width: 120px;
+}
+
+.mac-column {
+    max-width: 170px;
+    min-width: 150px;
+}
+
+.account-column {
+    max-width: 140px;
+    padding-right: 15px;
+}
+
+.domain-column {
+    max-width: 210px;
+    padding-right: 2px;
+}
+
+.popup-column {
+    position: relative;    
+}
+
+.popup-column:hover .popup-text {
+    display: inline-block;
+    /* vertical-align: middle; */
+}
+
+.popup-text {
+    display: none;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.9);
+    /* left: 55%; */
+    top: 3px;
+    width: 100%;
+    width: fit-content;
+    padding: 0 8px;
+    white-space: nowrap;
+    padding: 10px;
+    /* text-align: center; */
+    /* line-height: 30px; */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 5px;
+    z-index: 9999;
+}
+
+.popup-text::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent rgba(0, 0, 0, 0.9) transparent transparent;
+}
+
+.table {
+    margin-bottom: 0;
+    margin-top: 16px !important;
+    /* table-layout: fixed; */
+}
+
+th {
+    font-weight: 700;
+  }
+
+#previous {
+    margin-right: 10px;
+    padding: 10px 20px;
+}
+
+#next {
+    margin-left: 10px;
+    padding: 10px 20px;
+}
+
