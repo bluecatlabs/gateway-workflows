@@ -20,6 +20,9 @@ limitations under the License.
                be viewed by navigating to /api/v1/. 
 
 
+**PLEASE NOTE**: 
+For Adaptive Plugins like Terraform, and ServiceNow, please use the REST API found: https://quay.io/repository/bluecat/rest 
+
 Known issues:
 1. On upgrade or change, remove all __pycache__ folders and __*.pyc__ files as you make experience odd results as a result of caching
 
