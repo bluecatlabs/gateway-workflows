@@ -59,7 +59,6 @@ def add_host_record_add_host_record_page():
         "add_host_record_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )
 
 
@@ -112,7 +111,6 @@ def add_host_record_add_host_record_page_form():
                     form=form,
                     status_token=deploy_token,
                     text=util.get_text(module_path(), config.language),
-                    options=g.user.get_options(),
                 )
             return redirect(url_for("add_host_recordadd_host_record_add_host_record_page"))
         except Exception as e:
@@ -123,7 +121,6 @@ def add_host_record_add_host_record_page_form():
                 "add_host_record_page.html",
                 form=form,
                 text=util.get_text(module_path(), config.language),
-                options=g.user.get_options(),
             )
     else:
         g.user.logger.info("Form data was not valid.")
@@ -131,7 +128,6 @@ def add_host_record_add_host_record_page_form():
             "add_host_record_page.html",
             form=form,
             text=util.get_text(module_path(), config.language),
-            options=g.user.get_options(),
         )
 
 

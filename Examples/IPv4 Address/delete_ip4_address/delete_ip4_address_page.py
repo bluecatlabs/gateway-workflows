@@ -56,7 +56,6 @@ def delete_ip4_address_delete_ip4_address_page():
         "delete_ip4_address_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )
 
 
@@ -104,7 +103,6 @@ def delete_ip4_address_delete_ip4_address_page_form():
                 "delete_ip4_address_page.html",
                 form=form,
                 text=util.get_text(module_path(), config.language),
-                options=g.user.get_options(),
             )
     else:
         g.user.logger.info("Form data was not valid.")
@@ -112,5 +110,4 @@ def delete_ip4_address_delete_ip4_address_page_form():
             "delete_ip4_address_page.html",
             form=form,
             text=util.get_text(module_path(), config.language),
-            options=g.user.get_options(),
         )

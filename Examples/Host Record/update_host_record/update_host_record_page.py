@@ -60,7 +60,6 @@ def update_host_record_update_host_record_page():
         "update_host_record_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )
 
 
@@ -112,7 +111,6 @@ def update_host_record_update_host_record_page_form():
                         name=form.name.data,
                         ip4_address=form.ip4_address.data,
                         text=util.get_text(module_path(), config.language),
-                        options=g.user.get_options(),
                     )
 
             ip4_address = ",".join(ip4_address)
@@ -141,7 +139,6 @@ def update_host_record_update_host_record_page_form():
                     form=form,
                     status_token=deploy_token,
                     text=util.get_text(module_path(), config.language),
-                    options=g.user.get_options(),
                 )
             return redirect(url_for("update_host_recordupdate_host_record_update_host_record_page"))
         except Exception as e:
@@ -156,7 +153,6 @@ def update_host_record_update_host_record_page_form():
                 name=form.name.data,
                 ip4_address=form.ip4_address.data,
                 text=util.get_text(module_path(), config.language),
-                options=g.user.get_options(),
             )
     else:
         g.user.logger.info("Form data was not valid.")
@@ -168,7 +164,6 @@ def update_host_record_update_host_record_page_form():
             name=form.name.data,
             ip4_address=form.ip4_address.data,
             text=util.get_text(module_path(), config.language),
-            options=g.user.get_options(),
         )
 
 

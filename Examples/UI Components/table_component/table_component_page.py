@@ -22,7 +22,7 @@ Table component page
 """
 import os
 
-from flask import render_template, g
+from flask import render_template
 
 from bluecat import route
 from bluecat import util
@@ -58,5 +58,4 @@ def table_component_table_component_page():
         "table_component_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )

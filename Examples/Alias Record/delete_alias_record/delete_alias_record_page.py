@@ -58,7 +58,6 @@ def delete_alias_record_delete_alias_record_page():
         "delete_alias_record_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )
 
 
@@ -110,7 +109,6 @@ def delete_alias_record_delete_alias_record_page_form():
                 "delete_alias_record_page.html",
                 form=form,
                 text=util.get_text(module_path(), config.language),
-                options=g.user.get_options(),
             )
     else:
         g.user.logger.info("Form data was not valid.")
@@ -118,5 +116,4 @@ def delete_alias_record_delete_alias_record_page_form():
             "delete_alias_record_page.html",
             form=form,
             text=util.get_text(module_path(), config.language),
-            options=g.user.get_options(),
         )

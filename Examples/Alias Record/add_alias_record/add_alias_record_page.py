@@ -58,7 +58,6 @@ def add_alias_record_add_alias_record_page():
         "add_alias_record_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )
 
 
@@ -110,7 +109,6 @@ def add_alias_record_add_alias_record_page_form():
                 "add_alias_record_page.html",
                 form=form,
                 text=util.get_text(module_path(), config.language),
-                options=g.user.get_options(),
             )
     else:
         g.user.logger.info("Form data was not valid.")
@@ -118,5 +116,4 @@ def add_alias_record_add_alias_record_page_form():
             "add_alias_record_page.html",
             form=form,
             text=util.get_text(module_path(), config.language),
-            options=g.user.get_options(),
         )

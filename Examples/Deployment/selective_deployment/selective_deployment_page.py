@@ -56,7 +56,6 @@ def selective_deployment_selective_deployment_page():
         "selective_deployment_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )
 
 

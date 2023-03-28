@@ -58,7 +58,6 @@ def update_text_record_update_text_record_page():
         "update_text_record_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )
 
 
@@ -105,7 +104,6 @@ def update_text_record_update_text_record_page_form():
                 "update_text_record_page.html",
                 form=form,
                 text=util.get_text(module_path(), config.language),
-                options=g.user.get_options(),
             )
 
     else:
@@ -117,5 +115,4 @@ def update_text_record_update_text_record_page_form():
             "update_text_record_page.html",
             form=form,
             text=util.get_text(module_path(), config.language),
-            options=g.user.get_options(),
         )

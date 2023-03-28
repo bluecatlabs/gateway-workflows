@@ -57,7 +57,6 @@ def update_ip4_address_update_ip4_address_page():
         "update_ip4_address_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )
 
 
@@ -103,7 +102,6 @@ def update_ip4_address_update_ip4_address_page_form():
                 "update_ip4_address_page.html",
                 form=form,
                 text=util.get_text(module_path(), config.language),
-                options=g.user.get_options(),
             )
     else:
         g.user.logger.info("Form data was not valid.")
@@ -111,5 +109,4 @@ def update_ip4_address_update_ip4_address_page_form():
             "update_ip4_address_page.html",
             form=form,
             text=util.get_text(module_path(), config.language),
-            options=g.user.get_options(),
         )

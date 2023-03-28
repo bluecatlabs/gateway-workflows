@@ -60,7 +60,6 @@ def add_dhcp_ip4_address_add_dhcp_ip4_address_page():
         "add_dhcp_ip4_address_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )
 
 
@@ -122,7 +121,6 @@ def add_dhcp_ip4_address_add_dhcp_ip4_address_page_form():
                 "add_dhcp_ip4_address_page.html",
                 form=form,
                 text=util.get_text(module_path(), config.language),
-                options=g.user.get_options(),
             )
     else:
         g.user.logger.info("Form data was not valid.")
@@ -130,5 +128,4 @@ def add_dhcp_ip4_address_add_dhcp_ip4_address_page_form():
             "add_dhcp_ip4_address_page.html",
             form=form,
             text=util.get_text(module_path(), config.language),
-            options=g.user.get_options(),
         )

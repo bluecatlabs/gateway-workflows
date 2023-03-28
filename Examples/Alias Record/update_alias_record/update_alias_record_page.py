@@ -58,7 +58,6 @@ def update_alias_record_update_alias_record_page():
         "update_alias_record_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )
 
 
@@ -112,7 +111,6 @@ def update_alias_record_update_alias_record_page_form():
                 "update_alias_record_page.html",
                 form=form,
                 text=util.get_text(module_path(), config.language),
-                options=g.user.get_options(),
             )
     else:
         g.user.logger.info("Form data was not valid.")
@@ -120,5 +118,4 @@ def update_alias_record_update_alias_record_page_form():
             "update_alias_record_page.html",
             form=form,
             text=util.get_text(module_path(), config.language),
-            options=g.user.get_options(),
         )
