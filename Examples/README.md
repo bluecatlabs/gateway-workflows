@@ -1,4 +1,4 @@
-<!-- Copyright 2020-2022 BlueCat Networks (USA) Inc. and its affiliates -->
+<!-- Copyright 2020-2023 BlueCat Networks (USA) Inc. and its affiliates -->
 
 # **BlueCat Gateway Example Workflows**
 
