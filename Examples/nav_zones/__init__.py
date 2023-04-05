@@ -1,4 +1,4 @@
-# Copyright 2020-2023 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2023 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,4 +15,15 @@
 # By: BlueCat Networks
 # Date: 2023-04-05
 # Gateway Version: 23.1.0
-# Description: Example Gateway workflows
+# Description: Gateway workflow to demonstrate use of REST API v2 client.
+
+# pylint: disable=redefined-builtin,missing-docstring
+type = "ui"
+sub_pages = [
+    {
+        "name": "nav_zones_page",
+        "title": "Navigate zones",
+        "endpoint": "nav_zones",
+        "description": "Navigate zones",
+    },
+]

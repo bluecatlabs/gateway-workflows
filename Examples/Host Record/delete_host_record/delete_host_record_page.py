@@ -1,4 +1,4 @@
-# Copyright 2020-2022 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020-2023 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2022-11-30
-# Gateway Version: 22.11.1
+# Date: 2023-04-05
+# Gateway Version: 23.1.0
 # Description: Example Gateway workflow
 
 """
@@ -60,7 +60,6 @@ def delete_host_record_delete_host_record_page():
         "delete_host_record_page.html",
         form=form,
         text=util.get_text(module_path(), config.language),
-        options=g.user.get_options(),
     )
 
 
@@ -109,7 +108,6 @@ def delete_host_record_delete_host_record_page_form():
                     form=form,
                     status_token=deploy_token,
                     text=util.get_text(module_path(), config.language),
-                    options=g.user.get_options(),
                 )
             return redirect(url_for("delete_host_recorddelete_host_record_delete_host_record_page"))
         except Exception as e:
@@ -120,7 +118,6 @@ def delete_host_record_delete_host_record_page_form():
                 "delete_host_record_page.html",
                 form=form,
                 text=util.get_text(module_path(), config.language),
-                options=g.user.get_options(),
             )
     else:
         g.user.logger.info("Form data was not valid.")
@@ -128,7 +125,6 @@ def delete_host_record_delete_host_record_page_form():
             "delete_host_record_page.html",
             form=form,
             text=util.get_text(module_path(), config.language),
-            options=g.user.get_options(),
         )
 
 

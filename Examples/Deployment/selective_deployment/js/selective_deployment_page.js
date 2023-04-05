@@ -1,4 +1,4 @@
-// Copyright 2020-2022 BlueCat Networks (USA) Inc. and its affiliates
+// Copyright 2020-2023 BlueCat Networks (USA) Inc. and its affiliates
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 2022-11-30
-// Gateway Version: 22.11.1
+// Date: 2023-04-05
+// Gateway Version: 23.1.0
 // Description: Example Gateway workflow
 
 // JavaScript for your page goes in here.
@@ -105,13 +105,9 @@ function updateData(data_param){
     })
 }
 
-
-
-
 $(document).ready(function()
 {
     $('#deploy').click(deployData);
-
 });
 
 
