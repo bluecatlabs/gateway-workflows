@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2023-04-05
-# Gateway Version: 23.1.0
+# Date: 2023-08-31
+# Gateway Version: 23.2.0
 # Description: Example Gateway workflow
 
 """this file is responsible to selective deploying certain dns records

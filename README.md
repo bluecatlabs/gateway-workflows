@@ -72,9 +72,9 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Edwin Christie
 - Mike Leaver
 - Nishant Malhotra
-- Nathan Wickham
+- Lily Wickham
 - Ajay Basnet
-- Andreas Avramidis
+- Alexander Bartella
 - Roy Fisher
 - Chris Collins
 
@@ -109,10 +109,11 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Lucas Tran
 - Chester Wu
 - Aman Tawakley
+- Andreas Avramidis
 
 ## License
 
-Copyright 2017-2022 BlueCat Networks (USA) Inc. and its affiliates
+Copyright 2017-2023 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
