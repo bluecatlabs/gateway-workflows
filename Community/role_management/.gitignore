@@ -1,0 +1,52 @@
+
+# Byte-compiled / optimized / DLL files
+*/__pycache__/*
+rest_api/__pycache__/
+__pycache__/
+*.py[cod]
+*$py.class
+test/automation/Results
+.metals/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+html/
+.tox/
+.coverage
+.coveragerc
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+coverage-report/
+coverage-html/
+venv_unittest/
+
+*.cover
+.hypothesis/
+.pytest_cache/
+report/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# mypy
+.mypy_cache/
+.idea/
+
+# Bundle File
+*/*/vendor/
+*/*/css/webfonts/
+
+migrations/migration-*.xml
+

@@ -1,0 +1,51 @@
+@import '~@bluecateng/pelagos/less/spacing';
+@import '~@bluecateng/pelagos/less/utils';
+
+.StatusIcon {
+    @focus-visible();
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &[aria-expanded='true'],
+    &[aria-expanded='true']:focus {
+        border-radius: initial;
+        box-shadow: var(--shadow-04);
+    }
+
+    &--success {
+        color: green;
+    }
+
+    &--fail {
+        color: red;
+    }
+
+    &--warning {
+        color: #f1c21b;
+        background-color: transparent;
+    }
+
+    &--info {
+        color: #0043ce;
+        background-color: transparent;
+    }
+
+    &--medium {
+        font-size: 16px;
+        width: 26px;
+        height: 26px;
+    }
+
+    &--large {
+        font-size: 24px;
+        width: 28px;
+        height: 28px;
+    }
+
+    @media print {
+        display: none;
+    }
+}

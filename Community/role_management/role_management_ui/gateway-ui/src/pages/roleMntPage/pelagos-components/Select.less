@@ -1,0 +1,104 @@
+@import '~@bluecateng/pelagos/less/focus';
+@import '~@bluecateng/pelagos/less/spacing';
+@import '~@bluecateng/pelagos/less/utils';
+@import '~@bluecateng/pelagos/less/fonts';
+
+.Select {
+	position: relative;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.Select__text {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	height: 32px;
+	padding: 0 @sp-16;
+	background-color: var(--field);
+	border: none;
+	border-bottom: 1px solid var(--border-strong);
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+
+	&:hover {
+		background-color: var(--field-hover);
+	}
+
+	&:focus {
+		@focus-ring();
+	}
+
+	&--empty::before {
+		@font-12-400();
+		color: var(--text-placeholder);
+		content: attr(data-placeholder);
+	}
+
+	&--error {
+		outline: 2px solid var(--support-error);
+		outline-offset: -2px;
+	}
+
+	&--error:focus {
+		@focus-ring-error();
+	}
+
+	&:disabled {
+		cursor: default;
+		color: var(--text-disabled);
+		border-color: transparent;
+	}
+
+	&:disabled::before {
+		color: var(--text-disabled);
+	}
+}
+
+.Select__arrow {
+	margin-left: @sp-12;
+	transition: transform 0.15s ease-out;
+
+	&--open {
+		transform: rotate(180deg);
+	}
+}
+
+.Select__list {
+	position: absolute;
+	max-height: 15em;
+	border-radius: 3px;
+	padding: @sp-04 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: var(--layer);
+	box-shadow: var(--shadow-04);
+	z-index: 1000;
+}
+
+.Select__option {
+	@layer-hover-effects();
+	display: block;
+	padding: @sp-04 @sp-12;
+	cursor: pointer;
+
+	&[aria-selected='true'] {
+		background-color: var(--layer-selected);
+	}
+
+	&[aria-selected='true']:hover {
+		background-color: var(--layer-selected-hover);
+	}
+}
+
+@media print {
+	.Select__text {
+		background-color: transparent;
+		border-color: transparent;
+	}
+
+	.Select__text::before {
+		display: none;
+	}
+}

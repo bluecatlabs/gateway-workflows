@@ -1,0 +1,718 @@
+<!--
+	on-exist ENTITY
+-->
+<!ENTITY % on-exist-def '(skip-object|skip-tree|merge-object|delete-tree|recreate-tree|unlink) "skip-object" ' >
+
+<!--
+	Value
+-->
+<!ELEMENT value (#PCDATA)>
+	<!ATTLIST value name CDATA #REQUIRED>
+	<!ATTLIST value value CDATA #REQUIRED>
+
+<!--
+	Option Value
+-->
+<!ELEMENT option-value (#PCDATA)>
+	<!ATTLIST option-value value CDATA #REQUIRED>
+	<!ATTLIST option-value on-exist %on-exist-def; >
+
+<!--
+	Root Element
+-->
+<!ELEMENT data (object-field*,(user|user-group)*,tag-group*,shared-networks*,device-type*,dhcp-vendor-profile*,configuration*)>
+	<!ATTLIST data on-exception (stop|continue) #IMPLIED>
+
+	<!ATTLIST data max-queued-batches CDATA #IMPLIED>
+	<!ATTLIST data max-batch-size CDATA #IMPLIED>
+	<!ATTLIST data queue-priming-delay CDATA #IMPLIED>
+	<!ATTLIST data failed-batch-retry-segments CDATA #IMPLIED> <!-- will likely be removed -->
+	<!ATTLIST data optimistic-segmentation (true|false) #IMPLIED> <!-- will likely be removed -->
+
+	<!ATTLIST data per-batch-history-records (true|false) #IMPLIED>
+	<!ATTLIST data clear-sessions-on-success (true|false) #IMPLIED>
+	<!ATTLIST data lock-parent-when-child-added-or-removed (true|false) #IMPLIED>
+
+	<!ATTLIST data assume-empty-database (true|false) "false">
+	<!ATTLIST data ignore-unsupported (true|false) "false">
+	<!ATTLIST data existence-tracking-optimization (xml-only|fingerprint-and-xml|off) #IMPLIED>
+	<!ATTLIST data fingerprinting (off|empty|bloom|detailed) #IMPLIED>
+	<!ATTLIST data concurrent-preparation (true|false) #IMPLIED>
+
+	<!ATTLIST data brief-stats-logging (true|false) #IMPLIED>
+	<!ATTLIST data verbose-stats-reporting-period CDATA #IMPLIED>
+
+	<!ATTLIST data log-skip-tree-children (true|false) #IMPLIED>
+	<!ATTLIST data log-skip-tree-root (true|false) #IMPLIED>
+	<!ATTLIST data log-skip-object (true|false) #IMPLIED>
+	<!ATTLIST data log-create (true|false) #IMPLIED>
+	<!ATTLIST data log-delete (true|false) #IMPLIED>
+	<!ATTLIST data log-replace (true|false) #IMPLIED>
+	<!ATTLIST data log-merge (true|false) #IMPLIED>
+	<!ATTLIST data log-debug (true|false) #IMPLIED>
+
+	<!ATTLIST data blocked-reaction-threshold-initial CDATA #IMPLIED>
+	<!ATTLIST data blocked-reaction-threshold-expansion CDATA #IMPLIED>
+	<!ATTLIST data blocked-reaction-threshold-contraction CDATA #IMPLIED>
+	<!ATTLIST data incomplete-reaction-threshold-initial CDATA #IMPLIED>
+	<!ATTLIST data incomplete-reaction-threshold-expansion CDATA #IMPLIED>
+	<!ATTLIST data incomplete-reaction-threshold-contraction CDATA #IMPLIED>
+
+	<!ATTLIST data split-batches-on-dependencies (true|false) #IMPLIED>
+	<!ATTLIST data batch-processing-method-version (1|2) #IMPLIED>
+
+<!--
+	Object field
+-->
+<!ELEMENT object-field EMPTY>
+	<!ATTLIST object-field name CDATA #REQUIRED>
+	<!ATTLIST object-field display-name CDATA #REQUIRED>
+	<!ATTLIST object-field type CDATA #REQUIRED>
+	<!ATTLIST object-field required (true|false) "false">
+	<!ATTLIST object-field default-value CDATA #IMPLIED>
+	<!ATTLIST object-field predefined-values CDATA #IMPLIED>
+	<!ATTLIST object-field searchable (true|false) "true">
+	<!ATTLIST object-field validation CDATA #IMPLIED>
+	<!ATTLIST object-field object-name CDATA #REQUIRED>
+	<!ATTLIST object-field on-exist %on-exist-def; >
+
+<!--
+	User Group
+-->
+<!ELEMENT user-group (value*, member*)>
+	<!ATTLIST user-group name CDATA #REQUIRED>
+	<!ATTLIST user-group admin-privilege (true|false) "false">
+	<!ATTLIST user-group on-exist %on-exist-def; >
+
+<!--
+	User Group Member
+-->
+<!ELEMENT member EMPTY>
+	<!ATTLIST member user CDATA #REQUIRED>
+	<!ATTLIST member on-exist %on-exist-def; >
+
+<!--
+	User
+-->
+<!ELEMENT user (value*,member-of*)>
+	<!ATTLIST user name CDATA #REQUIRED>
+	<!ATTLIST user authenticator CDATA #IMPLIED>
+	<!ATTLIST user password CDATA #IMPLIED>
+	<!ATTLIST user password-md5 CDATA #IMPLIED>
+	<!ATTLIST user security-privilege (none|view-self|view-other|change|add|delete|full) "none">
+	<!ATTLIST user history-privilege (hide|view-list|view-details) "hide">
+	<!ATTLIST user email CDATA #REQUIRED>
+	<!ATTLIST user phone-number CDATA #IMPLIED>
+	<!ATTLIST user access-type (gui|api|gui-api) "gui">
+	<!ATTLIST user x509-required (true|false) "false">
+	<!ATTLIST user on-exist %on-exist-def; >
+
+<!--
+	User Group Membership
+-->
+<!ELEMENT member-of EMPTY>
+	<!ATTLIST member-of group CDATA #REQUIRED>
+	<!ATTLIST member-of on-exist %on-exist-def; >
+
+<!--
+	Tag Group
+-->
+<!ELEMENT tag-group (tag*)>
+	<!ATTLIST tag-group name CDATA #REQUIRED>
+	<!ATTLIST tag-group on-exist %on-exist-def; >
+
+<!--
+	Tag
+-->
+<!ELEMENT tag (tag*)>
+	<!ATTLIST tag name CDATA #REQUIRED>
+	<!ATTLIST tag on-exist %on-exist-def; >
+
+<!--
+	Shared Networks
+-->
+<!ELEMENT shared-networks (shared-network*)>
+	<!ATTLIST shared-networks name CDATA #REQUIRED>
+	<!ATTLIST shared-networks on-exist %on-exist-def; >
+
+<!--
+	Shared Network
+-->
+<!ELEMENT shared-network EMPTY>
+	<!ATTLIST shared-network name CDATA #REQUIRED>
+	<!ATTLIST shared-network on-exist %on-exist-def; >
+
+<!--
+	Device Type
+-->
+<!ELEMENT device-type (value*,device-subtype*)>
+	<!ATTLIST device-type name CDATA #REQUIRED>
+	<!ATTLIST device-type on-exist %on-exist-def; >
+
+<!--
+	Device Subtype
+-->
+<!ELEMENT device-subtype (value*)>
+	<!ATTLIST device-subtype name CDATA #REQUIRED>
+	<!ATTLIST device-subtype on-exist %on-exist-def; >
+
+<!--
+	DHCP Vendor Profile Definition
+-->
+<!ELEMENT dhcp-vendor-profile (dhcp-option-def*)>
+	<!ATTLIST dhcp-vendor-profile name CDATA #REQUIRED>
+	<!ATTLIST dhcp-vendor-profile id CDATA #REQUIRED>
+	<!ATTLIST dhcp-vendor-profile description CDATA #REQUIRED>
+
+<!--
+	DHCP Option Definition
+-->
+<!ELEMENT dhcp-option-def EMPTY>
+	<!ATTLIST dhcp-option-def name CDATA #REQUIRED>
+	<!ATTLIST dhcp-option-def display-name CDATA #IMPLIED>
+	<!ATTLIST dhcp-option-def code CDATA #REQUIRED>
+	<!ATTLIST dhcp-option-def description CDATA #REQUIRED>
+	<!ATTLIST dhcp-option-def type CDATA #REQUIRED>
+	<!ATTLIST dhcp-option-def multiple (true|false) "false">
+
+<!--
+	Configuration
+-->
+<!ELEMENT configuration (value*,soa?,dhcp-match-class*,dhcp-custom-option-def*,mac-pool*,mac*,tsig-key*, acl*,kerberos-realm*, server*,server-group*, tftp-group*,(ip4-block|ip6-block|ip6-network|ip4-network|ip4-address|ip6-address)*,view*,dhcp-zone-group*,(dns-option|dhcp-service-option|dhcp-vendor-option|dhcp-client-option|dhcp6-service-option|dhcp6-client-option)*)>
+	<!ATTLIST configuration name CDATA #REQUIRED>
+	<!ATTLIST configuration shared-networks CDATA #IMPLIED>
+	<!ATTLIST configuration description CDATA #IMPLIED>
+	<!ATTLIST configuration configuration-group CDATA #IMPLIED>
+	<!ATTLIST configuration check-restrictions (true|false) "false">
+	<!ATTLIST configuration disable-dns-option-inheritance (true|false) "false">
+	<!ATTLIST configuration on-exist %on-exist-def; >
+
+<!--
+	DHCP Match Class
+-->
+<!ELEMENT dhcp-match-class (dhcp-match-value*,dhcp-role*)>
+	<!ATTLIST dhcp-match-class name CDATA #REQUIRED>
+	<!ATTLIST dhcp-match-class type CDATA #REQUIRED>
+	<!ATTLIST dhcp-match-class match-offset CDATA #IMPLIED>
+	<!ATTLIST dhcp-match-class match-length CDATA #IMPLIED>
+	<!ATTLIST dhcp-match-class custom-raw-string CDATA #IMPLIED>
+	<!ATTLIST dhcp-match-class description CDATA #IMPLIED>
+	<!ATTLIST dhcp-match-class on-exist %on-exist-def; >
+
+<!--
+	DHCP Match Value
+-->
+<!ELEMENT dhcp-match-value EMPTY>
+	<!ATTLIST dhcp-match-value match-value CDATA #REQUIRED>
+	<!ATTLIST dhcp-match-value description CDATA #IMPLIED>
+	<!ATTLIST dhcp-match-value on-exist %on-exist-def; >
+
+<!--
+	DHCP Custom Option Definition
+-->
+<!ELEMENT dhcp-custom-option-def EMPTY>
+	<!ATTLIST dhcp-custom-option-def name CDATA #REQUIRED>
+	<!ATTLIST dhcp-custom-option-def display-name CDATA #IMPLIED>
+	<!ATTLIST dhcp-custom-option-def description CDATA #IMPLIED>
+	<!ATTLIST dhcp-custom-option-def code CDATA #REQUIRED>
+	<!ATTLIST dhcp-custom-option-def type CDATA #REQUIRED>
+	<!ATTLIST dhcp-custom-option-def multiple (true|false) "false">
+
+<!--
+	MAC Pool
+-->
+<!ELEMENT mac-pool (value*, dhcp-role*)>
+	<!ATTLIST mac-pool name CDATA #REQUIRED>
+	<!ATTLIST mac-pool on-exist %on-exist-def; >
+
+<!--
+	MAC Address
+-->
+<!ELEMENT mac (value*)>
+	<!ATTLIST mac address CDATA #REQUIRED>
+	<!ATTLIST mac name CDATA #IMPLIED>
+	<!ATTLIST mac pool CDATA #IMPLIED>
+	<!ATTLIST mac on-exist %on-exist-def; >
+
+<!--
+	IPv4 Block
+-->
+<!ELEMENT ip4-block (value*,soa?,dns-role*,dhcp-role*,(ip4-block|ip4-network)*,(dns-option|dns-raw-option|dhcp-service-option|dhcp-vendor-option|dhcp-client-option)*)>
+	<!ATTLIST ip4-block range CDATA #REQUIRED>
+	<!ATTLIST ip4-block name CDATA #IMPLIED>
+	<!ATTLIST ip4-block on-exist %on-exist-def; >
+
+<!--
+	IPv4 Network
+-->
+<!ELEMENT ip4-network (value*,soa?,dns-role*,dhcp-role*,dhcp-range*,ip4-address*,ip4-group*,(dns-option|dns-raw-option|dhcp-service-option|dhcp-vendor-option|dhcp-client-option|dhcp-raw-option)*)>
+	<!ATTLIST ip4-network range CDATA #REQUIRED>
+	<!ATTLIST ip4-network name CDATA #IMPLIED>
+	<!ATTLIST ip4-network shared-network CDATA #IMPLIED>
+	<!ATTLIST ip4-network gateway-address CDATA #IMPLIED>
+	<!ATTLIST ip4-network on-exist %on-exist-def; >
+
+<!--
+	IPv4 Address
+-->
+<!ELEMENT ip4-address (value*, ptr*,(dhcp-service-option|dhcp-vendor-option|dhcp-client-option|dhcp-raw-option)*)>
+	<!ATTLIST ip4-address address CDATA #REQUIRED>
+	<!ATTLIST ip4-address name CDATA #IMPLIED>
+	<!ATTLIST ip4-address state CDATA #IMPLIED>
+	<!ATTLIST ip4-address mac CDATA #IMPLIED>
+	<!ATTLIST ip4-address lease-time CDATA #IMPLIED>
+	<!ATTLIST ip4-address expire-time CDATA #IMPLIED>
+	<!ATTLIST ip4-address on-exist %on-exist-def; >
+
+<!--
+	PTR
+-->
+<!ELEMENT ptr (#PCDATA) >
+	<!ATTLIST ptr view CDATA #REQUIRED>
+	<!ATTLIST ptr host-name CDATA #REQUIRED>
+	<!ATTLIST ptr on-exist %on-exist-def; >
+
+<!--
+	IPv4 DHCP Range
+-->
+<!ELEMENT dhcp-range (exclude-range*,(dhcp-service-option|dhcp-vendor-option|dhcp-client-option|dhcp-raw-option)*)>
+	<!ATTLIST dhcp-range range CDATA #IMPLIED>
+	<!ATTLIST dhcp-range start CDATA #IMPLIED>
+	<!ATTLIST dhcp-range end CDATA #IMPLIED>
+	<!ATTLIST dhcp-range name CDATA #IMPLIED>
+	<!ATTLIST dhcp-range split-static (true|false) #IMPLIED>
+	<!ATTLIST dhcp-range on-exist %on-exist-def; >
+
+<!--
+	IPv4 DHCP Range Exclusions
+-->
+<!ELEMENT exclude-range EMPTY>
+	<!ATTLIST exclude-range range CDATA #IMPLIED>
+	<!ATTLIST exclude-range start CDATA #IMPLIED>
+	<!ATTLIST exclude-range end CDATA #IMPLIED>
+	<!ATTLIST exclude-range name CDATA #IMPLIED>
+	<!ATTLIST exclude-range on-exist %on-exist-def; >
+
+<!--
+	IPv4 IP Group
+-->
+<!ELEMENT ip4-group (value*)>
+	<!ATTLIST ip4-group start CDATA #REQUIRED>
+	<!ATTLIST ip4-group end CDATA #REQUIRED>
+	<!ATTLIST ip4-group name CDATA #IMPLIED>
+	<!ATTLIST ip4-group on-exist %on-exist-def; >
+
+<!--
+	IPv6 Block
+-->
+<!ELEMENT ip6-block (value*,dns-role*,dhcp-role*,(ip6-block|ip6-network)*,(dns-option|dns-raw-option|dhcp6-service-option|dhcp6-client-option)*)>
+	<!ATTLIST ip6-block block CDATA #REQUIRED>
+	<!ATTLIST ip6-block name CDATA #IMPLIED>
+	<!ATTLIST ip6-block on-exist %on-exist-def; >
+
+<!--
+	IPv6 Network
+-->
+<!ELEMENT ip6-network (value*,dns-role*,dhcp-role*,dhcp6-range*,ip6-address*,(dns-option|dns-raw-option|dhcp6-service-option|dhcp6-client-option|dhcp6-raw-option)*)>
+	<!ATTLIST ip6-network network CDATA #REQUIRED>
+	<!ATTLIST ip6-network name CDATA #IMPLIED>
+	<!ATTLIST ip6-network on-exist %on-exist-def; >
+
+<!--
+	IPv6 DHCPv6 Range
+-->	
+<!ELEMENT dhcp6-range (value*,(dhcp6-raw-option|dhcp6-service-option|dhcp6-client-option)*)>
+	<!ATTLIST dhcp6-range range CDATA #IMPLIED>
+	<!ATTLIST dhcp6-range start CDATA #IMPLIED>
+	<!ATTLIST dhcp6-range end CDATA #IMPLIED>
+	<!ATTLIST dhcp6-range name CDATA #IMPLIED>
+	<!ATTLIST dhcp6-range on-exist %on-exist-def; >
+
+<!--
+	IPv6 Address
+-->	
+<!ELEMENT ip6-address (value*, ptr*,(dhcp6-service-option|dhcp6-client-option|dhcp6-raw-option)*)>
+	<!ATTLIST ip6-address address CDATA #REQUIRED>
+	<!ATTLIST ip6-address name CDATA #IMPLIED>
+	<!ATTLIST ip6-address state CDATA #IMPLIED>
+	<!ATTLIST ip6-address duid CDATA #IMPLIED>
+	<!ATTLIST ip6-address mac CDATA #IMPLIED>
+	<!ATTLIST ip6-address reserve-using CDATA #IMPLIED>
+	<!ATTLIST ip6-address on-exist %on-exist-def; >
+
+<!--
+	DNS View
+-->
+<!ELEMENT view (value*,soa?,dns-role*,(zone|enum-zone)*,(dns-option|dns-raw-option)*)>
+	<!ATTLIST view name CDATA #REQUIRED>
+	<!ATTLIST view on-exist %on-exist-def; >
+
+<!--
+	DNS Zone
+-->
+<!ELEMENT zone (value*,soa?,dns-role*,(cname|generic-record|host|mx|srv|txt|hinfo|naptr|auto-host)*,zone*,(dns-option|dns-raw-option)*)>
+	<!ATTLIST zone name CDATA #REQUIRED>
+	<!ATTLIST zone deployable (true|false) #IMPLIED>
+	<!ATTLIST zone dynamic-update (true|false)  "false">
+	<!ATTLIST zone on-exist %on-exist-def; >
+
+<!--
+	TSIG Key
+-->
+<!ELEMENT tsig-key EMPTY>
+	<!ATTLIST tsig-key name CDATA #REQUIRED>
+	<!ATTLIST tsig-key algorithm CDATA #REQUIRED>
+	<!ATTLIST tsig-key secret CDATA #IMPLIED>
+	<!ATTLIST tsig-key length CDATA #REQUIRED>
+	<!ATTLIST tsig-key on-exist %on-exist-def; >
+
+<!--
+	ACL
+-->
+<!ELEMENT acl (value*, acl-value+)>
+	<!ATTLIST acl name CDATA #REQUIRED>
+	<!ATTLIST acl on-exist %on-exist-def; >
+
+<!--
+	ACL value
+-->
+<!ELEMENT acl-value EMPTY>
+	<!ATTLIST acl-value value CDATA #IMPLIED>
+
+<!--
+	Kerberos Realm
+-->
+<!ELEMENT kerberos-realm (service-principal*)>
+	<!ATTLIST kerberos-realm name CDATA #REQUIRED>
+	<!ATTLIST kerberos-realm host CDATA #REQUIRED>
+	<!ATTLIST kerberos-realm domain CDATA #REQUIRED>
+	<!ATTLIST kerberos-realm port CDATA #REQUIRED>
+	<!ATTLIST kerberos-realm on-exist %on-exist-def; >
+
+<!--
+	Service Principal
+-->
+<!ELEMENT service-principal EMPTY>
+	<!ATTLIST service-principal name CDATA #REQUIRED>
+	<!ATTLIST service-principal password CDATA #REQUIRED>
+	<!ATTLIST service-principal key-version-number CDATA #REQUIRED>
+	<!ATTLIST service-principal on-exist %on-exist-def; >
+
+<!--
+	DHCP Zone Group
+-->
+<!ELEMENT dhcp-zone-group (dhcp-zone*,deployment-server*)>
+	<!ATTLIST dhcp-zone-group name CDATA #REQUIRED>
+	<!ATTLIST dhcp-zone-group on-exist %on-exist-def; >
+
+<!--
+	DHCP Zone 
+-->
+<!ELEMENT dhcp-zone EMPTY>
+	<!ATTLIST dhcp-zone name CDATA #REQUIRED>
+	<!ATTLIST dhcp-zone primary-dns-server CDATA #REQUIRED>
+	<!ATTLIST dhcp-zone key CDATA #IMPLIED>
+	<!ATTLIST dhcp-zone kerberos-realm CDATA #IMPLIED>
+	<!ATTLIST dhcp-zone view CDATA #IMPLIED>
+	<!ATTLIST dhcp-zone on-exist %on-exist-def; >
+
+<!--
+	DHCP Zone Group Deployment Servers
+-->
+<!ELEMENT deployment-server EMPTY>
+	<!ATTLIST deployment-server name CDATA #REQUIRED>
+
+<!--
+	Server Group
+-->
+<!ELEMENT server-group (value*, linked-server*,soa?,(dns-option|dns-raw-option|dhcp-service-option|dhcp-vendor-option|dhcp-client-option|dhcp-raw-option|dhcp6-service-option|dhcp6-client-option|dhcp6-raw-option)*)>
+	<!ATTLIST server-group name CDATA #REQUIRED>
+	<!ATTLIST server-group on-exist %on-exist-def; >
+
+<!--
+	Server in Server Group
+-->
+<!ELEMENT linked-server EMPTY>
+	<!ATTLIST linked-server name CDATA #REQUIRED>
+	<!ATTLIST linked-server on-exist %on-exist-def; >
+
+<!--
+	Server
+-->
+<!ELEMENT server (value*,soa?,(dns-option|dns-raw-option|dhcp-service-option|dhcp-vendor-option|dhcp-client-option|dhcp-raw-option|dhcp6-service-option|dhcp6-client-option|dhcp6-raw-option)*)>
+	<!ATTLIST server name CDATA #REQUIRED>
+	<!ATTLIST server default-interface-address CDATA #IMPLIED>
+	<!ATTLIST server interface-ip6-address CDATA #IMPLIED>
+	<!ATTLIST server full-host-name CDATA #IMPLIED>
+	<!ATTLIST server profile CDATA #REQUIRED>
+	<!ATTLIST server dns-enabled CDATA #IMPLIED>
+	<!ATTLIST server dhcp-enabled CDATA #IMPLIED>
+	<!ATTLIST server dns-service-principal CDATA #IMPLIED>
+	<!ATTLIST server dhcp-service-principal CDATA #IMPLIED>
+	<!ATTLIST server readonly CDATA #IMPLIED>
+	<!ATTLIST server on-exist %on-exist-def; >
+
+<!--
+	DNS Zone SOA Record
+-->
+<!ELEMENT soa (value*)>
+	<!ATTLIST soa contact CDATA #REQUIRED>
+	<!ATTLIST soa refresh CDATA #REQUIRED>
+	<!ATTLIST soa retry CDATA #REQUIRED>
+	<!ATTLIST soa expire CDATA #REQUIRED>
+	<!ATTLIST soa minimum CDATA #REQUIRED>
+	<!ATTLIST soa ttl CDATA #IMPLIED>
+	<!ATTLIST soa on-exist %on-exist-def; >
+
+<!--
+	Generic DNS Record
+-->
+<!ELEMENT generic-record (value*)>
+	<!ATTLIST generic-record name CDATA #REQUIRED>
+	<!ATTLIST generic-record ttl CDATA #IMPLIED>
+	<!ATTLIST generic-record comment CDATA #IMPLIED>
+	<!ATTLIST generic-record rdata CDATA #REQUIRED>
+	<!ATTLIST generic-record type CDATA #REQUIRED>
+	<!ATTLIST generic-record on-exist %on-exist-def; >
+
+<!--
+	Host DNS Record
+-->
+<!ELEMENT host (value*)>
+	<!ATTLIST host name CDATA #REQUIRED>
+	<!ATTLIST host ttl CDATA #IMPLIED>
+	<!ATTLIST host comment CDATA #IMPLIED>
+	<!ATTLIST host address CDATA #REQUIRED>
+	<!ATTLIST host reverse-record (true|false) "true">
+	<!ATTLIST host on-exist %on-exist-def; >
+
+<!--
+	Auto Host DNS Record
+-->
+<!ELEMENT auto-host EMPTY>
+	<!ATTLIST auto-host name CDATA #REQUIRED>
+	<!ATTLIST auto-host ttl CDATA #IMPLIED>
+	<!ATTLIST auto-host comment CDATA #IMPLIED>
+	<!ATTLIST auto-host start CDATA #REQUIRED>
+	<!ATTLIST auto-host end CDATA #REQUIRED>
+	<!ATTLIST auto-host on-exist %on-exist-def; >
+
+<!--
+	MX DNS Record
+-->
+<!ELEMENT mx (value*)>
+	<!ATTLIST mx name CDATA #REQUIRED>
+	<!ATTLIST mx ttl CDATA #IMPLIED>
+	<!ATTLIST mx comment CDATA #IMPLIED>
+	<!ATTLIST mx host CDATA #REQUIRED>
+	<!ATTLIST mx priority CDATA #REQUIRED>
+	<!ATTLIST mx on-exist %on-exist-def; >
+
+<!--
+	SRV DNS Record
+-->
+<!ELEMENT srv (value*)>
+	<!ATTLIST srv name CDATA #REQUIRED>
+	<!ATTLIST srv ttl CDATA #IMPLIED>
+	<!ATTLIST srv comment CDATA #IMPLIED>
+	<!ATTLIST srv host CDATA #REQUIRED>
+	<!ATTLIST srv port CDATA #REQUIRED>
+	<!ATTLIST srv priority CDATA #REQUIRED>
+	<!ATTLIST srv weight CDATA #REQUIRED>
+	<!ATTLIST srv on-exist %on-exist-def; >
+
+<!--
+	TXT DNS Record
+-->
+<!ELEMENT txt (value*)>
+	<!ATTLIST txt name CDATA #REQUIRED>
+	<!ATTLIST txt ttl CDATA #IMPLIED>
+	<!ATTLIST txt comment CDATA #IMPLIED>
+	<!ATTLIST txt text CDATA #REQUIRED>
+	<!ATTLIST txt on-exist %on-exist-def; >
+
+<!--
+	CNAME DNS Record
+-->
+<!ELEMENT cname (value*)>
+	<!ATTLIST cname	name CDATA #REQUIRED>
+	<!ATTLIST cname	ttl CDATA #IMPLIED>
+	<!ATTLIST cname	comment CDATA #IMPLIED>
+	<!ATTLIST cname	host CDATA #IMPLIED>
+	<!ATTLIST cname	external-host CDATA #IMPLIED>
+	<!ATTLIST cname on-exist %on-exist-def; >
+
+<!--
+	HINFO DNS Record
+-->
+<!ELEMENT hinfo (value*)>
+	<!ATTLIST hinfo name CDATA #REQUIRED>
+	<!ATTLIST hinfo ttl CDATA #IMPLIED>
+	<!ATTLIST hinfo comment CDATA #IMPLIED>
+	<!ATTLIST hinfo cpu CDATA #REQUIRED>
+	<!ATTLIST hinfo os CDATA #REQUIRED>
+	<!ATTLIST hinfo on-exist %on-exist-def; >
+
+<!--
+	NAPTR DNS Record
+-->
+<!ELEMENT naptr (value*)>
+	<!ATTLIST naptr name CDATA #REQUIRED>
+	<!ATTLIST naptr ttl CDATA #IMPLIED>
+	<!ATTLIST naptr comment CDATA #IMPLIED>
+	<!ATTLIST naptr order CDATA #IMPLIED>
+	<!ATTLIST naptr preference CDATA #IMPLIED>
+	<!ATTLIST naptr service CDATA #IMPLIED>
+	<!ATTLIST naptr regexp CDATA #IMPLIED>
+	<!ATTLIST naptr flags CDATA #IMPLIED>
+	<!ATTLIST naptr replacement CDATA #IMPLIED>
+	<!ATTLIST naptr on-exist %on-exist-def; >
+
+<!--
+	ENUM Zone
+-->
+<!ELEMENT enum-zone (value*,enum-service*,enum-zone*,soa?,dns-role*,(dns-option|dns-raw-option)*)>
+	<!ATTLIST enum-zone name CDATA #REQUIRED>
+	<!ATTLIST enum-zone on-exist %on-exist-def; >
+
+<!--
+	ENUM Service
+-->
+<!ELEMENT enum-service EMPTY>
+	<!ATTLIST enum-service number CDATA #REQUIRED>
+	<!ATTLIST enum-service service CDATA #REQUIRED>
+	<!ATTLIST enum-service type CDATA #REQUIRED>
+	<!ATTLIST enum-service on-exist %on-exist-def; >
+
+<!--
+	DHCP Client Option
+-->
+<!ELEMENT dhcp-client-option (option-value*)>
+	<!ATTLIST dhcp-client-option name CDATA #IMPLIED>
+	<!ATTLIST dhcp-client-option code CDATA #IMPLIED>
+	<!ATTLIST dhcp-client-option value CDATA #IMPLIED>
+	<!ATTLIST dhcp-client-option server CDATA #IMPLIED>
+	<!ATTLIST dhcp-client-option server-group CDATA #IMPLIED>
+	<!ATTLIST dhcp-client-option on-exist %on-exist-def; >
+
+<!--
+	DHCPv6 Client Option
+-->
+<!ELEMENT dhcp6-client-option (option-value*)>
+	<!ATTLIST dhcp6-client-option name CDATA #IMPLIED>
+	<!ATTLIST dhcp6-client-option code CDATA #IMPLIED>
+	<!ATTLIST dhcp6-client-option value CDATA #IMPLIED>
+	<!ATTLIST dhcp6-client-option server CDATA #IMPLIED>
+	<!ATTLIST dhcp6-client-option server-group CDATA #IMPLIED>
+	<!ATTLIST dhcp6-client-option on-exist %on-exist-def; >
+
+<!--
+	DHCP Service Option
+-->
+<!ELEMENT dhcp-service-option (option-value*)>
+	<!ATTLIST dhcp-service-option name CDATA #REQUIRED>
+	<!ATTLIST dhcp-service-option value CDATA #IMPLIED>	
+	<!ATTLIST dhcp-service-option server CDATA #IMPLIED>
+	<!ATTLIST dhcp-service-option server-group CDATA #IMPLIED>
+	<!ATTLIST dhcp-service-option on-exist %on-exist-def; >
+
+<!--
+	DHCPv6 Service Option
+-->
+<!ELEMENT dhcp6-service-option (option-value*)>
+	<!ATTLIST dhcp6-service-option name CDATA #IMPLIED>
+	<!ATTLIST dhcp6-service-option code CDATA #IMPLIED>
+	<!ATTLIST dhcp6-service-option value CDATA #IMPLIED>
+	<!ATTLIST dhcp6-service-option server CDATA #IMPLIED>
+	<!ATTLIST dhcp6-service-option server-group CDATA #IMPLIED>
+	<!ATTLIST dhcp6-service-option on-exist %on-exist-def; >
+
+<!--
+	DNS Option
+-->
+<!ELEMENT dns-option (option-value*)>
+	<!ATTLIST dns-option name CDATA #REQUIRED>
+	<!ATTLIST dns-option value CDATA #IMPLIED>
+	<!ATTLIST dns-option server CDATA #IMPLIED>
+	<!ATTLIST dns-option server-group CDATA #IMPLIED>
+	<!ATTLIST dns-option on-exist %on-exist-def; >
+
+<!--
+	DNS Raw Option
+-->
+<!ELEMENT dns-raw-option (option-value+)>
+	<!ATTLIST dns-raw-option server CDATA #IMPLIED>
+	<!ATTLIST dns-raw-option server-group CDATA #IMPLIED>
+	<!ATTLIST dns-raw-option on-exist %on-exist-def; >
+
+<!--
+	DHCP Raw Option
+-->
+<!ELEMENT dhcp-raw-option (option-value+)>
+	<!ATTLIST dhcp-raw-option server CDATA #IMPLIED>
+	<!ATTLIST dhcp-raw-option server-group CDATA #IMPLIED>
+	<!ATTLIST dhcp-raw-option on-exist %on-exist-def; >
+
+<!--
+	DHCPv6 Raw Option
+-->
+<!ELEMENT dhcp6-raw-option (option-value+)>
+	<!ATTLIST dhcp6-raw-option server CDATA #IMPLIED>
+	<!ATTLIST dhcp6-raw-option server-group CDATA #IMPLIED>
+	<!ATTLIST dhcp6-raw-option on-exist %on-exist-def; >
+
+<!--
+	DNS Vendor Option
+-->
+<!ELEMENT dhcp-vendor-option (option-value*)>
+	<!ATTLIST dhcp-vendor-option id CDATA #REQUIRED>
+	<!ATTLIST dhcp-vendor-option name CDATA #IMPLIED>
+	<!ATTLIST dhcp-vendor-option code CDATA #REQUIRED>
+	<!ATTLIST dhcp-vendor-option value CDATA #IMPLIED>
+	<!ATTLIST dhcp-vendor-option server CDATA #IMPLIED>
+	<!ATTLIST dhcp-vendor-option server-group CDATA #IMPLIED>
+	<!ATTLIST dhcp-vendor-option on-exist %on-exist-def; >
+	
+<!--
+	DNS Deployment Role
+-->
+<!ELEMENT dns-role EMPTY>
+	<!ATTLIST dns-role server CDATA #REQUIRED>
+	<!ATTLIST dns-role server-ip CDATA #IMPLIED>
+	<!ATTLIST dns-role server-hostname CDATA #IMPLIED>
+	<!ATTLIST dns-role type (master|hidden-master|slave|stealth-slave|stub|forwarding|ad-master|recursion|read-only|none) "master">
+	<!ATTLIST dns-role ns-record-ttl CDATA #IMPLIED>
+	<!ATTLIST dns-role view CDATA #IMPLIED>
+	<!ATTLIST dns-role zone-transfer-interface CDATA #IMPLIED>
+	<!ATTLIST dns-role zone-transfer-protocol (v4|v6) "v4">
+	<!ATTLIST dns-role on-exist %on-exist-def; >
+	
+<!--
+	DHCP Deployment Role
+-->
+<!ELEMENT dhcp-role EMPTY>
+	<!ATTLIST dhcp-role server CDATA #REQUIRED>
+	<!ATTLIST dhcp-role type (master|none) "master">
+	<!ATTLIST dhcp-role secondary CDATA #IMPLIED>
+	<!ATTLIST dhcp-role on-exist %on-exist-def; >
+
+<!--
+	TFTP Deployment Role
+-->
+<!ELEMENT tftp-role EMPTY>
+	<!ATTLIST tftp-role server CDATA #REQUIRED>
+	<!ATTLIST tftp-role on-exist %on-exist-def; >
+	
+<!--
+	TFTP Group
+-->
+<!ELEMENT tftp-group (tftp-folder*, tftp-role*)>
+	<!ATTLIST tftp-group name CDATA #REQUIRED>
+	<!ATTLIST tftp-group on-exist %on-exist-def; >
+
+<!--
+	TFTP Folder
+-->
+<!ELEMENT tftp-folder (tftp-folder*)>
+	<!ATTLIST tftp-folder name CDATA #REQUIRED>
+	<!ATTLIST tftp-folder on-exist %on-exist-def; >

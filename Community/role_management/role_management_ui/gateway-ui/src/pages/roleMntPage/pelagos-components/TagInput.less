@@ -1,0 +1,130 @@
+@import '~@bluecateng/pelagos/less/spacing';
+@import '~@bluecateng/pelagos/less/utils';
+@import '~@bluecateng/pelagos/less/focus';
+
+.TagInput {
+	flex-flow: row wrap;
+	align-items: center;
+	align-content: space-between;
+	column-gap: @sp-08;
+	background-color: var(--field);
+	border-bottom: 1px solid var(--border-strong);
+	padding: @sp-02 @sp-16;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+
+	&:hover {
+		background-color: var(--field-hover);
+	}
+
+	&:focus-within {
+		@focus-ring();
+	}
+
+	@media print {
+		background-color: transparent;
+		border-color: transparent;
+	}
+
+	& > * {
+		// stylelint-disable-next-line @bluecateng/property-strict-value
+		margin: @sp-02 0 (@sp-04 - 1px); // minus 1px for the border
+	}
+
+	&--error {
+		outline: 2px solid var(--support-error);
+		outline-offset: -2px;
+
+		&:focus-within {
+			@focus-ring-error();
+		}
+	}
+
+	&__tag,
+	&__defaultTag {
+		align-items: center;
+		flex-direction: row;
+		padding: @sp-02 @sp-04;
+		border-radius: 3px;
+		white-space: nowrap;
+	}
+
+	&__tag {
+		background-color: var(--layer-selected);
+
+		@media print {
+			background-color: transparent;
+		}
+	}
+
+	&__defaultTag {
+		background-color: var(--layer-accent);
+
+		@media print {
+			color: var(--print-medium);
+			background-color: transparent;
+		}
+	}
+
+	&__remove {
+		@icon-button-nested();
+		font-size: 16px;
+		padding: @sp-02;
+		margin-left: @sp-04;
+		vertical-align: text-bottom;
+	}
+
+	&__input[type='text'] {
+		flex: 1;
+		height: 26px;
+		padding: 0;
+		border: none;
+		background-color: transparent;
+		width: 100%;
+
+		&:hover {
+			background-color: transparent;
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	&__list {
+		position: absolute;
+		max-height: 15em;
+		border-radius: 3px;
+		padding: @sp-04 0;
+		overflow-x: hidden;
+		overflow-y: auto;
+		background-color: var(--layer);
+		box-shadow: var(--shadow-04);
+		z-index: 1000;
+	}
+
+	&__option {
+		@layer-hover-effects();
+		flex-direction: row;
+		align-items: center;
+		padding: @sp-04 @sp-12;
+		cursor: pointer;
+	
+		&[aria-selected='true'] {
+			background-color: var(--layer-selected) !important;
+		}
+	
+		&[aria-selected='true']:hover {
+			background-color: var(--layer-selected);
+		}
+
+		&:hover {
+			background-color: var(--layer-selected) !important;
+		}
+	}
+
+	&__option.selected-tag {
+		background-color: var(--layer-hover);
+		font-weight: bold;
+	}
+}

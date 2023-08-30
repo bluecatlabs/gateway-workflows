@@ -1,0 +1,62 @@
+@import '~@bluecateng/pelagos/less/spacing';
+@import '~@bluecateng/pelagos/less/utils';
+@import '~@bluecateng/pelagos/less/focus';
+
+.ComboBox {
+	position: relative;
+	flex-direction: row;
+	align-items: center;
+
+	&__prefixIcon {
+		position: absolute;
+		top: 0px;
+		left: 8px
+	}
+}
+
+.ComboBox__input {
+	flex: 1;
+
+	&--hasPrefixIcon {
+		padding-left: 42px !important;
+	}
+
+	&.ComboBox--error {
+		outline: 2px solid var(--support-error);
+		outline-offset: -2px;
+	}
+
+	&:focus.ComboBox--error {
+		@focus-ring-error();
+	}
+}
+
+.ComboBox__add {
+	margin-left: @sp-08;
+}
+
+.ComboBox__list {
+	position: absolute;
+	max-height: 15em;
+	border-radius: 3px;
+	padding: @sp-04 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: var(--layer);
+	box-shadow: var(--shadow-04);
+	z-index: 1000;
+}
+
+.ComboBox__option {
+	@layer-hover-effects();
+	padding: @sp-04 @sp-12;
+	cursor: pointer;
+
+	&[aria-selected='true'] {
+		background-color: var(--layer-selected);
+	}
+
+	&[aria-selected='true']:hover {
+		background-color: var(--layer-selected-hover);
+	}
+}

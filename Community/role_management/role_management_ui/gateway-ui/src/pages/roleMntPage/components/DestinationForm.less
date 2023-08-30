@@ -1,0 +1,100 @@
+@import '~@bluecateng/pelagos/less/spacing';
+@import '~@bluecateng/pelagos/less/utils';
+@import '~@bluecateng/pelagos/less/focus';
+
+.serverInput {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    &__server {
+        width: 50%;
+    }
+
+    &__interface {
+        width: 40%;
+        .Select__text:disabled {
+            .SelectArrow {
+                display: none;
+            }
+        }
+    }
+
+    &__addIcon {
+        margin-bottom: 20px;
+    }
+}
+
+.oneServerInput {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    &__server {
+        width: 48%;
+    }
+
+    &__interface {
+        width: 48%;
+        .Select__text:disabled {
+            .SelectArrow {
+                display: none;
+            }
+        }
+    }
+}
+
+.serverInterface_label {
+    margin-top: @sp-16;
+}
+
+.serverInterface__list {
+    max-height: 120px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-bottom: @sp-16;
+}
+
+.serverInterface__entry {
+    @focus-visible();
+    flex-direction: row;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.serverInterface__name {
+    @ellipsis();
+    position: relative;
+    flex: 1;
+    padding: 0 @sp-08;
+
+    &::before {
+        position: absolute;
+        right: 0;
+        top: 10px;
+    }
+}
+
+.serverInterface__icon {
+    border-radius: 50%;
+}
+
+.transferInterfaceInput {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    &__server {
+        width: 48.5%;
+    }
+
+    &__interface {
+        width: 48.5%;
+        .Select__text:disabled {
+            .SelectArrow {
+                display: none;
+            }
+        }
+    }
+
+}

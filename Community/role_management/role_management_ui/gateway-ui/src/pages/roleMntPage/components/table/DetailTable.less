@@ -1,0 +1,51 @@
+@import '~@bluecateng/pelagos/less/utils';
+
+.DetailsGrid.GroupObjects {
+    margin-bottom: 18px;
+
+    .editor-grid(columns; 1fr; repeat(1, minmax(0, 1fr)) ; repeat(2, minmax(0, 1fr)) ; repeat(2, minmax(0, 1fr)) ; repeat(2, minmax(0, 1fr)));
+
+    .details-grid(
+        areas;
+        'f' 's';
+        'f' 's';
+        'f' 's';
+        'f s';
+    );
+
+    &__first {
+        grid-area: f;
+    }
+
+    &__second {
+        grid-area: sb;
+    }
+}
+
+.IconValueWrapper {
+    display: flex;
+    flex-direction: row;
+    transform: translateX(-6px);
+}
+
+.Table__title {
+    margin: 16px 16px 16px 0;
+}
+
+.RoleMnt-detailTableWrapper {
+    contain: none !important;
+    max-height: 484px;
+}
+
+.RoleMnt-detailTable {
+    & > thead {
+        background-color: var(--layer-accent);
+        top: 0;
+        position: sticky;
+        z-index: 1;
+    }
+
+    & > tbody {
+        background-color: var(--layer-01) !important;
+    }
+}

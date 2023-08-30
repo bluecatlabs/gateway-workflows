@@ -1,0 +1,148 @@
+@import '~@bluecateng/pelagos/less/utils';
+
+.DetailsGrid.DestinationObjects {
+    margin-bottom: 18px;
+    .editor-grid(columns; 1fr; repeat(1, minmax(0, 1fr)) ; repeat(4, minmax(0, 1fr)) ; repeat(4, minmax(0, 1fr)) ; repeat(4, minmax(0, 1fr)));
+
+    .details-grid(
+        areas;
+        'f' 's';
+        'f s . .';
+        'f s . .';
+        'f s . .';
+    );
+
+    &__first {
+        grid-area: f;
+    }
+
+    &__second {
+        grid-area: sb;
+    }
+}
+
+.confirmWrapper {
+    flex: 1;
+}
+
+.MultipleFieldsWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 240px;
+    margin-bottom: 18px;
+    margin-left: 16px;
+}
+
+.MultipleValuesWrapper {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    transform: translateX(-12px);
+
+    .icon-value {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 0px;
+        padding-left: 8px;
+
+        &__view {
+            padding-left: 4px;
+        }
+    }
+
+    &--noMarginBottom {
+        margin-bottom: 0;
+    }
+}
+
+.tableChangeWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 12px;
+    flex: none;
+    height: 194px;
+
+    .actionChangeTable {
+        &__tableWrapper {
+            overflow-y: auto;
+        }
+    }
+}
+
+.dowloadIcon {
+    transform: scale(1.2);
+    color: var(--button-primary);
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.arrowIcon {
+    display: flex;
+    align-self: center;
+    transform: scale(1.6) translateY(9px);
+    color: var(--button-primary);
+}
+
+.actionChangeTable__table > tbody > tr {
+    cursor: pointer;
+}
+
+.actionChangeTable__table {
+    & > thead {
+        background-color: var(--layer-01) !important;
+    }
+
+    & > tbody {
+        background-color: var(--layer-01) !important;
+    }
+}
+
+.leftTableWrapper::-webkit-scrollbar {
+    width: 0px;
+}
+
+.deploymentWrapper {
+    flex: none;
+    height: 200px;
+    overflow-y: auto;
+
+    .RoleMnt-deploymentTable {
+        & > thead {
+            background-color: var(--layer-01) !important;
+        }
+
+        & > tbody {
+            background-color: var(--layer-01) !important;
+        }
+    }
+}
+
+.destination-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.destination-title {
+    margin-bottom: 15px;
+}
+
+.groupItem-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.bottom-gap {
+    margin-bottom: 12px;
+}

@@ -1,0 +1,64 @@
+@import '~@bluecateng/pelagos/less/spacing';
+@import '~@bluecateng/pelagos/less/fonts';
+@import '~@bluecateng/pelagos/less/zindexes';
+
+
+// stylelint-disable @bluecateng/property-strict-value
+
+@tooltip-arrow-width: 5px;
+
+.Tooltip {
+	@font-12-400();
+	position: absolute;
+	opacity: 0;
+	z-index: @zindex-tooltip;
+	color: var(--text-inverse);
+	background-color: var(--background-inverse);
+	max-width: 400px;
+	padding: @sp-04 @sp-16;
+	border-radius: 3px;
+	white-space: pre-line;
+	box-shadow: var(--shadow-06);
+
+	&::after {
+		content: '';
+		position: absolute;
+		background-color: var(--background-inverse);
+	}
+
+	&--right::after {
+		left: -@tooltip-arrow-width;
+		top: var(--arrow-position);
+		width: @tooltip-arrow-width;
+		height: (2 * @tooltip-arrow-width);
+		margin-top: -@tooltip-arrow-width;
+		clip-path: polygon(100% 0, 0 50%, 100% 100%);
+	}
+
+	&--left::after {
+		right: -@tooltip-arrow-width;
+		top: var(--arrow-position);
+		width: @tooltip-arrow-width;
+		height: (2 * @tooltip-arrow-width);
+		margin-top: -@tooltip-arrow-width;
+		clip-path: polygon(0 0, 100% 50%, 0 100%);
+	}
+
+	&--top::after {
+		left: var(--arrow-position);
+		bottom: -@tooltip-arrow-width;
+		width: (2 * @tooltip-arrow-width);
+		height: @tooltip-arrow-width;
+		margin-left: -@tooltip-arrow-width;
+		clip-path: polygon(0 0, 50% 100%, 100% 0);
+	}
+
+	&--bottom::after {
+		left: var(--arrow-position);
+		top: -@tooltip-arrow-width;
+		width: (2 * @tooltip-arrow-width);
+		height: @tooltip-arrow-width;
+		margin-left: -@tooltip-arrow-width;
+		clip-path: polygon(0 100%, 50% 0, 100% 100%);
+	}
+}

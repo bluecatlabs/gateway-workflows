@@ -1,0 +1,51 @@
+@import '~@bluecateng/pelagos/less/spacing';
+@import '~@bluecateng/pelagos/less/utils';
+@import '~@bluecateng/pelagos/less/focus';
+
+.IconMenu {
+    &[aria-expanded='true'] {
+        outline: none;
+    }
+
+    &__menu {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background-color: var(--layer);
+        box-shadow: var(--shadow-04);
+        z-index: 4;
+    }
+
+    &__option {
+        @layer-hover-effects();
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 32px;
+        color: var(--text-secondary);
+        padding: 0 @sp-16;
+        cursor: pointer;
+
+        &:hover,
+        &:active {
+            color: var(--text-primary);
+        }
+    }
+
+    &--disabled,
+    &--disabled:hover,
+    &--disabled:active {
+        color: var(--text-disabled);
+        background-color: transparent;
+    }
+
+    &--divider {
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    &--current {
+        @focus-ring();
+        color: var(--text-primary);
+    }
+}

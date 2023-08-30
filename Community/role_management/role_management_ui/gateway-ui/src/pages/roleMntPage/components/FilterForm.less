@@ -1,0 +1,45 @@
+@import '~@bluecateng/pelagos/less/spacing';
+
+.FilterForm {
+    width: 640px;
+
+    .TagInput {
+        background-color: #fff;
+    }
+
+    .Select__text {
+        background-color: #fff;
+    }
+
+    .serverInput {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+    
+        &__server {
+            width: auto;
+        }
+    
+        &__interface {
+            width: 55%;
+            .Select__text:disabled {
+                border-color: #878d96;
+                .SelectArrow {
+                    display: none;
+                }
+            }
+        }
+    
+        &__addIcon {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.roleGroup-radio {
+    margin: @sp-12 0;
+    .RadioButton {
+        cursor: pointer;
+        gap: 6px;
+    }
+}

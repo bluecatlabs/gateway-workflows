@@ -1,0 +1,39 @@
+.Cellcontent {
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Cellcontent-tooltip {
+    background-color: gray;
+    padding: 6px;
+    border-radius: 3px;
+    color: #fff;
+    transform: translateY(-100%) translateX(-50%);
+    z-index: 9999;
+    font-size: 12px;
+    font-weight: 400;
+    position: absolute;
+    color: var(--text-inverse);
+    background-color: var(--background-inverse);
+    max-width: 400px;
+    padding: 4px 16px;
+    border-radius: 3px;
+    white-space: pre-line;
+    word-break: break-all;
+    box-shadow: var(--shadow-06);
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 100%;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid var(--background-inverse);
+        clear: both;
+    }
+}

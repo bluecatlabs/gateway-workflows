@@ -1,0 +1,13 @@
+{
+    "pages": [
+        {
+            "title": "DNS Role Management",
+            "url": "/role_management_ui/page",
+            "description": "DNS Role Management",
+            "permission": "role_management",
+            "nav_pos": "app",
+            "nav_path": [],
+            "nav_rank": 10
+        }
+    ]
+}

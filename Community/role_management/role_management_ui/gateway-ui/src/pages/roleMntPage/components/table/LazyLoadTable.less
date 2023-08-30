@@ -1,0 +1,57 @@
+@import '~@bluecateng/pelagos/less/spacing';
+
+.LazyLoadTable {
+    flex: 1;
+    overflow: hidden;
+    // margin-top: @sp-08;
+
+    &--narrow {
+        margin-right: 45vw; // to match details panel width
+    }
+
+    &__layer {
+        flex: 1;
+        margin-top: @sp-16;
+        background-color: var(--layer);
+        overflow: hidden;
+    }
+
+    &__toolbar {
+        margin-right: @sp-08;
+    }
+
+    &__tableWrapper {
+        position: relative;
+        overflow-y: auto;
+    }
+
+    &__table {
+        & > tbody {
+            & > tr {
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__footer {
+        padding: @sp-12;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        font-size: @sp-12;
+        color: var(--button-secondary);
+        background-color: var(--background-selected);
+    }
+}
+
+.LazyLoadTableFooter {
+    &__total {
+        font-weight: 600;
+    }
+
+    &__loading {
+        position: relative;
+        padding: 0px 25px;
+        color: transparent;
+    }
+}

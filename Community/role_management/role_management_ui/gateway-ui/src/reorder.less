@@ -1,0 +1,47 @@
+// Copyright 2023 BlueCat Networks (USA) Inc. and its affiliates. All Rights Reserved.
+@import '~@bluecateng/pelagos/less/elevations';
+@import '~@bluecateng/pelagos/less/spacing';
+
+// stylelint-disable @bluecateng/selector-bem
+
+.draggable {
+    cursor: move;
+    cursor: grab;
+    touch-action: none;
+
+    &::before {
+        content: '';
+        display: inline-block;
+        width: 3px;
+        height: 3px;
+        margin-right: @sp-12;
+        border-radius: 50%;
+        background-color: var(--icon-secondary);
+        box-shadow: 0 -5px 0 0 var(--icon-secondary), 0 5px 0 0 var(--icon-secondary),
+            5px 0 0 0 var(--icon-secondary), 5px -5px 0 0 var(--icon-secondary),
+            5px 5px 0 0 var(--icon-secondary);
+        opacity: 0.5;
+        transition: opacity 0.15s ease-out;
+    }
+
+    &:hover::before,
+    &:focus::before {
+        opacity: 1;
+    }
+}
+
+.dragging {
+    @elv-08();
+    z-index: 1000;
+}
+
+.placeholder {
+    opacity: 0;
+}
+
+.clone {
+    position: absolute;
+    left: 0;
+    top: 0;
+    will-change: transform;
+}

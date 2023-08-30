@@ -1,0 +1,22 @@
+.RoleMnt-deploymentTableWrapper {
+    contain: none !important;
+}
+
+.deploymentWrapper .RoleMnt-deploymentTable {
+    position: relative;
+
+    & > thead {
+        background-color: transparent;
+        top: 0;
+        position: sticky;
+        z-index: 1;
+    }
+
+    &__spinningWrapper {
+        position: absolute;
+        top: 64px;
+        z-index: 2;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}

@@ -1,0 +1,35 @@
+@import '~@bluecateng/pelagos/less/utils';
+
+.confirmWrapper {
+    flex: 1;
+}
+
+.DeleteConfirmTableWrapper {
+    contain: none !important;
+    height: 300px;
+    overflow-y: auto;
+    margin: 40px 20px;
+    flex: none;
+}
+
+.DeleteConfirmTable {
+    position: relative;
+
+    &__spinningWrapper {
+        position: absolute;
+        top: 64px;
+        z-index: 2;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.dowloadIcon {
+    transform: scale(1.2);
+    color: var(--button-primary);
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    cursor: pointer;
+    pointer-events: auto;
+}

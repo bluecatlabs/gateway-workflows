@@ -1,0 +1,95 @@
+@import '~@bluecateng/pelagos/less/breakpoints';
+@import '~@bluecateng/pelagos/less/spacing';
+@import '~@bluecateng/pelagos/less/utils';
+@import '~@bluecateng/pelagos/less/fonts';
+
+.RoleMnt {
+    flex: 1;
+    flex-basis: 0;
+    overflow-y: auto;
+
+    #detailsPanel {
+        width: 50vw;
+    }
+}
+
+.RoleMnt-wrapper {
+    padding: 20px 32px 20px 0;
+    flex: 1;
+}
+
+.RoleMnt-form {
+    .editor-grid(
+            areas;
+            'c'
+            'v'
+            'g'
+            'i';
+            
+            'c'
+            'v'
+            'g'
+            'i';
+            
+            'c v'
+            'g i';
+            
+            'c v'
+            'g i';
+            
+            'c v'
+            'g i';
+    );
+
+    display: grid;
+    grid-column-gap: @sp-24;
+    .editor-grid(columns; 1fr; repeat(1, minmax(0, 1fr)) ; repeat(2, minmax(0, 1fr)) ; repeat(2, minmax(0, 1fr)) ; repeat(2, minmax(0, 1fr)));
+    grid-auto-rows: min-content;
+    align-items: center;
+
+    &__configField {
+        grid-area: c;
+    }
+    &__viewField {
+        grid-area: v;
+    }
+    &__groupField {
+        grid-area: g;
+    }
+    &__inheritField {
+        grid-area: i;
+    }
+}
+
+.RoleMnt-tableWrapper {
+    flex: 1;
+    background-color: var(--layer);
+    margin-top: @sp-16;
+
+    .Table__title {
+        // margin-bottom: 6px;
+        margin-left: 0px;
+    }
+    .RoleMnt-tableToolbar {
+        // margin-top: @sp-08;
+        height: auto !important;
+        .Table__toolbarDefault {
+            align-items: center;
+            // padding-bottom: 6px;
+        }
+    }
+}
+
+.left-content {
+    margin-right: 50vw; // to match details panel width
+}
+
+#detailGroupPanel {
+    background-color: #fff;
+}
+
+.Dialog {
+    &--confirm {
+        width: 82% !important;
+    }
+}
