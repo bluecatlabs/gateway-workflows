@@ -409,6 +409,9 @@ class RoleAction:
         try:
             collection = common.get_parent_entity_of_role(role)
             role['serverInterface'] = server_interface_dict
+            if role_type == RoleType.HIDDEN_PRIMARY:
+                role_type = RoleType.STEALTH_SECONDARY
+                role['roleType'] = role_type
             if role.get('_inheritedFrom'):
                 collection_type = EntityV2.get_collection(self.collection.get('type'))
                 collection_id = self.collection.get('id')
