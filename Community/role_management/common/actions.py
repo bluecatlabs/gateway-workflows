@@ -55,7 +55,6 @@ class RoleAction:
         :return: status of copy role to server action
         """
         try:
-            rest_v2 = g.user.v2
             role = copy.deepcopy(role)
             if role.get('_inheritedFrom'):
                 result = {
@@ -172,7 +171,6 @@ class RoleAction:
         :return: status of move role to server action
         """
         try:
-            rest_v2 = g.user.v2
             role = copy.deepcopy(role)
             if role.get('_inheritedFrom'):
                 result = {

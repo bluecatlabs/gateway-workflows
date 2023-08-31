@@ -5,6 +5,7 @@ DEFAULT_FIELDS = 'id,name,type'
 ALLOW_TARGET_COLLECTION = 'zones/interfaces/bocks/networks'
 enable_copy_dns_option = True
 
+
 class Constants:
     @classmethod
     def all(cls):

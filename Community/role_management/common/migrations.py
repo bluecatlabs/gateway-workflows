@@ -126,7 +126,8 @@ def group_role_by_parent_id(cls_data, action, roles, configuration_name='', view
 
                 elif dup_role_type in (RoleType.STUB, RoleType.RECURSION, RoleType.FORWARDER):
                     g.user.logger.error(
-                        f"[MIGRATION][SKIP] Move primary role: Existing recursive roles are conflict with the Primary role.")
+                        f"[MIGRATION][SKIP] Move primary role: Existing recursive roles are conflict with the Primary "
+                        f"role.")
                     return filter_roles
             if role_type:
                 updated_role = dup_role if dup_role and not is_exists else {

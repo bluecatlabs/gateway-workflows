@@ -1,4 +1,4 @@
-FROM quay.io/bluecat/gateway_ci:23.2.0
+FROM quay.io/bluecat/gateway_ci:23.2.1
 USER root
 
 ENV PERMISSION_PATH         "./workflows/Role Management UI/deployment/permissions.json"

@@ -123,6 +123,7 @@ class DNSDeploymentRoles(Constants):
         }
         return code_mapping.get(role, '')
 
+
 class DeploymentRoleInterfaceType(Constants):
     SERVICE = 'SERVICE'
     ZONE_TRANSFER = 'ZONE_TRANSFER'

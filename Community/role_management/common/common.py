@@ -130,7 +130,7 @@ def get_range_hint_from_reverse_zone(reverse_ip_string) -> dict:
     ip_range_digits = []
     addition_range_str = ''
     if re.search(r'\[([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\-([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4]['
-                 r'0-9]|25[0-5])\]', character_split[0])\
+                 r'0-9]|25[0-5])\]', character_split[0]) \
             or re.search(r'\[([0-9a-f]|[0-9A-F])\-([0-9a-f]|[0-9A-F])\]', character_split[0]):
         addition_range_str = character_split[0]
         character_split = character_split[1:]
@@ -163,6 +163,7 @@ def int_to_hexa(numb: int):
     }
     return INT_TO_HEXA_DICT.get(numb, '')
 
+
 def hexa_to_int(char):
     char = char.lower()
     if char.isdigit() and int(char) < 10:
@@ -194,7 +195,7 @@ def construct_ipv4_hint_from_reverse_digit_list(ip_range_digits, addition_range=
         start_digit = int(start_end_ip[0])
         end_digit = int(start_end_ip[1])
         range_bit = math.log(end_digit - start_digit + 1, 2)
-        base_bit_count = len(ip_range_digits)*8
+        base_bit_count = len(ip_range_digits) * 8
         if math.floor(range_bit) != range_bit or base_bit_count > 24:
             raise InvalidParam()
         if not ipv4_hint:
@@ -225,7 +226,7 @@ def construct_ipv6_hint_from_reverse_digit_list(ip_range_digits=[], addition_ran
     octets = []
     temp_octet = ''
     for index, char in enumerate(ip_range_digits):
-        if (index+1) % 4 == 0:
+        if (index + 1) % 4 == 0:
             temp_octet += char.upper()
             temp_octet = temp_octet.lstrip('0')
             if not temp_octet:
