@@ -1,52 +1,38 @@
 # ROLE MANAGEMENT UI
 
-<!-- TABLE OF CONTENTS -->
-<details open="open">
-  <summary>
-    <h2 style="display: inline-block">Table of Contents</h2>
-  </summary>
-  <ol>
-    <li>
-      <a href="#about">About</a>
-    </li>
-    <li>
-      <a href="#bam-setup">BAM Setup</a>
-      <ul>
-        <li><a href="#adding-DNS-deployment-role">Adding  DNS deployment roles</a></li>
-        <li><a href="#adding-DNS-deployment-option">Adding DNS deployment options</a></li>
-      </ul>
-    <li><a href="#deployment">Deployment</a>
-      <ul>
-          <li><a href="#deploy-docker-container">Deploy Docker Container</a></li>
-        <li><a href="#assign-specific-write-privileges">Assign specific write privileges</a></li>
-      </ul>
-    </li>
-    <li><a href="#workflows-ui">Workflows UI</a>
-      <ul>
-        <li><a href="#get-dns-deployment-roles-ui">Get DNS Deployment Roles UI</a></li>
-        <li><a href="#dns-deployment-roles-detail-ui">DNS Deployment Roles Details UI</a></li>
-        <li><a href="#validate-actions-ui">Validate Actions UI</a></li>
-        <li><a href="#action result-ui">Action Result UI</a></li>
-      </ul>
-    </li>
-    <li><a href="#dns-deployment-role-actions">DNS Deployment Role Actions</a>
-      <ul>
-        <li><a href="#copy-role-to-server">Copy DNS Deployment Role To Server</a></li>
-        <li><a href="#move-role-to-server">Move DNS Deployment Role To Server</a></li>
-        <li><a href="#copy-role-to-zones">Move DNS Deployment Role To Zones</a></li>
-        <li><a href="#add-servers">Add Servers</a></li>
-        <li><a href="#publish-roles">Publish DNS Deployment Roles</a></li>
-        <li><a href="#hide-roles">Hide DNS Deployment Roles</a></li>
-      </ul>
-    </li>
-    <li><a href="#workflows-ui">Known Issues</a></li>
-    <li><a href="#reference">Reference</a>
-      <ul>
-        <li><a href="#rest-api-document">Rest API Document</a></li>
-      </ul>
-    </li>
-  </ol>
-</details>
+# Table of Contents
+- [About](#about)
+- [Requirements](#requirements)
+- [BAM Setup](#bam-setup)
+   - [Adding DNS Deployment Role](#adding-dns-deployment-role)
+      - [DNS Deployment Role](#dns-deployment-role)
+      - [Adding DNS Deployment Roles](#adding-dns-deployment-roles)
+   - [Adding DNS Deployment Options](#adding-dns-deployment-options)
+      - [DNS Deployment Option](#dns-deployment-option)
+      - [Adding DNS Deployment Options](#adding-dns-deployment-options)
+- [Deployment](#deployment)
+   - [Deploy Docker Container](#deploy-docker-container)
+- [Workflow Setup Instructions (Dev only)](#workflow-setup-instructions-dev-only)
+   - [1. Log in to the Bluecat npm Account](#1-log-in-to-the-bluecat-npm-account)
+   - [2. Install Libraries](#2-install-libraries)
+   - [3. Build the React App](#3-build-the-react-app)
+   - [Troubleshooting](#troubleshooting)
+      - [Limani Library Installation Failure](#limani-library-installation-failure)
+- [Workflow UI](#workflow-ui)
+   - [Get DNS Deployment Role](#get-dns-deployment-role)
+   - [DNS Deployment Role Details](#dns-deployment-role-details)
+   - [Validate Actions](#validate-actions)
+   - [Action Result](#action-result)
+- [DNS Deployment Role Actions](#dns-deployment-role-actions)
+   - [Copy DNS Deployment Role To Server](#copy-dns-deployment-role-to-server)
+   - [Move DNS Deployment Role To Server](#move-dns-deployment-role-to-server)
+   - [Copy DNS Deployment Role To Zones](#copy-dns-deployment-role-to-zones)
+   - [Add Servers](#add-servers)
+   - [Publish DNS Deployment Roles](#publish-dns-deployment-roles)
+   - [Hide DNS Deployment Roles](#hide-dns-deployment-roles)
+- [Reference](#reference)
+   - [Rest API Document](#rest-api-document)
+
 
 ## About
 Deployment roles determine the services provided by a server. A deployment role creates a client-facing service, specified with an IP address, on a network or published server interface. Each server interface can have multiple DNS roles. The BlueCat Role Management provides a centralized UI workflow for making instant actions to manage DNS deployment roles where the management of that data is spread across multiple DNS servers, DNS forwarding and reverse zones.
@@ -192,8 +178,70 @@ To add DNS deployment options:
             <bam-ip>                   IP of BAM
             <image-name>:<tag>         Can use Image name or ID
 
-
     ```
+
+## Workflow Setup Instructions (DEV Only)
+
+Follow these steps to manually set up the workflow. This guide assumes you are working in the `<workflows-dir>/role_management/role_management_ui/gateway-ui` directory.
+
+### 1. Log in to the Bluecat npm Account
+
+Navigate to the `gateway-ui` directory:
+
+```
+cd <workflows-dir>/role_management/role_management_ui/gateway-ui/
+```
+
+Log in using the Bluecat npm registry:
+
+
+```bash
+npm login --registry https://artifactory.bluecatlabs.net/api/npm/bcn-npm-dev-local/
+```
+
+You will be prompted for your Bluecat credentials:
+
+- **Username**: `<bluecat_username>`
+- **Password**: `<bluecat_password>`
+- **Email**: `<bluecat_email>`
+
+### 2. Install Libraries
+
+Run the following command to install the necessary libraries:
+
+```bash
+npm install
+```
+
+### 3. Build the React App
+
+Execute the following command to build the React application:
+
+```
+npm run build
+```
+
+### Troubleshooting
+
+#### Limani Library Installation Failure
+
+If you encounter a forbidden error while trying to install the `limani` library, follow these steps:
+
+1. Download the `limani-1.0.0.tgz` file from the [Artifactory repository](https://artifactory.bluecatlabs.net/ui/repos/tree/General/bcn-npm-dev-local/@bluecat/limani/-/@bluecat/limani-1.0.0.tgz).
+
+2. Place the downloaded file into the `gateway-ui/lib` directory.
+
+3. Modify the `package.json` file. Change:
+
+    ```json
+    "@bluecat/limani": "^1.0.0" 
+    
+    to 
+    
+    "@bluecat/limani": "file:lib/limani-1.0.0.tgz"
+    ```
+
+4. Run `npm install` and `npm run build` again.
 
 ## Workflow UI
 ### Get DNS Deployment Role
@@ -220,7 +268,6 @@ To add DNS deployment options:
 ### Add Servers
 ### Publish DNS Deployment Roles
 ### Hide DNS Deployment Roles
-
 
 ## Reference
 ### Rest API Document
