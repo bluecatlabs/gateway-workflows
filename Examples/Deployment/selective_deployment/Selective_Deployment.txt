@@ -1,8 +1,8 @@
-BlueCat Gateway 23.2.0
+BlueCat Gateway 24.1.0
 Example Selective deployment workflows
 
 Requirements: 
-• Address Manager v9.3.0 or greater.
+• Address Manager v9.4.0 or greater.
 • BDDS – BDDS appliances should be configured with necessary deployment roles and be under Address Manager control.
 
 In addition to Python wrappers for the Selective Deployment APIs, Example Selective Deployment workflows are now available on the BlueCat Labs GitHub repository, helping to complete BlueCat's Integrity solution of this API feature with UI-based Gateway workflows.
