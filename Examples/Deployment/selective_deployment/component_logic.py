@@ -1,4 +1,4 @@
-# Copyright 2020-2023 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020-2024 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2023-08-30
-# Gateway Version: 23.2.0
+# Date: 2024-02-20
+# Gateway Version: 24.1.0
 # Description: Example Gateway workflow
 
 """This file is responsible for populating the out put table in selective deploy"""

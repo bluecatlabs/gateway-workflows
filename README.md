@@ -67,7 +67,6 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 
 #### The Team:
 - Anita Cheng
-- Martin Minkov
 - Brian Shorland
 - Edwin Christie
 - Mike Leaver
@@ -110,6 +109,7 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Chester Wu
 - Aman Tawakley
 - Andreas Avramidis
+- Martin Minkov
 
 ## License
 

@@ -1,8 +1,8 @@
 # **Example Selective Deployment Workflow**
 ## Select a DNS record for deployment
 
-**BlueCat Gateway Version:** 23.2.0 or greater <br/>
-**BAM version:** 9.3.0 or greater <br/>
+**BlueCat Gateway Version:** 24.1.0 or greater <br/>
+**BAM version:** 9.4.0 or greater <br/>
 
 ### Dependencies
 DNS/DHCP server appliances should be configured with necessary deployment roles and be under Address Manager control. Full deployment to DNS/DHCP server required prior to performing selective deployment. <br/>
@@ -14,7 +14,7 @@ There is a standalone Selective Deployment workflow as well as new Add, Update, 
 
 By default, all Example Selective Deployment workflows invoke the selectiveDeploy API method using the ‘related’ property. This will deploy a record and any of its associated records. These Example workflows use related deployments as a precaution against broken record chains if modifying or deleting records.  
 
-For more details on the Selective Deployment API methods, refer to the DNS Integrity Gateway Help & Documentation or Administration Guide, or the Address Manager 9.3.0 API Guide available on BlueCat Customer Care.
+For more details on the Selective Deployment API methods, refer to the DNS Integrity Gateway Help & Documentation or Administration Guide, or the Address Manager 9.4.0 API Guide available on BlueCat Customer Care.
 
 ___
 **Note**
@@ -51,4 +51,4 @@ When you are working with selective deployment, keep in mind the following:
   previous deployment, the status message of the previous deployment will be overwritten.
 ___
 
-©2020-2023 BlueCat Networks (USA) Inc. and its affiliates (collectively 'BlueCat'). All rights reserved.
+©2020-2024 BlueCat Networks (USA) Inc. and its affiliates (collectively 'BlueCat'). All rights reserved.
