@@ -1,2 +1,3 @@
 title=Update Alias Record
-info=
+info=This workflow updates alias record in BAM.
+label=Only compatible with BAM RESTv1 API.

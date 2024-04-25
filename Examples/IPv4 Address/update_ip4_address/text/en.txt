@@ -1,2 +1,3 @@
 title=Update IPv4 Address
-info=
+info=This workflow updates IPv4 Address in BAM.
+label=Only compatible with BAM RESTv1 API.

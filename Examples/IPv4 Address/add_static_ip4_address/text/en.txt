@@ -1,2 +1,3 @@
 title=Add Static IPv4 Address
-info=
+info=This workflow adds a static IPv4 Address to BAM.
+label=Only compatible with BAM RESTv1 API.
