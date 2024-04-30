@@ -1,2 +1,3 @@
 title=Delete Alias Record
-info=
+info=This workflow deletes alias record from BAM.
+label=Only compatible with BAM RESTv1 API.

@@ -113,7 +113,7 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 
 ## License
 
-Copyright 2017-2023 BlueCat Networks (USA) Inc. and its affiliates
+Copyright 2017-2024 BlueCat Networks (USA) Inc. and its affiliates
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

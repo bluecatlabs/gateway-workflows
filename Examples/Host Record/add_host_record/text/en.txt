@@ -1,2 +1,3 @@
 title=Add Host Record
-info=
+info=This workflow adds host record to BAM.
+label=Only compatible with BAM RESTv1 API.

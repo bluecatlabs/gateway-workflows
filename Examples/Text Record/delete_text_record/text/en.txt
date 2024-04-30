@@ -1,2 +1,3 @@
 title=Delete Text Record
-info=
+info=This workflow deletes text record from BAM.
+label=Only compatible with BAM RESTv1 API.
