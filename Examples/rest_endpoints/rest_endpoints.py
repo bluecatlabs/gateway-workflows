@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2024-04-30
-# Gateway Version: 24.2.0
+# Date: 2024-06-26
+# Gateway Version: 24.3.0
 # Description: Example Gateway workflow
 
 """
@@ -110,3 +110,19 @@ def rest_test_no_auth():
     """
     # Permission check is not applicable here
     return jsonify({"answer": 42})
+
+
+#
+# Example of an endpoint that tests autologin for both services.
+#
+@route(app, "/rest_endpoints/autologin")
+@util.autologin(autologin_func)
+@util.rest_exception_catcher
+def rest_test_user_info():
+    """
+    Autologin for both services
+
+    :return:
+    """
+    # in this case it is always executed
+    return jsonify({"username": g.user.get_username()})

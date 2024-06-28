@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2024-04-30
-# Gateway Version: 24.2.0
+# Date: 2024-06-26
+# Gateway Version: 24.3.0
 # Description: Example Gateway workflow
 
 # pylint: disable=redefined-builtin
