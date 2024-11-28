@@ -1,4 +1,4 @@
-BlueCat Gateway 24.3.0
+BlueCat Gateway 24.4.0
 Example Selective deployment workflows
 
 Requirements: 

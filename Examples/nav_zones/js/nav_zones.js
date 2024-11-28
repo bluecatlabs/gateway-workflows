@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 // By: BlueCat Networks
-// Date: 2024-06-26
-// Gateway Version: 24.3.0
+// Date: 2024-12-13
+// Gateway Version: 24.4.0
 // Description: Gateway workflow to demonstrate use of REST API v2 client.
 
 // JavaScript for your page goes in here.
