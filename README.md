@@ -69,7 +69,6 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Anita Cheng
 - Brian Shorland
 - Edwin Christie
-- Mike Leaver
 - Roy Fisher
 - Chris Collins
 
@@ -110,6 +109,7 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Lily Wickham
 - Ajay Basnet
 - Alexander Bartella
+- Mike Leaver
 
 ## License
 
