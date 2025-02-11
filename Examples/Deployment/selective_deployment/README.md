@@ -1,7 +1,7 @@
 # **Example Selective Deployment Workflow**
 ## Select a DNS record for deployment
 
-**BlueCat Gateway Version:** 24.3.0 or greater <br/>
+**BlueCat Gateway Version:** 25.1.0 or greater <br/>
 **BAM version:** 9.4.0 or greater <br/>
 
 ### Dependencies
@@ -51,4 +51,4 @@ When you are working with selective deployment, keep in mind the following:
   previous deployment, the status message of the previous deployment will be overwritten.
 ___
 
-©2020-2024 BlueCat Networks (USA) Inc. and its affiliates (collectively 'BlueCat'). All rights reserved.
+©2020-2025 BlueCat Networks (USA) Inc. and its affiliates (collectively 'BlueCat'). All rights reserved.

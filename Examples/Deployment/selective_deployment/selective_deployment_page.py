@@ -1,4 +1,4 @@
-# Copyright 2020-2024 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020-2025 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2024-06-26
-# Gateway Version: 24.3.0
+# Date: 2025-02-12
+# Gateway Version: 25.1.0
 # Description: Example Gateway workflow
 
 """this file is responsible to selective deploying certain dns records

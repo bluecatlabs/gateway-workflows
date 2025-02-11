@@ -1,4 +1,4 @@
-# Copyright 2024 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2024-2025 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,15 +13,15 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2024-06-26
-# Gateway Version: 24.3.0
+# Date: 2025-02-12
+# Gateway Version: 25.1.0
 # Description: Gateway workflow to demonstrate use of REST API v2 client.
 
 """
 Navigate zones page
 """
 from bluecat import route
-from bluecat.address_manager import BAMAPI
+from bluecat.platform_integration.address_manager import BAMAPI
 from bluecat.gateway.decorators import api_exc_handler, page_exc_handler, require_permission
 from bluecat.util import no_cache
 from bluecat_libraries.address_manager.api import Client as V1Client

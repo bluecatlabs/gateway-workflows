@@ -69,11 +69,6 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Anita Cheng
 - Brian Shorland
 - Edwin Christie
-- Mike Leaver
-- Nishant Malhotra
-- Lily Wickham
-- Ajay Basnet
-- Alexander Bartella
 - Roy Fisher
 - Chris Collins
 
@@ -110,6 +105,11 @@ BlueCat Gateway would be so much less without the following people. Thank you fo
 - Aman Tawakley
 - Andreas Avramidis
 - Martin Minkov
+- Nishant Malhotra
+- Lily Wickham
+- Ajay Basnet
+- Alexander Bartella
+- Mike Leaver
 
 ## License
 
