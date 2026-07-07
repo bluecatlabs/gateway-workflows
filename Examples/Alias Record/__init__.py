@@ -1,4 +1,4 @@
-# Copyright 2020-2025 BlueCat Networks (USA) Inc. and its affiliates
+# Copyright 2020-2026 BlueCat Networks (USA) Inc. and its affiliates
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,6 @@
 # limitations under the License.
 #
 # By: BlueCat Networks
-# Date: 2025-11-14
-# Gateway Version: 25.3.0
+# Date: 2026-07-07
+# Gateway Version: 26.1.0
 # Description: Example Gateway workflow
