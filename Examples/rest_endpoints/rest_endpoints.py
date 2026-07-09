@@ -26,15 +26,6 @@ from bluecat import route, util
 from main_app import app
 
 
-def autologin_func():
-    """
-    I strongly recommend in real scenario use something more secure than storing plain text
-    username and password in a workflow file.
-    :return: username and password
-    """
-    return "testuser", "testuser"
-
-
 def get_configurations():
     """
     A simple example that connects to BAM and retrieves a list of configurations
@@ -79,22 +70,6 @@ def rest_put_test():
     :return:
     """
     return jsonify({"result": request.get_json()["foo"] + " plus some extra"})
-
-
-#
-# Autologin Example
-#
-@route(app, "/rest_endpoints/list_configurations", methods=["GET", "POST"])
-@util.autologin(autologin_func)
-@util.rest_exception_catcher
-def rest_test_autologin():
-    """
-    Autologin
-
-    :return:
-    """
-    # in this case it is always executed
-    return get_configurations()
 
 
 #
